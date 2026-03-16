@@ -23,6 +23,17 @@ val OnContainerGrayLight = Color(0xFFEBEBEB)
 val SecondaryWhiteLight = Color(0xFFFFFFFF)
 val OnSecondaryBlackLight = Color(0xFF181818)
 
+val MainTitleColorLight = Color(0xFF181818)
+val SubtitleBlackColorLight = Color(0xFF2B2B2B)
+
+// DarkTheme
+
+val MainTitleColorDark = Color(0xFFFFFFFF)
+val SubtitleBlackColorDark = Color(0xFFEBEBEB)
+
 // Other
 val SecondaryDarkLight = Color(0xFF2B2B2B)
 val SecondaryGrayLight = Color(0xFFEBEBEB)
+
+
+
