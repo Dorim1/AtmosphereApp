@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -40,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.data.model.DayUI
 
 @Composable
 @Preview
@@ -57,11 +62,23 @@ fun HomeScreen() {
 
         BottomSheetScaffold(
             sheetContent = {
-                Column( // Основной контент
-                    modifier = Modifier.fillMaxSize()
+                // Основной контент
+                Column(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .padding(horizontal = 23.dp, vertical = 36.dp)
                 ) {
-
+                    Text(
+                        text = "Моя Неделя",
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = "с 9 марта, 2026 по 16 марта, 2026", // todo: Динамическая дата
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
+                WeekRow(days)
             },
             sheetPeekHeight = peekHeight,
             sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
@@ -108,5 +125,34 @@ fun HomeScreen() {
             }
         }
     }
+}
 
+// todo: Удалить
+val days = listOf(
+    DayUI(9, "марта", DayState.Last),
+    DayUI(10, "марта", DayState.Last),
+    DayUI(11, "марта", DayState.Today),
+    DayUI(12, "марта", DayState.Next),
+    DayUI(13, "марта", DayState.Next),
+    DayUI(14, "марта", DayState.Next),
+    DayUI(15, "марта", DayState.Next),
+    DayUI(16, "марта", DayState.Next),
+
+)
+
+@Composable
+fun WeekRow(days: List<DayUI>) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(26.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        items(days) { day ->
+            DayItem(
+                day = day.number,
+                month = day.month,
+                state = day.state,
+                onClick = {  }
+            )
+        }
+    }
 }
