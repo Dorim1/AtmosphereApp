@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradient
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
@@ -34,6 +35,9 @@ val SubtitleBlackColorDark = Color(0xFFEBEBEB)
 // Other
 val SecondaryDarkLight = Color(0xFF2B2B2B)
 val SecondaryGrayLight = Color(0xFFEBEBEB)
+
+val LinearGradient1 = Color(0xFF607AFF)
+val LinearGradient2 = Color(0xFF9CACFE)
 
 
 

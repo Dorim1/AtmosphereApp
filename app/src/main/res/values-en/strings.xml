@@ -7,4 +7,5 @@
     <string name="home_evening_greeting">Good evening</string>
     <string name="home_night_greeting">Good night</string>
     <string name="home_morning_greeting">Good morning</string>
+    <string name="home_title_week_section">My Week</string>
 </resources>

@@ -33,9 +33,9 @@ enum class DayState { Last, Today, Next }
 
 @Composable
 @Preview
-private fun DayItemPreview() {
+private fun DayListItemPreview() {
     AtmosphereAppTheme {
-        DayItem(
+        DayListItem(
             day = 13,
             month = "Марта",
             state = DayState.Next,
@@ -46,7 +46,7 @@ private fun DayItemPreview() {
 }
 
 @Composable
-fun DayItem(
+fun DayListItem(
     day: Int,
     month: String,
     state: DayState,

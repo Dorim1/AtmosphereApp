@@ -7,4 +7,5 @@
     <string name="home_evening_greeting">Добрый вечер</string>
     <string name="home_night_greeting">Доброй ночи</string>
     <string name="home_morning_greeting">Доброе утро</string>
+    <string name="home_title_week_section">Моя Неделя</string>
 </resources>
