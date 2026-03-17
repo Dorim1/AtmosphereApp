@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.material.icons)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

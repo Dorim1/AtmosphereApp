@@ -24,6 +24,15 @@ val Typography = Typography(
         fontSize = 24.sp,
         color = MainTitleColorLight
     ),
+    titleMedium = TextStyle(
+        fontSize = 14.sp,
+        color = MainTitleColorLight
+    ),
+    headlineLarge = TextStyle(
+        fontSize = 32.sp,
+        color = MainTitleColorLight
+    ),
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

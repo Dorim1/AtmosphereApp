@@ -3,4 +3,9 @@
     <string name="intro_title" translatable="false">Atmosphere</string>
     <string name="intro_subtitle">для тех, кто следит за своей «внутренней погодой»</string>
     <string name="intro_button">Вперёд</string>
+    <string name="home_afternoon_greeting">Добрый день</string>
+    <string name="home_evening_greeting">Добрый вечер</string>
+    <string name="home_night_greeting">Доброй ночи</string>
+    <string name="home_morning_greeting">Доброе утро</string>
+    <string name="home_title_week_section">Моя Неделя</string>
 </resources>
