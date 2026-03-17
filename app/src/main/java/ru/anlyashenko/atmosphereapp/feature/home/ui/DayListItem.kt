@@ -82,9 +82,9 @@ fun DayListItem(
                     Modifier.border(borderStroke, RoundedCornerShape(100.dp))
                 else Modifier
             )
+            .clickable { onClick() }
             .background(containerColor)
             .padding(top = 5.dp)
-            .clickable { onClick() }
     ) {
         Box(
             contentAlignment = Alignment.Center,

@@ -4,6 +4,7 @@ import android.R.attr.maxHeight
 import android.widget.Space
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,11 +22,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SentimentDissatisfied
@@ -36,12 +40,16 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.twotone.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,7 +60,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -85,45 +96,82 @@ private fun HomeScreenPreview() {
 fun HomeScreen() {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val peekHeight = maxHeight * 0.75f
+        val scaffoldState = rememberBottomSheetScaffoldState()
+        val scrollState = rememberScrollState()
+
+        var noteText by remember { mutableStateOf("") }
 
         BottomSheetScaffold(
+            scaffoldState = scaffoldState,
             sheetContent = {
                 // Основной контент
                 Column(
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .padding(horizontal = 23.dp, vertical = 36.dp)
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(vertical = 36.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.home_title_week_section),
-                        style = MaterialTheme.typography.headlineLarge
+                    Column(
+                        modifier = Modifier.padding(horizontal = 23.dp)
+                    ) {
+                        // Заголовок недели
+                        Spacer(Modifier.height(36.dp))
+                        Text(
+                            text = stringResource(R.string.home_title_week_section),
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "с 9 марта, 2026 по 16 марта, 2026",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+
+                    Spacer(Modifier.height(36.dp))
+
+                    WeekRow(
+                        days = days
                     )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = "с 9 марта, 2026 по 16 марта, 2026", // todo: Динамическая дата
-                        style = MaterialTheme.typography.titleMedium
-                    )
+
+                    Column(
+                        modifier = Modifier.padding(horizontal = 23.dp)
+                    ) {
+                        // Заголовок настроений
+                        Spacer(Modifier.height(36.dp))
+                        Text(
+                            text = "Мой День",
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "Какое у вас настроение?",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(Modifier.height(22.dp))
+
+                        MoodColumn(
+                            moods = systemMoods,
+                            onMoodSelected = {},
+                        )
+
+                        Spacer(Modifier.height(13.dp))
+
+                        DayNoteField(
+                            value = noteText,
+                            onValueChange = { noteText = it },
+                            onSubmit = {}
+                        )
+
+                        Spacer(Modifier.height(36.dp))
+
+                        FooterSection(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.CenterHorizontally),
+                            onGetInClick = {},
+                        )
+                    }
                 }
-                WeekRow(days)
-                Column(
-                    modifier = Modifier
-                        .wrapContentHeight()
-                        .padding(start = 23.dp, end = 23.dp, top = 36.dp, bottom = 22.dp)
-                ) {
-                    Text(
-                        text = "Мой День",
-                        style = MaterialTheme.typography.headlineLarge
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = "Какое у вас настроение?",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
-                MoodColumn(
-                    moods = systemMoods,
-                    onMoodSelected = {},
-                )
 
             },
             sheetPeekHeight = peekHeight,
@@ -204,7 +252,7 @@ fun WeekRow(days: List<DayUI>) {
                 day = day.number,
                 month = day.month,
                 state = day.state,
-                onClick = {  }
+                onClick = { }
             )
         }
     }
@@ -214,16 +262,15 @@ fun WeekRow(days: List<DayUI>) {
 fun MoodColumn(
     moods: List<MoodUI>,
     onMoodSelected: (MoodUI) -> Unit
-    ) {
+) {
     var selectedMooId by remember { mutableStateOf<Int?>(null) }
+    var moodToEdit by remember { mutableStateOf<MoodUI?>(null) }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(26.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = 23.dp,
-                end = 23.dp,
                 top = 4.dp,
                 bottom = 23.dp
             )
@@ -235,8 +282,109 @@ fun MoodColumn(
                 onClick = {
                     selectedMooId = mood.id
                     onMoodSelected(mood)
+                },
+                onEdit = {
+                    moodToEdit = mood
                 }
             )
         }
+    }
+
+    moodToEdit?.let { mood ->
+        AlertDialog(
+            onDismissRequest = { moodToEdit = null },
+            title = { Text(text = "Редактировать настроение") },
+            text = { Text(text = "Здесь будут настройки для ${mood.title}") },
+            confirmButton = {
+                TextButton(onClick = {
+                    // todo: Сохранить изменения
+                    moodToEdit = null
+                }) {
+                    Text("Сохранить")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    moodToEdit = null
+                }) { Text("Отмена") }
+            }
+        )
+    }
+}
+
+@Composable
+fun DayNoteField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    onSubmit: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = 188.dp)
+            .clip(RoundedCornerShape(30.dp))
+            .border(2.dp, SecondaryGrayLight, RoundedCornerShape(30.dp))
+            .background(Color.Transparent)
+    ) {
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = 53.dp),
+            textStyle = TextStyle(
+                fontSize = 16.sp,
+                color = MainTitleColorLight
+            ),
+            decorationBox = { innerTextField ->
+                if (value.isEmpty()) {
+                    Text(
+                        text = "Напишите как прошел ваш день",
+                        fontSize = 16.sp,
+                        color = MainTitleColorLight.copy(alpha = 0.5f)
+                    )
+                }
+                innerTextField()
+            }
+        )
+
+        Surface(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(11.dp),
+            shape = RoundedCornerShape(50.dp),
+            color = MainTitleColorLight,
+            onClick = onSubmit
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 23.dp, vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Сохранить",
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    lineHeight = 10.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun FooterSection(
+    modifier: Modifier = Modifier,
+    onGetInClick: () -> Unit) {
+    Button(
+        modifier = modifier.size(200.dp, 50.dp),
+        onClick = onGetInClick,
+        shape = RoundedCornerShape(50.dp),
+    ) {
+        Text(
+            text = "Сохранить",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
