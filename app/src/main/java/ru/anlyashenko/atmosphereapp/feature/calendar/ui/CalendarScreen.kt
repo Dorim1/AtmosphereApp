@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +27,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,16 +49,18 @@ import java.time.LocalDate
 import java.time.Month
 import java.time.Period
 import java.util.Locale
+import kotlin.comparisons.then
+import kotlin.text.get
 
 val mockMoodMap: Map<LocalDate, Color> = mapOf(
-    LocalDate.of(2026, 3, 2)  to Color(0xFFB5EAB5),  // зелёный — отлично
-    LocalDate.of(2026, 3, 3)  to Color(0xFFB5EAB5),
-    LocalDate.of(2026, 3, 4)  to Color(0xFFB5EAB5),
-    LocalDate.of(2026, 3, 5)  to Color(0xFFFFE0A0),  // жёлтый — нормально
-    LocalDate.of(2026, 3, 6)  to Color(0xFFFFB5B5),  // красный — плохо
-    LocalDate.of(2026, 3, 7)  to Color(0xFFFFD4A0),  // оранжевый
-    LocalDate.of(2026, 3, 8)  to Color(0xFFFFB5B5),
-    LocalDate.of(2026, 3, 9)  to Color(0xFFB5EAB5),
+    LocalDate.of(2026, 3, 2) to Color(0xFFB5EAB5),  // зелёный — отлично
+    LocalDate.of(2026, 3, 3) to Color(0xFFB5EAB5),
+    LocalDate.of(2026, 3, 4) to Color(0xFFB5EAB5),
+    LocalDate.of(2026, 3, 5) to Color(0xFFFFE0A0),  // жёлтый — нормально
+    LocalDate.of(2026, 3, 6) to Color(0xFFFFB5B5),  // красный — плохо
+    LocalDate.of(2026, 3, 7) to Color(0xFFFFD4A0),  // оранжевый
+    LocalDate.of(2026, 3, 8) to Color(0xFFFFB5B5),
+    LocalDate.of(2026, 3, 9) to Color(0xFFB5EAB5),
     LocalDate.of(2026, 3, 10) to Color(0xFFFFB5B5),
     LocalDate.of(2026, 3, 11) to Color(0xFFB5EAB5),
 )
@@ -64,8 +74,8 @@ private fun CalendarScreenPreview() {
         selectedDate = LocalDate.of(2026, 3, 11),
         moodMap = mockMoodMap,
         note = mockNote,
-        onDateClick = { } ,
-        onDeleteNote = {  }
+        onDateClick = { },
+        onDeleteNote = { }
     )
 }
 
@@ -74,11 +84,11 @@ fun CalendarScreen(
     selectedDate: LocalDate,
     moodMap: Map<LocalDate, Color>,
     note: String?,
-    onDateClick:(LocalDate) -> Unit,
+    onDateClick: (LocalDate) -> Unit,
     onDeleteNote: () -> Unit
 ) {
-    val currentMonth = selectedDate.month
-    val currentYear = selectedDate.year
+    var displayYear by remember { mutableIntStateOf(selectedDate.year) }
+    var displayMonth by remember { mutableStateOf(selectedDate.month) }
 
     Column(
         modifier = Modifier
@@ -105,13 +115,16 @@ fun CalendarScreen(
         Spacer(Modifier.height(40.dp))
 
         Text(
-            text = currentYear.toString(),
+            text = displayYear.toString(),
             style = MaterialTheme.typography.bodyMedium,
             color = MainTitleColorLight.copy(alpha = 0.6f),
             modifier = Modifier.padding(horizontal = 23.dp)
         )
         Text(
-            text = currentMonth.getDisplayName(java.time.format.TextStyle.FULL_STANDALONE, Locale("ru"))
+            text = displayMonth.getDisplayName(
+                java.time.format.TextStyle.FULL_STANDALONE,
+                Locale("ru")
+            )
                 .replaceFirstChar { it.uppercase() },
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(horizontal = 23.dp)
@@ -120,11 +133,14 @@ fun CalendarScreen(
         Spacer(Modifier.height(21.dp))
 
         CalendarGrid(
-            year = currentYear,
-            month = currentMonth,
+            currentDate = selectedDate,
             moodMap = moodMap,
             selectedDate = selectedDate,
-            onDateClick = onDateClick
+            onDateClick = onDateClick,
+            onMonthChanged = { year, month ->
+                displayYear = year
+                displayMonth = month
+            }
         )
         Spacer(Modifier.padding(24.dp))
         HorizontalDivider(modifier = Modifier.padding(horizontal = 60.dp))
@@ -183,6 +199,43 @@ enum class PeriodType(val label: String) {
 
 @Composable
 fun CalendarGrid(
+    currentDate: LocalDate,
+    moodMap: Map<LocalDate, Color>,
+    selectedDate: LocalDate,
+    onDateClick: (LocalDate) -> Unit,
+    onMonthChanged: (year: Int, month: Month) -> Unit
+) {
+    val startPage = 500
+    val pagerState = rememberPagerState(initialPage = startPage, pageCount = { 1000 })
+
+    LaunchedEffect(pagerState.currentPage) {
+        val offset = (pagerState.currentPage - startPage)
+        val newDate = LocalDate.of(currentDate.year, currentDate.month, 1)
+            .plusMonths(offset.toLong())
+        onMonthChanged(newDate.year, newDate.month)
+    }
+
+    HorizontalPager(
+        state = pagerState,
+        modifier = Modifier.fillMaxWidth()
+    ) { page ->
+        val offset = page - startPage
+        val pageDate = LocalDate.of(currentDate.year, currentDate.month, 1)
+            .plusMonths(offset.toLong())
+
+        CalendarMonthPage(
+            year = pageDate.year,
+            month = pageDate.month,
+            moodMap = moodMap,
+            selectedDate = selectedDate,
+            onDateClick = onDateClick
+        )
+    }
+
+}
+
+@Composable
+fun CalendarMonthPage(
     year: Int,
     month: Month,
     moodMap: Map<LocalDate, Color>,
@@ -190,9 +243,8 @@ fun CalendarGrid(
     onDateClick: (LocalDate) -> Unit
 ) {
     val firstDay = LocalDate.of(year, month, 1)
-    val offset = (firstDay.dayOfWeek.value - 1)
+    val offset = firstDay.dayOfWeek.value - 1
     val daysInMonth = firstDay.lengthOfMonth()
-
     val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
     Column(modifier = Modifier.padding(horizontal = 23.dp)) {
@@ -210,8 +262,7 @@ fun CalendarGrid(
 
         Spacer(Modifier.height(8.dp))
 
-        val totalCells = offset + daysInMonth
-        val rows = (totalCells + 6) / 7
+        val rows = (offset + daysInMonth) / 7
 
         repeat(rows) { row ->
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -262,7 +313,7 @@ fun CalendarGrid(
 @Composable
 fun DayNoteSection(
     note: String?,
-    onDelete:() -> Unit
+    onDelete: () -> Unit
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 23.dp)
