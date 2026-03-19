@@ -58,27 +58,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
-import kotlinx.coroutines.channels.ticker
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.designsystem.elements.StopPostScrollNestedScrollConnection
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.LinearGradient1
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.LinearGradient2
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorDark
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.OnPrimaryWhite
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.PrimaryPurple
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SecondaryGrayLight
 import ru.anlyashenko.atmosphereapp.data.model.DayUI
 import ru.anlyashenko.atmosphereapp.data.model.MoodUI
@@ -104,74 +99,80 @@ fun HomeScreen() {
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
             sheetContent = {
-                // Основной контент
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .verticalScroll(scrollState)
-                        .padding(vertical = 36.dp)
+                        .nestedScroll(StopPostScrollNestedScrollConnection)
                 ) {
                     Column(
-                        modifier = Modifier.padding(horizontal = 23.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(scrollState)
+                            .padding(vertical = 36.dp)
                     ) {
-                        // Заголовок недели
-                        Spacer(Modifier.height(36.dp))
-                        Text(
-                            text = stringResource(R.string.home_title_week_section),
-                            style = MaterialTheme.typography.headlineLarge
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = "с 9 марта, 2026 по 16 марта, 2026",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-
-                    Spacer(Modifier.height(36.dp))
-
-                    WeekRow(
-                        days = days
-                    )
-
-                    Column(
-                        modifier = Modifier.padding(horizontal = 23.dp)
-                    ) {
-                        // Заголовок настроений
-                        Spacer(Modifier.height(36.dp))
-                        Text(
-                            text = "Мой День",
-                            style = MaterialTheme.typography.headlineLarge
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = "Какое у вас настроение?",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Spacer(Modifier.height(22.dp))
-
-                        MoodColumn(
-                            moods = systemMoods,
-                            onMoodSelected = {},
-                        )
-
-                        Spacer(Modifier.height(13.dp))
-
-                        DayNoteField(
-                            value = noteText,
-                            onValueChange = { noteText = it },
-                            onSubmit = {}
-                        )
+                        Column(
+                            modifier = Modifier.padding(horizontal = 23.dp)
+                        ) {
+                            // Заголовок недели
+                            Spacer(Modifier.height(36.dp))
+                            Text(
+                                text = stringResource(R.string.home_title_week_section),
+                                style = MaterialTheme.typography.headlineLarge
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = "с 9 марта, 2026 по 16 марта, 2026",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
 
                         Spacer(Modifier.height(36.dp))
 
-                        FooterSection(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.CenterHorizontally),
-                            onGetInClick = {},
+                        WeekRow(
+                            days = days
                         )
+
+                        Column(
+                            modifier = Modifier.padding(horizontal = 23.dp)
+                        ) {
+                            // Заголовок настроений
+                            Spacer(Modifier.height(36.dp))
+                            Text(
+                                text = "Мой День",
+                                style = MaterialTheme.typography.headlineLarge
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = "Какое у вас настроение?",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Spacer(Modifier.height(22.dp))
+
+                            MoodColumn(
+                                moods = systemMoods,
+                                onMoodSelected = {},
+                            )
+
+                            Spacer(Modifier.height(13.dp))
+
+                            DayNoteField(
+                                value = noteText,
+                                onValueChange = { noteText = it },
+                                onSubmit = {}
+                            )
+
+                            Spacer(Modifier.height(36.dp))
+
+                            FooterSection(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.CenterHorizontally),
+                                onGetInClick = {},
+                            )
+                        }
                     }
                 }
+
 
             },
             sheetPeekHeight = peekHeight,
@@ -375,7 +376,8 @@ fun DayNoteField(
 @Composable
 fun FooterSection(
     modifier: Modifier = Modifier,
-    onGetInClick: () -> Unit) {
+    onGetInClick: () -> Unit
+) {
     Button(
         modifier = modifier.size(200.dp, 50.dp),
         onClick = onGetInClick,
