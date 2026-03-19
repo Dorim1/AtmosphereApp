@@ -15,8 +15,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import ru.anlyashenko.atmosphereapp.core.designsystem.elements.BottomNavigationBar
+import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarScreen
+import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
+import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
+import java.time.LocalDate
 
 @Composable
 fun AppNavigation() {
@@ -59,8 +63,15 @@ fun AppNavigation() {
                     HomeScreen()
                 }
 
+                // Мок-данные
                 composable<Destinations.CalendarRoute> {
-                    Text(text = "Calendar Screen", Modifier.fillMaxSize())
+                    CalendarScreen(
+                        selectedDate = LocalDate.of(2026, 3, 11),
+                        moodMap = mockMoodMap,
+                        note = mockNote,
+                        onDateClick = { } ,
+                        onDeleteNote = {  }
+                    )
                 }
 
                 composable<Destinations.UserRoute> {
