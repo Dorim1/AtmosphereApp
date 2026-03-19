@@ -22,85 +22,46 @@ import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 fun AppNavigation() {
     val navController = rememberNavController()
 
-//    val navBackStackEntry by navController.currentBackStackEntryAsState()
-//    val currentDestination = navBackStackEntry?.destination
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     val screensWithoutBottomBar = listOf(
         Destinations.IntroRoute::class.qualifiedName
     )
-    val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-
-//    val showBottomBar = currentDestination?.hierarchy?.any { destination ->
-//        destination.hasRoute(Destinations.HomeRoute::class) ||
-//        destination.hasRoute(Destinations.CalendarRoute::class) ||
-//        destination.hasRoute(Destinations.UserRoute::class)
-//    } == true
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (currentDestination?.route !in screensWithoutBottomBar)
                 BottomNavigationBar(navController)
         }
     ) { innerPadding ->
-        val graph =
-            navController.createGraph(startDestination = Destinations.IntroRoute) {
-                composable<Destinations.IntroRoute> {
-                    IntroScreen(
-                        onGetInClick = {
-                            navController.navigate(Destinations.HomeRoute) {
-                                popUpTo<Destinations.IntroRoute> { inclusive = true }
-                            }
-                        }
-                    )
-                }
 
-                composable<Destinations.HomeRoute> {
-                    HomeScreen()
-                }
-
-                composable<Destinations.CalendarRoute> {
-                    Text(text = "Calendar Screen", Modifier.fillMaxSize())
-                }
-
-                composable<Destinations.UserRoute> {
-                    Text(text = "User Screen", Modifier.fillMaxSize())
-                }
-            }
         NavHost(
             navController = navController,
-            graph = graph,
+            startDestination = Destinations.IntroRoute,
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding())
-        )
-    }
-
-    /*NavHost(
-        navController = navController,
-        startDestination = Destinations.IntroRoute,
-        modifier = Modifier
-    ) {
-        composable<Destinations.IntroRoute> {
-            IntroScreen(
-                onGetInClick = {
-                    navController.navigate(Destinations.HomeRoute) {
-                        popUpTo<Destinations.IntroRoute> { inclusive = true }
+        ) {
+            composable<Destinations.IntroRoute> {
+                IntroScreen(
+                    onGetInClick = {
+                        navController.navigate(Destinations.HomeRoute) {
+                            popUpTo<Destinations.IntroRoute> { inclusive = true }
+                        }
                     }
-                }
-            )
+                )
+            }
+
+            composable<Destinations.HomeRoute> {
+                HomeScreen()
+            }
+
+            composable<Destinations.CalendarRoute> {
+                Text("Экран Календаря", modifier = Modifier.fillMaxSize())
+            }
+
+            composable<Destinations.UserRoute> {
+                Text("Экран пользователя", modifier = Modifier.fillMaxSize())
+            }
         }
-
-        composable<Destinations.HomeRoute> {
-            HomeScreen()
-        }
-
-        composable<Destinations.CalendarRoute> {
-            Text("Экран Календаря", modifier = Modifier.fillMaxSize())
-        }
-
-        composable<Destinations.UserRoute> {
-            Text("Экран пользователя", modifier = Modifier.fillMaxSize())
-        }
-    }*/
-
-
+    }
 }
