@@ -55,7 +55,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -89,6 +92,26 @@ fun HomeScreen() {
 
         var noteText by remember { mutableStateOf("") }
         var isNoteMode by remember { mutableStateOf(false) }
+
+        /*val smartScrollConnection = remember(scrollState) {
+            object : NestedScrollConnection {
+                override fun onPostScroll(
+                    consumed: Offset,
+                    available: Offset,
+                    source: NestedScrollSource
+                ): Offset {
+                    // available.y > 0 означает, что мы тянем контент ВНИЗ
+                    // scrollState.value == 0 означает, что мы в самом верху списка
+                    if (available.y > 0f && scrollState.value == 0) {
+                        // Мы наверху и тянем вниз — пропускаем жест,
+                        // чтобы BottomSheetScaffold мог свернуться!
+                        return Offset.Zero
+                    }
+                    // Во всех остальных случаях глушим "лишний" скролл, как в коммите
+                    return available
+                }
+            }
+        }*/
 
         BottomSheetScaffold(
             scaffoldState = scaffoldState,

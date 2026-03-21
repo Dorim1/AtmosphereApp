@@ -6,16 +6,20 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -43,11 +47,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SecondaryGrayLight
 import java.time.LocalDate
 import java.time.Month
 import java.time.Period
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 import kotlin.comparisons.then
 import kotlin.text.get
@@ -70,13 +76,16 @@ val mockNote = "Сегодня был продуктивный день, зак�
 @Composable
 @Preview
 private fun CalendarScreenPreview() {
-    CalendarScreen(
-        selectedDate = LocalDate.of(2026, 3, 11),
-        moodMap = mockMoodMap,
-        note = mockNote,
-        onDateClick = { },
-        onDeleteNote = { }
-    )
+    AtmosphereAppTheme() {
+        CalendarScreen(
+            selectedDate = LocalDate.of(2026, 3, 11),
+            moodMap = mockMoodMap,
+            note = mockNote,
+            onDateClick = { },
+            onDeleteNote = { }
+        )
+    }
+
 }
 
 @Composable
@@ -98,21 +107,14 @@ fun CalendarScreen(
     ) {
         Spacer(Modifier.height(46.dp))
 
-        Text(
-            text = "Ваш Календарь",
+      /*  Text(
+            text = "Ваш календарь",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
-        )
+        )*/
 
-        Spacer(Modifier.height(41.dp))
-
-        PeriodFilter(
-            selected = PeriodType.Day,
-            onSelect = {}
-        )
-
-        Spacer(Modifier.height(40.dp))
+//        Spacer(Modifier.height(33.dp))
 
         Text(
             text = displayYear.toString(),
@@ -142,12 +144,24 @@ fun CalendarScreen(
                 displayMonth = month
             }
         )
-        Spacer(Modifier.padding(24.dp))
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 60.dp))
-        Spacer(Modifier.padding(24.dp))
+        Spacer(Modifier.padding(8.dp))
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(32.dp)
+                    .height(4.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(MainTitleColorLight.copy(alpha = 0.2f))
+            )
+        }
+        Spacer(Modifier.padding(14.dp))
 
         DayNoteSection(
             note = note,
+            moodColor = moodMap[selectedDate],
             onDelete = onDeleteNote
         )
         Spacer(Modifier.height(32.dp))
@@ -155,46 +169,6 @@ fun CalendarScreen(
     }
 
 
-}
-
-@Composable
-fun PeriodFilter(
-    selected: PeriodType,
-    onSelect: (PeriodType) -> Unit
-) {
-    val periods = PeriodType.entries
-
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        periods.forEach { period ->
-            val isSelected = period == selected
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(50.dp))
-                    .background(
-                        if (isSelected) MaterialTheme.colorScheme.primary
-                        else Color.Transparent
-                    )
-                    .clickable { onSelect(period) }
-                    .padding(horizontal = 24.dp, vertical = 6.dp)
-            ) {
-                Text(
-                    text = period.label,
-                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-                    else MainTitleColorLight,
-                    fontSize = 14.sp,
-                    lineHeight = 14.sp
-                )
-            }
-        }
-    }
-}
-
-enum class PeriodType(val label: String) {
-    Day("День"), Week("Неделя"), Month("Месяц"), Year("Год")
 }
 
 @Composable
@@ -206,7 +180,8 @@ fun CalendarGrid(
     onMonthChanged: (year: Int, month: Month) -> Unit
 ) {
     val startPage = 500
-    val pagerState = rememberPagerState(initialPage = startPage, pageCount = { 1000 })
+    val pagerState = rememberPagerState(initialPage = startPage, pageCount = { startPage + 1 })
+
 
     LaunchedEffect(pagerState.currentPage) {
         val offset = (pagerState.currentPage - startPage)
@@ -215,22 +190,33 @@ fun CalendarGrid(
         onMonthChanged(newDate.year, newDate.month)
     }
 
-    HorizontalPager(
-        state = pagerState,
-        modifier = Modifier.fillMaxWidth()
-    ) { page ->
-        val offset = page - startPage
-        val pageDate = LocalDate.of(currentDate.year, currentDate.month, 1)
-            .plusMonths(offset.toLong())
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        val cellsSize = maxWidth / 7
+        val calendarHeight = cellsSize * 6 + 8.dp
 
-        CalendarMonthPage(
-            year = pageDate.year,
-            month = pageDate.month,
-            moodMap = moodMap,
-            selectedDate = selectedDate,
-            onDateClick = onDateClick
-        )
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(calendarHeight),
+        ) { page ->
+            val offset = page - startPage
+            val pageDate = LocalDate.of(currentDate.year, currentDate.month, 1)
+                .plusMonths(offset.toLong())
+
+            CalendarMonthPage(
+                year = pageDate.year,
+                month = pageDate.month,
+                moodMap = moodMap,
+                selectedDate = selectedDate,
+                onDateClick = onDateClick
+            )
+        }
     }
+
 
 }
 
@@ -247,7 +233,7 @@ fun CalendarMonthPage(
     val daysInMonth = firstDay.lengthOfMonth()
     val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
-    Column(modifier = Modifier.padding(horizontal = 23.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
             dayLabels.forEach { label ->
                 Text(
@@ -262,7 +248,7 @@ fun CalendarMonthPage(
 
         Spacer(Modifier.height(8.dp))
 
-        val rows = (offset + daysInMonth) / 7
+        val rows = (offset + daysInMonth + 6) / 7
 
         repeat(rows) { row ->
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -313,45 +299,57 @@ fun CalendarMonthPage(
 @Composable
 fun DayNoteSection(
     note: String?,
+    moodColor: Color?,
     onDelete: () -> Unit
 ) {
+    if (note.isNullOrEmpty()) return
+
     Column(
         modifier = Modifier.padding(horizontal = 23.dp)
     ) {
         Text(
             text = "Ваша запись в этот день",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
         )
 
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(12.dp))
 
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .defaultMinSize(minHeight = 188.dp)
-                .clip(RoundedCornerShape(30.dp))
-                .border(2.dp, SecondaryGrayLight, RoundedCornerShape(30.dp))
-                .background(Color.Transparent)
-                .padding(16.dp)
+                .height(IntrinsicSize.Min)
         ) {
-            if (note.isNullOrEmpty()) {
+            Box(
+                modifier = Modifier
+                    .width(4.dp)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(moodColor ?: MaterialTheme.colorScheme.primary)
+            )
+            Spacer(Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
-                    text = "Запись отсутствует",
-                    color = MainTitleColorLight.copy(alpha = 0.5f)
+                    text = note,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
-            } else {
-                Column() {
-                    Text(text = note)
-                    Spacer(Modifier.height(8.dp))
-                    TextButton(
-                        onClick = onDelete,
-                        modifier = Modifier.align(Alignment.End)
-                    ) {
-                        Text("Удалить")
-                    }
-                }
+
+                Spacer(Modifier.height(8.dp))
+
+                Text(
+                    text = "Удалить",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.clickable { onDelete() }
+                )
             }
         }
+
+
     }
 }
 
