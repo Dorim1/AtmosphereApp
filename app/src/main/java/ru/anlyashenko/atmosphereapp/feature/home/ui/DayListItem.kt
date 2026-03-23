@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SubtitleBlackColorLight
 
 enum class DayState { Last, Today, Next }
 
@@ -38,7 +37,7 @@ private fun DayListItemPreview() {
         DayListItem(
             day = 13,
             month = "Марта",
-            state = DayState.Next,
+            state = DayState.Today,
             {}
         )
     }
@@ -54,13 +53,13 @@ fun DayListItem(
 ) {
     val containerColor = when (state) {
         DayState.Last -> MaterialTheme.colorScheme.primary
-        DayState.Today -> SubtitleBlackColorLight
-        DayState.Next -> MaterialTheme.colorScheme.secondary
+        DayState.Today -> MaterialTheme.colorScheme.onSurface
+        DayState.Next -> MaterialTheme.colorScheme.onPrimary
     }
     val contentColor = when (state) {
         DayState.Last -> MaterialTheme.colorScheme.onPrimary
-        DayState.Today -> Color.White
-        DayState.Next -> MaterialTheme.colorScheme.onSecondary
+        DayState.Today -> MaterialTheme.colorScheme.onPrimary
+        DayState.Next -> MaterialTheme.colorScheme.onSurface
     }
     val borderStroke = if (state == DayState.Next) {
         BorderStroke(2.dp, MainTitleColorLight)

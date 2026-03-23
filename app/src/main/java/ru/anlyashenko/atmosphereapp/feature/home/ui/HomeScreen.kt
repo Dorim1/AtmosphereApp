@@ -60,6 +60,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -85,155 +86,182 @@ private fun HomeScreenPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val peekHeight = maxHeight * 0.75f
-        val scaffoldState = rememberBottomSheetScaffoldState()
-        val scrollState = rememberScrollState()
+    var noteText by remember { mutableStateOf("") }
+    var isNoteMode by remember { mutableStateOf(false) }
 
-        var noteText by remember { mutableStateOf("") }
-        var isNoteMode by remember { mutableStateOf(false) }
-
-        /*val smartScrollConnection = remember(scrollState) {
-            object : NestedScrollConnection {
-                override fun onPostScroll(
-                    consumed: Offset,
-                    available: Offset,
-                    source: NestedScrollSource
-                ): Offset {
-                    // available.y > 0 означает, что мы тянем контент ВНИЗ
-                    // scrollState.value == 0 означает, что мы в самом верху списка
-                    if (available.y > 0f && scrollState.value == 0) {
-                        // Мы наверху и тянем вниз — пропускаем жест,
-                        // чтобы BottomSheetScaffold мог свернуться!
-                        return Offset.Zero
-                    }
-                    // Во всех остальных случаях глушим "лишний" скролл, как в коммите
-                    return available
-                }
-            }
-        }*/
-
-        BottomSheetScaffold(
-            scaffoldState = scaffoldState,
-            sheetContent = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .nestedScroll(StopPostScrollNestedScrollConnection)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(scrollState)
-                            .padding(vertical = 36.dp)
-                    ) {
-                        if (!isNoteMode) {
-                            Column(
-                                modifier = Modifier.padding(horizontal = 23.dp)
-                            ) {
-                                // Заголовок недели
-                                Spacer(Modifier.height(36.dp))
-                                Text(
-                                    text = stringResource(R.string.home_title_week_section),
-                                    style = MaterialTheme.typography.headlineLarge
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    text = "с 9 марта, 2026 по 16 марта, 2026",
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                            }
-
-                            Spacer(Modifier.height(36.dp))
-
-                            WeekRow(days = days)
-                        }
-
-                        Column(
-                            modifier = Modifier.padding(horizontal = 23.dp)
-                        ) {
-                            // Заголовок настроений
-                            Spacer(Modifier.height(36.dp))
-                            Text(
-                                text = "Мой День",
-                                style = MaterialTheme.typography.headlineLarge
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            Text(
-                                text = "Какое у вас настроение?",
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            Spacer(Modifier.height(22.dp))
-
-                            if (!isNoteMode) {
-                                MoodColumn(moods = systemMoods, onMoodSelected = {},)
-                                AddNoteDayItem(onClick = { isNoteMode = true })
-                            }
-                        }
-                        if (isNoteMode) {
-                            NoteTextField(
-                                modifier = Modifier.padding(horizontal = 9.dp),
-                                value = noteText,
-                                onValueChange = { noteText = it })
-                        }
-                        Spacer(Modifier.height(36.dp))
-                        FooterSection(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 22.dp),
-                            isNoteMode = isNoteMode,
-                            onGetInClick = { },
-                            onSaveMode = { },
-                            onCancel = { isNoteMode = false }
-                        )
-
-                    }
-                }
-
-
-            },
-            sheetPeekHeight = peekHeight,
-            sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-            sheetContainerColor = MaterialTheme.colorScheme.background,
-            sheetDragHandle = null,
-            containerColor = MaterialTheme.colorScheme.primary
+    // Блок погоды
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 7.dp, end = 7.dp, top = 8.dp, bottom = 8.dp),
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.primary
         ) {
+            WeatherSection()
+            
+        }
 
-            Column(
+        // Блок недели
+        if (!isNoteMode) {
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 23.dp, vertical = 46.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(start = 7.dp, end = 7.dp, top = 0.dp, bottom = 8.dp),
+                shape = RoundedCornerShape(30.dp),
+                color = MaterialTheme.colorScheme.surface,
                 ) {
-                    Text(
-                        text = "12.03.2026", // todo: Подтягивать в ресурсы текущую дату
-                        color = Color.White.copy(alpha = 0.85f),
-                        fontSize = 14.sp
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings, // todo: Поменять на Material Symbols
-                        contentDescription = null,
-                        tint = Color.White
-                    )
+                Column(
+                    modifier = Modifier.padding(vertical = 32.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        // Заголовок недели
+                        Text(
+                            text = stringResource(R.string.home_title_week_section),
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "с 9 марта, 2026 по 16 марта, 2026",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                    Spacer(Modifier.height(32.dp))
+                    WeekRow(days = days)
                 }
+            }
 
+        }
+        // Блок настроений
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 7.dp, end = 7.dp, top = 0.dp, bottom = 8.dp),
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.surface,
+        ) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                Spacer(Modifier.height(32.dp))
+                Text(
+                    text = "Мой День",
+                    style = MaterialTheme.typography.headlineLarge
+                )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = stringResource(R.string.home_afternoon_greeting), // todo: От времени выставлять нужное приветствие
-                    color = Color.White,
-                    fontSize = 36.sp,
-                    fontWeight = FontWeight.Bold
+                    text = "Какое у вас настроение?",
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(Modifier.height(16.dp))
-                Text(
-                    text = "Добавить подпись",
-                    color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 20.sp
+
+                if (!isNoteMode) {
+                    MoodColumn(moods = systemMoods, onMoodSelected = {})
+                    AddNoteDayItem(onClick = { isNoteMode = true })
+                    Spacer(Modifier.height(18.dp))
+
+                } else {
+                    NoteTextField(
+                        value = noteText,
+                        onValueChange = { noteText = it }
+                    )
+                }
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+        FooterSection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 22.dp),
+            isNoteMode = isNoteMode,
+            onGetInClick = { },
+            onSaveMode = { },
+            onCancel = { isNoteMode = false }
+        )
+
+
+
+    }
+}
+
+
+@Composable
+fun WeatherSection() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 28.dp, vertical = 39.dp)
+    ) {
+        Column() {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column() {
+                    Text(
+                        text = "12°",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontSize = 64.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "Дождь со\nснегом",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+                Icon(
+                    painter = painterResource(R.drawable.ic_weather_hail),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(120.dp)
                 )
+            }
+            Spacer(Modifier.height(44.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                listOf(
+                    Triple("16:00", painterResource(R.drawable.ic_weather_hail), "+13°"),
+                    Triple("20:00", painterResource(R.drawable.ic_weather_hail), "+9°"),
+                    Triple("00:00", painterResource(R.drawable.ic_cloud), "+3°"),
+                ).forEach { (time, icon, temp) ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(1.dp)
+                    ) {
+                        Icon(
+                            painter = icon,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.size(48.dp)
+                        )
+                        Text(
+                            text = time,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            fontSize = 16.sp,
+                            lineHeight = 16.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = temp,
+                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+                            fontSize = 14.sp,
+                            lineHeight = 14.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
             }
         }
     }
@@ -386,66 +414,6 @@ fun MoodColumn(
         )
     }
 }
-
-/*@Composable
-fun DayNoteField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    onSubmit: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 188.dp)
-            .clip(RoundedCornerShape(30.dp))
-            .border(2.dp, SecondaryGrayLight, RoundedCornerShape(30.dp))
-            .background(Color.Transparent)
-    ) {
-        BasicTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = 53.dp),
-            textStyle = TextStyle(
-                fontSize = 16.sp,
-                color = MainTitleColorLight
-            ),
-            decorationBox = { innerTextField ->
-                if (value.isEmpty()) {
-                    Text(
-                        text = "Напишите как прошел ваш день",
-                        fontSize = 16.sp,
-                        color = MainTitleColorLight.copy(alpha = 0.5f)
-                    )
-                }
-                innerTextField()
-            }
-        )
-
-        Surface(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(11.dp),
-            shape = RoundedCornerShape(50.dp),
-            color = MainTitleColorLight,
-            onClick = onSubmit
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 23.dp, vertical = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = "Сохранить",
-                    color = Color.White,
-                    fontSize = 10.sp,
-                    lineHeight = 10.sp
-                )
-            }
-        }
-    }
-}*/
 
 @Composable
 fun FooterSection(
