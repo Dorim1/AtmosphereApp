@@ -1,9 +1,11 @@
 package ru.anlyashenko.atmosphereapp.feature.calendar.ui
 
 import android.widget.Space
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -54,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
@@ -105,7 +108,6 @@ fun CalendarScreen(
     val startPage = 500
     val pagerState = rememberPagerState(initialPage = startPage, pageCount = { startPage + 1 })
     val scope = rememberCoroutineScope()
-    val today = remember { LocalDate.now() }
 
     Column(
         modifier = Modifier
@@ -126,7 +128,7 @@ fun CalendarScreen(
             ) {
                 Text(
                     text = displayMonth.getDisplayName(
-                        java.time.format.TextStyle.FULL_STANDALONE, Locale("ru")
+                        TextStyle.FULL_STANDALONE, Locale("ru")
                     ).replaceFirstChar { it.uppercase() },
                     fontSize = 64.sp,
                     fontWeight = FontWeight.SemiBold
@@ -255,6 +257,13 @@ fun CalendarGrid(
         onMonthChanged(newDate.year, newDate.month)
     }
 
+    LaunchedEffect(Unit) {
+        delay(50)
+        pagerState.animateScrollBy(value = -20f, animationSpec = tween(400))
+        pagerState.animateScrollBy(value = 20f, animationSpec = tween(400))
+
+    }
+
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
         val cellsSize = maxWidth / 7
         val calendarHeight = cellsSize * 6 + 8.dp
@@ -379,9 +388,7 @@ fun DayNoteSection(
     Column(
         modifier = Modifier.padding(
             start = 16.dp,
-            end = 0.dp,
             top = 16.dp,
-            bottom = 0.dp
         )
     ) {
         Text(
@@ -403,7 +410,7 @@ fun DayNoteSection(
         ) {
             Box(
                 modifier = Modifier
-                    .width(4.dp)
+                    .width(8.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(50.dp))
                     .background(moodColor ?: MaterialTheme.colorScheme.primary)
