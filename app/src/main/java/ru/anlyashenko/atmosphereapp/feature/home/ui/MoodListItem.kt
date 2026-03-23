@@ -93,12 +93,12 @@ fun MoodListItem(
     )
 
     val backgroundColor by animateColorAsState(
-        targetValue = if (isSelected) mood.backgroundColor else Color.White, // todo: Поменять на Material Theme
+        targetValue = if (isSelected) mood.backgroundColor else MaterialTheme.colorScheme.surface,
         label = "bdColor"
     )
 
     val contentColor by animateColorAsState(
-        targetValue = if (isSelected) Color.Black else SecondaryGrayLight
+        targetValue = if (isSelected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f)
     )
 
     SwipeToDismissBox(
@@ -140,12 +140,12 @@ fun MoodListItem(
                 shape = RoundedCornerShape(16.dp),
                 color = backgroundColor,
                 shadowElevation = elevation,
-                border = if (isSelected) null else BorderStroke(2.dp, SecondaryGrayLight),
+                border = if (isSelected) null else BorderStroke(2.dp, MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f)),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 19.dp, vertical = 23.dp),
+                        .padding(horizontal = 19.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
