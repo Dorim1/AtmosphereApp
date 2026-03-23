@@ -145,7 +145,7 @@ fun MoodListItem(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 19.dp, vertical = 23.dp),
+                        .padding(horizontal = 19.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
