@@ -1,9 +1,11 @@
 package ru.anlyashenko.atmosphereapp.feature.calendar.ui
 
 import android.widget.Space
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -47,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SecondaryGrayLight
@@ -188,6 +191,13 @@ fun CalendarGrid(
         val newDate = LocalDate.of(currentDate.year, currentDate.month, 1)
             .plusMonths(offset.toLong())
         onMonthChanged(newDate.year, newDate.month)
+    }
+
+    LaunchedEffect(Unit) {
+        delay(50)
+        pagerState.animateScrollBy(value = -30f, animationSpec = tween(400))
+        pagerState.animateScrollBy(value = 30f, animationSpec = tween(400))
+
     }
 
     BoxWithConstraints(
