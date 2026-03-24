@@ -76,7 +76,11 @@ fun AppNavigation() {
                 }
 
                 composable<Destinations.UserRoute> {
-                    ProfileScreen()
+                    ProfileScreen(
+                        totalEntries = 64,
+                        currentStreak = 27,
+                        longestStreak = 36
+                    )
                 }
             }
         NavHost(
