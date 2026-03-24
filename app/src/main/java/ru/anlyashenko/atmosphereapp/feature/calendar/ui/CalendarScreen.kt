@@ -78,7 +78,7 @@ val mockMoodMap: Map<LocalDate, Color> = mapOf(
     LocalDate.of(2026, 3, 11) to Color(0xFFB5EAB5),
 )
 
-val mockNote = "Сегодня был продуктивный день, закончил важную задачу."
+val mockNote = "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
 
 @Composable
 @Preview
@@ -407,6 +407,7 @@ fun DayNoteSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
+                .padding(end = 16.dp)
         ) {
             Box(
                 modifier = Modifier
@@ -418,7 +419,8 @@ fun DayNoteSection(
             Spacer(Modifier.width(16.dp))
             Text(
                 text = note,
-                style = MaterialTheme.typography.bodyLarge,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onBackground
             )
         }

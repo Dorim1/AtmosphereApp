@@ -20,6 +20,7 @@ import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
+import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
 import java.time.LocalDate
 
 @Composable
@@ -75,7 +76,11 @@ fun AppNavigation() {
                 }
 
                 composable<Destinations.UserRoute> {
-                    Text(text = "User Screen", Modifier.fillMaxSize())
+                    ProfileScreen(
+                        totalEntries = 64,
+                        currentStreak = 27,
+                        longestStreak = 36
+                    )
                 }
             }
         NavHost(
