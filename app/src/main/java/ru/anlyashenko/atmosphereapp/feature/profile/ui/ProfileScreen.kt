@@ -24,6 +24,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.LocalFireDepartment
+import androidx.compose.material.icons.rounded.QueryStats
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,6 +52,12 @@ import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
 data class DailyMoodStat(
     val dayName: String,
     val level: Int,
+    val color: Color
+)
+
+data class MoodCountItem(
+    val name: String,
+    val count: Int,
     val color: Color
 )
 
@@ -116,8 +125,26 @@ fun ProfileScreen(
 
         Spacer(Modifier.height(8.dp))
         AverageMoodCard()
+
+        Spacer(Modifier.height(8.dp))
+        MoodCounterCard()
+
+        Spacer(Modifier.height(8.dp))
+        OpenStatForYearCard(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(Modifier.height(8.dp))
+        OpenSettingsCard(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        )
+
     }
 }
+
+
 
 @Composable
 fun TotalMarkCard(
@@ -387,6 +414,252 @@ fun TimeToggleSwitch() {
                     color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun MoodCounterCard(modifier: Modifier = Modifier) {
+    val items = listOf(
+        MoodCountItem("Отлично", 17, Color(0xFF8BB13B)), // Салатовый
+        MoodCountItem("Хорошо", 8, Color(0xFF0A6C60)),   // Темно-зеленый
+        MoodCountItem("Нормально", 5, Color(0xFFFFC107)),// Желтый
+        MoodCountItem("Плохо", 12, Color(0xFFFF5722)),   // Оранжевый
+        MoodCountItem("Ужасно", 1, Color(0xFFD32F2F))    // Красный
+    )
+
+    val totalCount = items.sumOf { it.count }
+
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(30.dp),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "Счётчик настроения",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                text = totalCount.toString(),
+                fontSize = 96.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            StackedMoodBar(items = items, modifier = Modifier.height(48.dp))
+            Spacer(Modifier.height(38.dp))
+            LegendGrid(items = items, totalCount = totalCount)
+        }
+    }
+
+}
+
+@Composable
+fun StackedMoodBar(items: List<MoodCountItem>, modifier: Modifier = Modifier) {
+    val visibleItems = items.filter { it.count > 0 }
+
+    val totalCount = visibleItems.sumOf { it.count }
+    val minWeight = totalCount * 0.1f
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.secondary),
+    ) {
+        visibleItems.forEachIndexed { index, item ->
+            val isFirst = index == 0
+            val isLast = index == visibleItems.lastIndex
+
+            val shape = RoundedCornerShape(
+                topStart = if (isFirst) 14.dp else 5.dp,
+                bottomStart = if (isFirst) 14.dp else 5.dp,
+                topEnd = if (isLast) 14.dp else 5.dp,
+                bottomEnd = if (isLast) 14.dp else 5.dp
+            )
+
+            val safeWeight = maxOf(item.count.toFloat(), minWeight)
+
+            Box(
+                modifier = Modifier
+                    .weight(safeWeight)
+                    .fillMaxHeight()
+                    .padding(
+                        top = 2.dp,
+                        bottom = 2.dp,
+                        start = if (isFirst) 2.dp else 1.dp,
+                        end = if (isLast) 2.dp else 1.dp
+                    )
+                    .clip(shape)
+                    .background(item.color)
+            )
+
+        }
+    }
+}
+
+@Composable
+fun LegendGrid(
+    items: List<MoodCountItem>,
+    totalCount: Int
+) {
+    val rows = items.chunked(2)
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        rows.forEach { rowItems ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            ) {
+                LegendItem(
+                    item = rowItems[0],
+                    totalCount = totalCount,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(Modifier.width(30.dp))
+                if (rowItems.size > 1) {
+                    LegendItem(
+                        item = rowItems[1],
+                        totalCount = totalCount,
+                        modifier = Modifier.weight(1f)
+                    )
+                } else {
+                    Spacer(Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LegendItem(
+    item: MoodCountItem,
+    totalCount: Int,
+    modifier: Modifier = Modifier
+) {
+    val percentage = if (totalCount > 0) (item.count * 100) / totalCount else 0
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .width(4.dp)
+                .height(36.dp)
+                .clip(RoundedCornerShape(50.dp))
+                .background(item.color)
+        )
+        Spacer(Modifier.width(8.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = item.name,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = item.count.toString(),
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(50.dp))
+                .background(MaterialTheme.colorScheme.secondary)
+                .padding(horizontal = 17.dp, vertical = 5.dp)
+        ) {
+            Text(
+                modifier = Modifier.width(32.dp),
+                textAlign = TextAlign.Center,
+                text = "$percentage%",
+                fontSize = 15.sp,
+                lineHeight = 15.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+}
+
+@Composable
+fun OpenStatForYearCard(
+    onClick:() -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .clip(RoundedCornerShape(30.dp))
+            .background(MaterialTheme.colorScheme.secondary)
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 28.dp),
+        color = MaterialTheme.colorScheme.secondary
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier.size(96.dp),
+                tint = MaterialTheme.colorScheme.onSurface,
+                imageVector = Icons.Rounded.QueryStats,
+                contentDescription = null,
+            )
+            Spacer(Modifier.width(44.dp))
+            Text(
+                text = "Статистика за год",
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = 32.sp,
+                fontWeight = FontWeight.SemiBold,
+                lineHeight = 32.sp
+            )
+        }
+    }
+
+}
+
+@Composable
+fun OpenSettingsCard(
+    onClick: () -> Unit,
+    modifier: Modifier
+) {
+    Surface(
+        modifier = modifier
+            .clip(RoundedCornerShape(30.dp))
+            .background(MaterialTheme.colorScheme.primary)
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 28.dp),
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier.size(96.dp),
+                tint = MaterialTheme.colorScheme.onPrimary,
+                imageVector = Icons.Rounded.Settings,
+                contentDescription = null,
+            )
+            Spacer(Modifier.width(44.dp))
+            Text(
+                text = "Настройки",
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 32.sp,
+                fontWeight = FontWeight.SemiBold,
+                lineHeight = 32.sp
+            )
         }
     }
 }
