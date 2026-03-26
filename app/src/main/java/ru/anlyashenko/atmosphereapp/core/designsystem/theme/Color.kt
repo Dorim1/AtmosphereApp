@@ -15,7 +15,7 @@ val Pink40 = Color(0xFF7D5260)
 
 // Background
 val BackgroundWhiteLight = Color(0xFFECECEC)
-val OnBackgroundBlackLight = Color(0xFF02060F)
+val OnBackgroundBlackLight = Color(0xFF2C2C2C)
 
 
 // Primary
@@ -25,12 +25,12 @@ val OnPrimaryWhite = Color(0xFFF5F5F5)
 
 // Secondary
 val SecondaryLight = Color(0xFFDCD7D1)
-val OnSecondaryBlackLight = Color(0xFF02060F)
+val OnSecondaryBlackLight = Color(0xFF2C2C2C)
 
 
 // Surface
 val SurfaceWhiteLight = Color(0xFFF8F8F8)
-val OnSurfaceBlackLight = Color(0xFF02060F)
+val OnSurfaceBlackLight = Color(0xFF2C2C2C)
 
 
 
@@ -43,7 +43,7 @@ val OnContainerGrayLight = Color(0xFFEBEBEB)
 //val PrimaryPurple = Color(0xFF607AFF)
 //val OnPrimaryWhite = Color(0xFFFFFFFF)
 
-val MainTitleColorLight = Color(0xFF02060F)
+val MainTitleColorLight = Color(0xFF2C2C2C)
 
 // DarkTheme
 
