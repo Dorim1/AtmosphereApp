@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.anlyashenko.atmosphereapp.core.designsystem.elements.DragHandle
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import java.time.LocalDate
 import java.time.Month
@@ -73,9 +74,16 @@ val mockMoodMap: Map<LocalDate, Color> = mapOf(
     LocalDate.of(2026, 3, 9) to Color(0xFF0A6C60),
     LocalDate.of(2026, 3, 10) to Color(0xFFD32F2F),
     LocalDate.of(2026, 3, 11) to Color(0xFF0A6C60),
-)
+    LocalDate.of(2025, 1, 10) to Color(0xFFFFC107),
+    LocalDate.of(2024, 7, 10) to Color(0xFF0A6C60),
+    LocalDate.of(2025, 3, 10) to Color(0xFFFFC107),
+    LocalDate.of(2025, 2, 10) to Color(0xFFFF5722),
+    LocalDate.of(2024, 3, 10) to Color(0xFF0A6C60),
 
-val mockNote = "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
+    )
+
+val mockNote =
+    "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
 
 @Composable
 @Preview
@@ -286,23 +294,12 @@ fun CalendarPagerCard(
             )
 
             Spacer(Modifier.height(12.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(32.dp)
-                        .height(4.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
-                )
-            }
+            DragHandle()
         }
     }
 }
 
+// TODO: Решить проблему с пустыми строками
 @Composable
 fun CalendarGrid(
     pagerState: PagerState,
@@ -314,10 +311,12 @@ fun CalendarGrid(
     onMonthChanged: (year: Int, month: Month) -> Unit
 ) {
     val today = remember { LocalDate.now() }
+    val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
     LaunchedEffect(pagerState.currentPage) {
         val offset = (pagerState.currentPage - startPage)
-        val newDate = LocalDate.of(currentDate.year, currentDate.month, 1).plusMonths(offset.toLong())
+        val newDate =
+            LocalDate.of(currentDate.year, currentDate.month, 1).plusMonths(offset.toLong())
         onMonthChanged(newDate.year, newDate.month)
     }
 
@@ -327,26 +326,43 @@ fun CalendarGrid(
         pagerState.animateScrollBy(value = 20f, animationSpec = tween(400))
     }
 
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val cellsSize = maxWidth / 7
-        val calendarHeight = cellsSize * 6 + 8.dp
-
-        HorizontalPager(
-            state = pagerState,
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(calendarHeight)
-        ) { page ->
-            val offset = page - startPage
-            val pageDate = LocalDate.of(today.year, today.month, 1).plusMonths(offset.toLong())
+                .padding(8.dp)
+        ) {
+            dayLabels.forEach { label ->
+                Text(
+                    text = label,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            val cellsSize = maxWidth / 7
+            val calendarHeight = cellsSize * 6 + 8.dp
 
-            CalendarMonthPage(
-                year = pageDate.year,
-                month = pageDate.month,
-                moodMap = moodMap,
-                selectedDate = selectedDate,
-                onDateClick = onDateClick
-            )
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(calendarHeight)
+            ) { page ->
+                val offset = page - startPage
+                val pageDate = LocalDate.of(today.year, today.month, 1).plusMonths(offset.toLong())
+
+                CalendarMonthPage(
+                    year = pageDate.year,
+                    month = pageDate.month,
+                    moodMap = moodMap,
+                    selectedDate = selectedDate,
+                    onDateClick = onDateClick
+                )
+            }
         }
     }
 
@@ -363,22 +379,8 @@ fun CalendarMonthPage(
     val firstDay = LocalDate.of(year, month, 1)
     val offset = firstDay.dayOfWeek.value - 1
     val daysInMonth = firstDay.lengthOfMonth()
-    val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            dayLabels.forEach { label ->
-                Text(
-                    text = label,
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center,
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        }
-        Spacer(Modifier.height(8.dp))
-
         val rows = (offset + daysInMonth + 6) / 7
 
         repeat(rows) { row ->
@@ -416,7 +418,10 @@ fun CalendarMonthPage(
                                         width = 1.dp,
                                         color = when {
                                             isSelected -> MaterialTheme.colorScheme.primary
-                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
+                                                alpha = 0.2f
+                                            )
+
                                             else -> Color.Transparent
                                         },
                                         shape = CircleShape

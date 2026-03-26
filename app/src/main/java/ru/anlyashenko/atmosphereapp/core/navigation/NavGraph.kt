@@ -3,12 +3,8 @@ package ru.anlyashenko.atmosphereapp.core.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,6 +17,7 @@ import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
+import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 import java.time.LocalDate
 
 @Composable
@@ -79,7 +76,16 @@ fun AppNavigation() {
                     ProfileScreen(
                         totalEntries = 64,
                         currentStreak = 27,
-                        longestStreak = 36
+                        longestStreak = 36,
+                        onYearlyStatsClick = {
+                            navController.navigate(Destinations.YearlyStatsRoute)
+                        }
+                    )
+                }
+
+                composable<Destinations.YearlyStatsRoute> {
+                    YearlyStatsScreen(
+                        moodMap = mockMoodMap
                     )
                 }
             }

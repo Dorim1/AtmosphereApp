@@ -14,4 +14,7 @@ sealed class Destinations(val route: String) {
 
     @Serializable
     object UserRoute
+
+    @Serializable
+    object YearlyStatsRoute
 }
