@@ -3,6 +3,7 @@ package ru.anlyashenko.atmosphereapp.feature.profile.ui
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +25,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.LocalFireDepartment
-import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,7 +49,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
 
 data class DailyMoodStat(
     val dayName: String,
@@ -130,13 +131,14 @@ fun ProfileScreen(
         MoodCounterCard()
 
         Spacer(Modifier.height(8.dp))
-        OpenStatForYearCard(
+        YearlyStatsCard(
+            percentage = 67,
             onClick = {},
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(Modifier.height(8.dp))
-        OpenSettingsCard(
+        SettingsCard(
             onClick = {},
             modifier = Modifier.fillMaxWidth()
         )
@@ -328,20 +330,6 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
         Spacer(Modifier.width(16.dp))
 
         Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                repeat(5) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(MainTitleColorLight.copy(alpha = 0.1f))
-                    )
-                }
-                Spacer(Modifier.height(20.dp))
-            }
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -367,8 +355,16 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
                         ) {
                             Box(
                                 modifier = Modifier
+                                    .fillMaxHeight(1f)
+                                    .width(37.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                                    .align(Alignment.BottomCenter)
+                            )
+                            Box(
+                                modifier = Modifier
                                     .fillMaxHeight(animatedHeight)
-                                    .width(20.dp)
+                                    .width(37.dp)
                                     .clip(RoundedCornerShape(8.dp))
                                     .background(stat.color)
                                     .align(Alignment.BottomCenter)
@@ -596,30 +592,32 @@ fun LegendItem(
 }
 
 @Composable
-fun OpenStatForYearCard(
+fun YearlyStatsCard(
+    percentage: Int,
     onClick:() -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
+        onClick = onClick,
         modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
-            .background(MaterialTheme.colorScheme.secondary)
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 28.dp),
-        color = MaterialTheme.colorScheme.secondary
+//            .clip(RoundedCornerShape(30.dp))
+//            .background(MaterialTheme.colorScheme.secondary)
+//            .padding(horizontal = 16.dp, vertical = 28.dp),
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(30.dp),
+        color = MaterialTheme.colorScheme.secondary,
     ) {
         Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 28.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                modifier = Modifier.size(96.dp),
-                tint = MaterialTheme.colorScheme.onSurface,
-                imageVector = Icons.Rounded.QueryStats,
-                contentDescription = null,
+            ProgressCircle(
+                percentage = percentage,
+                modifier = Modifier.size(96.dp)
             )
             Spacer(Modifier.width(44.dp))
             Text(
-                text = "Статистика за год",
+                text = "Статистика\nза год",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -627,23 +625,79 @@ fun OpenStatForYearCard(
             )
         }
     }
-
 }
 
 @Composable
-fun OpenSettingsCard(
+fun ProgressCircle(
+    percentage: Int,
+    modifier: Modifier = Modifier
+) {
+    var animationPlayed by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { animationPlayed = true }
+
+    val animatedPercentage by animateFloatAsState(
+        targetValue = if (animationPlayed) percentage.toFloat() else 0f,
+        animationSpec = tween(durationMillis = 1000),
+        label = "progress"
+    )
+
+    val activeColor = MaterialTheme.colorScheme.onSecondary
+    val inactiveColor = activeColor.copy(alpha = 0.15f)
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Canvas(modifier = Modifier
+            .fillMaxSize()
+            .padding(5.dp)
+        ) {
+            val strokeWidth = 12.dp.toPx()
+
+            drawCircle(
+                color = inactiveColor,
+                style = Stroke(width = strokeWidth)
+            )
+
+            val sweepAngle = (animatedPercentage / 100f) * 360f
+            drawArc(
+                color = activeColor,
+                startAngle = -90f,
+                sweepAngle = sweepAngle,
+                useCenter = false,
+                style = Stroke(
+                    width = strokeWidth,
+                    cap = StrokeCap.Round
+                )
+            )
+        }
+
+        Text(
+            text = "$percentage%",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSecondary
+        )
+    }
+}
+
+@Composable
+fun SettingsCard(
     onClick: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
-            .background(MaterialTheme.colorScheme.primary)
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 28.dp),
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+//            .clip(RoundedCornerShape(30.dp))
+//            .background(MaterialTheme.colorScheme.primary)
+//            .clickable { onClick() }
+//            .padding(horizontal = 16.dp, vertical = 28.dp),
+        shape = RoundedCornerShape(30.dp),
         color = MaterialTheme.colorScheme.primary
     ) {
         Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 28.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
