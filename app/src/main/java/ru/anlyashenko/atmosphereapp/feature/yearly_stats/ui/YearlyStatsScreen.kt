@@ -437,7 +437,6 @@ fun YearlyStatsCards(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    lineHeight = 24.sp
                 )
             }
         }
