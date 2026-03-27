@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.anlyashenko.atmosphereapp.core.designsystem.elements.DragHandle
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
 import java.time.LocalDate
 import java.time.Month
@@ -63,19 +64,89 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 val mockMoodMap: Map<LocalDate, Color> = mapOf(
-    LocalDate.of(2026, 3, 2) to Color(0xFF0A6C60),  // зелёный — отлично
+    // март 2026
+    LocalDate.of(2026, 3, 1) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 2) to Color(0xFF8AA232),
     LocalDate.of(2026, 3, 3) to Color(0xFF0A6C60),
     LocalDate.of(2026, 3, 4) to Color(0xFF0A6C60),
-    LocalDate.of(2026, 3, 5) to Color(0xFFFFC107),  // жёлтый — нормально
-    LocalDate.of(2026, 3, 6) to Color(0xFFD32F2F),  // красный — плохо
-    LocalDate.of(2026, 3, 7) to Color(0xFFFF5722),  // оранжевый
-    LocalDate.of(2026, 3, 8) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 5) to Color(0xFFFFC107),
+    LocalDate.of(2026, 3, 6) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 7) to Color(0xFFFF5722),
+    LocalDate.of(2026, 3, 8) to Color(0xFF8AA232),
     LocalDate.of(2026, 3, 9) to Color(0xFF0A6C60),
     LocalDate.of(2026, 3, 10) to Color(0xFFD32F2F),
     LocalDate.of(2026, 3, 11) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 3, 12) to Color(0xFFFFC107),
+    LocalDate.of(2026, 3, 13) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 14) to Color(0xFFFF5722),
+    LocalDate.of(2026, 3, 15) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 16) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 3, 17) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 18) to Color(0xFFFFC107),
+    LocalDate.of(2026, 3, 19) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 3, 20) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 21) to Color(0xFFFF5722),
+    LocalDate.of(2026, 3, 22) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 23) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 3, 24) to Color(0xFFFFC107),
+    LocalDate.of(2026, 3, 25) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 26) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 27) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 3, 28) to Color(0xFFFF5722),
+    LocalDate.of(2026, 3, 29) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 3, 30) to Color(0xFF8AA232),
+    LocalDate.of(2026, 3, 31) to Color(0xFF0A6C60),
+
+    // февраль 2026
+    LocalDate.of(2026, 2, 1) to Color(0xFFFFC107),
+    LocalDate.of(2026, 2, 2) to Color(0xFF8AA232),
+    LocalDate.of(2026, 2, 3) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 2, 4) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 2, 5) to Color(0xFFFF5722),
+    LocalDate.of(2026, 2, 6) to Color(0xFF8AA232),
+    LocalDate.of(2026, 2, 7) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 2, 8) to Color(0xFFFFC107),
+    LocalDate.of(2026, 2, 9) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 2, 10) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 2, 11) to Color(0xFF8AA232),
+    LocalDate.of(2026, 2, 12) to Color(0xFFFF5722),
+    LocalDate.of(2026, 2, 13) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 2, 14) to Color(0xFF8AA232),
+    LocalDate.of(2026, 2, 15) to Color(0xFF0A6C60),
+
+    // январь 2026
+    LocalDate.of(2026, 1, 1) to Color(0xFFFF5722),
+    LocalDate.of(2026, 1, 2) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 1, 3) to Color(0xFF8AA232),
+    LocalDate.of(2026, 1, 4) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 1, 5) to Color(0xFFFFC107),
+    LocalDate.of(2026, 1, 6) to Color(0xFF8AA232),
+    LocalDate.of(2026, 1, 7) to Color(0xFFD32F2F),
+    LocalDate.of(2026, 1, 8) to Color(0xFF0A6C60),
+    LocalDate.of(2026, 1, 9) to Color(0xFFFF5722),
+    LocalDate.of(2026, 1, 10) to Color(0xFF8AA232),
+
+    LocalDate.of(2025, 1, 1) to Color(0xFFFF5722),
+    LocalDate.of(2025, 1, 2) to Color(0xFFD32F2F),
+    LocalDate.of(2025, 1, 3) to Color(0xFF8AA232),
+    LocalDate.of(2025, 1, 4) to Color(0xFF0A6C60),
+    LocalDate.of(2025, 1, 5) to Color(0xFFFFC107),
+    LocalDate.of(2025, 1, 6) to Color(0xFF8AA232),
+    LocalDate.of(2025, 1, 7) to Color(0xFFD32F2F),
+    LocalDate.of(2025, 1, 8) to Color(0xFF0A6C60),
+    LocalDate.of(2025, 1, 9) to Color(0xFFFF5722),
+    LocalDate.of(2025, 1, 10) to Color(0xFF8AA232),
+
+    // старые данные
+    LocalDate.of(2025, 3, 10) to Color(0xFFFFC107),
+    LocalDate.of(2025, 2, 10) to Color(0xFFFF5722),
+    LocalDate.of(2025, 1, 10) to Color(0xFFFFC107),
+    LocalDate.of(2024, 7, 10) to Color(0xFF0A6C60),
+    LocalDate.of(2024, 3, 10) to Color(0xFF0A6C60),
 )
 
-val mockNote = "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
+val mockNote =
+    "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
 
 @Composable
 @Preview
@@ -286,23 +357,12 @@ fun CalendarPagerCard(
             )
 
             Spacer(Modifier.height(12.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(32.dp)
-                        .height(4.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
-                )
-            }
+            DragHandle()
         }
     }
 }
 
+// TODO: Решить проблему с пустыми строками
 @Composable
 fun CalendarGrid(
     pagerState: PagerState,
@@ -314,10 +374,12 @@ fun CalendarGrid(
     onMonthChanged: (year: Int, month: Month) -> Unit
 ) {
     val today = remember { LocalDate.now() }
+    val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
     LaunchedEffect(pagerState.currentPage) {
         val offset = (pagerState.currentPage - startPage)
-        val newDate = LocalDate.of(currentDate.year, currentDate.month, 1).plusMonths(offset.toLong())
+        val newDate =
+            LocalDate.of(currentDate.year, currentDate.month, 1).plusMonths(offset.toLong())
         onMonthChanged(newDate.year, newDate.month)
     }
 
@@ -327,26 +389,43 @@ fun CalendarGrid(
         pagerState.animateScrollBy(value = 20f, animationSpec = tween(400))
     }
 
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val cellsSize = maxWidth / 7
-        val calendarHeight = cellsSize * 6 + 8.dp
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            dayLabels.forEach { label ->
+                Text(
+                    text = label,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            val cellsSize = maxWidth / 7
+            val calendarHeight = cellsSize * 6
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(calendarHeight)
-        ) { page ->
-            val offset = page - startPage
-            val pageDate = LocalDate.of(today.year, today.month, 1).plusMonths(offset.toLong())
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(calendarHeight),
+                verticalAlignment = Alignment.Top
+            ) { page ->
+                val offset = page - startPage
+                val pageDate = LocalDate.of(today.year, today.month, 1).plusMonths(offset.toLong())
 
-            CalendarMonthPage(
-                year = pageDate.year,
-                month = pageDate.month,
-                moodMap = moodMap,
-                selectedDate = selectedDate,
-                onDateClick = onDateClick
-            )
+                CalendarMonthPage(
+                    year = pageDate.year,
+                    month = pageDate.month,
+                    moodMap = moodMap,
+                    selectedDate = selectedDate,
+                    onDateClick = onDateClick
+                )
+            }
         }
     }
 
@@ -363,22 +442,8 @@ fun CalendarMonthPage(
     val firstDay = LocalDate.of(year, month, 1)
     val offset = firstDay.dayOfWeek.value - 1
     val daysInMonth = firstDay.lengthOfMonth()
-    val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            dayLabels.forEach { label ->
-                Text(
-                    text = label,
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center,
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        }
-        Spacer(Modifier.height(8.dp))
-
         val rows = (offset + daysInMonth + 6) / 7
 
         repeat(rows) { row ->
@@ -416,7 +481,10 @@ fun CalendarMonthPage(
                                         width = 1.dp,
                                         color = when {
                                             isSelected -> MaterialTheme.colorScheme.primary
-                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
+                                                alpha = 0.2f
+                                            )
+
                                             else -> Color.Transparent
                                         },
                                         shape = CircleShape

@@ -86,6 +86,7 @@ private fun ProfileScreenPreview() {
             totalEntries = 64,
             currentStreak = 27,
             longestStreak = 36,
+            onYearlyStatsClick = {}
         )
     }
 }
@@ -95,6 +96,7 @@ fun ProfileScreen(
     totalEntries: Int,
     currentStreak: Int,
     longestStreak: Int,
+    onYearlyStatsClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -133,7 +135,7 @@ fun ProfileScreen(
         Spacer(Modifier.height(8.dp))
         YearlyStatsCard(
             percentage = 67,
-            onClick = {},
+            onClick = onYearlyStatsClick,
             modifier = Modifier.fillMaxWidth()
         )
 
