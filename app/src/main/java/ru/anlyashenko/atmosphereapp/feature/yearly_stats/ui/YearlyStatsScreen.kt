@@ -101,25 +101,25 @@ fun YearlyStatsScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 7.dp)
     ) {
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         YearHeaderCard(
             displayYear = displayYear,
             percentage = percentage
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         YearlyStatsPagerCard(
             pagerState = pagerState,
             availableYears = availableYears,
             moodMap = moodMap
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         TopMoodsCard(
             year = displayYear,
             moodMap = moodMap,
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         YearlyStatsCards(
             year = displayYear,
             moodMap = moodMap,
@@ -127,7 +127,6 @@ fun YearlyStatsScreen(
     }
 
 }
-
 
 
 @Composable
@@ -229,7 +228,7 @@ fun YearHeaderCard(displayYear: Int, percentage: Int) {
             Text(
                 text = displayYear.toString(),
                 fontSize = 64.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSecondary
             )
             Text(
@@ -266,35 +265,21 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
-
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
-        color = MaterialTheme.colorScheme.surface
-    ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 27.dp)) {
+    Column() {
+        if (topMoods.isEmpty()) {
             Text(
-                text = "Самые частые эмоции",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = 20.dp)
+                text = "Пока мало данных для этого года",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             )
-            if (topMoods.isEmpty()) {
-                Text(
-                    text = "Пока мало данных для этого года",
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+        } else {
+            topMoods.forEachIndexed { index, (color, percentage) ->
+                EmotionProgressBar(
+                    color = color,
+                    percentage = percentage,
                 )
-            } else {
-                topMoods.forEachIndexed { index, (color, percentage) ->
-                    EmotionProgressBar(
-                        color = color,
-                        percentage = percentage,
-                    )
-                    if (index < topMoods.lastIndex) {
-                        Spacer(Modifier.height(8.dp))
-                    }
+                if (index < topMoods.lastIndex) {
+                    Spacer(Modifier.height(6.dp))
                 }
             }
         }
@@ -341,8 +326,8 @@ fun EmotionProgressBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(118.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .height(165.dp)
+            .clip(RoundedCornerShape(30.dp))
             .background(lightBackgroundColor)
     ) {
         if (animatedFraction > 0f) {
@@ -363,13 +348,13 @@ fun EmotionProgressBar(
         ) {
             Text(
                 text = "$animatedPercentage%",
-                fontSize = 48.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onPrimary
+                fontSize = 96.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onPrimary,
             )
             Text(
                 text = moodName,
-                fontSize = 16.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onPrimary
             )
@@ -437,7 +422,6 @@ fun YearlyStatsCards(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    lineHeight = 24.sp
                 )
             }
         }
@@ -482,7 +466,7 @@ fun SmallStatCard(
                     text = value,
                     fontSize = 36.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.width(2.dp))
                 Icon(

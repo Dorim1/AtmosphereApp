@@ -277,7 +277,7 @@ fun AverageMoodCard(modifier: Modifier = Modifier) {
             Text(
                 text = "Среднее настроение",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(25.dp))
@@ -358,7 +358,7 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxHeight(1f)
-                                    .width(37.dp)
+                                    .width(42.dp) // 37.dp
                                     .clip(RoundedCornerShape(8.dp))
                                     .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                                     .align(Alignment.BottomCenter)
@@ -366,7 +366,7 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxHeight(animatedHeight)
-                                    .width(37.dp)
+                                    .width(42.dp) // 37.dp
                                     .clip(RoundedCornerShape(8.dp))
                                     .background(stat.color)
                                     .align(Alignment.BottomCenter)
@@ -439,7 +439,7 @@ fun MoodCounterCard(modifier: Modifier = Modifier) {
             Text(
                 text = "Счётчик настроения",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
@@ -622,7 +622,7 @@ fun YearlyStatsCard(
                 text = "Статистика\nза год",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 32.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 32.sp
             )
         }
@@ -713,7 +713,7 @@ fun SettingsCard(
                 text = "Настройки",
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 32.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 32.sp
             )
         }
