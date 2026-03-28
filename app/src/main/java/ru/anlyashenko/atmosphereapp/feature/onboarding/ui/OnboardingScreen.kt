@@ -25,8 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SecondaryGrayLight
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.SecondaryGrayLight
 
 @Composable
 @Preview

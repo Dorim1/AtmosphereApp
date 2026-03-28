@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import ru.anlyashenko.atmosphereapp.core.designsystem.elements.BottomNavigationBar
+import ru.anlyashenko.atmosphereapp.core.design_system.elements.BottomNavigationBar
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarScreen
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote

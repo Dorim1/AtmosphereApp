@@ -1,6 +1,5 @@
-package ru.anlyashenko.atmosphereapp.core.designsystem.theme
+package ru.anlyashenko.atmosphereapp.core.design_system.theme
 
-import android.view.Surface
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)

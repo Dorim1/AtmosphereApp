@@ -56,8 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.anlyashenko.atmosphereapp.core.designsystem.elements.DragHandle
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle

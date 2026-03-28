@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.core.designsystem.theme
+package ru.anlyashenko.atmosphereapp.core.design_system.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

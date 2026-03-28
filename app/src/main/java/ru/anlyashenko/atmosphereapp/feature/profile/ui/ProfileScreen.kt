@@ -48,7 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 
 data class DailyMoodStat(
     val dayName: String,

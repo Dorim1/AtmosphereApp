@@ -1,6 +1,5 @@
 package ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui
 
-import android.widget.Space
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
@@ -46,8 +45,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.anlyashenko.atmosphereapp.core.designsystem.elements.DragHandle
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapping.getLightColorForBackground
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapping.getMoodNameFromColor
