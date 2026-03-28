@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
+import android.graphics.drawable.Icon
+import android.widget.Space
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +38,8 @@ import androidx.compose.material.icons.outlined.SentimentSatisfied
 import androidx.compose.material.icons.outlined.SentimentVeryDissatisfied
 import androidx.compose.material.icons.outlined.SentimentVerySatisfied
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Mood
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetScaffold
@@ -57,13 +62,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,6 +82,10 @@ import ru.anlyashenko.atmosphereapp.core.designsystem.theme.MainTitleColorLight
 import ru.anlyashenko.atmosphereapp.core.designsystem.theme.SecondaryGrayLight
 import ru.anlyashenko.atmosphereapp.data.model.DayUI
 import ru.anlyashenko.atmosphereapp.data.model.MoodUI
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 @Preview
@@ -86,117 +98,61 @@ private fun HomeScreenPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
-    var noteText by remember { mutableStateOf("") }
-    var isNoteMode by remember { mutableStateOf(false) }
+    val weekRecords = remember { getDaysFromMondayToToday() }
 
-    // Блок погоды
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 7.dp)
     ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 7.dp, end = 7.dp, top = 8.dp, bottom = 8.dp),
-            shape = RoundedCornerShape(30.dp),
-            color = MaterialTheme.colorScheme.primary
-        ) {
-            WeatherSection()
-            
-        }
+        Spacer(Modifier.height(6.dp))
+        WeatherCard()
 
-        // Блок недели
-        if (!isNoteMode) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 7.dp, end = 7.dp, top = 0.dp, bottom = 8.dp),
-                shape = RoundedCornerShape(30.dp),
-                color = MaterialTheme.colorScheme.surface,
-                ) {
-                Column(
-                    modifier = Modifier.padding(vertical = 32.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    ) {
-                        // Заголовок недели
-                        Text(
-                            text = stringResource(R.string.home_title_week_section),
-                            style = MaterialTheme.typography.headlineLarge
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            text = "с 9 марта, 2026 по 16 марта, 2026",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                    Spacer(Modifier.height(32.dp))
-                    WeekRow(days = days)
-                }
-            }
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            weekRecords.forEachIndexed { index, record ->
+                val isToday = index == 0
 
-        }
-        // Блок настроений
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 7.dp, end = 7.dp, top = 0.dp, bottom = 8.dp),
-            shape = RoundedCornerShape(30.dp),
-            color = MaterialTheme.colorScheme.surface,
-        ) {
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Spacer(Modifier.height(32.dp))
-                Text(
-                    text = "Мой День",
-                    style = MaterialTheme.typography.headlineLarge
+                DayEntryCard(
+                    record = record,
+                    isToday = isToday
                 )
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    text = "Какое у вас настроение?",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(Modifier.height(16.dp))
 
-                if (!isNoteMode) {
-                    MoodColumn(moods = systemMoods, onMoodSelected = {})
-                    AddNoteDayItem(onClick = { isNoteMode = true })
-                    Spacer(Modifier.height(18.dp))
-
-                } else {
-                    NoteTextField(
-                        value = noteText,
-                        onValueChange = { noteText = it }
+                if (isToday) {
+                    CurrentDayActionRow(
+                        hasMood = record.hasMood,
+                        onMoodClick = {
+                            // TODO: Открыть выбор настроения
+                        },
+                        onNoteClick = {
+                            // TODO: Открыть написание заметки
+                        }
                     )
                 }
             }
         }
-
-        Spacer(Modifier.height(16.dp))
-        FooterSection(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 22.dp),
-            isNoteMode = isNoteMode,
-            onGetInClick = { },
-            onSaveMode = { },
-            onCancel = { isNoteMode = false }
-        )
-
-
-
+        Spacer(Modifier.height(6.dp))
     }
 }
 
 
 @Composable
+fun WeatherCard(
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(30.dp),
+        color = MaterialTheme.colorScheme.primary
+    ) {
+        WeatherSection()
+    }
+}
+@Composable
 fun WeatherSection() {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 28.dp, vertical = 39.dp)
+        modifier = Modifier.padding(horizontal = 28.dp, vertical = 39.dp),
     ) {
         Column() {
             Row(
@@ -231,35 +187,185 @@ fun WeatherSection() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                listOf(
-                    Triple("16:00", painterResource(R.drawable.ic_weather_hail), "+13°"),
-                    Triple("20:00", painterResource(R.drawable.ic_weather_hail), "+9°"),
-                    Triple("00:00", painterResource(R.drawable.ic_cloud), "+3°"),
-                ).forEach { (time, icon, temp) ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(1.dp)
-                    ) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier.size(48.dp)
-                        )
-                        Text(
-                            text = time,
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            fontSize = 16.sp,
-                            lineHeight = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = temp,
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                            fontSize = 14.sp,
-                            lineHeight = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                WeatherHourlyItem("16:00", painterResource(R.drawable.ic_weather_hail), "+13°")
+                WeatherHourlyItem("20:00", painterResource(R.drawable.ic_weather_hail), "+9°")
+                WeatherHourlyItem("00:00", painterResource(R.drawable.ic_cloud), "+3°")
+            }
+        }
+    }
+}
+
+
+@Composable
+fun WeatherHourlyItem(
+    time: String,
+    icon: Painter,
+    temp: String,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(1.dp)
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.size(48.dp)
+        )
+        Text(
+            text = time,
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontSize = 16.sp,
+            lineHeight = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Text(
+            text = temp,
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontSize = 14.sp,
+            lineHeight = 14.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+
+    }
+}
+
+@Composable
+fun CurrentDayActionRow(
+    hasMood: Boolean,
+    onMoodClick:() -> Unit,
+    onNoteClick:() -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(158.dp), // TODO: Всегда форма квадрата
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        Surface(
+            modifier = Modifier
+                .weight(1.5f)
+                .fillMaxHeight(),
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.primary,
+            onClick = onMoodClick
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = if (hasMood) "Изменить\nнастроение" else "Выбрать\nнастроение",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Normal
+                )
+
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(48.dp)
+                )
+
+            }
+        }
+
+        Surface(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.secondary,
+            onClick = onNoteClick
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Rounded.Edit,
+                    contentDescription = "Добавить заметку",
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.size(82.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DayEntryCard(
+    record: DailyRecord,
+    isToday: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale("ru"))
+    val formatterMonth = DateTimeFormatter.ofPattern("MMM", Locale("ru"))
+
+    val dayOfWeek = record.date.format(formatterDayOfWeek).replaceFirstChar { it.uppercase() }
+    val dayOfMonth = record.date.dayOfMonth.toString().padStart(2, '0')
+    val month = record.date.format(formatterMonth).uppercase()
+
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(30.dp),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column() {
+                Text(
+                    text = dayOfWeek,
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = dayOfMonth,
+                    fontSize = 82.sp,
+                    lineHeight = 82.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = month,
+                    fontSize = 82.sp,
+                    lineHeight = 82.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
+
+                )
+            }
+
+            Column(horizontalAlignment = Alignment.End) {
+                if (isToday && !record.hasMood) {
+                    Text(
+                        text = "Как прошёл ваш день?",
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.onSurface,
+//                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Start
+
+                    )
+                } else {
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        if (record.hasNote) {
+                            Icon(
+                                imageVector = Icons.Rounded.Edit,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                        if (record.hasMood) {
+                            Icon(
+                                imageVector = Icons.Rounded.Mood,
+                                contentDescription = null,
+                                tint = Color(0xFF8AA232),
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -267,64 +373,33 @@ fun WeatherSection() {
     }
 }
 
-@Composable
-fun NoteTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit,
-    maxLength: Int = 250,
-) {
+// todo: Удалить
+data class DailyRecord(
+    val date: LocalDate,
+    val hasMood: Boolean = false,
+    val hasNote: Boolean = false,
+)
 
-    val isOverLimit = value.length >= maxLength
-    val borderColor by animateColorAsState(
-        targetValue = if (isOverLimit) Color.Red else SecondaryGrayLight,
-        label = "borderColor"
-    )
+fun getDaysFromMondayToToday(): List<DailyRecord> {
+    val today = LocalDate.now()
+    val monday = today.with(DayOfWeek.MONDAY)
 
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 200.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .border(2.dp, borderColor, RoundedCornerShape(30.dp))
-    ) {
-        BasicTextField(
-            value = value,
-            onValueChange = { if (it.length <= maxLength) onValueChange(it) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = 60.dp),
-            textStyle = TextStyle(
-                fontSize = 14.sp,
-                color = MainTitleColorLight
-            ),
-            decorationBox = { innerTextField ->
-                if (value.isEmpty()) {
-                    Text(
-                        text = "Напишите как прошёл ваш день",
-                        fontSize = 14.sp,
-                        color = MainTitleColorLight.copy(alpha = 0.5f)
-                    )
-                }
-                innerTextField()
-            }
+    val daysList = mutableListOf<DailyRecord>()
+    var currentDate = today
+
+    while (!currentDate.isBefore(monday)) {
+        daysList.add(
+            DailyRecord(
+                date = currentDate,
+                hasMood = currentDate != today,
+                hasNote = currentDate.dayOfMonth % 2 == 0
+            )
         )
-
-        Text(
-            text = "${value.length} / $maxLength",
-            fontSize = 10.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = if (isOverLimit) Color.Red else MainTitleColorLight.copy(alpha = 0.3f),
-            lineHeight = 10.sp,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(horizontal = 24.dp, vertical = 20.dp)
-        )
-
+        currentDate = currentDate.minusDays(1)
     }
+    return daysList
 }
 
-// todo: Удалить
 val days = listOf(
     DayUI(9, "марта", DayState.Last),
     DayUI(10, "марта", DayState.Last),
@@ -344,188 +419,4 @@ val systemMoods = listOf(
     MoodUI(5, "Ужасно", Color(0xFFFFD1DC), Icons.Outlined.SentimentVeryDissatisfied)
 )
 
-@Composable
-fun WeekRow(days: List<DayUI>) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(26.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
-    ) {
-        items(days) { day ->
-            DayListItem(
-                day = day.number,
-                month = day.month,
-                state = day.state,
-                onClick = { }
-            )
-        }
-    }
-}
 
-@Composable
-fun MoodColumn(
-    moods: List<MoodUI>,
-    onMoodSelected: (MoodUI) -> Unit
-) {
-    var selectedMooId by remember { mutableStateOf<Int?>(null) }
-    var moodToEdit by remember { mutableStateOf<MoodUI?>(null) }
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(26.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                top = 4.dp,
-                bottom = 23.dp
-            )
-    ) {
-        moods.forEach { mood ->
-            MoodListItem(
-                mood = mood,
-                isSelected = selectedMooId == mood.id,
-                onClick = {
-                    selectedMooId = mood.id
-                    onMoodSelected(mood)
-                },
-                onEdit = {
-                    moodToEdit = mood
-                }
-            )
-        }
-    }
-
-    moodToEdit?.let { mood ->
-        AlertDialog(
-            onDismissRequest = { moodToEdit = null },
-            title = { Text(text = "Редактировать настроение") },
-            text = { Text(text = "Здесь будут настройки для ${mood.title}") },
-            confirmButton = {
-                TextButton(onClick = {
-                    // todo: Сохранить изменения
-                    moodToEdit = null
-                }) {
-                    Text("Сохранить")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    moodToEdit = null
-                }) { Text("Отмена") }
-            }
-        )
-    }
-}
-
-@Composable
-fun FooterSection(
-    modifier: Modifier = Modifier,
-    isNoteMode: Boolean = false,
-    onGetInClick: () -> Unit,
-    onSaveMode: () -> Unit = {},
-    onCancel: () -> Unit
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 23.dp),
-        horizontalArrangement = if (isNoteMode) Arrangement.spacedBy(11.dp) else Arrangement.Center
-    ) {
-        if (isNoteMode) {
-            Button(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(50.dp),
-                onClick = onCancel,
-                shape = RoundedCornerShape(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = SecondaryGrayLight,
-                    contentColor = MainTitleColorLight
-                )
-            ) {
-                Text(
-                    text = "Отмена",
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-
-            Button(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(50.dp),
-                onClick = onSaveMode,
-                shape = RoundedCornerShape(50.dp),
-            ) {
-                Text(
-                    text = "Добавить",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        } else {
-            Button(
-                modifier = Modifier.size(200.dp, 50.dp),
-                onClick = onGetInClick,
-                shape = RoundedCornerShape(50.dp),
-            ) {
-                Text(
-                    text = "Сохранить",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-        }
-
-    }
-
-}
-
-@Composable
-fun AddNoteDayItem(onClick: () -> Unit) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() },
-                onClick = onClick
-            ),
-        shape = RoundedCornerShape(16.dp),
-        color = Color.White,
-        border = BorderStroke(2.dp, SecondaryGrayLight)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 88.dp)
-                .padding(horizontal = 19.dp, vertical = 23.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column() {
-                Text(
-                    text = "Создать заметку",
-                    fontSize = 20.sp,
-                    color = MainTitleColorLight
-                )
-                Text(
-                    text = "Как прошёл день (необязательно)",
-                    fontSize = 15.sp,
-                    color = MainTitleColorLight.copy(alpha = 0.5f)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-        }
-    }
-}
