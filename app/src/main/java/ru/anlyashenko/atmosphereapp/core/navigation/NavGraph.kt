@@ -17,6 +17,7 @@ import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
+import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 import java.time.LocalDate
 
@@ -79,6 +80,9 @@ fun AppNavigation() {
                         longestStreak = 36,
                         onYearlyStatsClick = {
                             navController.navigate(Destinations.YearlyStatsRoute)
+                        },
+                        onSettingsClick = {
+                            navController.navigate(Destinations.SettingsRoute)
                         }
                     )
                 }
@@ -86,6 +90,14 @@ fun AppNavigation() {
                 composable<Destinations.YearlyStatsRoute> {
                     YearlyStatsScreen(
                         moodMap = mockMoodMap
+                    )
+                }
+                
+                composable<Destinations.SettingsRoute> {
+                    SettingsScreen(
+                        onBackClick = {
+                            navController.popBackStack()
+                        }
                     )
                 }
             }
