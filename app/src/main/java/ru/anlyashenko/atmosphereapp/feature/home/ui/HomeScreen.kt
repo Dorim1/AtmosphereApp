@@ -65,6 +65,7 @@ fun HomeScreen() {
     val weekRecords = remember { getDaysFromMondayToToday() }
 
     var showMoodSheet by remember { mutableStateOf(false) }
+    var showNoteDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -92,7 +93,7 @@ fun HomeScreen() {
                             showMoodSheet = true
                         },
                         onNoteClick = {
-                            // TODO: Открыть написание заметки
+                            showNoteDialog = true
                         }
                     )
                     if (showMoodSheet) {
@@ -101,6 +102,16 @@ fun HomeScreen() {
                             onMoodSelected = { selectedMood ->
                                 // TODO: Передать в ViewModel
                                 println("Выбрано настроение: ${selectedMood.title}")
+                            }
+                        )
+                    }
+
+                    if (showNoteDialog) {
+                        AddNoteDialog(
+                            onDismiss = { showNoteDialog = false },
+                            onSave = { savedText ->
+                                // TODO: Сохранять в БД
+                                println("Сохранённый текст: $savedText")
                             }
                         )
                     }
@@ -159,7 +170,9 @@ fun WeatherSection() {
             Spacer(Modifier.height(44.dp))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 13.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 WeatherHourlyItem("16:00", painterResource(R.drawable.ic_weather_hail), "+13°")
