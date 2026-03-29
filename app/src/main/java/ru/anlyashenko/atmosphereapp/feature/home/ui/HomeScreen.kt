@@ -63,6 +63,7 @@ private fun HomeScreenPreview() {
 @Composable
 fun HomeScreen() {
     val weekRecords = remember { getDaysFromMondayToToday() }
+
     var showMoodSheet by remember { mutableStateOf(false) }
 
     Column(

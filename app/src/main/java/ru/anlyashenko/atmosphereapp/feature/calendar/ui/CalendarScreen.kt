@@ -246,6 +246,15 @@ fun DayNoteSection(
     selectedDate: LocalDate,
     onDelete: () -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        DeleteConfirmationDialog(
+            onDismiss = { showDeleteDialog = false },
+            onConfirm = onDelete
+        )
+    }
+
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(
             text = "Ваша запись в этот день: ${selectedDate.dayOfMonth} ${
@@ -279,7 +288,9 @@ fun DayNoteSection(
         }
         Spacer(Modifier.height(32.dp))
         Button(
-            onClick = onDelete,
+            onClick = {
+                showDeleteDialog = true
+            },
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(end = 9.dp, bottom = 9.dp),
@@ -290,7 +301,8 @@ fun DayNoteSection(
         ) {
             Text(
                 text = "Удалить",
-                style = MaterialTheme.typography.labelLarge
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal
             )
         }
     }
