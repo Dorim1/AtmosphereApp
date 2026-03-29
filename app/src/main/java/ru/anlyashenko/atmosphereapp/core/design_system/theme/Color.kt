@@ -53,8 +53,7 @@ val SubtitleBlackColorDark = Color(0xFFEBEBEB)
 val SecondaryDarkLight = Color(0xFF2B2B2B)
 val SecondaryGrayLight = Color(0xFFEBEBEB)
 
-val LinearGradient1 = Color(0xFF607AFF)
-val LinearGradient2 = Color(0xFF9CACFE)
+val WarningRed = Color(0xFFE60023)
 
 
 
