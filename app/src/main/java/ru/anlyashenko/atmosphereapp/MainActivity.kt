@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import ru.anlyashenko.atmosphereapp.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {

@@ -70,6 +70,7 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.kotlinx.serialization)
     implementation(libs.material.icons)
+    implementation(libs.androidx.compose.foundation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

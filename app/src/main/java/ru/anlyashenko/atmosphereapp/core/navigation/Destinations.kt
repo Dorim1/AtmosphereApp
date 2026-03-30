@@ -3,15 +3,20 @@ package ru.anlyashenko.atmosphereapp.core.navigation
 import kotlinx.serialization.Serializable
 
 
-sealed class Destinations(val route: String) {
+sealed class Destinations {
     @Serializable
-    object IntroRoute
+    data object IntroRoute
     @Serializable
-    object HomeRoute
+    data object HomeRoute
 
     @Serializable
-    object CalendarRoute
+    data object CalendarRoute
 
     @Serializable
-    object UserRoute
+    data object UserRoute
+
+    @Serializable
+    data object YearlyStatsRoute
+    @Serializable
+    data object SettingsRoute
 }

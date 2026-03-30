@@ -40,7 +40,7 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
-
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 
 
 [plugins]
