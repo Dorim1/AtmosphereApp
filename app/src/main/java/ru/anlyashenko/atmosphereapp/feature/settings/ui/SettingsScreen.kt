@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CropFree
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.InsertEmoticon
+import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Palette
@@ -68,7 +69,7 @@ fun SettingsScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 24.dp),
+                .padding(top = 48.dp, bottom = 34.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -89,13 +90,11 @@ fun SettingsScreen(
             )
         }
 
-        SectionHeader(text = "Основные")
-        Spacer(modifier = Modifier.height(12.dp))
 
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(13.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
                 title = "Уведомления",
@@ -112,11 +111,10 @@ fun SettingsScreen(
                 onClick = { }
             )
         }
-
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(12.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(13.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
                 title = "Палитра",
@@ -133,10 +131,10 @@ fun SettingsScreen(
                 onClick = { }
             )
         }
-        Spacer(Modifier.height(5.dp))
+        Spacer(Modifier.height(12.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(13.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
                 title = "Настроения",
@@ -145,16 +143,18 @@ fun SettingsScreen(
                 modifier = Modifier.weight(1f),
                 onClick = { }
             )
-            Spacer(Modifier.weight(1f))
+            SettingsItemCard(
+                title = "Язык",
+                subtitle = "Русский",
+                icon = Icons.Outlined.Language,
+                modifier = Modifier.weight(1f),
+                onClick = { }
+            )
         }
-        Spacer(Modifier.height(32.dp))
-
-        SectionHeader(text = "Дополнительно")
-        Spacer(modifier = Modifier.height(12.dp))
-
+        Spacer(Modifier.height(12.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(13.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
                 title = "О приложении",
@@ -168,16 +168,6 @@ fun SettingsScreen(
         Spacer(Modifier.height(48.dp))
 
     }
-}
-
-@Composable
-fun SectionHeader(text: String) {
-    Text(
-        text = text,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Medium,
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
-    )
 }
 
 @Composable
