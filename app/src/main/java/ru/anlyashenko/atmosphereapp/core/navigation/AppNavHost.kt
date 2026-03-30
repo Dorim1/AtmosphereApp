@@ -1,5 +1,10 @@
 package ru.anlyashenko.atmosphereapp.core.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -30,9 +35,14 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Destination.IntroRoute
+        startDestination = Destination.IntroRoute,
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(300)) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(300)) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(300)) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(300)) },
+        modifier = modifier
     ) {
-        composable<Destination.IntroRoute> {
+        composable<Destination.IntroRoute>() {
             IntroScreen(
                 onGetInClick = {
                     navHostController.navigate(Destination.HomeRoute) {
@@ -42,12 +52,22 @@ fun AppNavHost(
             )
         }
 
-        composable<Destination.HomeRoute> {
+        composable<Destination.HomeRoute>(
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None }
+        ) {
             HomeScreen()
         }
 
         // Мок-данные
-        composable<Destination.CalendarRoute> {
+        composable<Destination.CalendarRoute>(
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None }
+        ) {
             CalendarScreen(
                 selectedDate = LocalDate.of(2026, 3, 11),
                 moodMap = mockMoodMap,
@@ -57,7 +77,12 @@ fun AppNavHost(
             )
         }
 
-        composable<Destination.UserRoute> {
+        composable<Destination.UserRoute>(
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None }
+        ) {
             ProfileScreen(
                 totalEntries = 64,
                 currentStreak = 27,

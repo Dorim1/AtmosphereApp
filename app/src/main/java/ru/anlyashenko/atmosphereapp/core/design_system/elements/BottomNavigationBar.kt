@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.elements
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -105,22 +107,28 @@ fun NavigationBar2(modifier: Modifier = Modifier) {
 
     val showBottomBar = currentDestination?.hierarchy?.any { dest ->
         dest.hasRoute(Destination.HomeRoute::class) ||
-        dest.hasRoute(Destination.CalendarRoute::class) ||
-        dest.hasRoute(Destination.UserRoute::class)
+                dest.hasRoute(Destination.CalendarRoute::class) ||
+                dest.hasRoute(Destination.UserRoute::class)
     } == true
-
-    val selectedNavigationIndex = rememberSaveable() { mutableIntStateOf(0) }
 
     Scaffold(
         modifier = modifier,
         bottomBar = {
             if (showBottomBar) {
-                NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
-                    bottomNavItems.forEachIndexed { index, destination ->
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    windowInsets = NavigationBarDefaults.windowInsets,
+                    modifier = modifier.height(67.dp
+                    )
+                ) {
+                    bottomNavItems.forEach { destination ->
+                        val isSelected = currentDestination.hierarchy.any {
+                            it.hasRoute(destination.route::class)
+                        }
+
                         NavigationBarItem(
-                            selected = selectedNavigationIndex.intValue == index,
+                            selected = isSelected,
                             onClick = {
-                                selectedNavigationIndex.intValue = index
                                 navController.navigate(destination.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
@@ -149,7 +157,7 @@ fun NavigationBar2(modifier: Modifier = Modifier) {
     ) { contentPadding ->
         AppNavHost(
             navHostController = navController,
-            modifier = Modifier.padding(contentPadding)
+            modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding())
         )
     }
 }
