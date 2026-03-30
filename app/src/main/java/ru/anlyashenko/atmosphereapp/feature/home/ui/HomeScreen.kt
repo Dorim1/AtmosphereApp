@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -227,11 +228,11 @@ fun CurrentDayActionRow(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .height(158.dp), // TODO: Всегда форма квадрата
+            .fillMaxWidth(),
+//            .height(158.dp), // TODO: Всегда форма квадрата
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        Surface(
+        /*Surface(
             modifier = Modifier
                 .weight(1.5f)
                 .fillMaxHeight(),
@@ -274,6 +275,66 @@ fun CurrentDayActionRow(
                     contentDescription = "Добавить заметку",
                     tint = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.size(82.dp)
+                )
+            }
+        }*/
+
+        Surface(
+            onClick = onMoodClick,
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .weight(1f)
+                .aspectRatio(1f)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_add_mood),
+                    contentDescription = "Выбрать настроение",
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(102.dp)
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = if (hasMood) "Изменить\nнастроение" else "Выбрать\nнастроение",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 24.sp
+                )
+            }
+        }
+
+        Surface(
+            onClick = onNoteClick,
+            shape = RoundedCornerShape(30.dp),
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier
+                .weight(1f)
+                .aspectRatio(1f)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_edit),
+                    contentDescription = "Выбрать настроение",
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.size(102.dp)
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = "Добавить\nзапись",
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 24.sp
                 )
             }
         }

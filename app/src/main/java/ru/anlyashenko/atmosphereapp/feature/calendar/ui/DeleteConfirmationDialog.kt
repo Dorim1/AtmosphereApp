@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ru.anlyashenko.atmosphereapp.R
 
 @Composable
 fun DeleteConfirmationDialog(
@@ -48,7 +50,7 @@ fun DeleteConfirmationDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.DeleteOutline,
+                    painter = painterResource(R.drawable.ic_warning),
                     contentDescription = "Внимание",
                     tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier.size(82.dp)
@@ -62,6 +64,7 @@ fun DeleteConfirmationDialog(
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
+                Spacer(Modifier.height(4.dp))
                 Text(
                     text = "Отменить это действие будет невозможно",
                     fontSize = 14.sp,
@@ -73,7 +76,7 @@ fun DeleteConfirmationDialog(
                 Spacer(Modifier.height(24.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
                         onClick = onDismiss,
@@ -88,8 +91,10 @@ fun DeleteConfirmationDialog(
                     ) {
                         Text(
                             text = "Нет, оставить",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Medium,
+                            textAlign = TextAlign.Center
+
                         )
                     }
                     Button(
@@ -108,8 +113,9 @@ fun DeleteConfirmationDialog(
                     ) {
                         Text(
                             text = "Да, удалить",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Medium,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }

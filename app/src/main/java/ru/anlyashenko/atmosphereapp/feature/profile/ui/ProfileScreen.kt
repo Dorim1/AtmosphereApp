@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -114,11 +115,11 @@ fun ProfileScreen(
         ) {
             TotalMarkCard(
                 totalEntries,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).aspectRatio(1f)
             )
             CurrentStreakCard(
                 longestStreak,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).aspectRatio(1f)
             )
         }
 
@@ -176,16 +177,16 @@ fun TotalMarkCard(
                 Text(
                     text = "Всего\nОтметок",
                     color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 16.sp,
-                    lineHeight = 16.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontSize = 20.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Medium
                 )
             }
             Text(
                 text = total.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 96.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 96.sp,
             )
         }
@@ -216,16 +217,16 @@ fun CurrentStreakCard(
                 Text(
                     text = "Дней\nподряд",
                     color = MaterialTheme.colorScheme.onSecondary,
-                    fontSize = 16.sp,
-                    lineHeight = 16.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontSize = 20.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight.Medium
                 )
             }
             Text(
                 text = total.toString(),
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 96.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 96.sp
             )
         }
@@ -251,7 +252,7 @@ fun LongestStreakCard(
                 text = currentStreak.toString(),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 96.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 96.sp
             )
             Spacer(Modifier.width(44.dp))
@@ -259,7 +260,7 @@ fun LongestStreakCard(
                 text = "Самая длинная\nсерия",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 lineHeight = 24.sp
             )
         }
@@ -448,7 +449,7 @@ fun MoodCounterCard(modifier: Modifier = Modifier) {
             Text(
                 text = totalCount.toString(),
                 fontSize = 96.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
