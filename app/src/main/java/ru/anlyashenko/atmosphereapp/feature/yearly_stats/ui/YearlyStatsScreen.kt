@@ -94,7 +94,7 @@ fun YearlyStatsScreen(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
@@ -123,6 +123,7 @@ fun YearlyStatsScreen(
             year = displayYear,
             moodMap = moodMap,
         )
+        Spacer(Modifier.height(6.dp))
     }
 
 }

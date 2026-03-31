@@ -147,6 +147,8 @@ fun ProfileScreen(
             onClick = onSettingsClick,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(Modifier.height(8.dp))
+
 
     }
 }

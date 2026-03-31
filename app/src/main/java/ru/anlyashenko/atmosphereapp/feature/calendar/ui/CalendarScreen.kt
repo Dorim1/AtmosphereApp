@@ -211,6 +211,8 @@ fun CalendarScreen(
                 onDelete = onDeleteNote
             )
         }
+        Spacer(Modifier.height(8.dp))
+
     }
 
 }
