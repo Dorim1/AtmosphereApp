@@ -3,7 +3,7 @@ package ru.anlyashenko.atmosphereapp.core.navigation
 import kotlinx.serialization.Serializable
 
 
-sealed class Destinations {
+sealed class Destination {
     @Serializable
     data object IntroRoute
     @Serializable
