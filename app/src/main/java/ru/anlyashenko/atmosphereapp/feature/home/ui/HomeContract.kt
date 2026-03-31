@@ -3,7 +3,7 @@ package ru.anlyashenko.atmosphereapp.feature.home.ui
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
-import ru.anlyashenko.atmosphereapp.domain.model.WeatherUiModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 
 
 data class HomeState(

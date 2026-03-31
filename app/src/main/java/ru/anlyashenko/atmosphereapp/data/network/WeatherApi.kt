@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.data.remote.network
+package ru.anlyashenko.atmosphereapp.data.network
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,7 +1,7 @@
-package ru.anlyashenko.atmosphereapp.domain.model
+package ru.anlyashenko.atmosphereapp.feature.home.models
 
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.data.remote.network.WeatherResponse
+import ru.anlyashenko.atmosphereapp.data.network.WeatherResponse
 import kotlin.math.roundToInt
 
 data class WeatherUiModel(

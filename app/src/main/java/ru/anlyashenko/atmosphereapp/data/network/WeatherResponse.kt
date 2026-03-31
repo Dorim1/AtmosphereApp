@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.data.remote.network
+package ru.anlyashenko.atmosphereapp.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

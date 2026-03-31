@@ -1,12 +1,11 @@
 package ru.anlyashenko.atmosphereapp.data.repository
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import ru.anlyashenko.atmosphereapp.core.dispathchers.DefaultDispatcherProvider
 import ru.anlyashenko.atmosphereapp.core.utils.Result
-import ru.anlyashenko.atmosphereapp.data.remote.network.WeatherApi
-import ru.anlyashenko.atmosphereapp.domain.model.WeatherUiModel
-import ru.anlyashenko.atmosphereapp.domain.model.toUiModel
+import ru.anlyashenko.atmosphereapp.data.network.WeatherApi
+import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.toUiModel
 
 class WeatherRepository( // TODO: DI
     private val api: WeatherApi,
