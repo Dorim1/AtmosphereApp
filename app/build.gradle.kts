@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.material.icons)
     implementation(libs.androidx.compose.foundation)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
