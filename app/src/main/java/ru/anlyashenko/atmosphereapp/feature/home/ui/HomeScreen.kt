@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,11 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.SentimentDissatisfied
-import androidx.compose.material.icons.outlined.SentimentNeutral
-import androidx.compose.material.icons.outlined.SentimentSatisfied
-import androidx.compose.material.icons.outlined.SentimentVeryDissatisfied
-import androidx.compose.material.icons.outlined.SentimentVerySatisfied
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Mood
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -178,7 +172,7 @@ fun WeatherSection() {
             ) {
                 WeatherHourlyItem("16:00", painterResource(R.drawable.ic_weather_hail), "+13°")
                 WeatherHourlyItem("20:00", painterResource(R.drawable.ic_weather_hail), "+9°")
-                WeatherHourlyItem("00:00", painterResource(R.drawable.ic_cloud), "+3°")
+                WeatherHourlyItem("00:00", painterResource(R.drawable.ic_weather_cloudy), "+3°")
             }
         }
     }
