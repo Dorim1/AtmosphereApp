@@ -1,5 +1,11 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,12 +25,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Mood
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,14 +41,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.gms.location.CurrentLocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -50,18 +64,34 @@ import java.util.Locale
 @Preview
 private fun HomeScreenPreview() {
     AtmosphereAppTheme {
-        HomeScreen()
+//        HomeScreen()
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
-    val weekRecords = remember { getDaysFromMondayToToday() }
+fun HomeScreen(
+    viewModel: HomeViewModel // todo: di hilt
+) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var showMoodSheet by remember { mutableStateOf(false) }
-    var showNoteDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        Log.d("Weather", "Permission granted: $isGranted")
+        if (isGranted) {
+            getLocation(context) { lat, lon ->
+                Log.d("Weather", "Location: $lat, $lon")
+                viewModel.setEvent(HomeEvent.LoadWeather(lat, lon))
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,10 +100,13 @@ fun HomeScreen() {
             .padding(horizontal = 7.dp)
     ) {
         Spacer(Modifier.height(6.dp))
-        WeatherCard()
+        WeatherCard(
+            weather = state.weather,
+            isLoading = state.isLoadingWeather
+        )
 
         Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            weekRecords.forEachIndexed { index, record ->
+            state.weekRecords.forEachIndexed { index, record ->
                 val isToday = index == 0
 
                 DayEntryCard(
@@ -85,53 +118,75 @@ fun HomeScreen() {
                     CurrentDayActionRow(
                         hasMood = record.hasMood,
                         onMoodClick = {
-                            showMoodSheet = true
+                            viewModel.setEvent(HomeEvent.OnMoodButtonClick)
                         },
                         onNoteClick = {
-                            showNoteDialog = true
+                            viewModel.setEvent(HomeEvent.OnNoteButtonClick)
                         }
                     )
-                    if (showMoodSheet) {
-                        MoodSelectionBottomSheet(
-                            onDismissRequest = { showMoodSheet = false },
-                            onMoodSelected = { selectedMood ->
-                                // TODO: Передать в ViewModel
-                                println("Выбрано настроение: ${selectedMood.title}")
-                            }
-                        )
-                    }
-
-                    if (showNoteDialog) {
-                        AddNoteDialog(
-                            onDismiss = { showNoteDialog = false },
-                            onSave = { savedText ->
-                                // TODO: Сохранять в БД
-                                println("Сохранённый текст: $savedText")
-                            }
-                        )
-                    }
                 }
             }
         }
         Spacer(Modifier.height(6.dp))
     }
+
+    if (state.showMoodSheet) {
+        MoodSelectionBottomSheet(
+            onDismissRequest = { viewModel.setEvent(HomeEvent.DismissDialogs) },
+            onMoodSelected = { selectedMood ->
+                viewModel.setEvent(HomeEvent.OnMoodSelected(selectedMood.id))
+            }
+        )
+    }
+
+    if (state.showNoteDialog) {
+        AddNoteDialog(
+            onDismiss = { viewModel.setEvent(HomeEvent.DismissDialogs) },
+            onSave = { savedText ->
+                viewModel.setEvent(HomeEvent.OnSaveNote(savedText))
+            }
+        )
+    }
 }
+
 
 
 @Composable
 fun WeatherCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    weather: WeatherUiModel?,
+    isLoading: Boolean
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(30.dp),
         color = MaterialTheme.colorScheme.primary
     ) {
-        WeatherSection()
+        if (isLoading) {
+            Box(
+                modifier = Modifier.padding(vertical = 60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
+            }
+        } else if (weather != null) {
+            WeatherSection(weather = weather)
+        } else {
+            Box(
+                modifier = Modifier.padding(vertical = 60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Нет данных о погоде",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
     }
 }
 @Composable
-fun WeatherSection() {
+fun WeatherSection(weather: WeatherUiModel) {
     Box(
         modifier = Modifier.padding(horizontal = 28.dp, vertical = 39.dp),
     ) {
@@ -143,20 +198,20 @@ fun WeatherSection() {
             ) {
                 Column() {
                     Text(
-                        text = "12°",
+                        text = weather.temperature,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 64.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Дождь со\nснегом",
+                        text = weather.description,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
                 Icon(
-                    painter = painterResource(R.drawable.ic_weather_hail),
+                    painter = painterResource(weather.iconResId),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(120.dp)
@@ -170,9 +225,13 @@ fun WeatherSection() {
                     .padding(horizontal = 13.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                WeatherHourlyItem("16:00", painterResource(R.drawable.ic_weather_hail), "+13°")
-                WeatherHourlyItem("20:00", painterResource(R.drawable.ic_weather_hail), "+9°")
-                WeatherHourlyItem("00:00", painterResource(R.drawable.ic_weather_cloudy), "+3°")
+                weather.hourlyForecast.forEach { hourlyItem ->
+                    WeatherHourlyItem(
+                        time = hourlyItem.time,
+                        icon = painterResource(hourlyItem.iconResId),
+                        temp = hourlyItem.temperature
+                    )
+                }
             }
         }
     }
@@ -223,55 +282,8 @@ fun CurrentDayActionRow(
     Row(
         modifier = modifier
             .fillMaxWidth(),
-//            .height(158.dp), // TODO: Всегда форма квадрата
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        /*Surface(
-            modifier = Modifier
-                .weight(1.5f)
-                .fillMaxHeight(),
-            shape = RoundedCornerShape(30.dp),
-            color = MaterialTheme.colorScheme.primary,
-            onClick = onMoodClick
-        ) {
-            Row(
-                modifier = Modifier.padding(start = 16.dp, end = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_add_mood),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(52.dp)
-                )
-
-                Text(
-                    text = if (hasMood) "Изменить\nнастроение" else "Выбрать\nнастроение",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            }
-        }
-
-        Surface(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight(),
-            shape = RoundedCornerShape(30.dp),
-            color = MaterialTheme.colorScheme.secondary,
-            onClick = onNoteClick
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_edit),
-                    contentDescription = "Добавить заметку",
-                    tint = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier.size(82.dp)
-                )
-            }
-        }*/
 
         Surface(
             onClick = onMoodClick,
@@ -452,5 +464,26 @@ fun getDaysFromMondayToToday(): List<DailyRecord> {
     return daysList
 }
 
+@SuppressLint("MissingPermission")
+fun getLocation(context: Context, onLocation: (Double, Double) -> Unit) {
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+
+    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+        if (location != null) {
+            onLocation(location.latitude, location.longitude)
+        } else {
+            val locationRequest = CurrentLocationRequest.Builder()
+                .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
+                .build()
+
+            fusedLocationClient.getCurrentLocation(locationRequest, null)
+                .addOnSuccessListener { currentLocation ->
+                    currentLocation?.let {
+                        onLocation(it.latitude, it.longitude)
+                    }
+                }
+        }
+    }
+}
 
 

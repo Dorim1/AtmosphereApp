@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.google.play.services.location)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
