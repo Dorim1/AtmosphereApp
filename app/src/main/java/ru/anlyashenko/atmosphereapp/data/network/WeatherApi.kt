@@ -1,5 +1,8 @@
 package ru.anlyashenko.atmosphereapp.data.network
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
@@ -12,6 +15,7 @@ interface WeatherApi {
         @Query("latitude") lat: Double,
         @Query("longitude") lon: Double,
         @Query("current_weather") currentWeather: Boolean = true,
+        @Query("hourly") hourly: String = "temperature_2m,weathercode",
         @Query("timezone") timezone: String = "auto"
     ): WeatherResponse
 }
@@ -19,17 +23,20 @@ interface WeatherApi {
 fun WeatherApi (
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
+    json: Json = Json
 ) : WeatherApi {
-    val retrofit = retrofit(baseUrl, okHttpClient)
-    return retrofit.create()
+    return retrofit(baseUrl, okHttpClient, json).create()
 }
 
 private fun retrofit(
     baseUrl: String,
-    okHttpClient: OkHttpClient? = null,
+    okHttpClient: OkHttpClient?,
+    json: Json
 ) : Retrofit {
+    val contentType = "application/json".toMediaType()
     return Retrofit.Builder()
         .baseUrl(baseUrl)
+        .addConverterFactory(json.asConverterFactory(contentType))
         .run { if (okHttpClient != null) client(okHttpClient) else this }
         .build()
 

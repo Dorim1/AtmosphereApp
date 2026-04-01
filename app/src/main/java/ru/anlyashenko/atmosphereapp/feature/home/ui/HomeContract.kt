@@ -11,6 +11,8 @@ data class HomeState(
     val weather: WeatherUiModel? = null,
     val isLoadingWeather: Boolean = false,
 
+    val weekRecords: List<DailyRecord> = emptyList(),
+
     // Данные текущего дня
     val currentDayRecord: DailyRecord? = null,
     val isRecordLoading: Boolean = false,
@@ -18,23 +20,21 @@ data class HomeState(
     // Состояние окон
     val showMoodSheet: Boolean = false,
     val showNoteDialog: Boolean = false,
+
 ): UiState
 
-sealed class HomeEvent : UiEvent {
-    data class LoadWeather(val lat: Double, val lon: Double) : HomeEvent()
+sealed interface HomeEvent : UiEvent {
+    data class LoadWeather(val lat: Double, val lon: Double) : HomeEvent
 
-    object OnMoodButtonClick : HomeEvent()
+    object OnMoodButtonClick : HomeEvent
+    object OnNoteButtonClick : HomeEvent
+    object DismissDialogs : HomeEvent
 
-    data class OnMoodSelected(val moodId: Int) : HomeEvent()
+    data class OnMoodSelected(val moodId: Int) : HomeEvent
+    data class OnSaveNote(val noteText: String) : HomeEvent
 
-    object OnNoteButtonClick : HomeEvent()
-
-    data class OnSaveNote(val noteText: String) : HomeEvent()
-
-    object DismissDialogs : HomeEvent()
 }
 
-sealed class HomeEffect : UiEffect {
-    data class ShowSnackbar(val message: String) : HomeEffect()
-    object NavigationToSettings : HomeEffect()
+sealed interface HomeEffect : UiEffect {
+    data class ShowSnackbar(val message: String) : HomeEffect
 }

@@ -7,14 +7,18 @@ import kotlin.math.roundToInt
 data class WeatherUiModel(
     val temperature: String,
     val description: String,
-    val iconResultId: Int
+    val iconResId: Int,
+    val hourlyForecast: List<HourlyWeatherUiModel>
 )
 
-fun WeatherResponse.toUiModel(): WeatherUiModel {
-    val tempInt = this.currentWeather.temperature.roundToInt()
-    val tempString = if (tempInt > 0) "+$tempInt°" else "$tempInt°" // TODO: МБ -
+data class HourlyWeatherUiModel(
+    val time: String,
+    val temperature: String,
+    val iconResId: Int
+)
 
-    val (desc, icon) = when (this.currentWeather.weatherCode) {
+private fun getWeatherDescAndIcon(weatherCode: Int): Pair<String, Int> {
+    return when (weatherCode) {
         0 -> "Ясно" to R.drawable.ic_weather_clear_sky
         1, 2, 3 -> "Облачно" to R.drawable.ic_weather_partly_cloudy_day
         45, 48 -> "Туман" to R.drawable.ic_weather_foggy
@@ -25,10 +29,30 @@ fun WeatherResponse.toUiModel(): WeatherUiModel {
         96, 99 -> "Град" to R.drawable.ic_weather_hail
         else -> "Неизвестно" to R.drawable.ic_weather_question_mark
     }
+}
+fun WeatherResponse.toUiModel(): WeatherUiModel {
+    val tempInt = this.currentWeather.temperature.roundToInt()
+    val tempString = if (tempInt > 0) "+$tempInt°" else "$tempInt°"
+
+    val (desc, icon) = getWeatherDescAndIcon(this.currentWeather.weatherCode)
+
+    val hourlyList = this.hourly.time.take(3).mapIndexed { index, time ->
+        val temp = this.hourly.temperature[index].roundToInt()
+        val code = this.hourly.weatherCode[index]
+
+        val (_, hourlyIcon) = getWeatherDescAndIcon(code)
+
+        HourlyWeatherUiModel(
+            time = time.takeLast(5),
+            temperature = if (temp > 0) "+$temp°" else "$temp°",
+            iconResId = hourlyIcon
+        )
+    }
 
     return WeatherUiModel(
         temperature = tempString,
         description = desc,
-        iconResultId = icon
+        iconResId = icon,
+        hourlyForecast = hourlyList
     )
 }

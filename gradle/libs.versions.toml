@@ -15,6 +15,7 @@ room = "2.8.4"
 serialization = "1.10.0"
 retrofit = "3.0.0"
 retrofitConverterKotlinxSerialization = "1.0.0"
+gms = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-seria
 material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+google-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "gms" }
 
 
 [plugins]
