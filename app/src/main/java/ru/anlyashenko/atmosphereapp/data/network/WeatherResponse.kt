@@ -17,7 +17,9 @@ data class CurrentWeather(
     @SerialName("temperature")
     val temperature: Double,
     @SerialName("weathercode")
-    val weatherCode: Int
+    val weatherCode: Int,
+    @SerialName("time")
+    val time: String
 )
 
 @Serializable
