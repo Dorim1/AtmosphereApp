@@ -7,11 +7,13 @@ import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
+import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
     override fun createInitialState(): HomeState = HomeState(
@@ -20,7 +22,7 @@ class HomeViewModel @Inject constructor(
 
     override fun handleEvent(event: HomeEvent) {
         when (event) {
-            is HomeEvent.LoadWeather -> fetchWeather(event.lat, event.lon)
+            is HomeEvent.LoadWeather -> fetchWeatherWithLocation()
 
             is HomeEvent.OnMoodButtonClick -> setState { copy(showMoodSheet = true) }
             is HomeEvent.OnNoteButtonClick -> setState { copy(showNoteDialog = true) }
@@ -41,25 +43,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun fetchWeather(lat: Double, lon: Double) {
-        Log.d("Weather", "fetchWeather called: $lat, $lon")
+    private fun fetchWeatherWithLocation() {
         setState { copy(isLoadingWeather = true) }
 
         viewModelScope.launch {
-            when (val result = weatherRepository.getWeather(lat, lon)) {
-                is Result.Success -> {
-                    setState {
-                        copy(
-                            weather = result.data,
-                            isLoadingWeather = false
-                        )
+            val location = locationTracker.getCurrentLocation()
+            Log.d("Weather", "fetchWeather called: ${location?.latitude}, ${location?.longitude}")
+            if (location != null) {
+                when (val result = weatherRepository.getWeather(location.latitude, location.longitude)) {
+                    is Result.Success -> setState { copy(weather = result.data, isLoadingWeather = false) }
+                    is Result.Error -> {
+                        setState { copy(isLoadingWeather = false) }
+                        setEffect { HomeEffect.ShowSnackbar("Не удалось загрузить погоду") }
                     }
                 }
-                is Result.Error -> {
-                    setState { copy(isLoadingWeather = false) }
-                    setEffect { HomeEffect.ShowSnackbar(result.message ?: "Ошибка") }
-                }
+            } else {
+                setState { copy(isLoadingWeather = false) }
+                setEffect { HomeEffect.ShowSnackbar("Нет доступа к геолокации. Проверьте GPS.") }
             }
+
         }
     }
 

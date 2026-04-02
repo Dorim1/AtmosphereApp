@@ -27,18 +27,4 @@ object NetworkModule {
         )
     }
 
-    /*@Provides
-    @Singleton
-    fun provideWeatherRepository(
-        api: WeatherApi,
-        dispatchers: DispatcherProvider
-    ): WeatherRepository {
-        return WeatherRepository(api, dispatchers)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDispatcherProvider() : DispatcherProvider {
-        return DefaultDispatcherProvider()
-    }*/
 }
