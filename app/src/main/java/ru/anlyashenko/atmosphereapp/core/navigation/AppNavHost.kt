@@ -5,23 +5,16 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.createGraph
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.BottomNavigationBar
 import ru.anlyashenko.atmosphereapp.core.dispathchers.DefaultDispatcherProvider
 import ru.anlyashenko.atmosphereapp.data.network.WeatherApi
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
@@ -87,24 +80,7 @@ fun AppNavHost(
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None }
         ) {
-            val viewModel = viewModel<HomeViewModel>(
-                factory = object : ViewModelProvider.Factory {
-                    @Suppress("UNCHECKED_CAST")
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        val api = WeatherApi(
-                            baseUrl = "https://api.open-meteo.com/",
-                            json = Json { ignoreUnknownKeys = true }
-                        )
-                        val dispatchers = DefaultDispatcherProvider()
-                        val repository = WeatherRepository(
-                            api = api,
-                            ioDispatcher = dispatchers
-                        )
-                        return HomeViewModel(weatherRepository = repository) as T
-                    }
-                }
-            )
-            HomeScreen(viewModel = viewModel)
+            HomeScreen()
         }
 
         // Мок-данные
