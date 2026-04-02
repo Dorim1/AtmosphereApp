@@ -1,14 +1,16 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
