@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.CurrentLocationRequest
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import ru.anlyashenko.atmosphereapp.R
@@ -89,63 +90,69 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     }
 
     LaunchedEffect(Unit) {
-        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+//        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        viewModel.setEvent(HomeEvent.LoadWeather(lat = 55.75, lon = 37.61))
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 7.dp)
-    ) {
-        Spacer(Modifier.height(6.dp))
-        WeatherCard(
-            weather = state.weather,
-            isLoading = state.isLoadingWeather
-        )
 
-        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            state.weekRecords.forEachIndexed { index, record ->
-                val isToday = index == 0
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 7.dp)
+        ) {
+            Spacer(Modifier.height(6.dp))
+            WeatherCard(
+                weather = state.weather,
+                isLoading = state.isLoadingWeather
+            )
+            Spacer(Modifier.height(6.dp))
 
-                DayEntryCard(
-                    record = record,
-                    isToday = isToday
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                state.weekRecords.forEachIndexed { index, record ->
+                    val isToday = index == 0
 
-                if (isToday) {
-                    CurrentDayActionRow(
-                        hasMood = record.hasMood,
-                        onMoodClick = {
-                            viewModel.setEvent(HomeEvent.OnMoodButtonClick)
-                        },
-                        onNoteClick = {
-                            viewModel.setEvent(HomeEvent.OnNoteButtonClick)
-                        }
+                    DayEntryCard(
+                        record = record,
+                        isToday = isToday
                     )
+
+                    if (isToday) {
+                        CurrentDayActionRow(
+                            hasMood = record.hasMood,
+                            onMoodClick = {
+                                viewModel.setEvent(HomeEvent.OnMoodButtonClick)
+                            },
+                            onNoteClick = {
+                                viewModel.setEvent(HomeEvent.OnNoteButtonClick)
+                            }
+                        )
+                    }
                 }
             }
+            Spacer(Modifier.height(6.dp))
         }
-        Spacer(Modifier.height(6.dp))
+
+        if (state.showMoodSheet) {
+            MoodSelectionBottomSheet(
+                onDismissRequest = { viewModel.setEvent(HomeEvent.DismissDialogs) },
+                onMoodSelected = { selectedMood ->
+                    viewModel.setEvent(HomeEvent.OnMoodSelected(selectedMood.id))
+                }
+            )
+        }
+
+        if (state.showNoteDialog) {
+            AddNoteDialog(
+                onDismiss = { viewModel.setEvent(HomeEvent.DismissDialogs) },
+                onSave = { savedText ->
+                    viewModel.setEvent(HomeEvent.OnSaveNote(savedText))
+                }
+            )
+        }
     }
 
-    if (state.showMoodSheet) {
-        MoodSelectionBottomSheet(
-            onDismissRequest = { viewModel.setEvent(HomeEvent.DismissDialogs) },
-            onMoodSelected = { selectedMood ->
-                viewModel.setEvent(HomeEvent.OnMoodSelected(selectedMood.id))
-            }
-        )
-    }
-
-    if (state.showNoteDialog) {
-        AddNoteDialog(
-            onDismiss = { viewModel.setEvent(HomeEvent.DismissDialogs) },
-            onSave = { savedText ->
-                viewModel.setEvent(HomeEvent.OnSaveNote(savedText))
-            }
-        )
-    }
 }
 
 
@@ -467,22 +474,22 @@ fun getDaysFromMondayToToday(): List<DailyRecord> {
 fun getLocation(context: Context, onLocation: (Double, Double) -> Unit) {
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-        if (location != null) {
-            onLocation(location.latitude, location.longitude)
-        } else {
-            val locationRequest = CurrentLocationRequest.Builder()
-                .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-                .build()
+    val locationRequest = CurrentLocationRequest.Builder()
+        .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
+        .setMaxUpdateAgeMillis(60_000L)
+        .build()
 
-            fusedLocationClient.getCurrentLocation(locationRequest, null)
-                .addOnSuccessListener { currentLocation ->
-                    currentLocation?.let {
-                        onLocation(it.latitude, it.longitude)
-                    }
-                }
+    fusedLocationClient.getCurrentLocation(locationRequest, null)
+        .addOnSuccessListener { location ->
+            if (location != null) {
+                onLocation(location.latitude, location.longitude)
+            } else {
+                Log.e("Weather", "Location is null")
+            }
         }
-    }
+        .addOnFailureListener { e ->
+            Log.e("Weather", "Location error: ${e.message}")
+        }
 }
 
 

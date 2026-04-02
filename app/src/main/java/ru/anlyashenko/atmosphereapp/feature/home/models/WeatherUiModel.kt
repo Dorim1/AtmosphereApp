@@ -27,7 +27,7 @@ private fun getWeatherDescAndIcon(weatherCode: Int): Pair<String, Int> {
         71, 73, 75, 77 -> "Снег" to R.drawable.ic_weather_snowy
         95 -> "Гроза" to R.drawable.ic_weather_thunderstorm
         96, 99 -> "Град" to R.drawable.ic_weather_hail
-        else -> "Неизвестно" to R.drawable.ic_weather_question_mark
+        else -> "Неизвестно" to R.drawable.ic_weather_question_mark // TODO: Заменить на --
     }
 }
 fun WeatherResponse.toUiModel(): WeatherUiModel {
@@ -36,17 +36,27 @@ fun WeatherResponse.toUiModel(): WeatherUiModel {
 
     val (desc, icon) = getWeatherDescAndIcon(this.currentWeather.weatherCode)
 
-    val hourlyList = this.hourly.time.take(3).mapIndexed { index, time ->
-        val temp = this.hourly.temperature[index].roundToInt()
-        val code = this.hourly.weatherCode[index]
+    val currentIndex = this.hourly.time.indexOf(this.currentWeather.time)
+    val startIndex = if (currentIndex != -1) currentIndex else 0
+    val targetIndices = listOf(startIndex + 4, startIndex + 8, startIndex + 12)
 
-        val (_, hourlyIcon) = getWeatherDescAndIcon(code)
+    val hourlyList = targetIndices.mapNotNull { index ->
+        if (index < this.hourly.time.size) {
+            val timeString = this.hourly.time[index]
+            val temp = this.hourly.temperature[index].roundToInt()
+            val code = this.hourly.weatherCode[index]
 
-        HourlyWeatherUiModel(
-            time = time.takeLast(5),
-            temperature = if (temp > 0) "+$temp°" else "$temp°",
-            iconResId = hourlyIcon
-        )
+            val (_, hourlyIcon) = getWeatherDescAndIcon(code)
+
+            HourlyWeatherUiModel(
+                time = timeString.takeLast(5),
+                temperature = if (temp > 0) "+$temp°" else "$temp°",
+                iconResId = hourlyIcon
+            )
+        } else {
+            null
+        }
+
     }
 
     return WeatherUiModel(
