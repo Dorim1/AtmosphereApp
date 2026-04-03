@@ -71,21 +71,8 @@ private fun HomeScreenPreview() {
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-            viewModel.setEvent(HomeEvent.LoadWeather)
-        }
-    }
-
     LaunchedEffect(Unit) {
-        permissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-            )
-        )
+        viewModel.setEvent(HomeEvent.LoadWeather)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -198,6 +185,12 @@ fun WeatherSection(weather: WeatherUiModel) {
             ) {
                 Column() {
                     Text(
+                        text = weather.cityName,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
                         text = weather.temperature,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 64.sp,
@@ -207,7 +200,7 @@ fun WeatherSection(weather: WeatherUiModel) {
                         text = weather.description,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.Medium
                     )
                 }
                 Icon(

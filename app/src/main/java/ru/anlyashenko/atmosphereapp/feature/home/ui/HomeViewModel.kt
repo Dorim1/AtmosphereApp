@@ -48,9 +48,10 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch {
             val location = locationTracker.getCurrentLocation()
-            Log.d("Weather", "fetchWeather called: ${location?.latitude}, ${location?.longitude}")
+            Log.d("Weather", "fetchWeather called: ${location?.lat}, ${location?.lon}")
             if (location != null) {
-                when (val result = weatherRepository.getWeather(location.latitude, location.longitude)) {
+                val city = location.city ?: "Неизвестный город"
+                when (val result = weatherRepository.getWeather(location.lat, location.lon, city)) {
                     is Result.Success -> setState { copy(weather = result.data, isLoadingWeather = false) }
                     is Result.Error -> {
                         setState { copy(isLoadingWeather = false) }
@@ -59,7 +60,7 @@ class HomeViewModel @Inject constructor(
                 }
             } else {
                 setState { copy(isLoadingWeather = false) }
-                setEffect { HomeEffect.ShowSnackbar("Нет доступа к геолокации. Проверьте GPS.") }
+                setEffect { HomeEffect.ShowSnackbar("Не удалось определить город") }
             }
 
         }

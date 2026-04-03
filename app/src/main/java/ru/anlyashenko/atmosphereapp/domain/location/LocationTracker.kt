@@ -1,7 +1,7 @@
 package ru.anlyashenko.atmosphereapp.domain.location
 
-import android.location.Location
+import ru.anlyashenko.atmosphereapp.domain.model.UserLocation
 
 interface LocationTracker {
-    suspend fun getCurrentLocation(): Location?
+    suspend fun getCurrentLocation(): UserLocation?
 }
