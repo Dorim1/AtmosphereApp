@@ -7,17 +7,14 @@ import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 
 
 data class HomeState(
-    // Данные для погоды
     val weather: WeatherUiModel? = null,
     val isLoadingWeather: Boolean = false,
 
     val weekRecords: List<DailyRecord> = emptyList(),
 
-    // Данные текущего дня
     val currentDayRecord: DailyRecord? = null,
     val isRecordLoading: Boolean = false,
 
-    // Состояние окон
     val showMoodSheet: Boolean = false,
     val showNoteDialog: Boolean = false,
 
