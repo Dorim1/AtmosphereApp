@@ -17,12 +17,12 @@ class WeatherRepository @Inject constructor(
     private val api: WeatherApi,
     @param:IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun getWeather(lat: Double, lon: Double) :Result<WeatherUiModel> {
+    suspend fun getWeather(lat: Double, lon: Double, cityName: String) :Result<WeatherUiModel> {
         return withContext(ioDispatcher) {
             try {
                 val response = api.getCurrentWeather(lat, lon)
                 Log.d("Weather", "Response: $response")
-                Result.Success(response.toUiModel())
+                Result.Success(response.toUiModel(cityName))
             } catch (e: Exception) {
                 Log.e("Weather", "Error: ${e.message}", e)
                 Result.Error(Exception("Не удалось получить погоду"))

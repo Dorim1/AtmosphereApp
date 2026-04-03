@@ -5,6 +5,7 @@ import ru.anlyashenko.atmosphereapp.data.network.WeatherResponse
 import kotlin.math.roundToInt
 
 data class WeatherUiModel(
+    val cityName: String,
     val temperature: String,
     val description: String,
     val iconResId: Int,
@@ -30,7 +31,7 @@ private fun getWeatherDescAndIcon(weatherCode: Int): Pair<String, Int> {
         else -> "Неизвестно" to R.drawable.ic_weather_question_mark // TODO: Заменить на --
     }
 }
-fun WeatherResponse.toUiModel(): WeatherUiModel {
+fun WeatherResponse.toUiModel(cityName: String): WeatherUiModel {
     val tempInt = this.currentWeather.temperature.roundToInt()
     val tempString = if (tempInt > 0) "+$tempInt°" else "$tempInt°"
 
@@ -60,6 +61,7 @@ fun WeatherResponse.toUiModel(): WeatherUiModel {
     }
 
     return WeatherUiModel(
+        cityName = cityName,
         temperature = tempString,
         description = desc,
         iconResId = icon,

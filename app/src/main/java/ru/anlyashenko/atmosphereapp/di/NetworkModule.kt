@@ -5,40 +5,33 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import retrofit2.Retrofit
-import ru.anlyashenko.atmosphereapp.core.dispathchers.DefaultDispatcherProvider
-import ru.anlyashenko.atmosphereapp.core.dispathchers.DispatcherProvider
+import ru.anlyashenko.atmosphereapp.data.network.IpGeoApi
 import ru.anlyashenko.atmosphereapp.data.network.WeatherApi
-import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://api.open-meteo.com/"
+    private const val WEATHER_BASE_URL = "https://api.open-meteo.com/"
+    private const val IP_BASE_URL = "https://ipwhois.app/"
 
     @Provides
     @Singleton
     fun provideWeatherApi(): WeatherApi {
         return WeatherApi(
-            baseUrl = BASE_URL,
+            baseUrl = WEATHER_BASE_URL,
             json = Json { ignoreUnknownKeys = true }
         )
     }
 
-    /*@Provides
-    @Singleton
-    fun provideWeatherRepository(
-        api: WeatherApi,
-        dispatchers: DispatcherProvider
-    ): WeatherRepository {
-        return WeatherRepository(api, dispatchers)
-    }
-
     @Provides
     @Singleton
-    fun provideDispatcherProvider() : DispatcherProvider {
-        return DefaultDispatcherProvider()
-    }*/
+    fun provideIpGeoApi(): IpGeoApi {
+        return IpGeoApi(
+            baseUrl = IP_BASE_URL,
+            json = Json { ignoreUnknownKeys = true }
+        )
+    }
+
 }

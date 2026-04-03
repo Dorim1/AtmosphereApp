@@ -34,9 +34,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +48,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.CurrentLocationRequest
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import ru.anlyashenko.atmosphereapp.R
@@ -75,23 +71,8 @@ private fun HomeScreenPreview() {
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
-
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        Log.d("Weather", "Permission granted: $isGranted")
-        if (isGranted) {
-            getLocation(context) { lat, lon ->
-                Log.d("Weather", "Location: $lat, $lon")
-                viewModel.setEvent(HomeEvent.LoadWeather(lat, lon))
-            }
-        }
-    }
-
     LaunchedEffect(Unit) {
-//        locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-        viewModel.setEvent(HomeEvent.LoadWeather(lat = 55.75, lon = 37.61))
+        viewModel.setEvent(HomeEvent.LoadWeather)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -204,6 +185,12 @@ fun WeatherSection(weather: WeatherUiModel) {
             ) {
                 Column() {
                     Text(
+                        text = weather.cityName,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
                         text = weather.temperature,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 64.sp,
@@ -213,7 +200,7 @@ fun WeatherSection(weather: WeatherUiModel) {
                         text = weather.description,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.Medium
                     )
                 }
                 Icon(

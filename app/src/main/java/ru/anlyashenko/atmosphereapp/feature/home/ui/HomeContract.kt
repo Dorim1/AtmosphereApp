@@ -24,7 +24,7 @@ data class HomeState(
 ): UiState
 
 sealed interface HomeEvent : UiEvent {
-    data class LoadWeather(val lat: Double, val lon: Double) : HomeEvent
+    object LoadWeather : HomeEvent
 
     object OnMoodButtonClick : HomeEvent
     object OnNoteButtonClick : HomeEvent
