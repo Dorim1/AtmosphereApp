@@ -7,10 +7,11 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET
+import ru.anlyashenko.atmosphereapp.data.network.models.IpGeoResponseDTO
 
 interface IpGeoApi {
     @GET("json/")
-    suspend fun getLocationByIp(): IpGeoResponse
+    suspend fun getLocationByIp(): IpGeoResponseDTO
 }
 
 fun IpGeoApi (

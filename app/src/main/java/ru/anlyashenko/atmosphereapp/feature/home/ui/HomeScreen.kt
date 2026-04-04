@@ -1,11 +1,5 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -47,9 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.android.gms.location.CurrentLocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
@@ -346,7 +336,7 @@ fun DayEntryCard(
     isToday: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale("ru"))
+    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale("ru")) // TODO: Locale - deprecated
     val formatterMonth = DateTimeFormatter.ofPattern("MMM", Locale("ru"))
 
     val dayOfWeek = record.date.format(formatterDayOfWeek).replaceFirstChar { it.uppercase() }
@@ -455,28 +445,6 @@ fun getDaysFromMondayToToday(): List<DailyRecord> {
         currentDate = currentDate.minusDays(1)
     }
     return daysList
-}
-
-@SuppressLint("MissingPermission")
-fun getLocation(context: Context, onLocation: (Double, Double) -> Unit) {
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
-    val locationRequest = CurrentLocationRequest.Builder()
-        .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-        .setMaxUpdateAgeMillis(60_000L)
-        .build()
-
-    fusedLocationClient.getCurrentLocation(locationRequest, null)
-        .addOnSuccessListener { location ->
-            if (location != null) {
-                onLocation(location.latitude, location.longitude)
-            } else {
-                Log.e("Weather", "Location is null")
-            }
-        }
-        .addOnFailureListener { e ->
-            Log.e("Weather", "Location error: ${e.message}")
-        }
 }
 
 

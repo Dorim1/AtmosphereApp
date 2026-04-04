@@ -3,7 +3,6 @@ package ru.anlyashenko.atmosphereapp.data.repository
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import ru.anlyashenko.atmosphereapp.core.dispathchers.DefaultDispatcherProvider
 import ru.anlyashenko.atmosphereapp.core.utils.Result
 import ru.anlyashenko.atmosphereapp.data.network.WeatherApi
 import ru.anlyashenko.atmosphereapp.di.IoDispatcher
