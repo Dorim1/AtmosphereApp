@@ -4,9 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
+import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
 
 @Database(
-    entities = [DiaryDao::class],
+    entities = [DiaryEntryDBO::class],
     version = 1,
     exportSchema = false
 )

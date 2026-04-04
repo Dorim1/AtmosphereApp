@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "diary_entries")
-data class DairyEntryDBO(
+data class DiaryEntryDBO(
     @PrimaryKey
     @ColumnInfo("date") val date: LocalDate,
     @ColumnInfo("moodId") val moodId: Int? = null,
