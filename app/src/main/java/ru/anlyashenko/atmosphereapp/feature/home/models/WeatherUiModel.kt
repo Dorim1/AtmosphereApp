@@ -1,9 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.home.models
 
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.data.network.WeatherResponse
-import java.time.LocalDate
-import java.time.LocalDateTime
+import ru.anlyashenko.atmosphereapp.data.network.models.WeatherResponseDTO
 import kotlin.math.roundToInt
 
 data class WeatherUiModel(
@@ -34,7 +32,7 @@ private fun getWeatherDescAndIcon(weatherCode: Int): Pair<String, Int> {
     }
 }
 
-fun WeatherResponse.toUiModel(cityName: String): WeatherUiModel {
+fun WeatherResponseDTO.toUiModel(cityName: String): WeatherUiModel {
     val tempInt = this.currentWeather.temperature.roundToInt()
     val tempString = if (tempInt > 0) "+$tempInt°" else "$tempInt°"
 
