@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapping
+package ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapper
 
 import androidx.compose.ui.graphics.Color
 

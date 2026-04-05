@@ -48,8 +48,8 @@ import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
-import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapping.getLightColorForBackground
-import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapping.getMoodNameFromColor
+import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapper.getLightColorForBackground
+import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapper.getMoodNameFromColor
 import java.time.LocalDate
 import java.time.Year.isLeap
 import java.time.YearMonth

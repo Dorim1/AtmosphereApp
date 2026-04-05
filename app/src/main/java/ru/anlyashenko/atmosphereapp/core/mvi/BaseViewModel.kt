@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> : ViewModel() {
-
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
 
@@ -24,6 +23,10 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(initialState)
     val uiState: StateFlow<State> = _uiState.asStateFlow()
 
+    // TODO: Возможно, более надёжный вариант SharedFlow с replay = 1
+    /**
+     * Channel может потерять события - если UI не подписан в момент отправки эффекта
+     */
     private val _effect: Channel<Effect> = Channel()
     val effect: Flow<Effect> = _effect.receiveAsFlow()
 
@@ -31,6 +34,10 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
         subscribeEvents()
     }
 
+    // TODO: Нет обработки ошибок
+    /**
+     * Если handleEvent бросит исключение, корутина упадёт и события перестанут обрабатываться
+     */
     private fun subscribeEvents() {
         viewModelScope.launch {
             _event.collect {
@@ -41,6 +48,12 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
 
     abstract fun handleEvent(event: Event)
 
+    // TODO: Возможно, MutableSharedFlow избыточен, можно попробовать >>>
+    /*
+    fun setEvent(event: Event) {
+        viewModelScope.launch { handleEvent(event) }
+    }
+     */
     fun setEvent(event: Event) {
         val newEvent = event
         viewModelScope.launch { _event.emit(newEvent) }
@@ -51,6 +64,10 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
         _uiState.value = newState
     }
 
+    // TODO: Лучше использовать один общий scope
+    /**
+     * setEffect запускает корутину на каждый эффект, могут создаваться много корутин
+     */
     protected fun setEffect(builder: () -> Effect) {
         val effectValue = builder()
         viewModelScope.launch { _effect.send(effectValue) }
