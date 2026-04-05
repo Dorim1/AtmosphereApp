@@ -24,11 +24,11 @@ class DatabaseCallback(
 
     private suspend fun populateDefaultMoods() {
         val defaultMoods = listOf(
-            MoodDBO(1, "Отлично", 1),
-            MoodDBO(2, "Хорошо", 2),
-            MoodDBO(3, "Нормально", 3),
-            MoodDBO(4, "Плохо", 4),
-            MoodDBO(5, "Ужасно", 5),
+            MoodDBO(1, "Отлично", 1, "#8AA232", "ic_mood_very_satisfied"),
+            MoodDBO(2, "Хорошо", 2, "#329340", "ic_mood_satisfied"),
+            MoodDBO(3, "Нормально", 3, "#FBC117", "ic_mood_neutral"),
+            MoodDBO(4, "Плохо", 4, "#FB5E01", "ic_mood_dissatisfied"),
+            MoodDBO(5, "Ужасно", 5, "#E40000", "ic_mood_very_dissatisfied"),
         )
         moodDaoProvider.get().insertMoods(defaultMoods)
     }

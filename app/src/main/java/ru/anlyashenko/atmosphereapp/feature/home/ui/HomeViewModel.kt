@@ -6,14 +6,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
+import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val locationTracker: LocationTracker
+    private val locationTracker: LocationTracker,
+    private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
     override fun createInitialState(): HomeState = HomeState(
@@ -31,9 +34,11 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeEvent.OnMoodSelected -> {
-                // TODO: Сохранить в БД
-                println("Выбрано настроение: ${event.moodId}")
-                setState { copy(showMoodSheet = false) }
+                viewModelScope.launch {
+                    val today = LocalDate.now()
+                    diaryRepository.saveMood(today, event.moodId)
+                    setState { copy(showMoodSheet = false) }
+                }
             }
             is HomeEvent.OnSaveNote -> {
                 // TODO: Сохранить в БД

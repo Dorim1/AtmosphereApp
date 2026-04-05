@@ -9,4 +9,6 @@ data class MoodDBO(
     @PrimaryKey val id: Int,
     @ColumnInfo("label") val label: String,
     @ColumnInfo("level") val level: Int,
+    @ColumnInfo("colorHex") val colorHex: String,
+    @ColumnInfo("iconKey") val iconKey: String
 )
