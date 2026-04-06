@@ -1,24 +1,22 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import android.util.Log
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
-import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
-import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepository
-import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
+import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepositoryImpl
+import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepositoryImpl
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository,
+    private val weatherRepository: WeatherRepositoryImpl,
     private val locationTracker: LocationTracker,
-    private val diaryRepository: DiaryRepository,
+    private val diaryRepository: DiaryRepositoryImpl,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
     init {

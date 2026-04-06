@@ -6,17 +6,18 @@ import kotlinx.coroutines.withContext
 import ru.anlyashenko.atmosphereapp.core.utils.Result
 import ru.anlyashenko.atmosphereapp.data.network.WeatherApi
 import ru.anlyashenko.atmosphereapp.di.IoDispatcher
+import ru.anlyashenko.atmosphereapp.domain.repository.WeatherRepository
+import ru.anlyashenko.atmosphereapp.feature.home.mapper.toUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
-import ru.anlyashenko.atmosphereapp.feature.home.models.toUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WeatherRepository @Inject constructor(
+class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi,
     @param:IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) {
-    suspend fun getWeather(lat: Double, lon: Double, cityName: String) :Result<WeatherUiModel> {
+): WeatherRepository {
+    override suspend fun getWeather(lat: Double, lon: Double, cityName: String) :Result<WeatherUiModel> {
         return withContext(ioDispatcher) {
             try {
                 val response = api.getCurrentWeather(lat, lon)

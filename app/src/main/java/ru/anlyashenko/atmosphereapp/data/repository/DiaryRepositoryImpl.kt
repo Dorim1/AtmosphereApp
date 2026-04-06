@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.map
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
+import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.feature.home.mapper.toUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
@@ -15,15 +16,15 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DiaryRepository @Inject constructor(
+class DiaryRepositoryImpl @Inject constructor(
     private val diaryDao: DiaryDao,
     private val moodDao: MoodDao
-) {
+) : DiaryRepository {
 
-    val availableMoods: Flow<List<MoodUiModel>> = moodDao.getAllMoods()
+    override val availableMoods: Flow<List<MoodUiModel>> = moodDao.getAllMoods()
         .map { moods -> moods.map { it.toUiModel() } }
 
-    fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
+    override fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
         val today = LocalDate.now()
         val monday = today.with(DayOfWeek.MONDAY)
 
@@ -50,7 +51,7 @@ class DiaryRepository @Inject constructor(
             }
         }
     }
-    suspend fun saveMood(date: LocalDate, moodId: Int) {
+    override suspend fun saveMood(date: LocalDate, moodId: Int) {
         val existingEntry = diaryDao.getEntryByDate(date)
         val entryToSave = existingEntry?.copy(moodId = moodId) ?: DiaryEntryDBO(date = date, moodId = moodId)
         diaryDao.insertOrUpdate(entryToSave)
