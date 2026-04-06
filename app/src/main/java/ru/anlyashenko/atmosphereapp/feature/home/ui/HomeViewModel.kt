@@ -21,9 +21,24 @@ class HomeViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
-    override fun createInitialState(): HomeState = HomeState(
-        weekRecords = getDaysFromMondayToToday()
-    )
+    init {
+        observeDiaryData()
+    }
+
+    override fun createInitialState(): HomeState = HomeState()
+
+    private fun observeDiaryData() {
+        viewModelScope.launch {
+            diaryRepository.getWeekRecordsFlow().collect { records ->
+                setState { copy(weekRecords = records) }
+            }
+        }
+        viewModelScope.launch {
+            diaryRepository.availableMoods.collect { moods ->
+                setState { copy(availableMoods = moods) }
+            }
+        }
+    }
 
     override fun handleEvent(event: HomeEvent) {
         when (event) {
