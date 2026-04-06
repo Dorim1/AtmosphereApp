@@ -39,63 +39,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class MoodOption(
-    val id: Int,
-    val title: String,
-    val icon: ImageVector,
-    val selectedColor: Color,
-    val selectedBgColor: Color
-)
-
-val moodOptions = listOf(
-    MoodOption(
-        id = 1,
-        title = "Отлично",
-        icon = Icons.Rounded.SentimentVerySatisfied,
-        selectedColor = Color(0xFF8AA232),
-        selectedBgColor = Color(0xFF8AA232).copy(alpha = 0.1f)
-    ),
-    MoodOption(
-        id = 2,
-        title = "Хорошо",
-        icon = Icons.Rounded.SentimentSatisfied,
-        selectedColor = Color(0xFF0A6C60),
-        selectedBgColor = Color(0xFF0A6C60).copy(alpha = 0.1f)
-    ),
-    MoodOption(
-        id = 3,
-        title = "Нормально",
-        icon = Icons.Rounded.SentimentNeutral,
-        selectedColor = Color(0xFFFFC107),
-        selectedBgColor = Color(0xFFFFC107).copy(alpha = 0.1f)
-    ),
-    MoodOption(
-        id = 4,
-        title = "Плохо",
-        icon = Icons.Rounded.SentimentDissatisfied,
-        selectedColor = Color(0xFFFF5722),
-        selectedBgColor = Color(0xFFFF5722).copy(alpha = 0.1f)
-    ),
-    MoodOption(
-        id = 5,
-        title = "Ужасно",
-        icon = Icons.Rounded.SentimentVeryDissatisfied,
-        selectedColor = Color(0xFFD32F2F),
-        selectedBgColor = Color(0xFFD32F2F).copy(alpha = 0.1f)
-    ),
-)
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoodSelectionBottomSheet(
-    onDismissRequest:() -> Unit,
-    onMoodSelected: (MoodOption) -> Unit
+    moods: List<MoodUiModel>,
+    onDismissRequest: () -> Unit,
+    onMoodSelected: (MoodUiModel) -> Unit,
 ) {
-    var selectedMood by remember { mutableStateOf<MoodOption?>(null) }
+    var selectedMood by remember { mutableStateOf<MoodUiModel?>(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     ModalBottomSheet(
@@ -120,7 +77,7 @@ fun MoodSelectionBottomSheet(
 
             Spacer(Modifier.height(24.dp))
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                moodOptions.forEach { mood ->
+                moods.forEach { mood ->
                     MoodItemRow(
                         mood = mood,
                         isSelected = selectedMood?.id == mood.id,
@@ -158,12 +115,12 @@ fun MoodSelectionBottomSheet(
 
 @Composable
 fun MoodItemRow(
-    mood: MoodOption,
+    mood: MoodUiModel,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (isSelected) mood.selectedBgColor else MaterialTheme.colorScheme.background
-    val contentColor = if (isSelected) mood.selectedColor else MaterialTheme.colorScheme.onSurface
+    val backgroundColor = if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.background
+    val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSurface
 
     Row(
         modifier = Modifier
@@ -180,13 +137,13 @@ fun MoodItemRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
-                imageVector = mood.icon,
-                contentDescription = mood.title,
+                painter = painterResource(mood.iconRes),
+                contentDescription = mood.label,
                 tint = contentColor,
                 modifier = Modifier.size(36.dp)
             )
             Text(
-                text = mood.title,
+                text = mood.label,
                 fontSize = 24.sp,
                 color = contentColor,
             )
@@ -210,7 +167,7 @@ fun MoodItemRow(
                 Box(
                     modifier = Modifier
                         .size(15.dp)
-                        .background(mood.selectedColor, CircleShape)
+                        .background(mood.color, CircleShape)
                 )
             }
         }

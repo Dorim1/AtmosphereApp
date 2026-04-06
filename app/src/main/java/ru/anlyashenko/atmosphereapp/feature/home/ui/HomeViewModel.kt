@@ -1,24 +1,44 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
+import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
+import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val locationTracker: LocationTracker
+    private val locationTracker: LocationTracker,
+    private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
-    override fun createInitialState(): HomeState = HomeState(
-        weekRecords = getDaysFromMondayToToday()
-    )
+    init {
+        observeDiaryData()
+    }
+
+    override fun createInitialState(): HomeState = HomeState()
+
+    private fun observeDiaryData() {
+        viewModelScope.launch {
+            diaryRepository.getWeekRecordsFlow().collect { records ->
+                setState { copy(weekRecords = records) }
+            }
+        }
+        viewModelScope.launch {
+            diaryRepository.availableMoods.collect { moods ->
+                setState { copy(availableMoods = moods) }
+            }
+        }
+    }
 
     override fun handleEvent(event: HomeEvent) {
         when (event) {
@@ -31,9 +51,11 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeEvent.OnMoodSelected -> {
-                // TODO: Сохранить в БД
-                println("Выбрано настроение: ${event.moodId}")
-                setState { copy(showMoodSheet = false) }
+                viewModelScope.launch {
+                    val today = LocalDate.now()
+                    diaryRepository.saveMood(today, event.moodId)
+                    setState { copy(showMoodSheet = false) }
+                }
             }
             is HomeEvent.OnSaveNote -> {
                 // TODO: Сохранить в БД
@@ -42,6 +64,19 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    /*fun onEditMoodConfirmed(id: Int, newLabel: String, newColor: Color, newIconKey: String) {
+        viewModelScope.launch {
+            val updatedDbo = MoodDBO(
+                id = id,
+                label = newLabel,
+                level = calculateLevel(id), // или оставляем прежний
+                iconKey = newIconKey,
+                colorHex = newColor.toHexCode() // Утилита для конвертации
+            )
+            moodDao.updateMood(updatedDbo)
+        }
+    }*/
 
     private fun fetchWeatherWithLocation() {
         setState { copy(isLoadingWeather = true) }

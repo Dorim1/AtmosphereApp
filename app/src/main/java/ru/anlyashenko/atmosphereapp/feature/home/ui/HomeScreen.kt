@@ -42,9 +42,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
-import java.time.DayOfWeek
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -107,6 +106,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
         if (state.showMoodSheet) {
             MoodSelectionBottomSheet(
+                moods = state.availableMoods,
                 onDismissRequest = { viewModel.setEvent(HomeEvent.DismissDialogs) },
                 onMoodSelected = { selectedMood ->
                     viewModel.setEvent(HomeEvent.OnMoodSelected(selectedMood.id))
@@ -332,7 +332,7 @@ fun CurrentDayActionRow(
 
 @Composable
 fun DayEntryCard(
-    record: DailyRecord,
+    record: DiaryRecordUiModel,
     isToday: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -394,18 +394,18 @@ fun DayEntryCard(
                                 modifier = Modifier.size(32.dp)
                             )
                         }
-                        if (record.hasMood) {
+                        if (record.hasMood && record.mood != null) {
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .background(
-                                        color = Color(0xFF8BB13B), // TODO: Передавать цвет из модели
+                                        color = record.mood.color, // TODO: Передавать цвет из модели
                                         shape = CircleShape
                                     ),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
-                                    imageVector = Icons.Rounded.Mood,
+                                    painter = painterResource(record.mood.iconRes),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.size(24.dp)
@@ -419,6 +419,7 @@ fun DayEntryCard(
         }
     }
 }
+/*
 
 // todo: Удалить
 data class DailyRecord(
@@ -446,5 +447,6 @@ fun getDaysFromMondayToToday(): List<DailyRecord> {
     }
     return daysList
 }
+*/
 
 

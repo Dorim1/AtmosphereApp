@@ -3,6 +3,8 @@ package ru.anlyashenko.atmosphereapp.feature.home.ui
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
+import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 
 
@@ -10,15 +12,15 @@ data class HomeState(
     val weather: WeatherUiModel? = null,
     val isLoadingWeather: Boolean = false,
 
-    val weekRecords: List<DailyRecord> = emptyList(),
+    val weekRecords: List<DiaryRecordUiModel> = emptyList(),
+    val availableMoods: List<MoodUiModel> = emptyList(),
 
-    val currentDayRecord: DailyRecord? = null,
     val isRecordLoading: Boolean = false,
 
     val showMoodSheet: Boolean = false,
     val showNoteDialog: Boolean = false,
 
-): UiState
+    ): UiState
 
 sealed interface HomeEvent : UiEvent {
     object LoadWeather : HomeEvent
