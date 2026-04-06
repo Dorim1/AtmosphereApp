@@ -1,11 +1,13 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
+import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
 import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepository
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
@@ -47,6 +49,19 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    /*fun onEditMoodConfirmed(id: Int, newLabel: String, newColor: Color, newIconKey: String) {
+        viewModelScope.launch {
+            val updatedDbo = MoodDBO(
+                id = id,
+                label = newLabel,
+                level = calculateLevel(id), // или оставляем прежний
+                iconKey = newIconKey,
+                colorHex = newColor.toHexCode() // Утилита для конвертации
+            )
+            moodDao.updateMood(updatedDbo)
+        }
+    }*/
 
     private fun fetchWeatherWithLocation() {
         setState { copy(isLoadingWeather = true) }

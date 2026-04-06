@@ -1,10 +1,10 @@
 package ru.anlyashenko.atmosphereapp.feature.home.mapper
 
 import androidx.compose.ui.graphics.Color
-import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import androidx.core.graphics.toColorInt
+import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
 
 fun MoodDBO.toUiModel(): MoodUiModel {
     // TODO: Цвета положить в Color.kt
@@ -12,18 +12,17 @@ fun MoodDBO.toUiModel(): MoodUiModel {
         id = this.id,
         label = this.label,
         level = this.level,
-        iconRes = iconKey.toIconResId(),
+        iconRes = MoodIconManager.getIconRes(this.iconKey),
         color = Color(colorHex.toColorInt())
     )
 }
 
-// TODO: Перенести в core/utils
-fun String.toIconResId(): Int = when (this) {
-    "ic_mood_very_satisfied" -> R.drawable.ic_mood_very_satisfied
-    "ic_mood_satisfied" -> R.drawable.ic_mood_satisfied
-    "ic_mood_neutral" -> R.drawable.ic_mood_neutral
-    "ic_mood_dissatisfied" -> R.drawable.ic_mood_dissatisfied
-    "ic_mood_very_dissatisfied" -> R.drawable.ic_mood_very_dissatisfied
-    else -> R.drawable.ic_mood_neutral
+fun Color.toHexCode(): String {
+    return String.format("#%02X%02X%02X%02X",
+        (this.alpha * 255).toInt(),
+        (this.red * 255).toInt(),
+        (this.green * 255).toInt(),
+        (this.blue * 255).toInt(),
+    )
 }
 
