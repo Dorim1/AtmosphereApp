@@ -416,34 +416,6 @@ fun DayEntryCard(
         }
     }
 }
-/*
 
-// todo: Удалить
-data class DailyRecord(
-    val date: LocalDate,
-    val hasMood: Boolean = false,
-    val hasNote: Boolean = false,
-)
-
-fun getDaysFromMondayToToday(): List<DailyRecord> {
-    val today = LocalDate.now()
-    val monday = today.with(DayOfWeek.MONDAY)
-
-    val daysList = mutableListOf<DailyRecord>()
-    var currentDate = today
-
-    while (!currentDate.isBefore(monday)) {
-        daysList.add(
-            DailyRecord(
-                date = currentDate,
-                hasMood = currentDate != today,
-                hasNote = currentDate.dayOfMonth % 2 == 0
-            )
-        )
-        currentDate = currentDate.minusDays(1)
-    }
-    return daysList
-}
-*/
 
 

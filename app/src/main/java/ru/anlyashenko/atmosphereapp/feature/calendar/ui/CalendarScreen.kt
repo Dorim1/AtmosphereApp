@@ -376,7 +376,6 @@ fun CalendarPagerCard(
     }
 }
 
-// TODO: Решить проблему с пустыми строками
 @Composable
 fun CalendarGrid(
     pagerState: PagerState,
@@ -483,7 +482,7 @@ fun CalendarMonthPage(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(32.dp)
+                                    .size(40.dp)
                                     .clip(CircleShape)
                                     .background(
                                         when {

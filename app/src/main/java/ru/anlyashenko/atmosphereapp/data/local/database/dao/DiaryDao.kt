@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.local.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,4 +22,7 @@ interface DiaryDao {
     // Получение одной записи по дате
     @Query("SELECT * FROM diary_entries WHERE date = :date")
     suspend fun getEntryByDate(date: LocalDate): DiaryEntryDBO?
+
+    @Delete
+    suspend fun delete(entry: DiaryEntryDBO)
 }
