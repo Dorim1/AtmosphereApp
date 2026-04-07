@@ -38,6 +38,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+//    private fun updateTodayRecord() {
+//        val today = LocalDate.now()
+//        setState { copy(todayRecord = weekRecords.find { it.date == today }) }
+//    }
+
     override fun handleEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.LoadWeather -> fetchWeatherWithLocation()
@@ -56,25 +61,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeEvent.OnSaveNote -> {
-                // TODO: Сохранить в БД
-                println("Сохранён текст: ${event.noteText}")
-                setState { copy(showNoteDialog = false) }
+                viewModelScope.launch {
+                    val today = LocalDate.now()
+                    diaryRepository.saveNote(today, event.noteText)
+                }
             }
         }
     }
 
-    /*fun onEditMoodConfirmed(id: Int, newLabel: String, newColor: Color, newIconKey: String) {
-        viewModelScope.launch {
-            val updatedDbo = MoodDBO(
-                id = id,
-                label = newLabel,
-                level = calculateLevel(id), // или оставляем прежний
-                iconKey = newIconKey,
-                colorHex = newColor.toHexCode() // Утилита для конвертации
-            )
-            moodDao.updateMood(updatedDbo)
-        }
-    }*/
 
     private fun fetchWeatherWithLocation() {
         setState { copy(isLoadingWeather = true) }

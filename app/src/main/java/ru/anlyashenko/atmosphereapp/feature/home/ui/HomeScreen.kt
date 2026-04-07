@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.Mood
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,7 +29,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +42,7 @@ import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -59,6 +58,8 @@ private fun HomeScreenPreview() {
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
 
     LaunchedEffect(Unit) {
         viewModel.setEvent(HomeEvent.LoadWeather)
@@ -91,12 +92,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     if (isToday) {
                         CurrentDayActionRow(
                             hasMood = record.hasMood,
-                            onMoodClick = {
-                                viewModel.setEvent(HomeEvent.OnMoodButtonClick)
-                            },
-                            onNoteClick = {
-                                viewModel.setEvent(HomeEvent.OnNoteButtonClick)
-                            }
+                            hasNote = record.hasNote,
+                            onMoodClick = { viewModel.setEvent(HomeEvent.OnMoodButtonClick) },
+                            onNoteClick = { viewModel.setEvent(HomeEvent.OnNoteButtonClick) },
                         )
                     }
                 }
@@ -116,6 +114,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
         if (state.showNoteDialog) {
             AddNoteDialog(
+                initialText = todayRecord?.note ?: "",
                 onDismiss = { viewModel.setEvent(HomeEvent.DismissDialogs) },
                 onSave = { savedText ->
                     viewModel.setEvent(HomeEvent.OnSaveNote(savedText))
@@ -125,9 +124,6 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     }
 
 }
-
-
-
 @Composable
 fun WeatherCard(
     modifier: Modifier = Modifier,
@@ -258,6 +254,7 @@ fun WeatherHourlyItem(
 @Composable
 fun CurrentDayActionRow(
     hasMood: Boolean,
+    hasNote: Boolean,
     onMoodClick:() -> Unit,
     onNoteClick:() -> Unit,
     modifier: Modifier = Modifier
@@ -319,7 +316,7 @@ fun CurrentDayActionRow(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "Добавить\nзапись",
+                    text = if (!hasNote) "Добавить\nзапись" else "Изменить\nзапись",
                     color = MaterialTheme.colorScheme.onSecondary,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,

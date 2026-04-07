@@ -9,4 +9,5 @@ interface DiaryRepository {
     val availableMoods: Flow<List<MoodUiModel>>
     fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>>
     suspend fun saveMood(date: LocalDate, moodId: Int)
+    suspend fun saveNote(date: LocalDate, text: String)
 }
