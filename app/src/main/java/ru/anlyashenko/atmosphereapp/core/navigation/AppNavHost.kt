@@ -10,15 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarScreen
+import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockNote
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
-import java.time.LocalDate
 
 
 @Composable
@@ -81,13 +79,7 @@ fun AppNavHost(
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None }
         ) {
-            CalendarScreen(
-                selectedDate = LocalDate.of(2026, 3, 11),
-                moodMap = mockMoodMap,
-                note = mockNote,
-                onDateClick = { },
-                onDeleteNote = { }
-            )
+            CalendarRoute()
         }
 
         composable<Destination.UserRoute>(

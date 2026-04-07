@@ -51,6 +51,23 @@ class DiaryRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun getAllRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
+        return combine(
+            diaryDao.getAllEntries(),
+            availableMoods
+        ) { entries, mood ->
+            entries.map { entry ->
+                val moodForEntry = mood.find { it.id == entry.moodId }
+                DiaryRecordUiModel(
+                    date = entry.date,
+                    mood = moodForEntry,
+                    note = entry.note
+                )
+            }
+        }
+    }
+
     override suspend fun saveMood(date: LocalDate, moodId: Int) {
         val existingEntry = diaryDao.getEntryByDate(date)
         val entryToSave = existingEntry?.copy(moodId = moodId) ?: DiaryEntryDBO(date = date, moodId = moodId)
