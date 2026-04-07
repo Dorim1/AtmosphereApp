@@ -9,14 +9,16 @@ import ru.anlyashenko.atmosphereapp.core.utils.Result
 import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepositoryImpl
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepositoryImpl
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
+import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
+import ru.anlyashenko.atmosphereapp.domain.repository.WeatherRepository
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepositoryImpl,
+    private val weatherRepository: WeatherRepository,
     private val locationTracker: LocationTracker,
-    private val diaryRepository: DiaryRepositoryImpl,
+    private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
     init {

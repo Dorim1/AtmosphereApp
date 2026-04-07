@@ -40,6 +40,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarViewModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.LocalDate
@@ -416,34 +417,6 @@ fun DayEntryCard(
         }
     }
 }
-/*
 
-// todo: Удалить
-data class DailyRecord(
-    val date: LocalDate,
-    val hasMood: Boolean = false,
-    val hasNote: Boolean = false,
-)
-
-fun getDaysFromMondayToToday(): List<DailyRecord> {
-    val today = LocalDate.now()
-    val monday = today.with(DayOfWeek.MONDAY)
-
-    val daysList = mutableListOf<DailyRecord>()
-    var currentDate = today
-
-    while (!currentDate.isBefore(monday)) {
-        daysList.add(
-            DailyRecord(
-                date = currentDate,
-                hasMood = currentDate != today,
-                hasNote = currentDate.dayOfMonth % 2 == 0
-            )
-        )
-        currentDate = currentDate.minusDays(1)
-    }
-    return daysList
-}
-*/
 
 

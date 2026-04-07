@@ -54,6 +54,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
@@ -145,21 +147,23 @@ val mockMoodMap: Map<LocalDate, Color> = mapOf(
     LocalDate.of(2024, 3, 10) to Color(0xFF0A6C60),
 )
 
-val mockNote =
-    "Нет никого, кто любил бы боль саму по себе, кто искал бы её и кто хотел бы иметь её просто потому, что это боль.."
-
 @Composable
-@Preview
-private fun CalendarScreenPreview() {
-    AtmosphereAppTheme() {
-        CalendarScreen(
-            selectedDate = LocalDate.of(2026, 3, 11),
-            moodMap = mockMoodMap,
-            note = mockNote,
-            onDateClick = { },
-            onDeleteNote = { }
-        )
-    }
+fun CalendarRoute(
+    viewModel: CalendarViewModel = hiltViewModel()
+) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    CalendarScreen(
+        selectedDate = state.selectedDate,
+        moodMap = state.moodMap,
+        note = state.selectedRecord?.note?.takeIf { it.isNotBlank() },
+        onDateClick = { date ->
+            viewModel.setEvent(CalendarEvent.OnDateSelected(date))
+        },
+        onDeleteNote = {
+            viewModel.setEvent(CalendarEvent.OnDeleteNote)
+        }
+    )
 
 }
 
@@ -376,7 +380,6 @@ fun CalendarPagerCard(
     }
 }
 
-// TODO: Решить проблему с пустыми строками
 @Composable
 fun CalendarGrid(
     pagerState: PagerState,
@@ -483,7 +486,7 @@ fun CalendarMonthPage(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(32.dp)
+                                    .size(40.dp)
                                     .clip(CircleShape)
                                     .background(
                                         when {
