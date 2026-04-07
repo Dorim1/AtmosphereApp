@@ -56,4 +56,10 @@ class DiaryRepositoryImpl @Inject constructor(
         val entryToSave = existingEntry?.copy(moodId = moodId) ?: DiaryEntryDBO(date = date, moodId = moodId)
         diaryDao.insertOrUpdate(entryToSave)
     }
+
+    override suspend fun saveNote(date: LocalDate, text: String) {
+        val existingEntry = diaryDao.getEntryByDate(date)
+        val entryToSave = existingEntry?.copy(note = text) ?: DiaryEntryDBO(date = date, note = text)
+        diaryDao.insertOrUpdate(entryToSave)
+    }
 }

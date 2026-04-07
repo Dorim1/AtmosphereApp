@@ -6,6 +6,7 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
+import java.time.LocalDate
 
 
 data class HomeState(
@@ -13,6 +14,7 @@ data class HomeState(
     val isLoadingWeather: Boolean = false,
 
     val weekRecords: List<DiaryRecordUiModel> = emptyList(),
+//    val todayRecord: DiaryRecordUiModel? = null,
     val availableMoods: List<MoodUiModel> = emptyList(),
 
     val isRecordLoading: Boolean = false,

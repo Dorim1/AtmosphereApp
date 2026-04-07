@@ -21,17 +21,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -39,13 +40,20 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun AddNoteDialog(
+    initialText: String,
     onDismiss: () -> Unit,
-    onSave: (String) -> Unit
+    onSave: (String) -> Unit,
 ) {
-    var noteText by remember() { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
+
+    var noteText by remember() { mutableStateOf(initialText) }
     val maxChar = 250
 
     val isLimitReached = noteText.length == maxChar
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     val animatedBorderColor by animateColorAsState(
         targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
@@ -85,9 +93,9 @@ fun AddNoteDialog(
                             shape = RoundedCornerShape(8.dp)
                         )
                         .background(
-                            Color.White,
+                            MaterialTheme.colorScheme.surface,
                             RoundedCornerShape(8.dp)
-                        ) // TODO: Изменить под тему
+                        )
                         .padding(13.dp)
                 ) {
                     BasicTextField(
@@ -95,7 +103,9 @@ fun AddNoteDialog(
                         onValueChange = {
                             if (it.length <= maxChar) noteText = it
                         },
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .focusRequester(focusRequester),
                         textStyle = TextStyle(
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onSurface
