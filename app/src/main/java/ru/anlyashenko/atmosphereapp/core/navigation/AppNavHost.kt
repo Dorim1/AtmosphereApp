@@ -14,6 +14,7 @@ import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
+import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
@@ -88,16 +89,9 @@ fun AppNavHost(
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None }
         ) {
-            ProfileScreen(
-                totalEntries = 64,
-                currentStreak = 27,
-                longestStreak = 36,
-                onYearlyStatsClick = {
-                    navHostController.navigate(Destination.YearlyStatsRoute)
-                },
-                onSettingsClick = {
-                    navHostController.navigate(Destination.SettingsRoute)
-                }
+            ProfileRoute(
+                onNavigateToSettings = { navHostController.navigate(Destination.SettingsRoute) },
+                onNavigateToYearlyStats = { navHostController.navigate(Destination.YearlyStatsRoute) }
             )
         }
 

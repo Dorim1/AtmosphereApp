@@ -49,48 +49,43 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
+import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 
-data class DailyMoodStat(
-    val dayName: String,
-    val level: Int,
-    val color: Color
-)
-
-data class MoodCountItem(
-    val name: String,
-    val count: Int,
-    val color: Color
-)
-
-val MoodLevel5Color = Color(0xFF0A6C60) // Темно-зеленый (Отлично)
-val MoodLevel4Color = Color(0xFF8BB13B) // Салатовый (Хорошо)
-val MoodLevel3Color = Color(0xFFFFC107) // Желтый (Нормально)
-val MoodLevel2Color = Color(0xFFFF5722) // Оранжевый (Плохо)
-val MoodLevel1Color = Color(0xFFD32F2F) // Красный (Ужасно)
-
-val weekData = listOf(
-    DailyMoodStat("Пн", 5, MoodLevel5Color),
-    DailyMoodStat("Вт", 2, MoodLevel2Color),
-    DailyMoodStat("Ср", 4, MoodLevel4Color),
-    DailyMoodStat("Чт", 3, MoodLevel3Color),
-    DailyMoodStat("Пт", 5, MoodLevel5Color),
-    DailyMoodStat("Сб", 3, MoodLevel3Color),
-    DailyMoodStat("Вс", 1, MoodLevel1Color),
-)
 
 @Composable
-@Preview
-private fun ProfileScreenPreview() {
-    AtmosphereAppTheme() {
-        ProfileScreen(
-            totalEntries = 64,
-            currentStreak = 27,
-            longestStreak = 36,
-            onYearlyStatsClick = {},
-            onSettingsClick = {}
-        )
+fun ProfileRoute(
+    viewModel: ProfileViewModel = hiltViewModel(),
+    onNavigateToSettings: () -> Unit,
+    onNavigateToYearlyStats: () -> Unit,
+) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                ProfileEffect.NavigateToSettings -> onNavigateToSettings()
+                ProfileEffect.NavigateToYearlyStats -> onNavigateToYearlyStats()
+            }
+        }
     }
+
+    ProfileScreen(
+        totalEntries = state.totalEntries,
+        currentStreak = state.currentStreak,
+        longestStreak = state.longestStreak,
+        moodCounts = state.moodCounts,
+        yearlyPercentage = state.yearlyProgress,
+        chartData = state.chartData,
+        chartInsight = state.chartInsight,
+        selectedTimeRange = state.selectedTimeRange,
+        onTimeRangeChanged = { viewModel.setEvent(ProfileEvent.OnTimeRangeChanged(it)) },
+        onYearlyStatsClick = { viewModel.setEvent(ProfileEvent.OnYearlyStatsClick) },
+        onSettingsClick = { viewModel.setEvent(ProfileEvent.OnSettingsClick) }
+    )
 }
 
 @Composable
@@ -99,7 +94,13 @@ fun ProfileScreen(
     currentStreak: Int,
     longestStreak: Int,
     onYearlyStatsClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    moodCounts: List<MoodCountItem>,
+    yearlyPercentage: Int,
+    chartData: List<DailyMoodStat>,
+    chartInsight: String,
+    selectedTimeRange: TimeRange,
+    onTimeRangeChanged: (TimeRange) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -115,11 +116,15 @@ fun ProfileScreen(
         ) {
             TotalMarkCard(
                 totalEntries,
-                modifier = Modifier.weight(1f).aspectRatio(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .aspectRatio(1f)
             )
             CurrentStreakCard(
                 longestStreak,
-                modifier = Modifier.weight(1f).aspectRatio(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .aspectRatio(1f)
             )
         }
 
@@ -130,14 +135,22 @@ fun ProfileScreen(
         )
 
         Spacer(Modifier.height(8.dp))
-        AverageMoodCard()
+        AverageMoodCard(
+            chartData = chartData,
+            insightText = chartInsight,
+            selectedRange = selectedTimeRange,
+            onRangeSelected = onTimeRangeChanged,
+        )
 
         Spacer(Modifier.height(8.dp))
-        MoodCounterCard()
+        MoodCounterCard(
+            items = moodCounts,
+            totalCount = totalEntries
+        )
 
         Spacer(Modifier.height(8.dp))
         YearlyStatsCard(
-            percentage = 67,
+            percentage = yearlyPercentage,
             onClick = onYearlyStatsClick,
             modifier = Modifier.fillMaxWidth()
         )
@@ -149,10 +162,8 @@ fun ProfileScreen(
         )
         Spacer(Modifier.height(8.dp))
 
-
     }
 }
-
 
 
 @Composable
@@ -270,7 +281,13 @@ fun LongestStreakCard(
 }
 
 @Composable
-fun AverageMoodCard(modifier: Modifier = Modifier) {
+fun AverageMoodCard(
+    modifier: Modifier = Modifier,
+    chartData: List<DailyMoodStat>,
+    insightText: String,
+    selectedRange: TimeRange,
+    onRangeSelected: (TimeRange) -> Unit,
+) {
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(30.dp),
@@ -286,11 +303,11 @@ fun AverageMoodCard(modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(25.dp))
-            MoodBarChart(data = weekData, modifier = Modifier.height(230.dp))
+            MoodBarChart(data = chartData, modifier = Modifier.height(230.dp))
 
             Spacer(Modifier.height(12.dp))
             Text(
-                text = "В Пн у вас чаще всего Отлично",
+                text = insightText,
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 modifier = Modifier.fillMaxWidth(),
@@ -298,23 +315,29 @@ fun AverageMoodCard(modifier: Modifier = Modifier) {
             )
 
             Spacer(Modifier.height(37.dp))
-            TimeToggleSwitch()
+            TimeToggleSwitch(selectedRange, onRangeSelected)
         }
     }
 }
 
 @Composable
-fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
+fun MoodBarChart(
+    data: List<DailyMoodStat>,
+    modifier: Modifier = Modifier
+) {
+
+    val yAxisColors = listOf(
+        Color(0xFF8BB13B), // 5 - Отлично
+        Color(0xFF0A6C60), // 4 - Хорошо
+        Color(0xFFFFC107), // 3 - Нормально
+        Color(0xFFFF5722), // 2 - Плохо
+        Color(0xFFD32F2F)  // 1 - Ужасно
+    )
+
     var startAnimation by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { startAnimation = true }
 
-    val moodColors = listOf(
-        MoodLevel5Color,
-        MoodLevel4Color,
-        MoodLevel3Color,
-        MoodLevel2Color,
-        MoodLevel1Color,
-    )
+
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom
@@ -324,7 +347,7 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            moodColors.forEach { color ->
+            yAxisColors.forEach { color ->
                 Box(
                     modifier = Modifier
                         .size(16.dp)
@@ -391,26 +414,27 @@ fun MoodBarChart(data: List<DailyMoodStat>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TimeToggleSwitch() {
-    val option = listOf("День", "Неделя", "Месяц")
-    var selectedOption by remember { mutableStateOf(option[0]) }
+fun TimeToggleSwitch(
+    selectedRange: TimeRange,
+    onRangeSelected: (TimeRange) -> Unit
+) {
 
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        option.forEach { option ->
-            val isSelected = selectedOption == option
+        TimeRange.entries.forEach { range ->
+            val isSelected = selectedRange == range
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(50.dp))
                     .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
-                    .clickable { selectedOption = option }
+                    .clickable { onRangeSelected(range) }
                     .padding(horizontal = 25.dp, vertical = 8.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = option,
+                    text = range.title,
                     fontSize = 14.sp,
                     lineHeight = 14.sp,
                     fontWeight = FontWeight.Medium,
@@ -422,16 +446,12 @@ fun TimeToggleSwitch() {
 }
 
 @Composable
-fun MoodCounterCard(modifier: Modifier = Modifier) {
-    val items = listOf(
-        MoodCountItem("Отлично", 17, Color(0xFF8BB13B)), // Салатовый
-        MoodCountItem("Хорошо", 8, Color(0xFF0A6C60)),   // Темно-зеленый
-        MoodCountItem("Нормально", 5, Color(0xFFFFC107)),// Желтый
-        MoodCountItem("Плохо", 12, Color(0xFFFF5722)),   // Оранжевый
-        MoodCountItem("Ужасно", 1, Color(0xFFD32F2F))    // Красный
-    )
+fun MoodCounterCard(
+    modifier: Modifier = Modifier,
+    totalCount: Int,
+    items: List<MoodCountItem>
+) {
 
-    val totalCount = items.sumOf { it.count }
 
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -458,7 +478,10 @@ fun MoodCounterCard(modifier: Modifier = Modifier) {
 
             StackedMoodBar(items = items, modifier = Modifier.height(48.dp))
             Spacer(Modifier.height(38.dp))
-            LegendGrid(items = items, totalCount = totalCount)
+            LegendGrid(
+                items = items,
+                totalCount = totalCount
+            )
         }
     }
 
@@ -548,7 +571,8 @@ fun LegendItem(
     totalCount: Int,
     modifier: Modifier = Modifier
 ) {
-    val percentage = if (totalCount > 0) (item.count * 100) / totalCount else 0
+
+    val itemPercentage = if (totalCount > 0) (item.count * 100) / totalCount else 0
 
     Row(
         modifier = modifier,
@@ -588,7 +612,7 @@ fun LegendItem(
             Text(
                 modifier = Modifier.width(32.dp),
                 textAlign = TextAlign.Center,
-                text = "$percentage%",
+                text = "$itemPercentage%",
                 fontSize = 15.sp,
                 lineHeight = 15.sp,
                 fontWeight = FontWeight.Medium,
@@ -601,7 +625,7 @@ fun LegendItem(
 @Composable
 fun YearlyStatsCard(
     percentage: Int,
-    onClick:() -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -655,9 +679,10 @@ fun ProgressCircle(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        Canvas(modifier = Modifier
-            .fillMaxSize()
-            .padding(5.dp)
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(5.dp)
         ) {
             val strokeWidth = 12.dp.toPx()
 
