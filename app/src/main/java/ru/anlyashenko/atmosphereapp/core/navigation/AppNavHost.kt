@@ -11,11 +11,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
-import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileScreen
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 
@@ -97,7 +95,7 @@ fun AppNavHost(
 
         composable<Destination.YearlyStatsRoute> {
             YearlyStatsScreen(
-                moodMap = mockMoodMap
+                onNavigateBack = { navHostController.popBackStack() }
             )
         }
 

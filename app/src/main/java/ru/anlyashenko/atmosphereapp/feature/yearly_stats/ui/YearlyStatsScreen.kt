@@ -42,14 +42,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.mockMoodMap
-import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapper.getLightColorForBackground
-import ru.anlyashenko.atmosphereapp.feature.yearly_stats.mapper.getMoodNameFromColor
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import java.time.LocalDate
 import java.time.Year.isLeap
 import java.time.YearMonth
@@ -58,24 +56,30 @@ import java.util.Collections.emptyList
 
 
 @Composable
-@Preview
-fun YearlyStatsScreenPreview() {
-    AtmosphereAppTheme() {
-        YearlyStatsScreen(
-            moodMap = mockMoodMap,
-        )
-    }
-}
-
-@Composable
 fun YearlyStatsScreen(
-    moodMap: Map<LocalDate, Color>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: YearlyStatsViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
 ) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is YearlyStatsEffect.NavigateBack -> onNavigateBack()
+            }
+        }
+    }
+
     val currentYear = LocalDate.now().year
+
+    val moodMap = remember(state.records) {
+        state.records.filter { it.hasMood }.associate { it.date to it.mood!! }
+    }
+
     val availableYears = remember(moodMap) {
-        val years = moodMap.keys.map { it.year }.toSet().toMutableList()
-        if (!years.contains(currentYear)) years.add(currentYear)
+        val years = moodMap.keys.map { it.year }.toMutableSet()
+        years.add(currentYear)
         years.sorted()
     }
 
@@ -133,7 +137,7 @@ fun YearlyStatsScreen(
 fun YearlyStatsPagerCard(
     pagerState: PagerState,
     availableYears: List<Int>,
-    moodMap: Map<LocalDate, Color>
+    moodMap: Map<LocalDate, MoodUiModel>
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -152,7 +156,6 @@ fun YearlyStatsPagerCard(
             Spacer(Modifier.height(27.dp))
             DragHandle()
         }
-
     }
 
 }
@@ -160,7 +163,7 @@ fun YearlyStatsPagerCard(
 @Composable
 fun YearMatrixCard(
     year: Int,
-    moodMap: Map<LocalDate, Color>
+    moodMap: Map<LocalDate, MoodUiModel>
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -180,11 +183,25 @@ fun YearMatrixCard(
                     ) {
                         if (day <= daysInMonth) {
                             val date = LocalDate.of(year, month, day)
-                            val color = moodMap[date]
+                            val mood = moodMap[date]
                             val today = LocalDate.now()
                             val isFuture = date.isAfter(today)
 
-                            if (color != null) {
+                            val circleSize = if (mood != null) 15.dp else 5.dp
+                            val circleColor = when {
+                                mood != null -> mood.color
+                                isFuture -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                                else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .size(circleSize)
+                                    .clip(CircleShape)
+                                    .background(circleColor)
+                            )
+
+                            /*if (color != null) {
                                 Box(
                                     modifier = Modifier
                                         .size(15.dp)
@@ -205,7 +222,7 @@ fun YearMatrixCard(
                                         .clip(CircleShape)
                                         .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
                                 )
-                            }
+                            }*/
                         }
                     }
                 }
@@ -245,7 +262,7 @@ fun YearHeaderCard(displayYear: Int, percentage: Int) {
 @Composable
 fun TopMoodsCard(
     year: Int,
-    moodMap: Map<LocalDate, Color>,
+    moodMap: Map<LocalDate, MoodUiModel>,
     modifier: Modifier = Modifier
 ) {
     val topMoods = remember(year, moodMap) {
@@ -265,17 +282,18 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
-    Column() {
+    Column(modifier = modifier) { // тутатааататататататата
         if (topMoods.isEmpty()) {
             Text(
                 text = "Пока мало данных для этого года",
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                modifier = Modifier.padding(16.dp)
             )
         } else {
-            topMoods.forEachIndexed { index, (color, percentage) ->
+            topMoods.forEachIndexed { index, (mood, percentage) ->
                 EmotionProgressBar(
-                    color = color,
+                    mood = mood,
                     percentage = percentage,
                 )
                 if (index < topMoods.lastIndex) {
@@ -288,12 +306,11 @@ fun TopMoodsCard(
 
 @Composable
 fun EmotionProgressBar(
-    color: Color,
+    mood: MoodUiModel,
     percentage: Int,
     modifier: Modifier = Modifier
 ) {
-    val moodName = getMoodNameFromColor(color)
-    val lightBackgroundColor = getLightColorForBackground(color)
+    val lightBackgroundColor = mood.color.copy(alpha = 0.2f)
 
     var targetPercentage by remember { mutableIntStateOf(0) }
 
@@ -336,7 +353,7 @@ fun EmotionProgressBar(
                     .fillMaxHeight()
                     .fillMaxWidth(fraction = animatedFraction)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(color)
+                    .background(mood.color)
             )
         }
 
@@ -353,7 +370,7 @@ fun EmotionProgressBar(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Text(
-                text = moodName,
+                text = mood.label,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onPrimary
@@ -366,7 +383,7 @@ fun EmotionProgressBar(
 fun YearlyStatsCards(
     modifier: Modifier = Modifier,
     year: Int,
-    moodMap: Map<LocalDate, Color>,
+    moodMap: Map<LocalDate, MoodUiModel>,
     entriesCount: Int? = null,
 ) {
     val (marksCount, maxStreak) = remember(year, moodMap) {
