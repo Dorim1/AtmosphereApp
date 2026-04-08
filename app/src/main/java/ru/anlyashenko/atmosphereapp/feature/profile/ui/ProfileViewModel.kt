@@ -61,7 +61,7 @@ class ProfileViewModel @Inject constructor(
                         chartData = chartData,
                         moodCounts = moodCounts,
                         yearlyProgress = yearlyProgress,
-                        chartInsight = "В ПН у вас чаще всего Отлично" // TODO: Написать логику для подведения статистики
+                        chartInsight = chartInsight
                     )
                 }
             }
@@ -128,7 +128,7 @@ class ProfileViewModel @Inject constructor(
             return Pair(emptyData, "Недостаточно данных для статистики")
         }
 
-        val chartData = DayOfWeek.values().mapIndexed { index, dayOfWeek ->
+        val chartData = DayOfWeek.entries.toTypedArray().mapIndexed { index, dayOfWeek ->
             val daysRecords = recordsWithMood.filter { it.date.dayOfWeek == dayOfWeek }
 
             val avgLevel = if (daysRecords.isNotEmpty()) {
@@ -140,17 +140,21 @@ class ProfileViewModel @Inject constructor(
             val roundedLevel = avgLevel.roundToInt()
             val color = availableMoods.find { it.level == roundedLevel }?.color ?: Color.Transparent
 
+            // TODO: Возможно нужно поменять в БД, чтобы level 5 = Отлично и по убывающей
+            val displayLevel = if (avgLevel > 0f) (6f - avgLevel) else 0f
+
             DailyMoodStat(
                 dayName = dayNames[index],
-                level = avgLevel,
+                level = displayLevel,
                 color = color
             )
         }
 
         val bestDay = chartData.maxByOrNull { it.level }
         val insightText = if (bestDay != null && bestDay.level > 0f) {
-            val moodLabel = availableMoods.find { it.level == bestDay.level.roundToInt() }?.label ?: "Настроение"
-            "В ${bestDay.dayName} у вас чаще всего «\$moodLabel»"
+            val originalLevel = (6f - bestDay.level).roundToInt()
+            val moodLabel = availableMoods.find { it.level == originalLevel }?.label ?: "Настроение"
+            "В ${bestDay.dayName} у вас чаще всего «$moodLabel»"
         } else {
             "Недостаточно данных"
         }
