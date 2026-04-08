@@ -17,12 +17,10 @@ data class ProfileState(
     val moodCounts: List<MoodCountItem> = emptyList(),
     val chartData: List<DailyMoodStat> = emptyList(),
     val chartInsight: String = "Недостаточно данных",
-    val selectedTimeRange: TimeRange = TimeRange.DAY,
     val yearlyProgress: Int = 0,
 ) : UiState
 
 sealed class ProfileEvent : UiEvent {
-    data class OnTimeRangeChanged(val range: TimeRange) : ProfileEvent()
     object OnYearlyStatsClick : ProfileEvent()
     object OnSettingsClick : ProfileEvent()
 }

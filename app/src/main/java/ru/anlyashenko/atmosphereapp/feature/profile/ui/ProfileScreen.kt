@@ -81,8 +81,6 @@ fun ProfileRoute(
         yearlyPercentage = state.yearlyProgress,
         chartData = state.chartData,
         chartInsight = state.chartInsight,
-        selectedTimeRange = state.selectedTimeRange,
-        onTimeRangeChanged = { viewModel.setEvent(ProfileEvent.OnTimeRangeChanged(it)) },
         onYearlyStatsClick = { viewModel.setEvent(ProfileEvent.OnYearlyStatsClick) },
         onSettingsClick = { viewModel.setEvent(ProfileEvent.OnSettingsClick) }
     )
@@ -99,8 +97,6 @@ fun ProfileScreen(
     yearlyPercentage: Int,
     chartData: List<DailyMoodStat>,
     chartInsight: String,
-    selectedTimeRange: TimeRange,
-    onTimeRangeChanged: (TimeRange) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -138,8 +134,6 @@ fun ProfileScreen(
         AverageMoodCard(
             chartData = chartData,
             insightText = chartInsight,
-            selectedRange = selectedTimeRange,
-            onRangeSelected = onTimeRangeChanged,
         )
 
         Spacer(Modifier.height(8.dp))
@@ -285,8 +279,6 @@ fun AverageMoodCard(
     modifier: Modifier = Modifier,
     chartData: List<DailyMoodStat>,
     insightText: String,
-    selectedRange: TimeRange,
-    onRangeSelected: (TimeRange) -> Unit,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -315,7 +307,6 @@ fun AverageMoodCard(
             )
 
             Spacer(Modifier.height(37.dp))
-            TimeToggleSwitch(selectedRange, onRangeSelected)
         }
     }
 }
@@ -408,38 +399,6 @@ fun MoodBarChart(
                         )
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun TimeToggleSwitch(
-    selectedRange: TimeRange,
-    onRangeSelected: (TimeRange) -> Unit
-) {
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        TimeRange.entries.forEach { range ->
-            val isSelected = selectedRange == range
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(50.dp))
-                    .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
-                    .clickable { onRangeSelected(range) }
-                    .padding(horizontal = 25.dp, vertical = 8.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = range.title,
-                    fontSize = 14.sp,
-                    lineHeight = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-                )
             }
         }
     }
