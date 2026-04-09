@@ -55,6 +55,8 @@ import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
+import java.time.format.TextStyle
+import java.util.Locale
 
 // todo: Выровнять текст на карточке "самая самая длинная серия"
 // todo: у "счётчика настроения" сделать одинаковые пропорции
@@ -110,7 +112,7 @@ fun ProfileScreen(
     moodCounts: List<MoodCountItem>,
     yearlyPercentage: Int,
     chartData: List<DailyMoodStat>,
-    chartInsight: String,
+    chartInsight: UiText,
 ) {
     Column(
         modifier = Modifier
@@ -292,7 +294,7 @@ fun LongestStreakCard(
 fun AverageMoodCard(
     modifier: Modifier = Modifier,
     chartData: List<DailyMoodStat>,
-    insightText: String,
+    insightText: UiText,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -313,7 +315,7 @@ fun AverageMoodCard(
 
             Spacer(Modifier.height(12.dp))
             Text(
-                text = insightText,
+                text = insightText.asString(),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 modifier = Modifier.fillMaxWidth(),
@@ -372,6 +374,7 @@ fun MoodBarChart(
             ) {
                 data.forEach { stat ->
                     val targetHeight = stat.level / 5f
+                    val dayName = stat.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                     val animatedHeight by animateFloatAsState(
                         targetValue = if (startAnimation) targetHeight else 0f,
                         animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
@@ -406,7 +409,7 @@ fun MoodBarChart(
                             )
                         }
                         Text(
-                            text = stat.dayName,
+                            text = dayName,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSurface

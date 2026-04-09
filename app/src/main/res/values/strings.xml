@@ -51,6 +51,10 @@
     <string name="yearly_diary_entries_title">Отметок\nв этом\nгоду</string>
     <string name="yearly_streak_title">Серия год</string>
     <string name="yearly_entries_title">Записей в году</string>
+    <string name="profile_not_enough_data">Недостаточно данных</string>
+    <string name="profile_not_enough_data_stats">Недостаточно данных для статистики</string>
+    <string name="profile_insight_pattern">В %1$s у вас чаще всего «%2$s»</string>
+    <string name="profile_fallback_mood">настроение</string>
     <string-array name="calendar_day_labels">
         <item>Пн</item>
         <item>Вт</item>

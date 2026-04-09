@@ -51,6 +51,10 @@
     <string name="yearly_diary_entries_title">Diary entries\nthis year</string>
     <string name="yearly_streak_title">Year streak</string>
     <string name="yearly_entries_title">Entries in year</string>
+    <string name="profile_not_enough_data">Not enough data</string>
+    <string name="profile_not_enough_data_stats">Not enough data for statistics</string>
+    <string name="profile_insight_pattern">On %1$s you usually feel \'%2$s\'</string>
+    <string name="profile_fallback_mood">mood</string>
     <string-array name="calendar_day_labels">
         <item>M</item>
         <item>T</item>
