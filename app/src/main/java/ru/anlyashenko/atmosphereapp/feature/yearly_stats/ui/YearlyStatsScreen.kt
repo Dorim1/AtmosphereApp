@@ -54,7 +54,7 @@ import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
-
+// todo: на карточках "серия года" и "записей в году" выровнять значок под цифры
 @Composable
 fun YearlyStatsScreen(
     modifier: Modifier = Modifier,
@@ -310,7 +310,7 @@ fun EmotionProgressBar(
     percentage: Int,
     modifier: Modifier = Modifier
 ) {
-    val lightBackgroundColor = mood.color.copy(alpha = 0.2f)
+    val lightBackgroundColor = mood.color.copy(alpha = 0.55f)
 
     var targetPercentage by remember { mutableIntStateOf(0) }
 

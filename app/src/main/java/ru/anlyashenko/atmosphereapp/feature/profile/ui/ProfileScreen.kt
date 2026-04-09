@@ -55,6 +55,8 @@ import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 
+// todo: Выровнять текст на карточке "самая самая длинная серия"
+// todo: у "счётчика настроения" сделать одинаковые пропорции
 
 @Composable
 fun ProfileRoute(

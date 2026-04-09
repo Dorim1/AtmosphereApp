@@ -65,6 +65,7 @@ import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
 
+// todo: показывать пользователю где есть запись а где нет
 @Composable
 fun CalendarRoute(
     viewModel: CalendarViewModel = hiltViewModel()
