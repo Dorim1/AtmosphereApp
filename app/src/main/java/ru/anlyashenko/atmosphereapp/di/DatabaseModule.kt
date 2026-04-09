@@ -32,9 +32,11 @@ object DatabaseModule {
             "app_database.db"
         )
         .addCallback(DatabaseCallback(moodDaoProvider, CoroutineScope(Dispatchers.IO)))
+        .fallbackToDestructiveMigration() // TODO: Сделать миграцию
         .build()
     }
 
+    // todo: Возможно не нужен @Singleton
     @Provides
     @Singleton
     fun provideMoodDao(database: AppDatabase): MoodDao {

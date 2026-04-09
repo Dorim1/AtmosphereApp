@@ -4,7 +4,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
@@ -15,8 +14,6 @@ import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileEffect.NavigateToYearlyStats
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -78,7 +75,7 @@ class ProfileViewModel @Inject constructor(
             .sortedBy { it.level }
             .map { mood ->
             MoodCountItem(
-                name = mood.label,
+                name = mood.defaultLabelRes,
                 count = grouped[mood.id] ?: 0,
                 color = mood.color,
             )
@@ -153,7 +150,7 @@ class ProfileViewModel @Inject constructor(
         val bestDay = chartData.maxByOrNull { it.level }
         val insightText = if (bestDay != null && bestDay.level > 0f) {
             val originalLevel = (6f - bestDay.level).roundToInt()
-            val moodLabel = availableMoods.find { it.level == originalLevel }?.label ?: "Настроение"
+            val moodLabel = availableMoods.find { it.level == originalLevel }?.defaultLabelRes ?: "Настроение"
             "В ${bestDay.dayName} у вас чаще всего «$moodLabel»"
         } else {
             "Недостаточно данных"

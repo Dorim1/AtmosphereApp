@@ -8,7 +8,8 @@ import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
 
 fun MoodDBO.toUiModel(): MoodUiModel {
-    val labelResId = when (this.level) {
+    // todo: Возможно переписать под systemKey
+    val defaultLabelRes = when (this.level) {
         1 -> R.string.mood_excellent
         2 -> R.string.mood_good
         3 -> R.string.mood_normal
@@ -17,11 +18,11 @@ fun MoodDBO.toUiModel(): MoodUiModel {
         else -> R.string.mood_normal
     }
 
-    // TODO: Цвета положить в Color.kt
     return MoodUiModel(
         id = this.id,
         level = this.level,
-        label = labelResId,
+        defaultLabelRes = defaultLabelRes,
+        customLabel = this.customName,
         iconRes = MoodIconManager.getIconRes(this.iconKey),
         color = Color(colorHex.toColorInt())
     )

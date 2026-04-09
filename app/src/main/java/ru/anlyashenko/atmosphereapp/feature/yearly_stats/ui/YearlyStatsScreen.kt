@@ -371,7 +371,7 @@ fun EmotionProgressBar(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Text(
-                text = stringResource(mood.label),
+                text = stringResource(mood.defaultLabelRes),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onPrimary
