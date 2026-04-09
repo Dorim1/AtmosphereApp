@@ -49,17 +49,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
@@ -173,6 +174,8 @@ fun DayNoteSection(
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
+    val monthName = selectedDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
+
     if (showDeleteDialog) {
         DeleteConfirmationDialog(
             onDismiss = { showDeleteDialog = false },
@@ -182,9 +185,11 @@ fun DayNoteSection(
 
     Column(modifier = Modifier.padding(start = 16.dp)) {
         Text(
-            text = "Ваша запись в этот день: ${selectedDate.dayOfMonth} ${
-                selectedDate.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale("ru"))
-            }",
+            text = stringResource(
+                R.string.calendar_record_date,
+                selectedDate.dayOfMonth,
+                monthName
+                ),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
@@ -225,7 +230,7 @@ fun DayNoteSection(
             )
         ) {
             Text(
-                text = "Удалить",
+                text = stringResource(R.string.text_delete_button),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal
             )
@@ -260,7 +265,7 @@ fun CalendarPagerCard(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.ChevronLeft,
-                        contentDescription = "Предыдущий месяц",
+                        contentDescription = stringResource(R.string.calendar_desc_previous_button),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -276,7 +281,7 @@ fun CalendarPagerCard(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.ChevronRight,
-                        contentDescription = "Следующий месяц",
+                        contentDescription = stringResource(R.string.calendar_desc_next_button),
                         tint = if (pagerState.currentPage < startPage) MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                     )
@@ -310,7 +315,7 @@ fun CalendarGrid(
     onMonthChanged: (year: Int, month: Month) -> Unit
 ) {
     val today = remember { LocalDate.now() }
-    val dayLabels = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
+    val dayLabels = stringArrayResource(R.array.calendar_day_labels).toList()
 
     LaunchedEffect(pagerState.currentPage) {
         val offset = (pagerState.currentPage - startPage)
@@ -449,7 +454,7 @@ fun CalendarHeaderCard(displayMonth: Month, displayYear: Int) {
         ) {
             Text(
                 text = displayMonth.getDisplayName(
-                    TextStyle.FULL_STANDALONE, Locale("ru")
+                    TextStyle.FULL_STANDALONE, Locale.getDefault()
                 ).replaceFirstChar { it.uppercase() },
                 fontSize = 64.sp,
                 fontWeight = FontWeight.SemiBold

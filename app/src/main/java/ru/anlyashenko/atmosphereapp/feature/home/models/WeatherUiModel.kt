@@ -1,9 +1,11 @@
 package ru.anlyashenko.atmosphereapp.feature.home.models
 
+import androidx.annotation.StringRes
+
 data class WeatherUiModel(
     val cityName: String,
     val temperature: String,
-    val description: String,
+    @param:StringRes val descriptionRes: Int,
     val iconResId: Int,
     val hourlyForecast: List<HourlyWeatherUiModel>
 )

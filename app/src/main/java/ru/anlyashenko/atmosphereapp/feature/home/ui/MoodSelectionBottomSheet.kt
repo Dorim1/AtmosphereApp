@@ -40,9 +40,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +71,7 @@ fun MoodSelectionBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Выбрать настроение",
+                text = stringResource(R.string.mood_sheet_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -104,7 +106,7 @@ fun MoodSelectionBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = "Готово",
+                    text = stringResource(R.string.mood_sheet_confirm),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -138,12 +140,12 @@ fun MoodItemRow(
         ) {
             Icon(
                 painter = painterResource(mood.iconRes),
-                contentDescription = mood.label,
+                contentDescription = stringResource(mood.label),
                 tint = contentColor,
                 modifier = Modifier.size(36.dp)
             )
             Text(
-                text = mood.label,
+                text = stringResource(mood.label),
                 fontSize = 24.sp,
                 color = contentColor,
             )

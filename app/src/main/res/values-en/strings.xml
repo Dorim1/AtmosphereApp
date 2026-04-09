@@ -3,9 +3,52 @@
     <string name="intro_title">Atmosphere</string>
     <string name="intro_subtitle">for those who track their inner weather</string>
     <string name="intro_button">Get started</string>
-    <string name="home_afternoon_greeting">Good afternoon</string>
-    <string name="home_evening_greeting">Good evening</string>
-    <string name="home_night_greeting">Good night</string>
-    <string name="home_morning_greeting">Good morning</string>
-    <string name="home_title_week_section">My Week</string>
+    <string name="text_delete_button">Delete</string>
+    <string name="calendar_desc_previous_button">Previous month</string>
+    <string name="calendar_desc_next_button">Next month</string>
+    <string name="calendar_record_date">Your entry for %2$s %1$d</string>
+    <string name="dialog_delete_title">Delete entry</string>
+    <string name="dialog_delete_icon_desc">Warning</string>
+    <string name="dialog_delete_subtitle">This action cannot be undone</string>
+    <string name="dialog_delete_cancel">No, keep it</string>
+    <string name="dialog_delete_confirm">Yes, delete</string>
+    <string name="weather_clear">Clear</string>
+    <string name="weather_partly_cloudy">Partly cloudy</string>
+    <string name="weather_cloudy">Overcast</string>
+    <string name="weather_foggy">Foggy</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_rain">Rain</string>
+    <string name="weather_snow">Snow</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_hail">Hail</string>
+    <string name="weather_unknown">Unknown</string>
+    <string name="weather_no_data">No weather data</string>
+    <string name="cd_select_mood">Select mood</string>
+    <string name="cd_edit_note">Edit note</string>
+    <string name="action_change_mood">Change\nmood</string>
+    <string name="action_select_mood">Select\nmood</string>
+    <string name="action_add_note">Add\nentry</string>
+    <string name="action_change_note">Edit\nentry</string>
+    <string name="home_day_question">How was your day?</string>
+    <string name="note_dialog_placeholder">Write about your day…</string>
+    <string name="note_dialog_cancel">Cancel</string>
+    <string name="note_dialog_save">Save</string>
+    <string name="mood_sheet_title">Select mood</string>
+    <string name="mood_sheet_confirm">Done</string>
+    <string name="mood_excellent">Excellent</string>
+    <string name="mood_good">Good</string>
+    <string name="mood_normal">Okay</string>
+    <string name="mood_bad">Bad</string>
+    <string name="mood_terrible">Terrible</string>
+    <string-array name="calendar_day_labels">
+        <item>M</item>
+        <item>T</item>
+        <item>W</item>
+        <item>T</item>
+        <item>F</item>
+        <item>S</item>
+        <item>S</item>
+    </string-array>
+
+
 </resources>
