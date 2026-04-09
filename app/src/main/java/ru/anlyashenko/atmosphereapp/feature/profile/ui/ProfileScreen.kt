@@ -5,7 +5,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,12 +51,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 
 // todo: Выровнять текст на карточке "самая самая длинная серия"
 // todo: у "счётчика настроения" сделать одинаковые пропорции
+
+@Composable
+@Preview
+private fun ProfileScreePreview() {
+    AtmosphereAppTheme() {
+        ProfileRoute(
+            onNavigateToSettings = { },
+            onNavigateToYearlyStats = { }
+        )
+    }
+}
 
 @Composable
 fun ProfileRoute(
@@ -113,7 +124,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(9.dp)
         ) {
-            TotalMarkCard(
+            TotalEntriesCard(
                 totalEntries,
                 modifier = Modifier
                     .weight(1f)
@@ -164,7 +175,7 @@ fun ProfileScreen(
 
 
 @Composable
-fun TotalMarkCard(
+fun TotalEntriesCard(
     total: Int,
     modifier: Modifier = Modifier
 ) {
@@ -185,7 +196,7 @@ fun TotalMarkCard(
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = "Всего\nОтметок",
+                    text = stringResource(R.string.profile_total_entries_title),
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 20.sp,
                     lineHeight = 20.sp,
@@ -225,7 +236,7 @@ fun CurrentStreakCard(
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = "Дней\nподряд",
+                    text = stringResource(R.string.profile_current_streak_title),
                     color = MaterialTheme.colorScheme.onSecondary,
                     fontSize = 20.sp,
                     lineHeight = 20.sp,
@@ -267,7 +278,7 @@ fun LongestStreakCard(
             )
             Spacer(Modifier.width(44.dp))
             Text(
-                text = "Самая длинная\nсерия",
+                text = stringResource(R.string.profile_longest_streak_title),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
@@ -292,7 +303,7 @@ fun AverageMoodCard(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 27.dp)
         ) {
             Text(
-                text = "Среднее настроение",
+                text = stringResource(R.string.profile_average_mood_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -424,7 +435,7 @@ fun MoodCounterCard(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Счётчик настроения",
+                text = stringResource(R.string.profile_mood_counter_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -572,7 +583,7 @@ fun LegendItem(
                 .padding(horizontal = 17.dp, vertical = 5.dp)
         ) {
             Text(
-                modifier = Modifier.width(32.dp),
+                modifier = Modifier.width(42.dp),
                 textAlign = TextAlign.Center,
                 text = "$itemPercentage%",
                 fontSize = 15.sp,
@@ -610,7 +621,7 @@ fun YearlyStatsCard(
             )
             Spacer(Modifier.width(44.dp))
             Text(
-                text = "Статистика\nза год",
+                text = stringResource(R.string.profile_yearly_stats_button),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Medium,
@@ -702,7 +713,7 @@ fun SettingsCard(
             )
             Spacer(Modifier.width(44.dp))
             Text(
-                text = "Настройки",
+                text = stringResource(R.string.profile_settings_button),
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Medium,

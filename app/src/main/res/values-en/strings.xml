@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AtmosphereApp</string>
     <string name="intro_title">Atmosphere</string>
-    <string name="intro_subtitle">for those who track their inner weather</string>
+    <string name="intro_subtitle">for those who care about their inner weather</string>
     <string name="intro_button">Get started</string>
     <string name="text_delete_button">Delete</string>
     <string name="calendar_desc_previous_button">Previous month</string>
@@ -40,6 +40,17 @@
     <string name="mood_normal">Okay</string>
     <string name="mood_bad">Bad</string>
     <string name="mood_terrible">Terrible</string>
+    <string name="profile_total_entries_title">Total\nEntries</string>
+    <string name="profile_current_streak_title">Streak\ndays</string>
+    <string name="profile_longest_streak_title">Longest\nstreak</string>
+    <string name="profile_average_mood_title">Average mood</string>
+    <string name="profile_mood_counter_title">Mood tracker</string>
+    <string name="profile_yearly_stats_button">Yearly\nstatistics</string>
+    <string name="profile_settings_button">Settings</string>
+    <string name="yearly_not_enough_data">Not enough data for this year</string>
+    <string name="yearly_diary_entries_title">Diary entries\nthis year</string>
+    <string name="yearly_streak_title">Year streak</string>
+    <string name="yearly_entries_title">Entries in year</string>
     <string-array name="calendar_day_labels">
         <item>M</item>
         <item>T</item>

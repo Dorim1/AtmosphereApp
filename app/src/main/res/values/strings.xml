@@ -40,6 +40,17 @@
     <string name="mood_normal">Нормально</string>
     <string name="mood_bad">Плохо</string>
     <string name="mood_terrible">Ужасно</string>
+    <string name="profile_total_entries_title">Всего\nОтметок</string>
+    <string name="profile_current_streak_title">Дней\nподряд</string>
+    <string name="profile_longest_streak_title">Самая длинная\nсерия</string>
+    <string name="profile_average_mood_title">Среднее настроение</string>
+    <string name="profile_mood_counter_title">Счётчик настроения</string>
+    <string name="profile_yearly_stats_button">Статистика\nза год</string>
+    <string name="profile_settings_button">Настройки</string>
+    <string name="yearly_not_enough_data">Пока мало данных для этого года</string>
+    <string name="yearly_diary_entries_title">Отметок\nв этом\nгоду</string>
+    <string name="yearly_streak_title">Серия год</string>
+    <string name="yearly_entries_title">Записей в году</string>
     <string-array name="calendar_day_labels">
         <item>Пн</item>
         <item>Вт</item>
