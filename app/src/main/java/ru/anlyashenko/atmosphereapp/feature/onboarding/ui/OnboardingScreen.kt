@@ -84,6 +84,7 @@ fun HeaderSection() {
     }
 }
 
+// TODO: Решить проблему в размером кнопки
 @Composable
 fun FooterSection(onGetInClick: () -> Unit) {
     Button(

@@ -3,9 +3,67 @@
     <string name="intro_title" translatable="false">Atmosphere</string>
     <string name="intro_subtitle">для тех, кто следит за своей «внутренней погодой»</string>
     <string name="intro_button">Вперёд</string>
-    <string name="home_afternoon_greeting">Добрый день</string>
-    <string name="home_evening_greeting">Добрый вечер</string>
-    <string name="home_night_greeting">Доброй ночи</string>
-    <string name="home_morning_greeting">Доброе утро</string>
-    <string name="home_title_week_section">Моя Неделя</string>
+    <string name="text_delete_button">Удалить</string>
+    <string name="calendar_desc_previous_button">Предыдущий месяц</string>
+    <string name="calendar_desc_next_button">Следующий месяц</string>
+    <string name="calendar_record_date">Ваша запись в этот день: %1$d %2$s</string>
+    <string name="dialog_delete_title">Удаление записи</string>
+    <string name="dialog_delete_icon_desc">Внимание</string>
+    <string name="dialog_delete_subtitle">Отменить это действие будет невозможно</string>
+    <string name="dialog_delete_cancel">Нет, оставить</string>
+    <string name="dialog_delete_confirm">Да, удалить</string>
+    <string name="weather_clear">Ясно</string>
+    <string name="weather_partly_cloudy">Облачно</string>
+    <string name="weather_cloudy">Пасмурно</string>
+    <string name="weather_foggy">Туман</string>
+    <string name="weather_drizzle">Морось</string>
+    <string name="weather_rain">Дождь</string>
+    <string name="weather_snow">Снег</string>
+    <string name="weather_thunderstorm">Гроза</string>
+    <string name="weather_hail">Град</string>
+    <string name="weather_unknown">Неизвестно</string>
+    <string name="weather_no_data">Нет данных о погоде</string>
+    <string name="cd_select_mood">Выбрать настроение</string>
+    <string name="cd_edit_note">Редактировать запись</string>
+    <string name="action_change_mood">Изменить\nнастроение</string>
+    <string name="action_select_mood">Выбрать\nнастроение</string>
+    <string name="action_add_note">Добавить\nзапись</string>
+    <string name="action_change_note">Изменить\nзапись</string>
+    <string name="home_day_question">Как прошёл ваш день?</string>
+    <string name="note_dialog_placeholder">Напишите как прошёл ваш день…</string>
+    <string name="note_dialog_cancel">Отмена</string>
+    <string name="note_dialog_save">Сохранить</string>
+    <string name="mood_sheet_title">Выбрать настроение</string>
+    <string name="mood_sheet_confirm">Готово</string>
+    <string name="mood_excellent">Отлично</string>
+    <string name="mood_good">Хорошо</string>
+    <string name="mood_normal">Нормально</string>
+    <string name="mood_bad">Плохо</string>
+    <string name="mood_terrible">Ужасно</string>
+    <string name="profile_total_entries_title">Всего\nОтметок</string>
+    <string name="profile_current_streak_title">Дней\nподряд</string>
+    <string name="profile_longest_streak_title">Самая длинная\nсерия</string>
+    <string name="profile_average_mood_title">Среднее настроение</string>
+    <string name="profile_mood_counter_title">Счётчик настроения</string>
+    <string name="profile_yearly_stats_button">Статистика\nза год</string>
+    <string name="profile_settings_button">Настройки</string>
+    <string name="yearly_not_enough_data">Пока мало данных для этого года</string>
+    <string name="yearly_diary_entries_title">Отметок\nв этом\nгоду</string>
+    <string name="yearly_streak_title">Серия год</string>
+    <string name="yearly_entries_title">Записей в году</string>
+    <string name="profile_not_enough_data">Недостаточно данных</string>
+    <string name="profile_not_enough_data_stats">Недостаточно данных для статистики</string>
+    <string name="profile_insight_pattern">В %1$s у вас чаще всего «%2$s»</string>
+    <string name="profile_fallback_mood">настроение</string>
+    <string-array name="calendar_day_labels">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
+
+
 </resources>

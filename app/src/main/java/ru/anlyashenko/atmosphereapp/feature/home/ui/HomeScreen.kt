@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +41,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarViewModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.LocalDate
@@ -151,7 +151,7 @@ fun WeatherCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Нет данных о погоде",
+                    text = stringResource(R.string.weather_no_data),
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Medium
                 )
@@ -184,7 +184,7 @@ fun WeatherSection(weather: WeatherUiModel) {
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = weather.description,
+                        text = stringResource(weather.descriptionRes),
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium
@@ -281,13 +281,15 @@ fun CurrentDayActionRow(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_add_mood),
-                    contentDescription = "Выбрать настроение",
+                    contentDescription = stringResource(R.string.cd_select_mood),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(102.dp)
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = if (hasMood) "Изменить\nнастроение" else "Выбрать\nнастроение",
+                    text = if (hasMood) stringResource(R.string.action_change_mood) else stringResource(
+                        R.string.action_select_mood
+                    ),
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
@@ -311,13 +313,15 @@ fun CurrentDayActionRow(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_edit),
-                    contentDescription = "Выбрать настроение",
+                    contentDescription = stringResource(R.string.cd_edit_note),
                     tint = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier.size(102.dp)
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = if (!hasNote) "Добавить\nзапись" else "Изменить\nзапись",
+                    text = if (!hasNote) stringResource(R.string.action_add_note) else stringResource(
+                        R.string.action_change_note
+                    ),
                     color = MaterialTheme.colorScheme.onSecondary,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
@@ -334,8 +338,8 @@ fun DayEntryCard(
     isToday: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale("ru")) // TODO: Locale - deprecated
-    val formatterMonth = DateTimeFormatter.ofPattern("MMM", Locale("ru"))
+    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()) // TODO: Locale - deprecated
+    val formatterMonth = DateTimeFormatter.ofPattern("MMM", Locale.getDefault())
 
     val dayOfWeek = record.date.format(formatterDayOfWeek).replaceFirstChar { it.uppercase() }
     val dayOfMonth = record.date.dayOfMonth.toString().padStart(2, '0')
@@ -376,7 +380,7 @@ fun DayEntryCard(
             Column(horizontalAlignment = Alignment.End) {
                 if (isToday && !record.hasMood) {
                     Text(
-                        text = "Как прошёл ваш день?",
+                        text = stringResource(R.string.home_day_question),
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Start
@@ -397,7 +401,7 @@ fun DayEntryCard(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .background(
-                                        color = record.mood.color, // TODO: Передавать цвет из модели
+                                        color = record.mood.color,
                                         shape = CircleShape
                                     ),
                                 contentAlignment = Alignment.Center

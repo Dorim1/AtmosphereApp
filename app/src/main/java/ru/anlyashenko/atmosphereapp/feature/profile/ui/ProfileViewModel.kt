@@ -4,8 +4,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
@@ -78,7 +78,7 @@ class ProfileViewModel @Inject constructor(
             .sortedBy { it.level }
             .map { mood ->
             MoodCountItem(
-                name = mood.label,
+                name = mood.defaultLabelRes,
                 count = grouped[mood.id] ?: 0,
                 color = mood.color,
             )
@@ -119,16 +119,15 @@ class ProfileViewModel @Inject constructor(
     private fun calculateChartData(
         records: List<DiaryRecordUiModel>,
         availableMoods: List<MoodUiModel>,
-    ) : Pair<List<DailyMoodStat>, String> {
+    ) : Pair<List<DailyMoodStat>, UiText> {
         val recordsWithMood = records.filter { it.hasMood }
-        val dayNames = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
 
         if (recordsWithMood.isEmpty() || availableMoods.isEmpty()) {
-            val emptyData = dayNames.map { DailyMoodStat(it, 0f, Color.Transparent) }
-            return Pair(emptyData, "Недостаточно данных для статистики")
+            val emptyData = DayOfWeek.entries.map { DailyMoodStat(it, 0f, Color.Transparent) }
+            return Pair(emptyData, UiText.StringResource(R.string.profile_not_enough_data_stats))
         }
 
-        val chartData = DayOfWeek.entries.toTypedArray().mapIndexed { index, dayOfWeek ->
+        val chartData = DayOfWeek.entries.map { dayOfWeek ->
             val daysRecords = recordsWithMood.filter { it.date.dayOfWeek == dayOfWeek }
 
             val avgLevel = if (daysRecords.isNotEmpty()) {
@@ -144,7 +143,7 @@ class ProfileViewModel @Inject constructor(
             val displayLevel = if (avgLevel > 0f) (6f - avgLevel) else 0f
 
             DailyMoodStat(
-                dayName = dayNames[index],
+                dayOfWeek = dayOfWeek,
                 level = displayLevel,
                 color = color
             )
@@ -153,10 +152,25 @@ class ProfileViewModel @Inject constructor(
         val bestDay = chartData.maxByOrNull { it.level }
         val insightText = if (bestDay != null && bestDay.level > 0f) {
             val originalLevel = (6f - bestDay.level).roundToInt()
-            val moodLabel = availableMoods.find { it.level == originalLevel }?.label ?: "Настроение"
-            "В ${bestDay.dayName} у вас чаще всего «$moodLabel»"
+            val mood = availableMoods.find { it.level == originalLevel }
+
+            val localizedDayName = bestDay.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+
+            if (mood != null) {
+                UiText.StringResource(
+                    R.string.profile_insight_pattern,
+                    localizedDayName,
+                    UiText.StringResource(mood.defaultLabelRes)
+                )
+            } else {
+                UiText.StringResource(
+                    R.string.profile_insight_pattern,
+                    localizedDayName,
+                    UiText.StringResource(R.string.profile_fallback_mood)
+                )
+            }
         } else {
-            "Недостаточно данных"
+            UiText.StringResource(R.string.profile_not_enough_data)
         }
 
         return Pair(chartData, insightText)

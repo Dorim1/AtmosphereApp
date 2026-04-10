@@ -12,6 +12,7 @@ import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// todo: Удалить логи
 @Singleton
 class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi,

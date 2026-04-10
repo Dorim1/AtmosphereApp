@@ -14,12 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.SentimentDissatisfied
-import androidx.compose.material.icons.rounded.SentimentNeutral
-import androidx.compose.material.icons.rounded.SentimentSatisfied
-import androidx.compose.material.icons.rounded.SentimentVeryDissatisfied
-import androidx.compose.material.icons.rounded.SentimentVerySatisfied
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,12 +31,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +63,7 @@ fun MoodSelectionBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Выбрать настроение",
+                text = stringResource(R.string.mood_sheet_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -104,7 +98,7 @@ fun MoodSelectionBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = "Готово",
+                    text = stringResource(R.string.mood_sheet_confirm),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -122,6 +116,8 @@ fun MoodItemRow(
     val backgroundColor = if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.background
     val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSurface
 
+    val displayName = mood.customLabel ?: stringResource(id = mood.defaultLabelRes)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,12 +134,12 @@ fun MoodItemRow(
         ) {
             Icon(
                 painter = painterResource(mood.iconRes),
-                contentDescription = mood.label,
+                contentDescription = stringResource(mood.defaultLabelRes),
                 tint = contentColor,
                 modifier = Modifier.size(36.dp)
             )
             Text(
-                text = mood.label,
+                text = displayName,
                 fontSize = 24.sp,
                 color = contentColor,
             )

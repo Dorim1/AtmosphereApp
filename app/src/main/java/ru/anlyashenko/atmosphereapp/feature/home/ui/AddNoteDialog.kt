@@ -31,12 +31,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ru.anlyashenko.atmosphereapp.R
 
 @Composable
 fun AddNoteDialog(
@@ -115,7 +117,7 @@ fun AddNoteDialog(
                             Box(modifier = Modifier.fillMaxSize()) {
                                 if (noteText.isEmpty()) {
                                     Text(
-                                        text = "Напишите как прошёл ваш день...",
+                                        text = stringResource(R.string.note_dialog_placeholder),
                                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                                         fontSize = 18.sp
                                     )
@@ -150,7 +152,7 @@ fun AddNoteDialog(
                         shape = RoundedCornerShape(30.dp)
                     ) {
                         Text(
-                            text = "Отмена",
+                            text = stringResource(R.string.note_dialog_cancel),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -170,7 +172,7 @@ fun AddNoteDialog(
                         shape = RoundedCornerShape(30.dp)
                     ) {
                         Text(
-                            text = "Сохранить",
+                            text = stringResource(R.string.note_dialog_save),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium
                         )

@@ -41,11 +41,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import java.time.LocalDate
@@ -190,7 +192,7 @@ fun YearMatrixCard(
                             val circleSize = if (mood != null) 15.dp else 5.dp
                             val circleColor = when {
                                 mood != null -> mood.color
-                                isFuture -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                                isFuture -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.15f)
                                 else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                             }
 
@@ -200,29 +202,6 @@ fun YearMatrixCard(
                                     .clip(CircleShape)
                                     .background(circleColor)
                             )
-
-                            /*if (color != null) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(15.dp)
-                                        .clip(CircleShape)
-                                        .background(color)
-                                )
-                            } else if (!isFuture) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(5.dp)
-                                        .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
-                                )
-                            } else if (year == today.year) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(5.dp)
-                                        .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
-                                )
-                            }*/
                         }
                     }
                 }
@@ -285,7 +264,7 @@ fun TopMoodsCard(
     Column(modifier = modifier) { // тутатааататататататата
         if (topMoods.isEmpty()) {
             Text(
-                text = "Пока мало данных для этого года",
+                text = stringResource(R.string.yearly_not_enough_data),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 modifier = Modifier.padding(16.dp)
@@ -370,7 +349,7 @@ fun EmotionProgressBar(
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Text(
-                text = mood.label,
+                text = stringResource(mood.defaultLabelRes),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onPrimary
@@ -435,7 +414,7 @@ fun YearlyStatsCards(
                 )
 
                 Text(
-                    text = "Отметок\nв этом\nгоду",
+                    text = stringResource(R.string.yearly_diary_entries_title), // todo: я хуй знает как это перевести
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -448,12 +427,12 @@ fun YearlyStatsCards(
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             SmallStatCard(
-                title = "Серия год",
+                title = stringResource(R.string.yearly_streak_title),
                 value = maxStreak.toString(),
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             SmallStatCard(
-                title = "Записей в году",
+                title = stringResource(R.string.yearly_entries_title),
                 value = finalEntriesCount.toString(),
                 backgroundColor = MaterialTheme.colorScheme.surface
             )

@@ -1,5 +1,8 @@
 package ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui
 
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
