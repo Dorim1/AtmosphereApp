@@ -55,6 +55,34 @@
     <string name="profile_not_enough_data_stats">Недостаточно данных для статистики</string>
     <string name="profile_insight_pattern">В %1$s у вас чаще всего «%2$s»</string>
     <string name="profile_fallback_mood">настроение</string>
+    <string name="settings_back">Назад</string>
+    <string name="settings_title">Настройки</string>
+
+    <string name="settings_notifications_title">Уведомления</string>
+    <string name="settings_notifications_subtitle">Включено</string>
+
+    <string name="settings_appearance_title">Оформление</string>
+    <string name="settings_appearance_system">Системная\nтема</string>
+    <string name="settings_appearance_light">Светлая\nтема</string>
+    <string name="settings_appearance_dark">Темная\nтема</string>
+
+    <string name="settings_palette_title">Палитра</string>
+    <string name="settings_palette_subtitle">Мягкая</string>
+
+    <string name="settings_corners_title">Закругление</string>
+    <string name="settings_corners_subtitle">Умеренное</string>
+
+    <string name="settings_moods_title">Настроения</string>
+    <string name="settings_moods_subtitle">Изменить</string>
+
+    <string name="settings_language_title">Язык</string>
+    <string name="settings_language_subtitle">Русский</string>
+
+    <string name="settings_about_title">О приложении</string>
+    <string name="settings_about_subtitle">Читать</string>
+
+    <string name="settings_appearance_desc">Включите темную тему или выберите автоматически подстраивается под тему, выбранную в настройках устройства.</string>
+
     <string-array name="calendar_day_labels">
         <item>Пн</item>
         <item>Вт</item>

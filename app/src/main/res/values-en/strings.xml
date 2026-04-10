@@ -55,6 +55,35 @@
     <string name="profile_not_enough_data_stats">Not enough data for statistics</string>
     <string name="profile_insight_pattern">On %1$s you usually feel \'%2$s\'</string>
     <string name="profile_fallback_mood">mood</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_subtitle">Enabled</string>
+
+    <string name="settings_appearance_title">Appearance</string>
+    <string name="settings_appearance_system">System</string>
+    <string name="settings_appearance_light">Light</string>
+    <string name="settings_appearance_dark">Dark</string>
+
+    <string name="settings_palette_title">Palette</string>
+    <string name="settings_palette_subtitle">Soft</string>
+
+    <string name="settings_corners_title">Corners</string>
+    <string name="settings_corners_subtitle">Moderate</string>
+
+    <string name="settings_moods_title">Moods</string>
+    <string name="settings_moods_subtitle">Manage</string>
+
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_subtitle">English</string>
+
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_subtitle">Read</string>
+
+    <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
+
+
     <string-array name="calendar_day_labels">
         <item>M</item>
         <item>T</item>

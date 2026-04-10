@@ -16,32 +16,28 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CropFree
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.InsertEmoticon
-import androidx.compose.material.icons.outlined.Language
-import androidx.compose.material.icons.outlined.LightMode
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 
 @Preview
@@ -59,6 +55,11 @@ private fun SettingsScreenPreview() {
 fun SettingsScreen(
     onBackClick: () -> Unit
 ) {
+    var showThemeSheet by remember { mutableStateOf(false) }
+    val currentTheme = ThemeMode.SYSTEM
+
+    var showLanguageDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,7 +75,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBackIosNew,
-                contentDescription = "Назад",
+                contentDescription = stringResource(R.string.settings_back),
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
@@ -83,7 +84,7 @@ fun SettingsScreen(
 
             Spacer(Modifier.width(12.dp))
             Text(
-                text = "Настройки",
+                text = stringResource(R.string.settings_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onBackground
@@ -97,16 +98,36 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
-                title = "Уведомления",
-                subtitle = "Включено",
-                icon = Icons.Outlined.Notifications,
+                title = stringResource(R.string.settings_notifications_title),
+                subtitle = stringResource(R.string.settings_notifications_subtitle),
+                painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
                 onClick = { }
             )
             SettingsItemCard(
-                title = "Оформление",
-                subtitle = "Системное",
-                icon = Icons.Outlined.LightMode,
+                title = stringResource(R.string.settings_appearance_title),
+                subtitle = stringResource(R.string.settings_appearance_system),
+                painter = painterResource(R.drawable.ic_setting_theme),
+                modifier = Modifier.weight(1f),
+                onClick = { showThemeSheet = true }
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            SettingsItemCard(
+                title = stringResource(R.string.settings_palette_title),
+                subtitle = stringResource(R.string.settings_palette_subtitle),
+                painter = painterResource(R.drawable.ic_setting_palette),
+                modifier = Modifier.weight(1f),
+                onClick = { }
+            )
+            SettingsItemCard(
+                title = stringResource(R.string.settings_corners_title),
+                subtitle = stringResource(R.string.settings_corners_subtitle),
+                painter = painterResource(R.drawable.ic_setting_rounded_corner),
                 modifier = Modifier.weight(1f),
                 onClick = { }
             )
@@ -117,38 +138,18 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
-                title = "Палитра",
-                subtitle = "Мягкая",
-                icon = Icons.Outlined.Palette,
+                title = stringResource(R.string.settings_moods_title),
+                subtitle = stringResource(R.string.settings_moods_subtitle),
+                painter = painterResource(R.drawable.ic_setting_edit_mood),
                 modifier = Modifier.weight(1f),
                 onClick = { }
             )
             SettingsItemCard(
-                title = "Закругление",
-                subtitle = "Умеренное",
-                icon = Icons.Outlined.CropFree,
+                title = stringResource(R.string.settings_language_title),
+                subtitle = stringResource(R.string.settings_language_subtitle),
+                painter = painterResource(R.drawable.ic_setting_language),
                 modifier = Modifier.weight(1f),
-                onClick = { }
-            )
-        }
-        Spacer(Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            SettingsItemCard(
-                title = "Настроения",
-                subtitle = "Изменить",
-                icon = Icons.Outlined.InsertEmoticon,
-                modifier = Modifier.weight(1f),
-                onClick = { }
-            )
-            SettingsItemCard(
-                title = "Язык",
-                subtitle = "Русский",
-                icon = Icons.Outlined.Language,
-                modifier = Modifier.weight(1f),
-                onClick = { }
+                onClick = { showLanguageDialog = true }
             )
         }
         Spacer(Modifier.height(12.dp))
@@ -157,9 +158,9 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SettingsItemCard(
-                title = "О приложении",
-                subtitle = "Читать",
-                icon = Icons.Outlined.Info,
+                title = stringResource(R.string.settings_about_title),
+                subtitle = stringResource(R.string.settings_about_subtitle),
+                painter = painterResource(R.drawable.ic_setting_info),
                 modifier = Modifier.weight(1f),
                 onClick = {  }
             )
@@ -168,13 +169,31 @@ fun SettingsScreen(
         Spacer(Modifier.height(48.dp))
 
     }
+
+    if (showThemeSheet) {
+        ThemeSelectionBottomSheet(
+            initialTheme = currentTheme,
+            onDismissRequest = { showThemeSheet = false },
+            onThemeSelected = {  }
+        )
+    }
+
+    if (showLanguageDialog) {
+        LanguageSelectionDialog(
+            initialLanguage = AppLanguage.RUSSIAN,
+            onDismissRequest = { showLanguageDialog = false },
+            onSaveClick = { selectedLanguage ->
+                showLanguageDialog = false
+            }
+        )
+    }
 }
 
 @Composable
 fun SettingsItemCard(
     title: String,
     subtitle: String,
-    icon: ImageVector,
+    painter: Painter,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -218,7 +237,7 @@ fun SettingsItemCard(
             }
 
             Icon(
-                imageVector = icon,
+                painter = painter,
                 contentDescription = title,
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(38.dp)
