@@ -60,6 +60,8 @@ fun SettingsScreen(
 
     var showLanguageDialog by remember { mutableStateOf(false) }
 
+    var showNotificationSheet by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,7 +104,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_notifications_subtitle),
                 painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
-                onClick = { }
+                onClick = { showNotificationSheet = true }
             )
             SettingsItemCard(
                 title = stringResource(R.string.settings_appearance_title),
@@ -184,6 +186,15 @@ fun SettingsScreen(
             onDismissRequest = { showLanguageDialog = false },
             onSaveClick = { selectedLanguage ->
                 showLanguageDialog = false
+            }
+        )
+    }
+
+    if (showNotificationSheet) {
+        NotificationSettingsBottomSheet(
+            onDismissRequest = { showNotificationSheet = false },
+            onSaveRequest = { hour, minute, isEnabled ->
+                showNotificationSheet = false
             }
         )
     }
