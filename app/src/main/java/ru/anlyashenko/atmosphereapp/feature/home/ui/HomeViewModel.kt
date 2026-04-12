@@ -6,8 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.core.utils.Result
-import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepositoryImpl
-import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepositoryImpl
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.domain.repository.WeatherRepository
