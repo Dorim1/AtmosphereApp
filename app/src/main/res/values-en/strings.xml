@@ -82,6 +82,9 @@
     <string name="settings_about_subtitle">Read</string>
 
     <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
+    <string name="duration_picker_confirm_button">Confirm</string>
+    <string name="hour_indicator">h</string>
+    <string name="minute_indicator">m</string>
 
 
     <string-array name="calendar_day_labels">

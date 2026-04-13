@@ -82,6 +82,9 @@
     <string name="settings_about_subtitle">Читать</string>
 
     <string name="settings_appearance_desc">Включите темную тему или выберите автоматически подстраивается под тему, выбранную в настройках устройства.</string>
+    <string name="duration_picker_confirm_button">Продолжить</string>
+    <string name="hour_indicator">ч</string>
+    <string name="minute_indicator">м</string>
 
     <string-array name="calendar_day_labels">
         <item>Пн</item>
