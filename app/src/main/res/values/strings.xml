@@ -85,6 +85,7 @@
     <string name="duration_picker_confirm_button">Продолжить</string>
     <string name="hour_indicator">ч</string>
     <string name="minute_indicator">м</string>
+    <string name="appearance_screen_title">Оформление</string>
 
     <string-array name="calendar_day_labels">
         <item>Пн</item>

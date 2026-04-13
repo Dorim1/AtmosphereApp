@@ -19,4 +19,10 @@ sealed class Destination {
     data object YearlyStatsRoute
     @Serializable
     data object SettingsRoute
+
+    @Serializable
+    data object SettingsAppearanceRoute
+
+    @Serializable
+    data object SettingsEditMoodsRoute
 }

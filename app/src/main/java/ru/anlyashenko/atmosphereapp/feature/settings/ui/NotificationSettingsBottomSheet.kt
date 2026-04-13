@@ -105,16 +105,16 @@ fun NotificationSettingsBottomSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     BaseVerticalWheelPicker(
-                        modifier = Modifier.width(64.dp),
+                        modifier = Modifier.width(128.dp),
                         items = hours,
                         state = hourState,
-                        unfocusedCount = 2,
-                        itemHeight = 48.dp,
+                        unfocusedCount = 1,
+                        itemHeight = 96.dp,
                         focus = {  },
                         content = { index ->
                             Text(
                                 text = hours[index].toString().padStart(2, '0'),
-                                fontSize = 48.sp,
+                                fontSize = 96.sp,
                                 fontWeight = FontWeight.Medium,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
@@ -122,25 +122,25 @@ fun NotificationSettingsBottomSheet(
                         }
                     )
 
-                    VerticalDivider(
-                        modifier = Modifier
-                            .height(128.dp)
-                            .padding(horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
-                        thickness = 1.dp
+                    Text(
+                        text = ":",
+                        fontSize = 96.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
 
                     BaseVerticalWheelPicker(
-                        modifier = Modifier.width(64.dp),
+                        modifier = Modifier.width(128.dp), // todo: Решить как то проблему размера
                         items = minutes,
                         state = minuteState,
-                        unfocusedCount = 2,
-                        itemHeight = 48.dp,
+                        unfocusedCount = 1,
+                        itemHeight = 96.dp,
                         focus = {  },
                         content = { index ->
                             Text(
                                 text = minutes[index].toString().padStart(2, '0'),
-                                fontSize = 48.sp,
+                                fontSize = 96.sp,
                                 fontWeight = FontWeight.Medium,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface

@@ -85,6 +85,7 @@
     <string name="duration_picker_confirm_button">Confirm</string>
     <string name="hour_indicator">h</string>
     <string name="minute_indicator">m</string>
+    <string name="appearance_screen_title">Appearance</string>
 
 
     <string-array name="calendar_day_labels">
