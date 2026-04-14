@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -42,15 +44,14 @@ import ru.anlyashenko.atmosphereapp.R
 
 @Composable
 fun AddNoteDialog(
-    initialText: String,
+    initialText: String = "",
     onDismiss: () -> Unit,
     onSave: (String) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    var noteText by remember() { mutableStateOf(initialText) }
+    var noteText by remember { mutableStateOf(initialText) }
     val maxChar = 250
-
     val isLimitReached = noteText.length == maxChar
 
     LaunchedEffect(Unit) {
@@ -65,8 +66,8 @@ fun AddNoteDialog(
     )
 
     val animatedCounterColor by animateColorAsState(
-        targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
-        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+        targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
+        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
         animationSpec = tween(durationMillis = 300),
         label = "CounterColorAnimation"
     )
@@ -80,25 +81,49 @@ fun AddNoteDialog(
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 19.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Column(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, bottom = 20.dp, start = 20.dp, end = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(
+                    text = stringResource(R.string.add_note_to_day_title),
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(Modifier.height(24.dp))
+
+                Text(
+                    text = "${noteText.length} / $maxChar",
+                    color = animatedCounterColor,
+                    fontSize = 12.sp,
+                    fontWeight = if (isLimitReached) FontWeight.Medium else FontWeight.Normal,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, bottom = 4.dp),
+                    textAlign = TextAlign.Start
+                )
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(228.dp)
+                        .heightIn(min = 56.dp)
                         .border(
                             width = 1.dp,
                             color = animatedBorderColor,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(16.dp)
                         )
                         .background(
                             MaterialTheme.colorScheme.surface,
-                            RoundedCornerShape(8.dp)
+                            RoundedCornerShape(16.dp)
                         )
-                        .padding(13.dp)
+                        .padding(16.dp)
                 ) {
                     BasicTextField(
                         value = noteText,
@@ -106,53 +131,48 @@ fun AddNoteDialog(
                             if (it.length <= maxChar) noteText = it
                         },
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
                             .focusRequester(focusRequester),
                         textStyle = TextStyle(
-                            fontSize = 18.sp,
+                            fontSize = 16.sp,
                             color = MaterialTheme.colorScheme.onSurface
                         ),
                         cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                         decorationBox = { innerTextField ->
-                            Box(modifier = Modifier.fillMaxSize()) {
+                            Box(modifier = Modifier.fillMaxWidth()) {
                                 if (noteText.isEmpty()) {
                                     Text(
                                         text = stringResource(R.string.note_dialog_placeholder),
-                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                        fontSize = 18.sp
+                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                                        fontSize = 16.sp
                                     )
                                 }
                                 innerTextField()
                             }
                         }
                     )
-                    Text(
-                        text = "${noteText.length} / $maxChar",
-                        color = animatedCounterColor,
-                        fontSize = 10.sp,
-                        fontWeight = if (isLimitReached) FontWeight.Medium else FontWeight.Normal,
-                        modifier = Modifier.align(Alignment.BottomEnd)
-                    )
                 }
-                Spacer(Modifier.height(22.dp))
+
+                Spacer(Modifier.height(28.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
                         onClick = onDismiss,
                         modifier = Modifier
                             .weight(1f)
-                            .height(56.dp),
+                            .height(52.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = MaterialTheme.colorScheme.onBackground
+                            containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f),
+                            contentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                         ),
-                        shape = RoundedCornerShape(30.dp)
+                        shape = RoundedCornerShape(30.dp),
+                        elevation = null
                     ) {
                         Text(
-                            text = stringResource(R.string.note_dialog_cancel),
+                            text = stringResource(R.string.text_cancel_button),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -164,15 +184,16 @@ fun AddNoteDialog(
                         },
                         modifier = Modifier
                             .weight(1f)
-                            .height(56.dp),
+                            .height(52.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
-                        shape = RoundedCornerShape(30.dp)
+                        shape = RoundedCornerShape(30.dp),
+                        elevation = null
                     ) {
                         Text(
-                            text = stringResource(R.string.note_dialog_save),
+                            text = stringResource(R.string.text_save_button),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium
                         )

@@ -4,11 +4,11 @@
     <string name="intro_subtitle">для тех, кто следит за своей «внутренней погодой»</string>
     <string name="intro_button">Вперёд</string>
     <string name="text_delete_button">Удалить</string>
-    <string name="calendar_desc_previous_button">Предыдущий месяц</string>
-    <string name="calendar_desc_next_button">Следующий месяц</string>
+    <string name="cd_previous_button">Предыдущий месяц</string>
+    <string name="cd_next_button">Следующий месяц</string>
     <string name="calendar_record_date">Ваша запись в этот день: %1$d %2$s</string>
     <string name="dialog_delete_title">Удаление записи</string>
-    <string name="dialog_delete_icon_desc">Внимание</string>
+    <string name="cd_dialog_delete">Внимание</string>
     <string name="dialog_delete_subtitle">Отменить это действие будет невозможно</string>
     <string name="dialog_delete_cancel">Нет, оставить</string>
     <string name="dialog_delete_confirm">Да, удалить</string>
@@ -31,10 +31,10 @@
     <string name="action_change_note">Изменить\nзапись</string>
     <string name="home_day_question">Как прошёл ваш день?</string>
     <string name="note_dialog_placeholder">Напишите как прошёл ваш день…</string>
-    <string name="note_dialog_cancel">Отмена</string>
-    <string name="note_dialog_save">Сохранить</string>
+    <string name="text_cancel_button">Отмена</string>
+    <string name="text_save_button">Сохранить</string>
     <string name="mood_sheet_title">Выбрать настроение</string>
-    <string name="mood_sheet_confirm">Готово</string>
+    <string name="text_confirm_button">Готово</string>
     <string name="mood_excellent">Отлично</string>
     <string name="mood_good">Хорошо</string>
     <string name="mood_normal">Нормально</string>
@@ -48,14 +48,14 @@
     <string name="profile_yearly_stats_button">Статистика\nза год</string>
     <string name="profile_settings_button">Настройки</string>
     <string name="yearly_not_enough_data">Пока мало данных для этого года</string>
-    <string name="yearly_diary_entries_title">Отметок\nв этом\nгоду</string>
+    <string name="yearly_mood_entries_title">Отметок\nв этом\nгоду</string>
     <string name="yearly_streak_title">Серия год</string>
-    <string name="yearly_entries_title">Записей в году</string>
+    <string name="yearly_notes_title">Записей в году</string>
     <string name="profile_not_enough_data">Недостаточно данных</string>
     <string name="profile_not_enough_data_stats">Недостаточно данных для статистики</string>
     <string name="profile_insight_pattern">В %1$s у вас чаще всего «%2$s»</string>
     <string name="profile_fallback_mood">настроение</string>
-    <string name="settings_back">Назад</string>
+    <string name="cd_settings_back">Назад</string>
     <string name="settings_title">Настройки</string>
 
     <string name="settings_notifications_title">Уведомления</string>
@@ -86,6 +86,7 @@
     <string name="hour_indicator">ч</string>
     <string name="minute_indicator">м</string>
     <string name="appearance_screen_title">Оформление</string>
+    <string name="add_note_to_day_title">Добавить заметку ко дню</string>
 
     <string-array name="calendar_day_labels">
         <item>Пн</item>

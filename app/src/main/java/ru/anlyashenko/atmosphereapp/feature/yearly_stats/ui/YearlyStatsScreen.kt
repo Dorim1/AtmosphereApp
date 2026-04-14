@@ -48,7 +48,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import java.time.LocalDate
 import java.time.Year.isLeap
@@ -407,14 +408,14 @@ fun YearlyStatsCards(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = marksCount.toString(),
+                    text = marksCount.toTwoDigits(),
                     fontSize = 86.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
                 Text(
-                    text = stringResource(R.string.yearly_diary_entries_title), // todo: я хуй знает как это перевести
+                    text = stringResource(R.string.yearly_mood_entries_title), // todo: я хуй знает как это перевести
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -428,12 +429,12 @@ fun YearlyStatsCards(
         ) {
             SmallStatCard(
                 title = stringResource(R.string.yearly_streak_title),
-                value = maxStreak.toString(),
+                value = maxStreak.toTwoDigits(),
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             SmallStatCard(
-                title = stringResource(R.string.yearly_entries_title),
-                value = finalEntriesCount.toString(),
+                title = stringResource(R.string.yearly_notes_title),
+                value = finalEntriesCount.toTwoDigits(),
                 backgroundColor = MaterialTheme.colorScheme.surface
             )
         }

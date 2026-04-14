@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel

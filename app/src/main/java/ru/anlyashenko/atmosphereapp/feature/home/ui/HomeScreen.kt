@@ -338,7 +338,7 @@ fun DayEntryCard(
     isToday: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()) // TODO: Locale - deprecated
+    val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE", Locale.getDefault())
     val formatterMonth = DateTimeFormatter.ofPattern("MMM", Locale.getDefault())
 
     val dayOfWeek = record.date.format(formatterDayOfWeek).replaceFirstChar { it.uppercase() }

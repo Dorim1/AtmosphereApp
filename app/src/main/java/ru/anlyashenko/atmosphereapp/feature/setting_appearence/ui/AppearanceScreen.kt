@@ -88,7 +88,7 @@ fun AppearanceScreen(
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBackIosNew,
-                contentDescription = stringResource(R.string.settings_back),
+                contentDescription = stringResource(R.string.cd_settings_back),
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))

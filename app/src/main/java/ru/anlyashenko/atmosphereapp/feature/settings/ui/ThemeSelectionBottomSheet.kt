@@ -129,7 +129,7 @@ fun ThemeSelectionBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.mood_sheet_confirm),
+                    text = stringResource(R.string.text_confirm_button),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )

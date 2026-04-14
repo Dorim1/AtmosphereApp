@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.core.design_system.elements
+package ru.anlyashenko.atmosphereapp.core.design_system.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

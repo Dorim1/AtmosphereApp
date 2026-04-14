@@ -60,7 +60,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.DragHandle
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
@@ -265,7 +265,7 @@ fun CalendarPagerCard(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.ChevronLeft,
-                        contentDescription = stringResource(R.string.calendar_desc_previous_button),
+                        contentDescription = stringResource(R.string.cd_previous_button),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -281,7 +281,7 @@ fun CalendarPagerCard(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.ChevronRight,
-                        contentDescription = stringResource(R.string.calendar_desc_next_button),
+                        contentDescription = stringResource(R.string.cd_next_button),
                         tint = if (pagerState.currentPage < startPage) MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                     )

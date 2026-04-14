@@ -6,7 +6,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.NavigationBar2
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar2
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 
 @AndroidEntryPoint

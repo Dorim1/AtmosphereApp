@@ -19,7 +19,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,9 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.BaseVerticalWheelPicker
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.WheelPickerFocusVertical
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.rememberWheelPickerState
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.BaseVerticalWheelPicker
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.rememberWheelPickerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,10 +72,10 @@ fun NotificationSettingsBottomSheet(
 
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Приложение будет отправлять напоминания только в указанный интервал, чтобы не отвлекать вас в неподходящие моменты.",
-                fontSize = 12.sp,
+                text = "Приложение будет отправлять напоминания только в указанное время, чтобы не отвлекать вас в неподходящие моменты.",
+                fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                lineHeight = 12.sp
+                lineHeight = 14.sp
             )
 
             Spacer(Modifier.height(32.dp))
@@ -171,8 +169,8 @@ fun NotificationSettingsBottomSheet(
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
                         checkedTrackColor = MaterialTheme.colorScheme.primary,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.primary,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.surface,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                         uncheckedBorderColor = Color.Transparent
                     )
                 )
