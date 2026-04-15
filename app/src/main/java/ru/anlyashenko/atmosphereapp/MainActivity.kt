@@ -3,8 +3,11 @@ package ru.anlyashenko.atmosphereapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.LocalContext
 import dagger.hilt.android.AndroidEntryPoint
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar2
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
@@ -26,6 +29,7 @@ class MainActivity : ComponentActivity() {
                 NavigationBar2()
             }
         }
+
     }
 }
 

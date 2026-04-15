@@ -5,8 +5,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.anlyashenko.atmosphereapp.data.repository.DiaryRepositoryImpl
+import ru.anlyashenko.atmosphereapp.data.repository.SettingRepositoryImpl
 import ru.anlyashenko.atmosphereapp.data.repository.WeatherRepositoryImpl
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
+import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import ru.anlyashenko.atmosphereapp.domain.repository.WeatherRepository
 
 @Module
@@ -22,4 +24,9 @@ interface RepositoryModule {
     fun bindWeatherRepository(
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
+
+    @Binds
+    fun bindSettingsRepository(
+        settingsRepositoryImpl: SettingRepositoryImpl
+    ): SettingsRepository
 }

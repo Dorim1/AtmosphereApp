@@ -1,5 +1,8 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,23 +26,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationScheduler
 
 @Preview
 @Composable
@@ -56,16 +61,40 @@ private fun SettingsScreenPreview() {
 
 @Composable
 fun SettingsScreen(
+    viewModel: SettingsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNavigateToAppearance: () -> Unit,
     onNavigateToEditMoods: () -> Unit
 ) {
-    val currentTheme = ThemeMode.SYSTEM
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var showLanguageDialog by remember { mutableStateOf(false) }
+    // todo: перенести на активити или на homeScreen
+    val context = LocalContext.current
 
-    var showNotificationSheet by remember { mutableStateOf(false) }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        viewModel.setEvent(SettingsEvent.OnPermissionResult(isGranted))
+    }
 
+    LaunchedEffect(viewModel.effect) {
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
+                is SettingsEffect.NavigateBack -> onBackClick()
+                is SettingsEffect.NavigateToAppearance -> onNavigateToAppearance()
+                is SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
+                is SettingsEffect.RequestNotificationPermission -> {
+                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+                is SettingsEffect.ScheduleNotification -> {
+                    NotificationScheduler.scheduleDailyReminder(context, effect.hour, effect.minute)
+                }
+                is SettingsEffect.CancelNotification -> {
+                    NotificationScheduler.cancelReminder(context)
+                }
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -97,8 +126,6 @@ fun SettingsScreen(
             )
         }
 
-
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -108,14 +135,14 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_notifications_subtitle),
                 painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
-                onClick = { showNotificationSheet = true }
+                onClick = { viewModel.setEvent(SettingsEvent.OpenNotificationSheet) }
             )
             SettingsItemCard(
                 title = stringResource(R.string.settings_appearance_title),
                 subtitle = stringResource(R.string.settings_appearance_system),
                 painter = painterResource(R.drawable.ic_setting_theme),
                 modifier = Modifier.weight(1f),
-                onClick = { onNavigateToAppearance() }
+                onClick = { viewModel.setEvent(SettingsEvent.OnAppearanceClick) }
             )
         }
         Spacer(Modifier.height(12.dp))
@@ -128,7 +155,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_moods_subtitle),
                 painter = painterResource(R.drawable.ic_setting_palette),
                 modifier = Modifier.weight(1f),
-                onClick = { onNavigateToEditMoods() }
+                onClick = { viewModel.setEvent(SettingsEvent.OnEditMoodsClick) }
             )
 
             SettingsItemCard(
@@ -136,7 +163,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_language_subtitle),
                 painter = painterResource(R.drawable.ic_setting_language),
                 modifier = Modifier.weight(1f),
-                onClick = { showLanguageDialog = true }
+                onClick = { viewModel.setEvent(SettingsEvent.OpenLanguageDialog) }
             )
 
         }
@@ -158,21 +185,27 @@ fun SettingsScreen(
 
     }
 
-    if (showLanguageDialog) {
+    if (state.showLanguageDialog) {
         LanguageSelectionDialog(
             initialLanguage = AppLanguage.RUSSIAN,
-            onDismissRequest = { showLanguageDialog = false },
+            onDismissRequest = { viewModel.setEvent(SettingsEvent.DismissDialogs) },
             onSaveClick = { selectedLanguage ->
-                showLanguageDialog = false
+                // TODO: Ивент сохранения языка
+                viewModel.setEvent(SettingsEvent.DismissDialogs)
             }
         )
     }
 
-    if (showNotificationSheet) {
+    if (state.showNotificationSheet && !state.isLoading) {
         NotificationSettingsBottomSheet(
-            onDismissRequest = { showNotificationSheet = false },
-            onSaveRequest = { hour, minute, isEnabled ->
-                showNotificationSheet = false
+            initialEnabled = state.isNotificationsEnabled,
+            initialHour = state.notificationHour,
+            initialMinute = state.notificationMinute,
+            onDismissRequest = { viewModel.setEvent(SettingsEvent.DismissDialogs) },
+            onSaveRequest = { selectedHour, selectedMinute, isEnabled ->
+                viewModel.setEvent(
+                    SettingsEvent.SaveNotificationSettings(isEnabled, selectedHour, selectedMinute)
+                )
             }
         )
     }
