@@ -40,7 +40,7 @@ class ProfileViewModel @Inject constructor(
             ) { records, availableMoods ->
                 Pair(records, availableMoods)
             }.collect { (records, availableMoods) ->
-                val total = records.size
+                val total = records.count { it.hasMood }
 
                 val sortedDates = records.map { it.date }.sortedDescending()
                 val (currentStreak, longestStreak) = calculateStreaks(sortedDates)

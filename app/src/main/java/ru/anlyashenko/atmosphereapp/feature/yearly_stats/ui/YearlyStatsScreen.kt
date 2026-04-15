@@ -129,6 +129,7 @@ fun YearlyStatsScreen(
         YearlyStatsCards(
             year = displayYear,
             moodMap = moodMap,
+            notesCount = state.records.count { it.date.year == displayYear && it.hasNote }
         )
         Spacer(Modifier.height(6.dp))
     }
@@ -262,7 +263,7 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
-    Column(modifier = modifier) { // тутатааататататататата
+    Column(modifier = modifier) {
         if (topMoods.isEmpty()) {
             Text(
                 text = stringResource(R.string.yearly_not_enough_data),
@@ -364,7 +365,7 @@ fun YearlyStatsCards(
     modifier: Modifier = Modifier,
     year: Int,
     moodMap: Map<LocalDate, MoodUiModel>,
-    entriesCount: Int? = null,
+    notesCount: Int,
 ) {
     val (marksCount, maxStreak) = remember(year, moodMap) {
         val datesInYear = moodMap.keys.filter { it.year == year }.sorted()
@@ -388,7 +389,6 @@ fun YearlyStatsCards(
         Pair(datesInYear.size, localMaxStreak)
     }
 
-    val finalEntriesCount = entriesCount ?: marksCount
 
     Row(
         modifier = modifier
@@ -434,7 +434,7 @@ fun YearlyStatsCards(
             )
             SmallStatCard(
                 title = stringResource(R.string.yearly_notes_title),
-                value = finalEntriesCount.toTwoDigits(),
+                value = notesCount.toTwoDigits(),
                 backgroundColor = MaterialTheme.colorScheme.surface
             )
         }

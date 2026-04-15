@@ -235,7 +235,7 @@ fun CurrentStreakCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier.size(48.dp),
-                    imageVector = Icons.Rounded.LocalFireDepartment,
+                    imageVector = Icons.Rounded.LocalFireDepartment, // todo: Заменить
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSecondary,
                 )
