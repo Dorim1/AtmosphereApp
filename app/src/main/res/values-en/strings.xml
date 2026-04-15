@@ -1,17 +1,31 @@
 <resources>
     <string name="app_name">AtmosphereApp</string>
+
+    <!--  IntroScreen  -->
     <string name="intro_title">Atmosphere</string>
     <string name="intro_subtitle">for those who care about their inner weather</string>
     <string name="intro_button">Get started</string>
+
+    <!--  Universal  -->
     <string name="text_delete_button">Delete</string>
-    <string name="calendar_desc_previous_button">Previous month</string>
-    <string name="calendar_desc_next_button">Next month</string>
+    <string name="text_cancel_button">Cancel</string>
+    <string name="text_save_button">Save</string>
+    <string name="text_confirm_button">Done</string>
+
+
+    <!--  CalendarScreen  -->
+    <string name="cd_previous_button">Previous month</string>
+    <string name="cd_next_button">Next month</string>
+
     <string name="calendar_record_date">Your entry for %2$s %1$d</string>
+
     <string name="dialog_delete_title">Delete entry</string>
-    <string name="dialog_delete_icon_desc">Warning</string>
+    <string name="cd_dialog_delete">Warning</string>
     <string name="dialog_delete_subtitle">This action cannot be undone</string>
     <string name="dialog_delete_cancel">No, keep it</string>
     <string name="dialog_delete_confirm">Yes, delete</string>
+
+    <!--  HomeScreen  -->
     <string name="weather_clear">Clear</string>
     <string name="weather_partly_cloudy">Partly cloudy</string>
     <string name="weather_cloudy">Overcast</string>
@@ -23,23 +37,28 @@
     <string name="weather_hail">Hail</string>
     <string name="weather_unknown">Unknown</string>
     <string name="weather_no_data">No weather data</string>
+
     <string name="cd_select_mood">Select mood</string>
     <string name="cd_edit_note">Edit note</string>
+
     <string name="action_change_mood">Change\nmood</string>
     <string name="action_select_mood">Select\nmood</string>
-    <string name="action_add_note">Add\nentry</string>
-    <string name="action_change_note">Edit\nentry</string>
+    <string name="action_add_note">Add\nnote</string>
+    <string name="action_change_note">Edit\nnote</string>
     <string name="home_day_question">How was your day?</string>
+
     <string name="note_dialog_placeholder">Write about your day…</string>
-    <string name="note_dialog_cancel">Cancel</string>
-    <string name="note_dialog_save">Save</string>
+
     <string name="mood_sheet_title">Select mood</string>
-    <string name="mood_sheet_confirm">Done</string>
     <string name="mood_excellent">Excellent</string>
     <string name="mood_good">Good</string>
     <string name="mood_normal">Okay</string>
     <string name="mood_bad">Bad</string>
     <string name="mood_terrible">Terrible</string>
+
+    <string name="add_note_to_day_title">Add a note for the day</string>
+
+    <!--  ProfileScreen  -->
     <string name="profile_total_entries_title">Total\nEntries</string>
     <string name="profile_current_streak_title">Streak\ndays</string>
     <string name="profile_longest_streak_title">Longest\nstreak</string>
@@ -47,16 +66,21 @@
     <string name="profile_mood_counter_title">Mood tracker</string>
     <string name="profile_yearly_stats_button">Yearly\nstatistics</string>
     <string name="profile_settings_button">Settings</string>
-    <string name="yearly_not_enough_data">Not enough data for this year</string>
-    <string name="yearly_diary_entries_title">Diary entries\nthis year</string>
-    <string name="yearly_streak_title">Year streak</string>
-    <string name="yearly_entries_title">Entries in year</string>
+    <string name="profile_insight_pattern">On %1$s you usually feel \'%2$s\'</string>
     <string name="profile_not_enough_data">Not enough data</string>
     <string name="profile_not_enough_data_stats">Not enough data for statistics</string>
-    <string name="profile_insight_pattern">On %1$s you usually feel \'%2$s\'</string>
     <string name="profile_fallback_mood">mood</string>
-    <string name="settings_back">Back</string>
+
+    <!--  YearlyScreen  -->
+    <string name="yearly_not_enough_data">Not enough data for this year</string>
+    <string name="yearly_mood_entries_title">Mood entries\nthis year</string>
+    <string name="yearly_streak_title">Year streak</string>
+    <string name="yearly_notes_title">Notes this year</string>
+
+    <!--  SettingsScreen  -->
     <string name="settings_title">Settings</string>
+
+    <string name="cd_settings_back">Back</string>
 
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_subtitle">Enabled</string>
@@ -82,10 +106,13 @@
     <string name="settings_about_subtitle">Read</string>
 
     <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
-    <string name="duration_picker_confirm_button">Confirm</string>
     <string name="hour_indicator">h</string>
     <string name="minute_indicator">m</string>
 
+    <!--  AppearanceScreen  -->
+    <string name="appearance_screen_title">Appearance</string>
+
+    <string name="duration_picker_confirm_button">Confirm</string>
 
     <string-array name="calendar_day_labels">
         <item>M</item>

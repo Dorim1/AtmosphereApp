@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
@@ -127,7 +128,6 @@ fun LanguageSelectionDialog(
     }
 }
 
-// todo: нормально сделать contentColor
 @Composable
 fun LanguageOptionItem(
     text: String,
@@ -135,7 +135,7 @@ fun LanguageOptionItem(
     onClick: () -> Unit
 ) {
     val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
-    val borderColor = if (isSelected) Color.Transparent else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+    val borderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
     val contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
 
     Surface(
@@ -145,7 +145,7 @@ fun LanguageOptionItem(
             .height(48.dp),
         shape = RoundedCornerShape(50.dp),
         color = backgroundColor,
-        border = BorderStroke(1.dp, borderColor),
+        border = if (isSelected) null else BorderStroke(1.dp, borderColor),
         contentColor = contentColor
     ) {
         Row(
@@ -159,13 +159,15 @@ fun LanguageOptionItem(
                 text = text,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
-                color = contentColor
             )
 
             RadioButton(
                 selected = isSelected,
                 onClick = onClick,
-                colors = RadioButtonDefaults.colors(contentColor, contentColor)
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                )
             )
         }
     }

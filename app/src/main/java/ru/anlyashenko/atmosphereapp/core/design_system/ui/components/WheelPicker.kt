@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.core.design_system.elements.components
+package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
 
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec

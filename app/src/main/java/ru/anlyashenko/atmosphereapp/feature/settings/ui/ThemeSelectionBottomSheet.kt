@@ -37,10 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
-
-enum class ThemeMode {
-    SYSTEM, LIGHT, DARK
-}
+import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -132,7 +129,7 @@ fun ThemeSelectionBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.mood_sheet_confirm),
+                    text = stringResource(R.string.text_confirm_button),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )

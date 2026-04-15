@@ -14,6 +14,8 @@ import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
+import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.AppearanceScreen
+import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui.EditMoodsScreen
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 
@@ -71,7 +73,6 @@ fun AppNavHost(
             HomeScreen()
         }
 
-        // Мок-данные
         composable<Destination.CalendarRoute>(
             enterTransition = { EnterTransition.None },
             exitTransition = { ExitTransition.None },
@@ -101,6 +102,26 @@ fun AppNavHost(
 
         composable<Destination.SettingsRoute> {
             SettingsScreen(
+                onNavigateToAppearance = { navHostController.navigate(Destination.SettingsAppearanceRoute) },
+                onNavigateToEditMoods = { navHostController.navigate(Destination.SettingsEditMoodsRoute) },
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
+
+        composable<Destination.SettingsAppearanceRoute> {
+            AppearanceScreen(
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
+
+        composable<Destination.SettingsEditMoodsRoute> {
+            EditMoodsScreen(
+                onReplaceClick = {},
+                onEditMoodClick = {},
                 onBackClick = {
                     navHostController.popBackStack()
                 }

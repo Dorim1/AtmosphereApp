@@ -39,13 +39,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
 
 @Preview
 @Composable
 private fun SettingsScreenPreview() {
     AtmosphereAppTheme() {
         SettingsScreen(
-            onBackClick = {}
+            onNavigateToAppearance = {},
+            onNavigateToEditMoods = {},
+            onBackClick = {},
         )
     }
 
@@ -53,9 +56,10 @@ private fun SettingsScreenPreview() {
 
 @Composable
 fun SettingsScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onNavigateToAppearance: () -> Unit,
+    onNavigateToEditMoods: () -> Unit
 ) {
-    var showThemeSheet by remember { mutableStateOf(false) }
     val currentTheme = ThemeMode.SYSTEM
 
     var showLanguageDialog by remember { mutableStateOf(false) }
@@ -77,7 +81,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBackIosNew,
-                contentDescription = stringResource(R.string.settings_back),
+                contentDescription = stringResource(R.string.cd_settings_back),
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
@@ -111,27 +115,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_appearance_system),
                 painter = painterResource(R.drawable.ic_setting_theme),
                 modifier = Modifier.weight(1f),
-                onClick = { showThemeSheet = true }
-            )
-        }
-        Spacer(Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            SettingsItemCard(
-                title = stringResource(R.string.settings_palette_title),
-                subtitle = stringResource(R.string.settings_palette_subtitle),
-                painter = painterResource(R.drawable.ic_setting_palette),
-                modifier = Modifier.weight(1f),
-                onClick = { }
-            )
-            SettingsItemCard(
-                title = stringResource(R.string.settings_corners_title),
-                subtitle = stringResource(R.string.settings_corners_subtitle),
-                painter = painterResource(R.drawable.ic_setting_rounded_corner),
-                modifier = Modifier.weight(1f),
-                onClick = { }
+                onClick = { onNavigateToAppearance() }
             )
         }
         Spacer(Modifier.height(12.dp))
@@ -142,10 +126,11 @@ fun SettingsScreen(
             SettingsItemCard(
                 title = stringResource(R.string.settings_moods_title),
                 subtitle = stringResource(R.string.settings_moods_subtitle),
-                painter = painterResource(R.drawable.ic_setting_edit_mood),
+                painter = painterResource(R.drawable.ic_setting_palette),
                 modifier = Modifier.weight(1f),
-                onClick = { }
+                onClick = { onNavigateToEditMoods() }
             )
+
             SettingsItemCard(
                 title = stringResource(R.string.settings_language_title),
                 subtitle = stringResource(R.string.settings_language_subtitle),
@@ -153,6 +138,7 @@ fun SettingsScreen(
                 modifier = Modifier.weight(1f),
                 onClick = { showLanguageDialog = true }
             )
+
         }
         Spacer(Modifier.height(12.dp))
         Row(
@@ -170,14 +156,6 @@ fun SettingsScreen(
         }
         Spacer(Modifier.height(48.dp))
 
-    }
-
-    if (showThemeSheet) {
-        ThemeSelectionBottomSheet(
-            initialTheme = currentTheme,
-            onDismissRequest = { showThemeSheet = false },
-            onThemeSelected = {  }
-        )
     }
 
     if (showLanguageDialog) {

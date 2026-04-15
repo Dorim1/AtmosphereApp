@@ -1,10 +1,8 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
@@ -21,6 +18,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -98,7 +97,7 @@ fun MoodSelectionBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.mood_sheet_confirm),
+                    text = stringResource(R.string.text_confirm_button),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -145,27 +144,14 @@ fun MoodItemRow(
             )
         }
 
-        Box(
-            modifier = Modifier
-                .size(24.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = CircleShape
-                )
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    shape = CircleShape
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            if (isSelected) {
-                Box(
-                    modifier = Modifier
-                        .size(15.dp)
-                        .background(mood.color, CircleShape)
-                )
-            }
-        }
+        RadioButton(
+            selected = isSelected,
+            onClick = onClick,
+            modifier = Modifier.size(24.dp),
+            colors = RadioButtonDefaults.colors(
+                selectedColor = mood.color,
+                unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+            )
+        )
     }
 }

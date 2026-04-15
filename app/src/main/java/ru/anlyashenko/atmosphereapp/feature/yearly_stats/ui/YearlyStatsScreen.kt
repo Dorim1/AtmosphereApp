@@ -48,7 +48,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.DragHandle
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import java.time.LocalDate
 import java.time.Year.isLeap
@@ -128,6 +129,7 @@ fun YearlyStatsScreen(
         YearlyStatsCards(
             year = displayYear,
             moodMap = moodMap,
+            notesCount = state.records.count { it.date.year == displayYear && it.hasNote }
         )
         Spacer(Modifier.height(6.dp))
     }
@@ -261,7 +263,7 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
-    Column(modifier = modifier) { // тутатааататататататата
+    Column(modifier = modifier) {
         if (topMoods.isEmpty()) {
             Text(
                 text = stringResource(R.string.yearly_not_enough_data),
@@ -363,7 +365,7 @@ fun YearlyStatsCards(
     modifier: Modifier = Modifier,
     year: Int,
     moodMap: Map<LocalDate, MoodUiModel>,
-    entriesCount: Int? = null,
+    notesCount: Int,
 ) {
     val (marksCount, maxStreak) = remember(year, moodMap) {
         val datesInYear = moodMap.keys.filter { it.year == year }.sorted()
@@ -387,7 +389,6 @@ fun YearlyStatsCards(
         Pair(datesInYear.size, localMaxStreak)
     }
 
-    val finalEntriesCount = entriesCount ?: marksCount
 
     Row(
         modifier = modifier
@@ -407,14 +408,14 @@ fun YearlyStatsCards(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = marksCount.toString(),
+                    text = marksCount.toTwoDigits(),
                     fontSize = 86.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
                 Text(
-                    text = stringResource(R.string.yearly_diary_entries_title), // todo: я хуй знает как это перевести
+                    text = stringResource(R.string.yearly_mood_entries_title), // todo: я хуй знает как это перевести
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -428,12 +429,12 @@ fun YearlyStatsCards(
         ) {
             SmallStatCard(
                 title = stringResource(R.string.yearly_streak_title),
-                value = maxStreak.toString(),
+                value = maxStreak.toTwoDigits(),
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             SmallStatCard(
-                title = stringResource(R.string.yearly_entries_title),
-                value = finalEntriesCount.toString(),
+                title = stringResource(R.string.yearly_notes_title),
+                value = notesCount.toTwoDigits(),
                 backgroundColor = MaterialTheme.colorScheme.surface
             )
         }

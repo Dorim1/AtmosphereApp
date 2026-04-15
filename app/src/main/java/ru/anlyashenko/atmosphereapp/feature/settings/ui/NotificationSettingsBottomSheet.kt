@@ -19,7 +19,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,9 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.BaseVerticalWheelPicker
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.WheelPickerFocusVertical
-import ru.anlyashenko.atmosphereapp.core.design_system.elements.components.rememberWheelPickerState
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.BaseVerticalWheelPicker
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.rememberWheelPickerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,10 +72,10 @@ fun NotificationSettingsBottomSheet(
 
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Приложение будет отправлять напоминания только в указанный интервал, чтобы не отвлекать вас в неподходящие моменты.",
-                fontSize = 12.sp,
+                text = "Приложение будет отправлять напоминания только в указанное время, чтобы не отвлекать вас в неподходящие моменты.",
+                fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                lineHeight = 12.sp
+                lineHeight = 14.sp
             )
 
             Spacer(Modifier.height(32.dp))
@@ -105,16 +103,16 @@ fun NotificationSettingsBottomSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     BaseVerticalWheelPicker(
-                        modifier = Modifier.width(64.dp),
+                        modifier = Modifier.width(128.dp),
                         items = hours,
                         state = hourState,
-                        unfocusedCount = 2,
-                        itemHeight = 48.dp,
+                        unfocusedCount = 1,
+                        itemHeight = 96.dp,
                         focus = {  },
                         content = { index ->
                             Text(
                                 text = hours[index].toString().padStart(2, '0'),
-                                fontSize = 48.sp,
+                                fontSize = 96.sp,
                                 fontWeight = FontWeight.Medium,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
@@ -122,25 +120,25 @@ fun NotificationSettingsBottomSheet(
                         }
                     )
 
-                    VerticalDivider(
-                        modifier = Modifier
-                            .height(128.dp)
-                            .padding(horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
-                        thickness = 1.dp
+                    Text(
+                        text = ":",
+                        fontSize = 96.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
 
                     BaseVerticalWheelPicker(
-                        modifier = Modifier.width(64.dp),
+                        modifier = Modifier.width(128.dp), // todo: Решить как то проблему размера
                         items = minutes,
                         state = minuteState,
-                        unfocusedCount = 2,
-                        itemHeight = 48.dp,
+                        unfocusedCount = 1,
+                        itemHeight = 96.dp,
                         focus = {  },
                         content = { index ->
                             Text(
                                 text = minutes[index].toString().padStart(2, '0'),
-                                fontSize = 48.sp,
+                                fontSize = 96.sp,
                                 fontWeight = FontWeight.Medium,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
@@ -171,8 +169,8 @@ fun NotificationSettingsBottomSheet(
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
                         checkedTrackColor = MaterialTheme.colorScheme.primary,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.primary,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.surface,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                         uncheckedBorderColor = Color.Transparent
                     )
                 )

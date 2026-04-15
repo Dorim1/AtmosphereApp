@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.core.design_system.elements.components
+package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -52,9 +52,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
+import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -206,7 +209,7 @@ fun TotalEntriesCard(
                 )
             }
             Text(
-                text = total.toString(),
+                text = total.toTwoDigits(),
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
@@ -232,7 +235,7 @@ fun CurrentStreakCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier.size(48.dp),
-                    imageVector = Icons.Rounded.LocalFireDepartment,
+                    imageVector = Icons.Rounded.LocalFireDepartment, // todo: Заменить
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSecondary,
                 )
@@ -246,7 +249,7 @@ fun CurrentStreakCard(
                 )
             }
             Text(
-                text = total.toString(),
+                text = total.toTwoDigits(),
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
@@ -272,7 +275,7 @@ fun LongestStreakCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = currentStreak.toString(),
+                text = currentStreak.toTwoDigits(),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
@@ -725,4 +728,6 @@ fun SettingsCard(
         }
     }
 }
+
+
 
