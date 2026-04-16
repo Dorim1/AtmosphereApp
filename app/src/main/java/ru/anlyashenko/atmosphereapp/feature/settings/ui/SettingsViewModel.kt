@@ -6,12 +6,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
+import ru.anlyashenko.atmosphereapp.domain.model.AlarmItem
+import ru.anlyashenko.atmosphereapp.domain.notification.AlarmScheduler
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val alarmScheduler: AlarmScheduler
 ) : BaseViewModel<SettingsEvent, SettingsState, SettingsEffect>() {
 
     override fun createInitialState(): SettingsState = SettingsState()
@@ -71,21 +74,26 @@ class SettingsViewModel @Inject constructor(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 setEffect { SettingsEffect.RequestNotificationPermission }
             } else {
-                setEffect { SettingsEffect.ScheduleNotification(event.hour, event.minute) }
+                alarmScheduler.schedule(
+                    AlarmItem(
+                        hour = event.hour,
+                        minute = event.minute
+                    )
+                )
             }
         } else {
-            setEffect { SettingsEffect.CancelNotification }
+            alarmScheduler.cancel(1001)
         }
     }
 
     private fun handlePermissionResult(isGranted: Boolean) {
         if (isGranted) {
-            setEffect {
-                SettingsEffect.ScheduleNotification(
-                    currentState.notificationHour,
-                    currentState.notificationMinute
+            alarmScheduler.schedule(
+                AlarmItem(
+                    hour = currentState.notificationHour,
+                    minute = currentState.notificationMinute
                 )
-            }
+            )
         } else {
             setState { copy(isNotificationsEnabled = false) }
         }

@@ -44,7 +44,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationScheduler
 
 @Preview
 @Composable
@@ -69,7 +68,6 @@ fun SettingsScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     // todo: перенести на активити или на homeScreen
-    val context = LocalContext.current
 
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -85,12 +83,6 @@ fun SettingsScreen(
                 is SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
                 is SettingsEffect.RequestNotificationPermission -> {
                     permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-                is SettingsEffect.ScheduleNotification -> {
-                    NotificationScheduler.scheduleDailyReminder(context, effect.hour, effect.minute)
-                }
-                is SettingsEffect.CancelNotification -> {
-                    NotificationScheduler.cancelReminder(context)
                 }
             }
         }

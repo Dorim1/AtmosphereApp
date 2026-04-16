@@ -37,6 +37,10 @@ sealed interface SettingsEffect : UiEffect {
     object NavigateToEditMoods : SettingsEffect
 
     object RequestNotificationPermission : SettingsEffect
-    data class ScheduleNotification(val hour: Int, val minute: Int) : SettingsEffect
-    object CancelNotification : SettingsEffect
+//    data class ScheduleNotification(
+//        val id: Int = 1001,
+//        val hour: Int,
+//        val minute: Int
+//    ) : SettingsEffect
+//    object CancelNotification : SettingsEffect
 }

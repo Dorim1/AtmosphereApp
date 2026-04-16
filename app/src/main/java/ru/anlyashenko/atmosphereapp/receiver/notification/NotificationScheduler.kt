@@ -8,6 +8,7 @@ import ru.anlyashenko.atmosphereapp.receiver.NotificationReceiver
 import java.util.Calendar
 import kotlin.jvm.java
 
+/*
 object NotificationScheduler {
 
     fun scheduleDailyReminder(context: Context, hour: Int, minute: Int) {
@@ -51,4 +52,4 @@ object NotificationScheduler {
         )
         alarmManager.cancel(pendingIntent)
     }
-}
+}*/
