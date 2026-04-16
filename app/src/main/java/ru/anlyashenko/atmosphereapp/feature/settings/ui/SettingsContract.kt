@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
+import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
@@ -11,7 +13,14 @@ data class SettingsState(
     val isLoading: Boolean = true,
     val showNotificationSheet: Boolean = false,
     val showLanguageDialog: Boolean = false,
-): UiState
+): UiState {
+    val notificationSubtitle: UiText
+        get() = if (isNotificationsEnabled) {
+            UiText.StringResource(R.string.settings_notifications_enabled)
+        } else {
+            UiText.StringResource(R.string.settings_notifications_disabled)
+        }
+}
 
 sealed interface SettingsEvent: UiEvent {
     object OnBackClick : SettingsEvent
@@ -37,10 +46,5 @@ sealed interface SettingsEffect : UiEffect {
     object NavigateToEditMoods : SettingsEffect
 
     object RequestNotificationPermission : SettingsEffect
-//    data class ScheduleNotification(
-//        val id: Int = 1001,
-//        val hour: Int,
-//        val minute: Int
-//    ) : SettingsEffect
-//    object CancelNotification : SettingsEffect
+
 }

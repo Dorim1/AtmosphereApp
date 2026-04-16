@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
 
 @Preview
 @Composable
@@ -68,7 +68,6 @@ fun SettingsScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     // todo: перенести на активити или на homeScreen
-
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -124,7 +123,7 @@ fun SettingsScreen(
         ) {
             SettingsItemCard(
                 title = stringResource(R.string.settings_notifications_title),
-                subtitle = stringResource(R.string.settings_notifications_subtitle),
+                subtitle = state.notificationSubtitle.asString(),
                 painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
                 onClick = { viewModel.setEvent(SettingsEvent.OpenNotificationSheet) }
@@ -259,3 +258,4 @@ fun SettingsItemCard(
         }
     }
 }
+

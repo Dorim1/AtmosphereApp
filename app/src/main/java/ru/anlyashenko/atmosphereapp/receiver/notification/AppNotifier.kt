@@ -22,7 +22,7 @@ class AppNotifier @Inject constructor(
         val channel = NotificationChannel(
             channelId,
             "Уведомления",
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)
 
@@ -37,7 +37,7 @@ class AppNotifier @Inject constructor(
         )
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_setting_notifications)
+            .setSmallIcon(R.drawable.ic_setting_notifications) // todo: Поменять
             .setContentTitle("Как прошёл ваш день?")
             .setContentText("Уделите минуту, чтобы отметить своё настроение.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
