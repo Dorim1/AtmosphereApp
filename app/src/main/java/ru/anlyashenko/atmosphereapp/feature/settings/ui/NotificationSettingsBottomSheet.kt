@@ -16,7 +16,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -33,10 +32,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.BaseVerticalWheelPicker
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.rememberWheelPickerState
 
@@ -69,7 +70,7 @@ fun NotificationSettingsBottomSheet(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "Уведомление",
+                text = stringResource(R.string.notification_settings_title),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -77,7 +78,7 @@ fun NotificationSettingsBottomSheet(
 
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Приложение будет отправлять напоминания только в указанное время, чтобы не отвлекать вас в неподходящие моменты.",
+                text = stringResource(R.string.notification_settings_description),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 lineHeight = 14.sp
@@ -162,7 +163,7 @@ fun NotificationSettingsBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Включить уведомления",
+                    text = stringResource(R.string.notification_settings_enable),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
@@ -196,7 +197,7 @@ fun NotificationSettingsBottomSheet(
                 )
             ) {
                 Text(
-                    text = "Готово",
+                    text = stringResource(R.string.text_confirm_button),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary

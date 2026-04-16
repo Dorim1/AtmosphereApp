@@ -99,7 +99,7 @@ val bottomNavItems = listOf(
 )
 
 @Composable
-fun NavigationBar2(modifier: Modifier = Modifier) {
+fun NavigationBar(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

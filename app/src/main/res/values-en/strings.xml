@@ -83,7 +83,8 @@
     <string name="cd_settings_back">Back</string>
 
     <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_notifications_subtitle">Enabled</string>
+    <string name="settings_notifications_enabled">Enabled</string>
+    <string name="settings_notifications_disabled">Disabled</string>
 
     <string name="settings_appearance_title">Appearance</string>
     <string name="settings_appearance_system">System</string>
@@ -105,12 +106,18 @@
     <string name="settings_about_title">About</string>
     <string name="settings_about_subtitle">Read</string>
 
-    <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
+    <string name="notification_settings_title">Notifications</string>
     <string name="hour_indicator">h</string>
     <string name="minute_indicator">m</string>
+    <string name="notification_settings_description">
+        The app will send reminders only at the selected time to avoid disturbing you at inconvenient moments.
+    </string>
+    <string name="notification_settings_enable">Enable notifications</string>
+
 
     <!--  AppearanceScreen  -->
     <string name="appearance_screen_title">Appearance</string>
+    <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
 
     <string name="duration_picker_confirm_button">Confirm</string>
 

@@ -19,6 +19,7 @@ data class ProfileState(
     val moodCounts: List<MoodCountItem> = emptyList(),
     val chartData: List<DailyMoodStat> = emptyList(),
     val chartInsight: UiText = StringResource(R.string.profile_not_enough_data),
+//    val hasEnoughMoodData: Boolean = false,
     val yearlyProgress: Int = 0,
 ) : UiState
 

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import javax.inject.Inject
 
-
+// TODO: вынести dataStore
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class SettingRepositoryImpl @Inject constructor(

@@ -336,6 +336,7 @@ fun MoodBarChart(
     modifier: Modifier = Modifier
 ) {
 
+    // todo: Динамически менять, при смене палитры
     val yAxisColors = listOf(
         Color(0xFF8BB13B), // 5 - Отлично
         Color(0xFF0A6C60), // 4 - Хорошо
@@ -431,6 +432,7 @@ fun MoodCounterCard(
     items: List<MoodCountItem>
 ) {
 
+    val hasEnoughData = totalCount >= 7
 
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -440,27 +442,45 @@ fun MoodCounterCard(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = stringResource(R.string.profile_mood_counter_title),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            if (hasEnoughData) {
+                Text(
+                    text = stringResource(R.string.profile_mood_counter_title),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
 
-            Text(
-                text = totalCount.toString(),
-                fontSize = 96.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+                Text(
+                    text = totalCount.toString(),
+                    fontSize = 96.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
-            StackedMoodBar(items = items, modifier = Modifier.height(48.dp))
-            Spacer(Modifier.height(38.dp))
-            LegendGrid(
-                items = items,
-                totalCount = totalCount
-            )
+                StackedMoodBar(items = items, modifier = Modifier.height(48.dp))
+                Spacer(Modifier.height(38.dp))
+                LegendGrid(
+                    items = items,
+                    totalCount = totalCount
+                )
+            } else {
+                Column {
+                    Text(
+                        text = "Not enough data",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                    Text(
+                        text = "Add at least 7 days of mood entries to see statistics",
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                    return@Column
+                }
+            }
+
+
         }
     }
 
