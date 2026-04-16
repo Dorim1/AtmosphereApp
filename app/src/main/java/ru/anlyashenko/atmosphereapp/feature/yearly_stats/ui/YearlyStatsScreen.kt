@@ -263,6 +263,7 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
+    // todo: Добавить блок
     Column(modifier = modifier) {
         if (topMoods.isEmpty()) {
             Text(
@@ -337,7 +338,6 @@ fun EmotionProgressBar(
                     .background(mood.color)
             )
         }
-
         Column(
             modifier = Modifier
                 .align(Alignment.CenterStart)
@@ -415,7 +415,7 @@ fun YearlyStatsCards(
                 )
 
                 Text(
-                    text = stringResource(R.string.yearly_mood_entries_title), // todo: я хуй знает как это перевести
+                    text = stringResource(R.string.yearly_mood_entries_title),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary,
