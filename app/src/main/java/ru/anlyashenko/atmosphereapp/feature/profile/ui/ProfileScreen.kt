@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -38,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -97,6 +99,7 @@ fun ProfileRoute(
         currentStreak = state.currentStreak,
         longestStreak = state.longestStreak,
         moodCounts = state.moodCounts,
+        hasEnoughMoodData = state.hasEnoughMoodData,
         yearlyPercentage = state.yearlyProgress,
         chartData = state.chartData,
         chartInsight = state.chartInsight,
@@ -113,6 +116,7 @@ fun ProfileScreen(
     onYearlyStatsClick: () -> Unit,
     onSettingsClick: () -> Unit,
     moodCounts: List<MoodCountItem>,
+    hasEnoughMoodData: Boolean,
     yearlyPercentage: Int,
     chartData: List<DailyMoodStat>,
     chartInsight: UiText,
@@ -158,7 +162,8 @@ fun ProfileScreen(
         Spacer(Modifier.height(8.dp))
         MoodCounterCard(
             items = moodCounts,
-            totalCount = totalEntries
+            totalCount = totalEntries,
+            hasEnoughData = hasEnoughMoodData
         )
 
         Spacer(Modifier.height(8.dp))
@@ -429,27 +434,42 @@ fun MoodBarChart(
 fun MoodCounterCard(
     modifier: Modifier = Modifier,
     totalCount: Int,
-    items: List<MoodCountItem>
+    items: List<MoodCountItem>,
+    hasEnoughData: Boolean
 ) {
-
-    val hasEnoughData = totalCount >= 7
-
     Surface(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 160.dp),
         shape = RoundedCornerShape(30.dp),
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 27.dp)
         ) {
-            if (hasEnoughData) {
-                Text(
-                    text = stringResource(R.string.profile_mood_counter_title),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
 
+            Text(
+                text = stringResource(R.string.profile_mood_counter_title),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            if (!hasEnoughData) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Not enough data",
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                }
+            } else {
                 Text(
                     text = totalCount.toString(),
                     fontSize = 96.sp,
@@ -460,30 +480,14 @@ fun MoodCounterCard(
 
                 StackedMoodBar(items = items, modifier = Modifier.height(48.dp))
                 Spacer(Modifier.height(38.dp))
+
                 LegendGrid(
                     items = items,
                     totalCount = totalCount
                 )
-            } else {
-                Column {
-                    Text(
-                        text = "Not enough data",
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
-                    Text(
-                        text = "Add at least 7 days of mood entries to see statistics",
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                    )
-                    return@Column
-                }
             }
-
-
         }
     }
-
 }
 
 @Composable
