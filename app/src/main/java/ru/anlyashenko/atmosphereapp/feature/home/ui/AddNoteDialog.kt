@@ -19,6 +19,8 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,12 +60,12 @@ fun AddNoteDialog(
         focusRequester.requestFocus()
     }
 
-    val animatedBorderColor by animateColorAsState(
+   /* val animatedBorderColor by animateColorAsState(
         targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
         animationSpec = tween(durationMillis = 300),
         label = "BorderColorAnimation"
-    )
+    )*/
 
     val animatedCounterColor by animateColorAsState(
         targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
@@ -99,18 +101,57 @@ fun AddNoteDialog(
 
                 Spacer(Modifier.height(24.dp))
 
-                Text(
-                    text = "${noteText.length} / $maxChar",
-                    color = animatedCounterColor,
-                    fontSize = 12.sp,
-                    fontWeight = if (isLimitReached) FontWeight.Medium else FontWeight.Normal,
+                OutlinedTextField(
+                    value = noteText,
+                    onValueChange = {
+                        if (it.length <= maxChar) noteText = it
+                    },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, bottom = 4.dp),
-                    textAlign = TextAlign.Start
+                        .fillMaxWidth(),
+//                        .focusRequester(focusRequester),
+                    shape = RoundedCornerShape(16.dp),
+                    textStyle = TextStyle(
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    ),
+//                    placeholder = {
+//                        Text(
+//                            text = stringResource(R.string.note_dialog_placeholder),
+//                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+//                        )
+//                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = if (isLimitReached)
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
+                        else
+                            MaterialTheme.colorScheme.primary,
+
+                        unfocusedBorderColor = if (isLimitReached)
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
+                        else
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+
+                        cursorColor = MaterialTheme.colorScheme.onSurface
+                    ),
+                    label = {
+                        Text(
+                            text = stringResource(R.string.note_dialog_placeholder),
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                        )
+                    },
+                    supportingText = {
+                        Text(
+                            text = "${noteText.length} / $maxChar",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                            color = animatedCounterColor,
+                            fontWeight = if (isLimitReached) FontWeight.Medium else FontWeight.Normal
+                        )
+                    },
                 )
 
-                Box(
+                /*Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 56.dp)
@@ -151,7 +192,7 @@ fun AddNoteDialog(
                             }
                         }
                     )
-                }
+                }*/
 
                 Spacer(Modifier.height(28.dp))
 

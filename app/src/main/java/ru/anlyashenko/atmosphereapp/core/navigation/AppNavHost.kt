@@ -120,8 +120,6 @@ fun AppNavHost(
 
         composable<Destination.SettingsEditMoodsRoute> {
             EditMoodsScreen(
-                onReplaceClick = {},
-                onEditMoodClick = {},
                 onBackClick = {
                     navHostController.popBackStack()
                 }

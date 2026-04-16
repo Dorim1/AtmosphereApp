@@ -35,25 +35,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.MoodThemeData
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.availableMoodIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditMoodBottomSheet(
     mood: MoodEditModel,
     onDismissRequest: () -> Unit,
-    onSave: (newName: String, newIcon: Int) -> Unit
+    onSave: (newName: String, newIconRes: Int) -> Unit
 ) {
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     var nameText by remember { mutableStateOf(mood.name) }
-    var selectedIconIndex by remember { mutableIntStateOf(0) } // 0 - выбранный по умолчанию
+    val initialIconIndex = availableMoodIcons.indexOf(mood.iconRes).takeIf { it >= 0 } ?: 0
+    var selectedIconIndex by remember { mutableIntStateOf(initialIconIndex) }
 
-    val totalIcons = 14
+    val maxCharLimit = 15
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -75,17 +80,21 @@ fun EditMoodBottomSheet(
             )
             Spacer(Modifier.height(24.dp))
 
-            Text(
-                text = "Изменить название",
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-            )
-            Spacer(Modifier.height(8.dp))
+//            Text(
+//                text = "Изменить название",
+//                fontSize = 16.sp,
+//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+//            )
+//            Spacer(Modifier.height(8.dp))
 
-            // todo: Сделать ограничение на длину
+            // todo: Сделать оповещение, что слишком длинное название
             OutlinedTextField(
                 value = nameText,
-                onValueChange = { nameText = it },
+                onValueChange = { newText ->
+                    if (newText.length <= maxCharLimit) {
+                        nameText = newText
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50.dp),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -100,7 +109,21 @@ fun EditMoodBottomSheet(
                             .background(mood.color, CircleShape)
                     )
                 },
-                singleLine = true
+                singleLine = true,
+                label = {
+                    Text(
+                        text = "Изменить название",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    )
+                },
+                supportingText = {
+                    Text(
+                        text = "${nameText.length} / $maxCharLimit",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End
+                    )
+                }
             )
 
             Spacer(Modifier.height(24.dp))
@@ -117,21 +140,23 @@ fun EditMoodBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                for (i in 0 until totalIcons) {
-                    val isSelected = i == selectedIconIndex
+                availableMoodIcons.forEachIndexed { index, iconRes ->
+                    val isSelected = index == selectedIconIndex
 
                     Box(
                         modifier = Modifier
                             .size(48.dp)
                             .clip(CircleShape)
                             .background(if (isSelected) mood.color.copy(alpha = 0.8f) else Color.Transparent)
-                            .clickable { selectedIconIndex = i },
+                            .clickable { selectedIconIndex = index },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_mood_very_satisfied),
+                            painter = painterResource(iconRes),
                             contentDescription = null,
-                            tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                            tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.3f
+                            ),
                             modifier = Modifier.size(32.dp)
                         )
                     }
@@ -141,10 +166,11 @@ fun EditMoodBottomSheet(
             Spacer(Modifier.height(40.dp))
 
             Button(
-                onClick = { onSave(nameText, selectedIconIndex) },
+                onClick = { onSave(nameText, availableMoodIcons[selectedIconIndex]) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
+                enabled = nameText.isNotBlank(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
@@ -152,7 +178,7 @@ fun EditMoodBottomSheet(
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = "Готово",
+                    text = stringResource(R.string.text_confirm_button),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium
                 )

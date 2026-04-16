@@ -26,72 +26,52 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-
-data class MoodEditModel(val id: Int, val name: String, val color: Color)
-data class PaletteModel(val id: Int, val name: String, val colors: List<Color>)
-
-@Preview
-@Composable
-private fun EditMoodsScreenPreview() {
-    AtmosphereAppTheme() {
-        EditMoodsScreen(
-            onBackClick = {},
-            onEditMoodClick = {},
-            onReplaceClick = {}
-        )
-    }
-}
-
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.MoodThemeData.standardColors
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.availableMoodIcons
+import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
 @Composable
 fun EditMoodsScreen(
+    viewModel: EditMoodsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onEditMoodClick: () -> Unit,
-    onReplaceClick: () -> Unit
+//    onEditMoodClick: () -> Unit,
+//    onReplaceClick: () -> Unit
 ) {
 
-    val standardColors = listOf(
-        Color(0xFF8CB342), // Отлично (Зеленый)
-        Color(0xFF00695C), // Хорошо (Темно-изумрудный)
-        Color(0xFFFBC02D), // Нормально (Желтый)
-        Color(0xFFEF6C00), // Плохо (Оранжевый)
-        Color(0xFFD50000)  // Ужасно (Красный)
-    )
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.effect) {
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
+                is EditMoodsContract.Effect.NavigateBack -> onBackClick()
+            }
+        }
+    }
 
     val moods = listOf(
-        MoodEditModel(1, "Отлично", standardColors[0]),
-        MoodEditModel(2, "Хорошо", standardColors[1]),
-        MoodEditModel(3, "Нормально", standardColors[2]),
-        MoodEditModel(4, "Плохо", standardColors[3]),
-        MoodEditModel(5, "Ужасно", standardColors[4])
+        MoodEditModel(1, "Отлично", standardColors[0], iconRes = availableMoodIcons[0]),
+        MoodEditModel(2, "Хорошо", standardColors[1], iconRes = availableMoodIcons[1]),
+        MoodEditModel(3, "Нормально", standardColors[2], iconRes = availableMoodIcons[2]),
+        MoodEditModel(4, "Плохо", standardColors[3], iconRes = availableMoodIcons[3]),
+        MoodEditModel(5, "Ужасно", standardColors[4], iconRes = availableMoodIcons[4])
     )
-
-    val palettes = listOf(
-        PaletteModel(0, "Стандартная", standardColors),
-        PaletteModel(1, "Палитра 1", standardColors),
-        PaletteModel(2, "Палитра 2", standardColors),
-        PaletteModel(3, "Палитра 3", standardColors),
-        PaletteModel(4, "Палитра 4", standardColors)
-    )
-
-    var selectedPaletteId by remember { mutableIntStateOf(0) }
 
     var moodToEdit by remember { mutableStateOf<MoodEditModel?>(null) }
     var moodToReplace by remember { mutableStateOf<MoodEditModel?>(null) }
@@ -115,7 +95,7 @@ fun EditMoodsScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .clickable(onClick = onBackClick),
+                    .clickable { viewModel.setEvent(EditMoodsContract.Event.OnBackClick) },
             )
 
             Spacer(Modifier.width(12.dp))
@@ -167,11 +147,13 @@ fun EditMoodsScreen(
         )
         Spacer(Modifier.height(28.dp))
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            palettes.forEach { palette ->
+            state.palettes.forEach { palette ->
                 PaletteSelectionItem(
                     palette = palette,
-                    isSelected = selectedPaletteId == palette.id,
-                    onClick = { selectedPaletteId = palette.id }
+                    isSelected = state.selectedPaletteId == palette.id,
+                    onClick = {
+                        viewModel.setEvent(EditMoodsContract.Event.SelectPalette(palette.id))
+                    }
                 )
             }
         }

@@ -70,6 +70,10 @@
     <string name="profile_not_enough_data">Not enough data</string>
     <string name="profile_not_enough_data_stats">Not enough data for statistics</string>
     <string name="profile_fallback_mood">mood</string>
+    <string name="not_enough_data">Not enough data</string>
+    <string name="not_enough_data_description">
+    Add at least 7 days of mood entries to see statistics
+</string>
 
     <!--  YearlyScreen  -->
     <string name="yearly_not_enough_data">Not enough data for this year</string>

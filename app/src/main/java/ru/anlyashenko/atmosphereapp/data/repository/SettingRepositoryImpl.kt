@@ -24,6 +24,7 @@ class SettingRepositoryImpl @Inject constructor(
         val NOTIFICATION_ENABLED = booleanPreferencesKey("notifications_enabled")
         val NOTIFICATION_HOUR = intPreferencesKey("notification_hour")
         val NOTIFICATION_MINUTE = intPreferencesKey("notification_minute")
+        val SELECTED_PALETTE_ID = intPreferencesKey("selected_palette_id")
     }
 
     override val notificationEnabledFlow: Flow<Boolean> = dataStore.data
@@ -40,12 +41,22 @@ class SettingRepositoryImpl @Inject constructor(
         .map { preferences ->
             preferences[NOTIFICATION_MINUTE] ?: 30
         }
+    override val selectedPaletteFlow: Flow<Int> = dataStore.data
+        .map { preferences ->
+            preferences[SELECTED_PALETTE_ID] ?: 0
+        }
 
     override suspend fun saveNotificationSettings(isEnabled: Boolean, hour: Int, minute: Int) {
         dataStore.edit { preferences ->
             preferences[NOTIFICATION_ENABLED] = isEnabled
             preferences[NOTIFICATION_HOUR] = hour
             preferences[NOTIFICATION_MINUTE] = minute
+        }
+    }
+
+    override suspend fun saveSelectedPalette(paletteId: Int) {
+        dataStore.edit { preferences ->
+            preferences[SELECTED_PALETTE_ID] = paletteId
         }
     }
 }
