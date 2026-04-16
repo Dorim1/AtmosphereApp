@@ -1,6 +1,8 @@
 package ru.anlyashenko.atmosphereapp.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -13,6 +15,7 @@ import ru.anlyashenko.atmosphereapp.data.local.database.AppDatabase
 import ru.anlyashenko.atmosphereapp.data.local.database.DatabaseCallback
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
+import ru.anlyashenko.atmosphereapp.data.repository.dataStore
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -34,6 +37,14 @@ object DatabaseModule {
         .addCallback(DatabaseCallback(moodDaoProvider, CoroutineScope(Dispatchers.IO)))
         .fallbackToDestructiveMigration() // TODO: Сделать миграцию
         .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> {
+        return context.dataStore
     }
 
     // todo: Возможно не нужен @Singleton

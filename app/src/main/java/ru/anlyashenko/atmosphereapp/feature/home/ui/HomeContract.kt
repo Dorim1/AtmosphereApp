@@ -14,7 +14,6 @@ data class HomeState(
     val isLoadingWeather: Boolean = false,
 
     val weekRecords: List<DiaryRecordUiModel> = emptyList(),
-//    val todayRecord: DiaryRecordUiModel? = null,
     val availableMoods: List<MoodUiModel> = emptyList(),
 
     val isRecordLoading: Boolean = false,

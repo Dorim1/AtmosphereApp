@@ -16,6 +16,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -42,13 +44,16 @@ import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.rememberWhe
 @Composable
 fun NotificationSettingsBottomSheet(
     onDismissRequest: () -> Unit,
-    onSaveRequest: (hour: Int, minute: Int, isEnabled: Boolean) -> Unit
+    onSaveRequest: (hour: Int, minute: Int, isEnabled: Boolean) -> Unit,
+    initialEnabled: Boolean,
+    initialHour: Int,
+    initialMinute: Int
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    var isNotificationsEnabled by remember { mutableStateOf(true) }
-    var selectedHour by remember { mutableIntStateOf(20) }
-    var selectedMinute by remember { mutableIntStateOf(0) }
+    var isEnabled by rememberSaveable { mutableStateOf(initialEnabled) }
+    var hour by rememberSaveable { mutableIntStateOf(initialHour) }
+    var minute by rememberSaveable { mutableIntStateOf(initialMinute) }
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -86,17 +91,17 @@ fun NotificationSettingsBottomSheet(
                 val hours = remember { (0..23).toList() }
                 val minutes = remember { (0..59).toList() }
 
-                val hourState = rememberWheelPickerState(initialIndex = selectedHour)
-                val minuteState = rememberWheelPickerState(initialIndex = selectedMinute)
+                val hourState = rememberWheelPickerState(initialIndex = hour)
+                val minuteState = rememberWheelPickerState(initialIndex = minute)
 
                 LaunchedEffect(hourState) {
                     snapshotFlow { hourState.currentIndexSnapshot }
-                        .collect { index -> if (index >= 0) selectedHour = hours[index] }
+                        .collect { index -> if (index >= 0) hour = hours[index] }
                 }
 
                 LaunchedEffect(minuteState) {
                     snapshotFlow { minuteState.currentIndexSnapshot }
-                        .collect { index -> if (index >= 0) selectedMinute = minutes[index] }
+                        .collect { index -> if (index >= 0) minute = minutes[index] }
                 }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -108,7 +113,7 @@ fun NotificationSettingsBottomSheet(
                         state = hourState,
                         unfocusedCount = 1,
                         itemHeight = 96.dp,
-                        focus = {  },
+                        focus = { },
                         content = { index ->
                             Text(
                                 text = hours[index].toString().padStart(2, '0'),
@@ -129,12 +134,12 @@ fun NotificationSettingsBottomSheet(
                     )
 
                     BaseVerticalWheelPicker(
-                        modifier = Modifier.width(128.dp), // todo: Решить как то проблему размера
+                        modifier = Modifier.width(128.dp),
                         items = minutes,
                         state = minuteState,
                         unfocusedCount = 1,
                         itemHeight = 96.dp,
-                        focus = {  },
+                        focus = { },
                         content = { index ->
                             Text(
                                 text = minutes[index].toString().padStart(2, '0'),
@@ -164,8 +169,8 @@ fun NotificationSettingsBottomSheet(
                 )
 
                 Switch(
-                    checked = isNotificationsEnabled,
-                    onCheckedChange = { isNotificationsEnabled = it },
+                    checked = isEnabled,
+                    onCheckedChange = { isEnabled = it },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
                         checkedTrackColor = MaterialTheme.colorScheme.primary,
@@ -179,7 +184,7 @@ fun NotificationSettingsBottomSheet(
             Spacer(Modifier.height(32.dp))
             Button(
                 onClick = {
-                    onSaveRequest(selectedHour, selectedMinute, isNotificationsEnabled)
+                    onSaveRequest(hour, minute, isEnabled)
                     onDismissRequest()
                 },
                 modifier = Modifier
