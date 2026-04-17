@@ -41,20 +41,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.getDisplayName
 import ru.anlyashenko.atmosphereapp.core.utils.availableMoodIcons
-import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.MoodEditModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditMoodBottomSheet(
-    mood: MoodEditModel,
+    mood: MoodUiModel,
     onDismissRequest: () -> Unit,
     onSave: (newName: String, newIconRes: Int) -> Unit
 ) {
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    var nameText by remember { mutableStateOf(mood.name) }
+    val displayName = mood.getDisplayName()
+    var nameText by remember { mutableStateOf(displayName) }
     val initialIconIndex = availableMoodIcons.indexOf(mood.iconRes).takeIf { it >= 0 } ?: 0
     var selectedIconIndex by remember { mutableIntStateOf(initialIconIndex) }
 
@@ -73,7 +75,7 @@ fun EditMoodBottomSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                text = mood.name,
+                text = mood.getDisplayName(),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
