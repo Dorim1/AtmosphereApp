@@ -19,16 +19,19 @@ import javax.inject.Singleton
 interface RepositoryModule {
 
     @Binds
+    @Singleton
     fun bindDiaryRepository(
         diaryRepositoryImpl: DiaryRepositoryImpl
     ): DiaryRepository
 
     @Binds
+    @Singleton
     fun bindWeatherRepository(
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
 
     @Binds
+    @Singleton
     fun bindSettingsRepository(
         settingsRepositoryImpl: SettingRepositoryImpl
     ): SettingsRepository

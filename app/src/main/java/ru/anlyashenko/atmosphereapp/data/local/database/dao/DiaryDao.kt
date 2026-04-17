@@ -27,6 +27,10 @@ interface DiaryDao {
     @Query("SELECT * FROM diary_entries WHERE date = :date")
     suspend fun getEntryByDate(date: LocalDate): DiaryEntryDBO?
 
+    // Замена всех записей с одним настроением на другое
+    @Query("UPDATE diary_entries SET moodId = :targetMoodId WHERE moodId = :oldMoodId")
+    suspend fun replaceMoodInAllEntries(oldMoodId: Int, targetMoodId: Int)
+
     @Delete
     suspend fun delete(entry: DiaryEntryDBO)
 }

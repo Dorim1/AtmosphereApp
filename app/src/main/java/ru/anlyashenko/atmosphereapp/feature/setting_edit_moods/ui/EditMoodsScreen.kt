@@ -43,19 +43,25 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.MoodThemeData.standardColors
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.availableMoodIcons
+import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.MoodEditModel
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
 @Composable
 fun EditMoodsScreen(
     viewModel: EditMoodsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-//    onEditMoodClick: () -> Unit,
-//    onReplaceClick: () -> Unit
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val moods = state.moods.map { uiModel ->
+        MoodEditModel(
+            id = uiModel.id,
+            name = uiModel.customLabel ?: stringResource(uiModel.defaultLabelRes),
+            color = uiModel.color,
+            iconRes = uiModel.iconRes
+        )
+    }
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
@@ -65,13 +71,6 @@ fun EditMoodsScreen(
         }
     }
 
-    val moods = listOf(
-        MoodEditModel(1, "Отлично", standardColors[0], iconRes = availableMoodIcons[0]),
-        MoodEditModel(2, "Хорошо", standardColors[1], iconRes = availableMoodIcons[1]),
-        MoodEditModel(3, "Нормально", standardColors[2], iconRes = availableMoodIcons[2]),
-        MoodEditModel(4, "Плохо", standardColors[3], iconRes = availableMoodIcons[3]),
-        MoodEditModel(5, "Ужасно", standardColors[4], iconRes = availableMoodIcons[4])
-    )
 
     var moodToEdit by remember { mutableStateOf<MoodEditModel?>(null) }
     var moodToReplace by remember { mutableStateOf<MoodEditModel?>(null) }
@@ -166,7 +165,7 @@ fun EditMoodsScreen(
             mood = moodToEdit!!,
             onDismissRequest = { moodToEdit = null },
             onSave = { newName, newIconId ->
-                // TODO: Сохранить изменения
+                viewModel.setEvent(EditMoodsContract.Event.SaveMood(moodToEdit!!.id, newName, newIconId))
                 moodToEdit = null
             }
         )
@@ -179,7 +178,12 @@ fun EditMoodsScreen(
             availableMoods = otherMoods,
             onDismissRequest = { moodToReplace = null },
             onReplaceConfirm = { targetMood ->
-                // TODO: Выполнить замену
+                viewModel.setEvent(
+                    EditMoodsContract.Event.ReplaceMood(
+                        oldMoodId = moodToReplace!!.id,
+                        targetMoodId = targetMood.id
+                    )
+                )
                 moodToReplace = null
             }
         )

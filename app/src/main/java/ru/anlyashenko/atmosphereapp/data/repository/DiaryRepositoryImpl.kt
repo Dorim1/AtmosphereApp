@@ -3,6 +3,8 @@ package ru.anlyashenko.atmosphereapp.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
@@ -89,5 +91,19 @@ class DiaryRepositoryImpl @Inject constructor(
             val entryToSave = existingEntry?.copy(note = text) ?: DiaryEntryDBO(date = date, note = text)
             diaryDao.insertOrUpdate(entryToSave)
         }
+    }
+
+    override suspend fun updateMoodDetails(
+        moodId: Int,
+        customName: String,
+        iconRes: Int
+    ) {
+        val iconKey = MoodIconManager.getKeyByRes(iconRes)
+        moodDao.updateMoodDetails(moodId, customName, iconKey)
+    }
+
+
+    override suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int) {
+        diaryDao.replaceMoodInAllEntries(oldMoodId, targetMoodId)
     }
 }

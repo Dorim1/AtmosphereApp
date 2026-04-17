@@ -47,15 +47,12 @@ object DatabaseModule {
         return context.dataStore
     }
 
-    // todo: Возможно не нужен @Singleton
     @Provides
-    @Singleton
     fun provideMoodDao(database: AppDatabase): MoodDao {
         return database.moodDao()
     }
 
     @Provides
-    @Singleton
     fun provideDiaryDao(database: AppDatabase): DiaryDao {
         return database.diaryDao()
     }
