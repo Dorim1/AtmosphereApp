@@ -13,31 +13,32 @@ import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import javax.inject.Inject
 
+// todo: почистить логику, часть логики есть в DiaryRepository
 @HiltViewModel
 class EditMoodsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val diaryRepository: DiaryRepository,
 ) : BaseViewModel<EditMoodsContract.Event, EditMoodsContract.State, EditMoodsContract.Effect>(){
 
-    val moodsFlow: Flow<List<MoodUiModel>> = combine(
-        diaryRepository.availableMoods,
-        settingsRepository.selectedPaletteFlow
-    ) { moods, selectedPaletteId ->
-        val activePalette = MoodPalettes.getPaletteById(selectedPaletteId)
-
-        moods.map { mood ->
-            val colorIndex = mood.level - 1
-            val dynamicColor = activePalette.colors.getOrElse(colorIndex) { mood.color }
-            mood.copy(color = dynamicColor)
-        }
-    }
+//    val moodsFlow: Flow<List<MoodUiModel>> = combine(
+//        diaryRepository.availableMoods,
+//        settingsRepository.selectedPaletteFlow
+//    ) { moods, selectedPaletteId ->
+//        val activePalette = MoodPalettes.getPaletteById(selectedPaletteId)
+//
+//        moods.map { mood ->
+//            val colorIndex = mood.level - 1
+//            val dynamicColor = activePalette.colors.getOrElse(colorIndex) { mood.color }
+//            mood.copy(color = dynamicColor)
+//        }
+//    }
 
     override fun createInitialState() = EditMoodsContract.State()
 
     init {
 
         viewModelScope.launch {
-            moodsFlow.collectLatest { coloredMoods ->
+            diaryRepository.availableMoods.collectLatest { coloredMoods ->
                 setState { copy(moods = coloredMoods) }
             }
         }
