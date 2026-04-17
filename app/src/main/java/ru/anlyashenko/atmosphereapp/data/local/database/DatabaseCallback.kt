@@ -23,7 +23,7 @@ class DatabaseCallback(
     }
 
     private suspend fun populateDefaultMoods() {
-        val defaultMoods = listOf(
+        val defaultMoods: List<MoodDBO> = listOf(
             MoodDBO(1, "EXCELLENT", 1, "#8AA232", "ic_mood_very_satisfied", null), // TODO: Создать строковые константы
             MoodDBO(2, "GOOD", 2, "#329340", "ic_mood_satisfied", null),
             MoodDBO(3, "NORMAL", 3, "#FBC117", "ic_mood_neutral", null),

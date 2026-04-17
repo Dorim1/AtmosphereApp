@@ -16,6 +16,10 @@ interface MoodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMoods(moods: List<MoodDBO>)
 
+    // Обновление имени и иконки у конкретного настроения
+    @Query("UPDATE moods SET customName = :newName, iconKey = :newIconKey WHERE id = :moodId")
+    suspend fun updateMoodDetails(moodId: Int, newName: String, newIconKey: String)
+
     @Update
     suspend fun updateMood(mood: MoodDBO)
 }

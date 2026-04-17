@@ -11,5 +11,7 @@ interface DiaryRepository {
     fun getAllRecordsFlow(): Flow<List<DiaryRecordUiModel>>
     suspend fun saveMood(date: LocalDate, moodId: Int)
     suspend fun saveNote(date: LocalDate, text: String)
+    suspend fun updateMoodDetails(moodId: Int, customName: String, iconRes: Int)
+    suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int)
 
 }

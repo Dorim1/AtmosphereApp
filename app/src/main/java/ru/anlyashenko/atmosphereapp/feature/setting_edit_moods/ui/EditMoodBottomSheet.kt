@@ -41,8 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.MoodThemeData
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.availableMoodIcons
+import ru.anlyashenko.atmosphereapp.core.utils.availableMoodIcons
+import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.MoodEditModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

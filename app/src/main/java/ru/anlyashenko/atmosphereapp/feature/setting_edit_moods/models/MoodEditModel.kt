@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
+package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
