@@ -2,6 +2,7 @@ package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,9 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,14 +63,17 @@ fun ReplaceMoodBottomSheet(
                 .padding(bottom = 32.dp),
         ) {
             Text(
-                text = "Заменить настроение",
+                text = stringResource(R.string.replace_mood_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Настроение “${moodToReplace.displayName.asString()}” будет заменено на выбранное настроение во всех записях",
+                text = stringResource(
+                    R.string.replace_mood_description,
+                    moodToReplace.displayName.asString()
+                ),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 lineHeight = 14.sp
@@ -78,7 +84,10 @@ fun ReplaceMoodBottomSheet(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { selectedTargetMood = mood }
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() })
+                        { selectedTargetMood = mood }
                         .padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -96,7 +105,7 @@ fun ReplaceMoodBottomSheet(
                     )
                     RadioButton(
                         selected = selectedTargetMood == mood,
-                        onClick = { selectedTargetMood = mood },
+                        onClick = null,
                         modifier = Modifier.size(24.dp),
                         colors = RadioButtonDefaults.colors(
                             selectedColor = mood.color,
@@ -112,13 +121,13 @@ fun ReplaceMoodBottomSheet(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Внимание: ",
+                    text = stringResource(R.string.replace_mood_warning_prefix),
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.error,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "это действие нельзя будет отменить",
+                    text = stringResource(R.string.replace_mood_warning_text),
                     fontSize = 14.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -136,9 +145,9 @@ fun ReplaceMoodBottomSheet(
                     contentColor = MaterialTheme.colorScheme.onError
                 ),
                 shape = RoundedCornerShape(50.dp)
-            )  {
+            ) {
                 Text(
-                    text = "Заменить",
+                    text = stringResource(R.string.replace_mood_button),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )

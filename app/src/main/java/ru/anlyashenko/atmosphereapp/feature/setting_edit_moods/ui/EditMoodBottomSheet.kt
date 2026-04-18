@@ -84,12 +84,12 @@ fun EditMoodBottomSheet(
             )
             Spacer(Modifier.height(24.dp))
 
-//            Text(
-//                text = "Изменить название",
-//                fontSize = 16.sp,
-//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-//            )
-//            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Изменить название",
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+            Spacer(Modifier.height(8.dp))
 
             // todo: Сделать оповещение, что слишком длинное название
             OutlinedTextField(
@@ -114,13 +114,6 @@ fun EditMoodBottomSheet(
                     )
                 },
                 singleLine = true,
-                label = {
-                    Text(
-                        text = "Изменить название",
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                    )
-                },
                 supportingText = {
                     Text(
                         text = "${nameText.length} / $maxCharLimit",

@@ -2,6 +2,7 @@ package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -92,7 +93,7 @@ fun EditMoodsScreen(
 
             Spacer(Modifier.width(12.dp))
             Text(
-                text = "Редактировать настроения",
+                text = stringResource(R.string.edit_moods_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -100,14 +101,14 @@ fun EditMoodsScreen(
         }
 
         Text(
-            text = "Настроения",
+            text = stringResource(R.string.edit_moods_moods_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Измените название настроения или выберите новый значок, чтобы внешний вид соответствовал вашим предпочтениям.",
+            text = stringResource(R.string.edit_moods_moods_description),
             fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
         )
@@ -125,7 +126,7 @@ fun EditMoodsScreen(
 
         Spacer(Modifier.height(40.dp))
         Text(
-            text = "Палитра",
+            text = stringResource(R.string.edit_moods_palette_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
@@ -133,7 +134,7 @@ fun EditMoodsScreen(
 
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Настройте цветовую схему настроений под свой вкус.",
+            text = stringResource(R.string.edit_moods_palette_description),
             fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
         )
@@ -158,7 +159,13 @@ fun EditMoodsScreen(
             mood = moodToEdit!!,
             onDismissRequest = { moodToEdit = null },
             onSave = { newName, newIconId ->
-                viewModel.setEvent(EditMoodsContract.Event.SaveMood(moodToEdit!!.id, newName, newIconId))
+                viewModel.setEvent(
+                    EditMoodsContract.Event.SaveMood(
+                        moodToEdit!!.id,
+                        newName,
+                        newIconId
+                    )
+                )
                 moodToEdit = null
             }
         )
@@ -182,7 +189,6 @@ fun EditMoodsScreen(
         )
     }
 }
-
 
 
 @Composable
@@ -215,7 +221,7 @@ fun MoodEditItem(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_setting_replace),
-                contentDescription = "Заменить",
+                contentDescription = stringResource(R.string.cd_mood_replace),
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(24.dp)
             )
@@ -228,7 +234,7 @@ fun MoodEditItem(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_edit),
-                contentDescription = "Редактировать",
+                contentDescription = stringResource(R.string.cd_mood_edit),
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(24.dp)
             )
@@ -246,13 +252,16 @@ fun PaletteSelectionItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick)
+            .clickable(
+                indication = null, interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
             selected = isSelected,
-            onClick = onClick,
+            onClick = null,
             modifier = Modifier.size(24.dp),
             colors = RadioButtonDefaults.colors(
                 selectedColor = MaterialTheme.colorScheme.primary,
@@ -262,7 +271,7 @@ fun PaletteSelectionItem(
         Spacer(Modifier.width(16.dp))
 
         Text(
-            text = palette.name,
+            text = stringResource(palette.nameRes),
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)

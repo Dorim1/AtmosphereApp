@@ -19,10 +19,10 @@ object LanguageManager {
         val currentLocales = AppCompatDelegate.getApplicationLocales()
         val languageTag = currentLocales.toLanguageTags()
 
-        return if (languageTag.contains("ru")) {
-            AppLanguage.RUSSIAN
-        } else {
-            AppLanguage.ENGLISH
+        return when {
+            languageTag.startsWith("en") -> AppLanguage.ENGLISH
+            languageTag.startsWith("ru") -> AppLanguage.RUSSIAN
+            else -> AppLanguage.ENGLISH
         }
     }
 

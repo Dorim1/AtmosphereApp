@@ -37,7 +37,7 @@ class DiaryRepositoryImpl @Inject constructor(
 
         moods.map { dbModel ->
             val uiModel = dbModel.toUiModel()
-            val colorIndex = uiModel.level - 1
+            val colorIndex = activePalette.colors.size - uiModel.level
             val dynamicColor = activePalette.colors.getOrElse(colorIndex) { uiModel.color }
 
             uiModel.copy(color = dynamicColor)

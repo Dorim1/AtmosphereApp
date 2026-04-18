@@ -4,13 +4,12 @@ import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
-// todo: Дать названия палитрам
 object MoodPalettes {
 
     val allPalettes = listOf(
         PaletteModel(
             id = 0,
-            name = "Стандартная",
+            nameRes = R.string.palette_classic,
             colors = listOf(
                 Color(0xFF8CB342),
                 Color(0xFF00695C),
@@ -21,7 +20,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 1,
-            name = "Палитра 1",
+            nameRes = R.string.palette_sunset_heat,
             colors = listOf(
                 Color(0xFFF2C230),
                 Color(0xFFF2921D),
@@ -32,7 +31,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 2,
-            name = "Палитра 2",
+            nameRes = R.string.palette_desert_wind,
             colors = listOf(
                 Color(0xFF355459),
                 Color(0xFF7A7848),
@@ -43,7 +42,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 3,
-            name = "Палитра 3",
+            nameRes = R.string.palette_quiet_forest,
             colors = listOf(
                 Color(0xFF5B643D),
                 Color(0xFF314350),
@@ -54,7 +53,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 4,
-            name = "Палитра 4",
+            nameRes = R.string.palette_graphite,
             colors = listOf(
                 Color(0xFF3A3128),
                 Color(0xFF615441),
@@ -65,7 +64,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 5,
-            name = "Палитра 5",
+            nameRes = R.string.palette_sea_breeze,
             colors = listOf(
                 Color(0xFF53658F),
                 Color(0xFF2D4159),
@@ -76,7 +75,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 6,
-            name = "Палитра 6",
+            nameRes = R.string.palette_autumn_comfort,
             colors = listOf(
                 Color(0xFF7E3A27),
                 Color(0xFFCEBF94),
@@ -87,7 +86,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 7,
-            name = "Палитра 7",
+            nameRes = R.string.palette_dusty_roads,
             colors = listOf(
                 Color(0xFF604848),
                 Color(0xFF907878),
@@ -98,7 +97,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 8,
-            name = "Палитра 8",
+            nameRes = R.string.palette_hot_sand,
             colors = listOf(
                 Color(0xFFC04732),
                 Color(0xFFE59732),
@@ -109,7 +108,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 9,
-            name = "Палитра 9",
+            nameRes = R.string.palette_velvet_night,
             colors = listOf(
                 Color(0xFF66546C),
                 Color(0xFFD2AA71),
@@ -120,7 +119,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 10,
-            name = "Палитра 10",
+            nameRes = R.string.palette_dark_flame,
             colors = listOf(
                 Color(0xFF2C1106),
                 Color(0xFF590505),
@@ -131,7 +130,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 11,
-            name = "Палитра 11",
+            nameRes = R.string.palette_northern_chill,
             colors = listOf(
                 Color(0xFF0E1618),
                 Color(0xFF395563),
@@ -142,7 +141,7 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 12,
-            name = "Палитра 12",
+            nameRes = R.string.palette_smoldering_coal,
             colors = listOf(
                 Color(0xFFB09F8B),
                 Color(0xFF503D36),

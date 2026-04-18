@@ -95,6 +95,31 @@
     <string name="notification_settings_title">Уведомления</string>
     <string name="notification_settings_description">Приложение будет отправлять напоминания только в указанное время, чтобы не отвлекать вас в неподходящие моменты.</string>
     <string name="notification_settings_enable">Включить уведомления</string>
+    <string name="palette_classic">Классика</string>
+    <string name="palette_sunset_heat">Закатный жар</string>
+    <string name="palette_desert_wind">Пустынный ветер</string>
+    <string name="palette_quiet_forest">Тихий лес</string>
+    <string name="palette_graphite">Графит</string>
+    <string name="palette_sea_breeze">Морской бриз</string>
+    <string name="palette_autumn_comfort">Осенний уют</string>
+    <string name="palette_dusty_roads">Пыльные дороги</string>
+    <string name="palette_hot_sand">Горячий песок</string>
+    <string name="palette_velvet_night">Бархатная ночь</string>
+    <string name="palette_dark_flame">Тёмное пламя</string>
+    <string name="palette_northern_chill">Северный холод</string>
+    <string name="palette_smoldering_coal">Тлеющий уголь</string>
+    <string name="edit_moods_title">Редактировать настроения</string>
+    <string name="edit_moods_moods_title">Настроения</string>
+    <string name="edit_moods_moods_description">Измените название настроения или выберите новый значок, чтобы внешний вид соответствовал вашим предпочтениям.</string>
+    <string name="edit_moods_palette_title">Палитра</string>
+    <string name="edit_moods_palette_description">Настройте цветовую схему настроений под свой вкус.</string>
+    <string name="cd_mood_replace">Заменить</string>
+    <string name="cd_mood_edit">Редактировать</string>
+    <string name="replace_mood_title">Заменить настроение</string>
+    <string name="replace_mood_description">Настроение “%1$s” будет заменено на выбранное настроение во всех записях</string>
+    <string name="replace_mood_warning_prefix">"Внимание: "</string>
+    <string name="replace_mood_warning_text">это действие нельзя будет отменить</string>
+    <string name="replace_mood_button">Заменить</string>
 
     <string-array name="calendar_day_labels">
         <item>Пн</item>

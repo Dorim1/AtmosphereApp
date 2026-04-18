@@ -55,6 +55,10 @@ class ProfileViewModel @Inject constructor(
 
                 val (chartData, chartInsight) = calculateChartData(records, availableMoods)
 
+                val yAxisColors = availableMoods
+                    .sortedByDescending { it.level }
+                    .map { it.color }
+
                 setState {
                     copy(
                         totalEntries = total,
@@ -62,6 +66,7 @@ class ProfileViewModel @Inject constructor(
                         longestStreak = longestStreak,
                         chartData = chartData,
                         moodCounts = moodCounts,
+                        yAxisColors = yAxisColors,
                         yearlyProgress = yearlyProgress,
                         chartInsight = chartInsight,
                         hasEnoughMoodData = hasEnoughMoodData
@@ -78,7 +83,7 @@ class ProfileViewModel @Inject constructor(
         val grouped = records.mapNotNull { it.mood }.groupingBy { it.id }.eachCount()
 
         return availableMoods
-            .sortedBy { it.level }
+            .sortedByDescending { it.level }
             .map { mood ->
             MoodCountItem(
                 name = mood.displayName,
@@ -142,19 +147,16 @@ class ProfileViewModel @Inject constructor(
             val roundedLevel = avgLevel.roundToInt()
             val color = availableMoods.find { it.level == roundedLevel }?.color ?: Color.Transparent
 
-            // TODO: Возможно нужно поменять в БД, чтобы level 5 = Отлично и по убывающей
-            val displayLevel = if (avgLevel > 0f) (6f - avgLevel) else 0f
-
             DailyMoodStat(
                 dayOfWeek = dayOfWeek,
-                level = displayLevel,
+                level = avgLevel,
                 color = color
             )
         }
 
         val bestDay = chartData.maxByOrNull { it.level }
         val insightText = if (bestDay != null && bestDay.level > 0f) {
-            val originalLevel = (6f - bestDay.level).roundToInt()
+            val originalLevel = bestDay.level.roundToInt()
             val mood = availableMoods.find { it.level == originalLevel }
 
             val localizedDayName = bestDay.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())

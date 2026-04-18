@@ -25,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.LocalFireDepartment
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -102,7 +102,8 @@ fun ProfileRoute(
         chartData = state.chartData,
         chartInsight = state.chartInsight,
         onYearlyStatsClick = { viewModel.setEvent(ProfileEvent.OnYearlyStatsClick) },
-        onSettingsClick = { viewModel.setEvent(ProfileEvent.OnSettingsClick) }
+        onSettingsClick = { viewModel.setEvent(ProfileEvent.OnSettingsClick) },
+        yAxisColors = state.yAxisColors
     )
 }
 
@@ -118,6 +119,7 @@ fun ProfileScreen(
     yearlyPercentage: Int,
     chartData: List<DailyMoodStat>,
     chartInsight: UiText,
+    yAxisColors: List<Color>
 ) {
     Column(
         modifier = Modifier
@@ -155,6 +157,7 @@ fun ProfileScreen(
         AverageMoodCard(
             chartData = chartData,
             insightText = chartInsight,
+            yAxisColors = yAxisColors
         )
 
         Spacer(Modifier.height(8.dp))
@@ -238,7 +241,7 @@ fun CurrentStreakCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier.size(48.dp),
-                    imageVector = Icons.Rounded.LocalFireDepartment, // todo: Заменить
+                    painter = painterResource(R.drawable.ic_heat),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSecondary,
                 )
@@ -284,7 +287,7 @@ fun LongestStreakCard(
                 fontWeight = FontWeight.Medium,
                 lineHeight = 96.sp
             )
-            Spacer(Modifier.width(44.dp))
+            Spacer(Modifier.width(58.dp))
             Text(
                 text = stringResource(R.string.profile_longest_streak_title),
                 color = MaterialTheme.colorScheme.onSurface,
@@ -301,6 +304,7 @@ fun AverageMoodCard(
     modifier: Modifier = Modifier,
     chartData: List<DailyMoodStat>,
     insightText: UiText,
+    yAxisColors: List<Color>,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -317,7 +321,11 @@ fun AverageMoodCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(25.dp))
-            MoodBarChart(data = chartData, modifier = Modifier.height(230.dp))
+            MoodBarChart(
+                data = chartData,
+                yAxisColors = yAxisColors,
+                modifier = Modifier.height(230.dp)
+            )
 
             Spacer(Modifier.height(12.dp))
             Text(
@@ -336,21 +344,11 @@ fun AverageMoodCard(
 @Composable
 fun MoodBarChart(
     data: List<DailyMoodStat>,
-    modifier: Modifier = Modifier
+    yAxisColors: List<Color>,
+    modifier: Modifier = Modifier,
 ) {
-
-    // todo: Динамически менять, при смене палитры
-    val yAxisColors = listOf(
-        Color(0xFF8BB13B), // 5 - Отлично
-        Color(0xFF0A6C60), // 4 - Хорошо
-        Color(0xFFFFC107), // 3 - Нормально
-        Color(0xFFFF5722), // 2 - Плохо
-        Color(0xFFD32F2F)  // 1 - Ужасно
-    )
-
     var startAnimation by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { startAnimation = true }
-
 
     Row(
         modifier = modifier.fillMaxWidth(),
