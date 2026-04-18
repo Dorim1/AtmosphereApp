@@ -81,7 +81,7 @@ class ProfileViewModel @Inject constructor(
             .sortedBy { it.level }
             .map { mood ->
             MoodCountItem(
-                name = mood.defaultLabelRes,
+                name = mood.displayName,
                 count = grouped[mood.id] ?: 0,
                 color = mood.color,
             )
@@ -163,7 +163,7 @@ class ProfileViewModel @Inject constructor(
                 UiText.StringResource(
                     R.string.profile_insight_pattern,
                     localizedDayName,
-                    UiText.StringResource(mood.defaultLabelRes)
+                    mood.displayName
                 )
             } else {
                 UiText.StringResource(

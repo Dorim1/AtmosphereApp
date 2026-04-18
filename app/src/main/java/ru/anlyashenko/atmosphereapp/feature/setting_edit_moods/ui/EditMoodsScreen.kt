@@ -43,7 +43,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.getDisplayName
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
@@ -204,7 +203,7 @@ fun MoodEditItem(
         Spacer(Modifier.width(24.dp))
 
         Text(
-            text = mood.getDisplayName(),
+            text = mood.displayName.asString(),
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)

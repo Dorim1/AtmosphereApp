@@ -41,8 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.getDisplayName
-import ru.anlyashenko.atmosphereapp.core.utils.availableMoodIcons
+import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,9 +54,12 @@ fun EditMoodBottomSheet(
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    val displayName = mood.getDisplayName()
+    val displayName = mood.displayName.asString()
     var nameText by remember { mutableStateOf(displayName) }
-    val initialIconIndex = availableMoodIcons.indexOf(mood.iconRes).takeIf { it >= 0 } ?: 0
+
+    val availableIconIndex = remember { MoodIconManager.getAllIconRes() }
+
+    val initialIconIndex = availableIconIndex.indexOf(mood.iconRes).takeIf { it >= 0 } ?: 0
     var selectedIconIndex by remember { mutableIntStateOf(initialIconIndex) }
 
     val maxCharLimit = 15
@@ -75,7 +77,7 @@ fun EditMoodBottomSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                text = mood.getDisplayName(),
+                text = mood.displayName.asString(),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -142,7 +144,7 @@ fun EditMoodBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                availableMoodIcons.forEachIndexed { index, iconRes ->
+                availableIconIndex.forEachIndexed { index, iconRes ->
                     val isSelected = index == selectedIconIndex
 
                     Box(
@@ -168,7 +170,7 @@ fun EditMoodBottomSheet(
             Spacer(Modifier.height(40.dp))
 
             Button(
-                onClick = { onSave(nameText, availableMoodIcons[selectedIconIndex]) },
+                onClick = { onSave(nameText, availableIconIndex[selectedIconIndex]) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

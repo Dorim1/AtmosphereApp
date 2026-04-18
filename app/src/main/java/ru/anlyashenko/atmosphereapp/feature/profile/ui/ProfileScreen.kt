@@ -39,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -59,7 +58,6 @@ import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
-import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -604,7 +602,7 @@ fun LegendItem(
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = stringResource(item.name),
+                text = item.name.asString(),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onSurface,
