@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
+// todo: Дать названия палитрам
 object MoodPalettes {
 
     val allPalettes = listOf(
