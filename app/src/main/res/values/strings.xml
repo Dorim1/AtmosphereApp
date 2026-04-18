@@ -120,6 +120,9 @@
     <string name="replace_mood_warning_prefix">"Внимание: "</string>
     <string name="replace_mood_warning_text">это действие нельзя будет отменить</string>
     <string name="replace_mood_button">Заменить</string>
+    <string name="edit_mood_change_name">Изменить название</string>
+    <string name="edit_mood_change_icon">Изменить значок</string>
+    <string name="select_app_language">Выберите язык\nприложения</string>
 
     <string-array name="calendar_day_labels">
         <item>Пн</item>

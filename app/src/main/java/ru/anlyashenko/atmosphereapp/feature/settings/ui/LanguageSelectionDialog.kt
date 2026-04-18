@@ -28,6 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import ru.anlyashenko.atmosphereapp.R
 
+// todo: Вынести класс
 enum class AppLanguage {
     RUSSIAN, ENGLISH
 }
@@ -64,7 +69,7 @@ fun LanguageSelectionDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Выберите язык\nприложения",
+                    text = stringResource(R.string.select_app_language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -144,7 +149,11 @@ fun LanguageOptionItem(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(48.dp),
+            .height(48.dp)
+            .semantics {
+                selected = isSelected
+                role = Role.RadioButton
+            },
         shape = RoundedCornerShape(50.dp),
         color = backgroundColor,
         border = if (isSelected) null else BorderStroke(1.dp, borderColor),
@@ -165,7 +174,7 @@ fun LanguageOptionItem(
 
             RadioButton(
                 selected = isSelected,
-                onClick = onClick,
+                onClick = null,
                 colors = RadioButtonDefaults.colors(
                     selectedColor = MaterialTheme.colorScheme.onPrimary,
                     unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)

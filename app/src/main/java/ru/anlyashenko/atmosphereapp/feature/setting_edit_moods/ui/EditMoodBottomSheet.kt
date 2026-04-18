@@ -95,11 +95,11 @@ fun EditMoodBottomSheet(
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "Изменить название",
+                text = stringResource(R.string.edit_mood_change_name),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(24.dp))
 
             OutlinedTextField(
                 value = nameText,
@@ -145,7 +145,7 @@ fun EditMoodBottomSheet(
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "Изменить значок",
+                text = stringResource(R.string.edit_mood_change_icon),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )

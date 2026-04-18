@@ -118,6 +118,7 @@
     </string>
     <string name="notification_settings_enable">Enable notifications</string>
 
+    <string name="select_app_language">Select app language</string>
 
     <!--  AppearanceScreen  -->
     <string name="appearance_screen_title">Appearance</string>
@@ -147,6 +148,8 @@
     <string name="edit_moods_palette_description">
         Customize the mood color scheme to fit your personal style.
     </string>
+    <string name="edit_mood_change_name">Change name</string>
+    <string name="edit_mood_change_icon">Change icon</string>
 
     <string name="replace_mood_title">Replace mood</string>
     <string name="replace_mood_description">Mood «%1$s» will be replaced with the selected mood in all entries</string>

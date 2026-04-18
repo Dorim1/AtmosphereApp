@@ -1,5 +1,9 @@
 package ru.anlyashenko.atmosphereapp.feature.onboarding.ui
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -87,11 +91,24 @@ fun HeaderSection() {
 // TODO: Решить проблему в размером кнопки
 @Composable
 fun FooterSection(onGetInClick: () -> Unit) {
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) {
+        onGetInClick()
+    }
+
     Button(
         modifier = Modifier
             .padding(vertical = 150.dp)
             .size(200.dp, 50.dp),
-        onClick = onGetInClick,
+        onClick = {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                onGetInClick()
+            }
+        },
         shape = RoundedCornerShape(50.dp),
     ) {
         Text(

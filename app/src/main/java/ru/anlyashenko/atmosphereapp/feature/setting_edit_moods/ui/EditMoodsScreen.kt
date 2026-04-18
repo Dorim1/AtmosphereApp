@@ -37,6 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -256,7 +260,11 @@ fun PaletteSelectionItem(
                 indication = null, interactionSource = remember { MutableInteractionSource() },
                 onClick = onClick
             )
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .semantics {
+                selected = isSelected
+                role = Role.RadioButton
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
