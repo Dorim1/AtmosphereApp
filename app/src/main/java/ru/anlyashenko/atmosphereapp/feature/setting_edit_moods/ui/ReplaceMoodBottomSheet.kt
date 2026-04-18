@@ -34,15 +34,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.MoodEditModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplaceMoodBottomSheet(
-    moodToReplace: MoodEditModel,
-    availableMoods: List<MoodEditModel>,
+    moodToReplace: MoodUiModel,
+    availableMoods: List<MoodUiModel>,
     onDismissRequest: () -> Unit,
-    onReplaceConfirm: (MoodEditModel) -> Unit
+    onReplaceConfirm: (MoodUiModel) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var selectedTargetMood by remember() { mutableStateOf(availableMoods.firstOrNull()) }
@@ -67,7 +67,7 @@ fun ReplaceMoodBottomSheet(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Настроение “${moodToReplace.name}” будет заменено на выбранное настроение во всех записях",
+                text = "Настроение “${moodToReplace.displayName.asString()}” будет заменено на выбранное настроение во всех записях",
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 lineHeight = 14.sp
@@ -89,7 +89,7 @@ fun ReplaceMoodBottomSheet(
                     )
                     Spacer(Modifier.width(16.dp))
                     Text(
-                        text = mood.name,
+                        text = mood.displayName.asString(),
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.weight(1f)

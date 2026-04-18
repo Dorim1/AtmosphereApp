@@ -8,7 +8,7 @@ import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
 
 fun MoodDBO.toUiModel(): MoodUiModel {
-    // todo: Возможно переписать под systemKey
+    // todo: Возможно переписать под systemKey либо вообще удалить SystemKey нахуц
     val defaultLabelRes = when (this.level) {
         1 -> R.string.mood_excellent
         2 -> R.string.mood_good
@@ -28,12 +28,4 @@ fun MoodDBO.toUiModel(): MoodUiModel {
     )
 }
 
-fun Color.toHexCode(): String {
-    return String.format("#%02X%02X%02X%02X",
-        (this.alpha * 255).toInt(),
-        (this.red * 255).toInt(),
-        (this.green * 255).toInt(),
-        (this.blue * 255).toInt(),
-    )
-}
 

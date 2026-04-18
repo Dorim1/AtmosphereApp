@@ -2,9 +2,10 @@ package ru.anlyashenko.atmosphereapp.feature.profile.models
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 
 data class MoodCountItem(
-    @param:StringRes val name: Int,
+    val name: UiText,
     val count: Int,
     val color: Color
 )

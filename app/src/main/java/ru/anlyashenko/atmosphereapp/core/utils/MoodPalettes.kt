@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
+// todo: Дать названия палитрам
 object MoodPalettes {
 
     val allPalettes = listOf(
@@ -158,23 +159,3 @@ object MoodPalettes {
 
 
 }
-
-// Todo: Вынести
-val availableMoodIcons = listOf(
-    R.drawable.ic_mood_great, //
-    R.drawable.ic_mood_neutral, //
-    R.drawable.ic_mood_sad, //
-    R.drawable.ic_mood_bad, //
-    R.drawable.ic_mood_satisfied, //
-    R.drawable.ic_mood_very_satisfied, //
-    R.drawable.ic_mood_very_dissatisfied, //
-    R.drawable.ic_mood_dissatisfied, //
-    R.drawable.ic_mood_calm, //
-    R.drawable.ic_mood_content, //
-    R.drawable.ic_mood_excited, //
-    R.drawable.ic_mood_extremely_dissatisfied, //
-    R.drawable.ic_mood_frustrated, //
-    R.drawable.ic_mood_sick, //
-    R.drawable.ic_mood_stressed, //
-    R.drawable.ic_mood_worried //
-)

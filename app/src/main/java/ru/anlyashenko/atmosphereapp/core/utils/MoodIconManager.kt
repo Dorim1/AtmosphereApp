@@ -23,6 +23,9 @@ object MoodIconManager {
         "ic_mood_worried" to R.drawable.ic_mood_worried
     )
 
+//    val allIconKeys: List<String> = icons.keys.toList()
+//    val allIconRes: List<Int> = icons.values.toList()
+
     fun getIconRes(key: String): Int = icons[key] ?: R.drawable.ic_mood_neutral
 
     fun getKeyByRes(resId: Int): String {
@@ -31,4 +34,5 @@ object MoodIconManager {
     }
 
     fun getAllIcons(): List<String> = icons.keys.toList()
+    fun getAllIconRes(): List<Int> = icons.values.toList()
 }

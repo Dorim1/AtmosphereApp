@@ -11,11 +11,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.dataStore
 import ru.anlyashenko.atmosphereapp.data.local.database.AppDatabase
 import ru.anlyashenko.atmosphereapp.data.local.database.DatabaseCallback
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
-import ru.anlyashenko.atmosphereapp.data.repository.dataStore
 import javax.inject.Provider
 import javax.inject.Singleton
 

@@ -5,10 +5,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
+import ru.anlyashenko.atmosphereapp.core.utils.MoodPalettes
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
 import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
+import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import ru.anlyashenko.atmosphereapp.feature.home.mapper.toUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
@@ -20,11 +22,27 @@ import javax.inject.Singleton
 @Singleton
 class DiaryRepositoryImpl @Inject constructor(
     private val diaryDao: DiaryDao,
-    private val moodDao: MoodDao
+    private val moodDao: MoodDao,
+    private val settingsRepository: SettingsRepository
 ) : DiaryRepository {
 
-    override val availableMoods: Flow<List<MoodUiModel>> = moodDao.getAllMoods()
-        .map { moods -> moods.map { it.toUiModel() } }
+//    override val availableMoods: Flow<List<MoodUiModel>> = moodDao.getAllMoods()
+//        .map { moods -> moods.map { it.toUiModel() } }
+
+    override val availableMoods: Flow<List<MoodUiModel>> = combine(
+        moodDao.getAllMoods(),
+        settingsRepository.selectedPaletteFlow
+    ) { moods, paletteId ->
+        val activePalette = MoodPalettes.getPaletteById(paletteId)
+
+        moods.map { dbModel ->
+            val uiModel = dbModel.toUiModel()
+            val colorIndex = uiModel.level - 1
+            val dynamicColor = activePalette.colors.getOrElse(colorIndex) { uiModel.color }
+
+            uiModel.copy(color = dynamicColor)
+        }
+    }
 
     override fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
         val today = LocalDate.now()

@@ -43,7 +43,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.MoodEditModel
+import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
 @Composable
@@ -54,14 +54,7 @@ fun EditMoodsScreen(
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val moods = state.moods.map { uiModel ->
-        MoodEditModel(
-            id = uiModel.id,
-            name = uiModel.customLabel ?: stringResource(uiModel.defaultLabelRes),
-            color = uiModel.color,
-            iconRes = uiModel.iconRes
-        )
-    }
+    val moods = state.moods
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
@@ -72,8 +65,8 @@ fun EditMoodsScreen(
     }
 
 
-    var moodToEdit by remember { mutableStateOf<MoodEditModel?>(null) }
-    var moodToReplace by remember { mutableStateOf<MoodEditModel?>(null) }
+    var moodToEdit by remember { mutableStateOf<MoodUiModel?>(null) }
+    var moodToReplace by remember { mutableStateOf<MoodUiModel?>(null) }
 
     Column(
         modifier = Modifier
@@ -194,7 +187,7 @@ fun EditMoodsScreen(
 
 @Composable
 fun MoodEditItem(
-    mood: MoodEditModel,
+    mood: MoodUiModel,
     onEditClick: () -> Unit,
     onReplaceClick: () -> Unit,
 ) {
@@ -210,7 +203,7 @@ fun MoodEditItem(
         Spacer(Modifier.width(24.dp))
 
         Text(
-            text = mood.name,
+            text = mood.displayName.asString(),
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)
