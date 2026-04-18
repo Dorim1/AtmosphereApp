@@ -27,12 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ru.anlyashenko.atmosphereapp.R
 
 enum class AppLanguage {
     RUSSIAN, ENGLISH
@@ -99,7 +101,7 @@ fun LanguageSelectionDialog(
                         )
                     ) {
                         Text(
-                            text = "Отмена",
+                            text = stringResource(R.string.text_cancel_button),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -117,7 +119,7 @@ fun LanguageSelectionDialog(
                         )
                     ) {
                         Text(
-                            text = "Сохранить",
+                            text = stringResource(R.string.text_save_button),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium
                         )

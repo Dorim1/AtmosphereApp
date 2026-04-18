@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.utils.LanguageManager
 import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
 
 @Preview
@@ -66,6 +68,8 @@ fun SettingsScreen(
     onNavigateToEditMoods: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val currentLanguage = remember { LanguageManager.getCurrentLanguage() }
 
     // todo: перенести на активити или на homeScreen
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -178,11 +182,11 @@ fun SettingsScreen(
 
     if (state.showLanguageDialog) {
         LanguageSelectionDialog(
-            initialLanguage = AppLanguage.RUSSIAN,
+            initialLanguage = currentLanguage,
             onDismissRequest = { viewModel.setEvent(SettingsEvent.DismissDialogs) },
             onSaveClick = { selectedLanguage ->
-                // TODO: Ивент сохранения языка
                 viewModel.setEvent(SettingsEvent.DismissDialogs)
+                LanguageManager.setLanguage(selectedLanguage)
             }
         )
     }
@@ -232,13 +236,15 @@ fun SettingsItemCard(
                         text = title,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
+                        lineHeight = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(Modifier.height(2.dp))
                     Text(
                         text = subtitle,
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                        lineHeight = 14.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                     )
                 }
                 Icon(
