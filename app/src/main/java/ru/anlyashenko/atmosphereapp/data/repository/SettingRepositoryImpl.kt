@@ -21,6 +21,7 @@ class SettingRepositoryImpl @Inject constructor(
         val NOTIFICATION_HOUR = intPreferencesKey("notification_hour")
         val NOTIFICATION_MINUTE = intPreferencesKey("notification_minute")
         val SELECTED_PALETTE_ID = intPreferencesKey("selected_palette_id")
+        val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     }
 
     override val notificationEnabledFlow: Flow<Boolean> = dataStore.data
@@ -41,6 +42,10 @@ class SettingRepositoryImpl @Inject constructor(
         .map { preferences ->
             preferences[SELECTED_PALETTE_ID] ?: 0
         }
+    override val isOnboardingCompletedFlow: Flow<Boolean> = dataStore.data
+        .map { preferences ->
+            preferences[ONBOARDING_COMPLETED] ?: false
+        }
 
     override suspend fun saveNotificationSettings(isEnabled: Boolean, hour: Int, minute: Int) {
         dataStore.edit { preferences ->
@@ -53,6 +58,12 @@ class SettingRepositoryImpl @Inject constructor(
     override suspend fun saveSelectedPalette(paletteId: Int) {
         dataStore.edit { preferences ->
             preferences[SELECTED_PALETTE_ID] = paletteId
+        }
+    }
+
+    override suspend fun saveOnboardingCompleted(isCompleted: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[ONBOARDING_COMPLETED] = isCompleted
         }
     }
 }

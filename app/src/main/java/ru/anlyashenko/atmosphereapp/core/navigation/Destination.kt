@@ -3,26 +3,27 @@ package ru.anlyashenko.atmosphereapp.core.navigation
 import kotlinx.serialization.Serializable
 
 
-sealed class Destination {
+sealed interface Destination {
     @Serializable
-    data object IntroRoute
-    @Serializable
-    data object HomeRoute
+    data object IntroRoute : Destination
 
     @Serializable
-    data object CalendarRoute
+    data object HomeRoute : Destination
 
     @Serializable
-    data object UserRoute
+    data object CalendarRoute : Destination
 
     @Serializable
-    data object YearlyStatsRoute
-    @Serializable
-    data object SettingsRoute
+    data object UserRoute : Destination
 
     @Serializable
-    data object SettingsAppearanceRoute
+    data object YearlyStatsRoute : Destination
+    @Serializable
+    data object SettingsRoute : Destination
 
     @Serializable
-    data object SettingsEditMoodsRoute
+    data object SettingsAppearanceRoute : Destination
+
+    @Serializable
+    data object SettingsEditMoodsRoute : Destination
 }
