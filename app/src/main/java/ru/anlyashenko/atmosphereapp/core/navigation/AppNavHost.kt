@@ -7,12 +7,14 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
 import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
+import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroViewModel
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.AppearanceScreen
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui.EditMoodsScreen
@@ -23,11 +25,12 @@ import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 @Composable
 fun AppNavHost(
     navHostController: NavHostController,
+    startDestination: Destination,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Destination.IntroRoute,
+        startDestination = startDestination,
         enterTransition = {
             slideInHorizontally(
                 initialOffsetX = { it },
@@ -54,9 +57,10 @@ fun AppNavHost(
         },
         modifier = modifier
     ) {
-        composable<Destination.IntroRoute>() {
+        composable<Destination.IntroRoute> {
             IntroScreen(
                 onGetInClick = {
+
                     navHostController.navigate(Destination.HomeRoute) {
                         popUpTo<Destination.IntroRoute> { inclusive = true }
                     }

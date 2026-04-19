@@ -32,6 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -123,7 +127,11 @@ fun MoodItemRow(
             .clip(RoundedCornerShape(30.dp))
             .background(backgroundColor)
             .clickable(onClick = onClick)
-            .padding(horizontal = 21.dp, vertical = 27.dp),
+            .padding(horizontal = 21.dp, vertical = 27.dp)
+            .semantics {
+                selected = isSelected
+                role = Role.RadioButton
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

@@ -2,20 +2,14 @@ package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -32,8 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -53,8 +45,8 @@ fun AddNoteDialog(
     val focusRequester = remember { FocusRequester() }
 
     var noteText by remember { mutableStateOf(initialText) }
-    val maxChar = 250
-    val isLimitReached = noteText.length == maxChar
+    val maxCharLimit = 250
+    val isLimitReached = noteText.length == maxCharLimit
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -104,7 +96,7 @@ fun AddNoteDialog(
                 OutlinedTextField(
                     value = noteText,
                     onValueChange = {
-                        if (it.length <= maxChar) noteText = it
+                        if (it.length <= maxCharLimit) noteText = it
                     },
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -122,12 +114,12 @@ fun AddNoteDialog(
 //                    },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = if (isLimitReached)
-                            MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                         else
                             MaterialTheme.colorScheme.primary,
 
                         unfocusedBorderColor = if (isLimitReached)
-                            MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                         else
                             MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
 
@@ -142,7 +134,7 @@ fun AddNoteDialog(
                     },
                     supportingText = {
                         Text(
-                            text = "${noteText.length} / $maxChar",
+                            text = "${noteText.length} / $maxCharLimit",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
                             color = animatedCounterColor,

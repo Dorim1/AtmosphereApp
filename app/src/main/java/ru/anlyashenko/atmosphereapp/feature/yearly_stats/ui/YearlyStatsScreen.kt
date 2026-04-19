@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -43,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -79,6 +81,8 @@ fun YearlyStatsScreen(
     val moodMap = remember(state.records) {
         state.records.filter { it.hasMood }.associate { it.date to it.mood!! }
     }
+
+    val hasEnoughData = state.hasEnoughMoodData
 
     val availableYears = remember(moodMap) {
         val years = moodMap.keys.map { it.year }.toMutableSet()
@@ -124,6 +128,7 @@ fun YearlyStatsScreen(
         TopMoodsCard(
             year = displayYear,
             moodMap = moodMap,
+            hasEnoughData = hasEnoughData
         )
         Spacer(Modifier.height(6.dp))
         YearlyStatsCards(
@@ -244,6 +249,7 @@ fun YearHeaderCard(displayYear: Int, percentage: Int) {
 fun TopMoodsCard(
     year: Int,
     moodMap: Map<LocalDate, MoodUiModel>,
+    hasEnoughData: Boolean,
     modifier: Modifier = Modifier
 ) {
     val topMoods = remember(year, moodMap) {
@@ -263,15 +269,30 @@ fun TopMoodsCard(
                 Pair(color, percentage)
             }
     }
-    // todo: Добавить блок
     Column(modifier = modifier) {
-        if (topMoods.isEmpty()) {
-            Text(
-                text = stringResource(R.string.yearly_not_enough_data),
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                modifier = Modifier.padding(16.dp)
-            )
+        if (!hasEnoughData || topMoods.isEmpty()) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 160.dp),
+                shape = RoundedCornerShape(30.dp),
+                color = MaterialTheme.colorScheme.surface
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.yearly_not_enough_data),
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+            }
         } else {
             topMoods.forEachIndexed { index, (mood, percentage) ->
                 EmotionProgressBar(

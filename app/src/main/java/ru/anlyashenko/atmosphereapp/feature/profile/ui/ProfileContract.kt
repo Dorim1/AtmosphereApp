@@ -1,7 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.profile.ui
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
@@ -9,7 +8,6 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText.DynamicString
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText.StringResource
 
 data class ProfileState(
@@ -18,6 +16,7 @@ data class ProfileState(
     val longestStreak: Int = 0,
     val moodCounts: List<MoodCountItem> = emptyList(),
     val chartData: List<DailyMoodStat> = emptyList(),
+    val yAxisColors: List<Color> = emptyList(),
     val chartInsight: UiText = StringResource(R.string.profile_not_enough_data),
     val hasEnoughMoodData: Boolean = false,
     val yearlyProgress: Int = 0,

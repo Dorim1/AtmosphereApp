@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -62,7 +64,15 @@ fun EditMoodBottomSheet(
     val initialIconIndex = availableIconIndex.indexOf(mood.iconRes).takeIf { it >= 0 } ?: 0
     var selectedIconIndex by remember { mutableIntStateOf(initialIconIndex) }
 
-    val maxCharLimit = 15
+    val maxCharLimit = 20
+    val isLimitReached = nameText.length == maxCharLimit
+
+    val animatedCounterColor by animateColorAsState(
+        targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
+        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+        animationSpec = tween(durationMillis = 300),
+        label = "CounterColorAnimation"
+    )
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -84,14 +94,13 @@ fun EditMoodBottomSheet(
             )
             Spacer(Modifier.height(24.dp))
 
-//            Text(
-//                text = "Изменить название",
-//                fontSize = 16.sp,
-//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-//            )
-//            Spacer(Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.edit_mood_change_name),
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+            Spacer(Modifier.height(24.dp))
 
-            // todo: Сделать оповещение, что слишком длинное название
             OutlinedTextField(
                 value = nameText,
                 onValueChange = { newText ->
@@ -102,8 +111,17 @@ fun EditMoodBottomSheet(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(50.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    focusedBorderColor = MaterialTheme.colorScheme.primary
+                    focusedBorderColor = if (isLimitReached)
+                        MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
+                    else
+                        MaterialTheme.colorScheme.primary,
+
+                    unfocusedBorderColor = if (isLimitReached)
+                        MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
+                    else
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+
+                    cursorColor = MaterialTheme.colorScheme.onSurface
                 ),
                 trailingIcon = {
                     Box(
@@ -114,17 +132,11 @@ fun EditMoodBottomSheet(
                     )
                 },
                 singleLine = true,
-                label = {
-                    Text(
-                        text = "Изменить название",
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                    )
-                },
                 supportingText = {
                     Text(
                         text = "${nameText.length} / $maxCharLimit",
                         modifier = Modifier.fillMaxWidth(),
+                        color = animatedCounterColor,
                         textAlign = TextAlign.End
                     )
                 }
@@ -133,7 +145,7 @@ fun EditMoodBottomSheet(
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "Изменить значок",
+                text = stringResource(R.string.edit_mood_change_icon),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )

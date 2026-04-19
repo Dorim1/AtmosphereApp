@@ -118,10 +118,47 @@
     </string>
     <string name="notification_settings_enable">Enable notifications</string>
 
+    <string name="select_app_language">Select app language</string>
 
     <!--  AppearanceScreen  -->
     <string name="appearance_screen_title">Appearance</string>
     <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
+
+    <!--  EditMoodsScreen  -->
+    <string name="palette_classic">Classic</string>
+    <string name="palette_sunset_heat">Sunset Heat</string>
+    <string name="palette_desert_wind">Desert Wind</string>
+    <string name="palette_quiet_forest">Quiet Forest</string>
+    <string name="palette_graphite">Graphite</string>
+    <string name="palette_sea_breeze">Sea Breeze</string>
+    <string name="palette_autumn_comfort">Autumn Comfort</string>
+    <string name="palette_dusty_roads">Dusty Roads</string>
+    <string name="palette_hot_sand">Hot Sand</string>
+    <string name="palette_velvet_night">Velvet Night</string>
+    <string name="palette_dark_flame">Dark Flame</string>
+    <string name="palette_northern_chill">Northern Chill</string>
+    <string name="palette_smoldering_coal">Smoldering Coal</string>
+
+    <string name="edit_moods_title">Edit moods</string>
+    <string name="edit_moods_moods_title">Moods</string>
+    <string name="edit_moods_moods_description">
+        Change mood names or select a new icon so their appearance matches your preferences.
+    </string>
+    <string name="edit_moods_palette_title">Palette</string>
+    <string name="edit_moods_palette_description">
+        Customize the mood color scheme to fit your personal style.
+    </string>
+    <string name="edit_mood_change_name">Change name</string>
+    <string name="edit_mood_change_icon">Change icon</string>
+
+    <string name="replace_mood_title">Replace mood</string>
+    <string name="replace_mood_description">Mood «%1$s» will be replaced with the selected mood in all entries</string>
+    <string name="replace_mood_warning_prefix">"Warning: "</string>
+    <string name="replace_mood_warning_text">this action cannot be undone</string>
+    <string name="replace_mood_button">Replace</string>
+
+    <string name="cd_mood_replace">Replace</string>
+    <string name="cd_mood_edit">Edit</string>
 
     <string name="duration_picker_confirm_button">Confirm</string>
 

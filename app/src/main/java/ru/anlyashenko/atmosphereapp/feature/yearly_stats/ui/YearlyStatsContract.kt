@@ -12,6 +12,7 @@ import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 data class YearlyStatsState(
     val records: List<DiaryRecordUiModel> = emptyList(),
     val availableMoods: List<MoodUiModel> = emptyList(),
+    val hasEnoughMoodData: Boolean = false,
 ) : UiState
 
 sealed class YearlyStatsEvent : UiEvent {

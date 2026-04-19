@@ -55,6 +55,7 @@ private fun HomeScreenPreview() {
     }
 }
 
+// todo: сделать, чтобы погода не подгружалась каждый раз при обновлении экрана
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {

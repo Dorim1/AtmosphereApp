@@ -1,5 +1,9 @@
 package ru.anlyashenko.atmosphereapp.feature.onboarding.ui
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.SecondaryGrayLight
@@ -39,7 +45,19 @@ private fun InroScreenPreview() {
 }
 
 @Composable
-fun IntroScreen(onGetInClick: () -> Unit) {
+fun IntroScreen(
+    viewModel: IntroViewModel = hiltViewModel(),
+    onGetInClick: () -> Unit
+) {
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                IntroEffect.NavigateToHome -> onGetInClick()
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,7 +66,9 @@ fun IntroScreen(onGetInClick: () -> Unit) {
     ) {
         HeaderSection()
         Spacer(Modifier.weight(1f, fill = false))
-        FooterSection(onGetInClick)
+        FooterSection(
+            onGetInClick = { viewModel.setEvent(IntroEvent.CompleteOnboarding) }
+        )
     }
 }
 
@@ -65,7 +85,7 @@ fun HeaderSection() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(4f/ 4f)
+                .aspectRatio(4f / 4f)
         )
         Spacer(Modifier.height(4.dp))
         Text(
@@ -87,11 +107,25 @@ fun HeaderSection() {
 // TODO: Решить проблему в размером кнопки
 @Composable
 fun FooterSection(onGetInClick: () -> Unit) {
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) {
+        onGetInClick()
+    }
+
     Button(
         modifier = Modifier
             .padding(vertical = 150.dp)
             .size(200.dp, 50.dp),
-        onClick = onGetInClick,
+        onClick = {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                onGetInClick()
+            }
+
+        },
         shape = RoundedCornerShape(50.dp),
     ) {
         Text(
