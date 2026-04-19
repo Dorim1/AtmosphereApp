@@ -7,7 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
@@ -37,7 +39,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContent {
-            AtmosphereAppTheme(dynamicColor = false, darkTheme = false) {
+
+            val themeMode by viewModel.themeMode.collectAsStateWithLifecycle()
+            val cornerRadius by viewModel.cornerRadius.collectAsStateWithLifecycle()
+
+            AtmosphereAppTheme(
+                themeMode = themeMode,
+                cornerRadiusMode = cornerRadius
+            ) {
                 if (!viewModel.isLoading) {
                     NavigationBar(startDestination = viewModel.startDestination)
                 }

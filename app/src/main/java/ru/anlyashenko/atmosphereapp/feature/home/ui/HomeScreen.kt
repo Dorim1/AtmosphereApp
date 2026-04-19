@@ -47,13 +47,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-@Composable
-@Preview
-private fun HomeScreenPreview() {
-    AtmosphereAppTheme {
-//        HomeScreen()
-    }
-}
 
 // todo: сделать, чтобы погода не подгружалась каждый раз при обновлении экрана
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,7 +127,7 @@ fun WeatherCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primary
     ) {
         if (isLoading) {
@@ -269,7 +262,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onMoodClick,
-            shape = RoundedCornerShape(30.dp),
+            shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .weight(1f)
@@ -301,7 +294,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onNoteClick,
-            shape = RoundedCornerShape(30.dp),
+            shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
                 .weight(1f)
@@ -348,7 +341,7 @@ fun DayEntryCard(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(
