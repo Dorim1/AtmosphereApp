@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -24,6 +25,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -51,6 +53,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -189,7 +192,7 @@ fun DayNoteSection(
                 R.string.calendar_record_date,
                 selectedDate.dayOfMonth,
                 monthName
-                ),
+            ),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
@@ -412,27 +415,39 @@ fun CalendarMonthPage(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .clip(CircleShape)
-                                    .background(
-                                        when {
-                                            isFuture || hasNoMood -> Color.Transparent
-                                            else -> moodColor
-                                        }
+                                    .then(
+                                        if (isSelected) Modifier.border(
+                                            width = 2.dp,
+                                            color = moodColor ?: MaterialTheme.colorScheme.primary,
+                                            shape = CircleShape
+                                        ) else Modifier
                                     )
-                                    .border(
-                                        width = 1.dp,
-                                        color = when {
-                                            isSelected -> MaterialTheme.colorScheme.primary
-                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
-                                                alpha = 0.2f
-                                            )
-
-                                            else -> Color.Transparent
-                                        },
-                                        shape = CircleShape
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = null,
+                                        onClick = { onDateClick(date) }
                                     )
-                                    .clickable { onDateClick(date) }
                             ) {
-
+                                Box(
+                                    modifier = Modifier
+                                        .size(34.dp)
+                                        .clip(CircleShape)
+                                        .background(
+                                            when {
+                                                isFuture || hasNoMood -> Color.Transparent
+                                                else -> moodColor
+                                            }
+                                        )
+                                        .then(
+                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.border(
+                                                width = 1.dp,
+                                                color = MaterialTheme.colorScheme.onSurface.copy(
+                                                    alpha = 0.2f
+                                                ),
+                                                shape = CircleShape
+                                            ) else Modifier
+                                        )
+                                )
                             }
                         }
                     }

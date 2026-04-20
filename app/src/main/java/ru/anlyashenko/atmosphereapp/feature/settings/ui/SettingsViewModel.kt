@@ -9,8 +9,10 @@ import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.model.AlarmItem
 import ru.anlyashenko.atmosphereapp.domain.notification.AlarmScheduler
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 import javax.inject.Inject
 
+// todo: Решить проблему с отправкой уведомлений после получения разрешения
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
@@ -82,7 +84,7 @@ class SettingsViewModel @Inject constructor(
                 )
             }
         } else {
-            alarmScheduler.cancel(1001)
+            alarmScheduler.cancel(NotificationDefaults.ALARM_ID)
         }
     }
 

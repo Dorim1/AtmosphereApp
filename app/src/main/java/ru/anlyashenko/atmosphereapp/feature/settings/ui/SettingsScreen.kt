@@ -47,18 +47,6 @@ import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.utils.LanguageManager
 import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
 
-@Preview
-@Composable
-private fun SettingsScreenPreview() {
-    AtmosphereAppTheme() {
-        SettingsScreen(
-            onNavigateToAppearance = {},
-            onNavigateToEditMoods = {},
-            onBackClick = {},
-        )
-    }
-
-}
 
 @Composable
 fun SettingsScreen(
@@ -71,7 +59,6 @@ fun SettingsScreen(
 
     val currentLanguage = remember { LanguageManager.getCurrentLanguage() }
 
-    // todo: перенести на активити или на homeScreen
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->

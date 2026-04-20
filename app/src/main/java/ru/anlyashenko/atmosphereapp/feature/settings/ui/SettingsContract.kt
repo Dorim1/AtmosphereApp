@@ -5,11 +5,12 @@ import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 
 data class SettingsState(
-    val isNotificationsEnabled: Boolean = true,
-    val notificationHour: Int = 20,
-    val notificationMinute: Int = 30,
+    val isNotificationsEnabled: Boolean = NotificationDefaults.DEFAULT_IS_ENABLED,
+    val notificationHour: Int = NotificationDefaults.DEFAULT_HOUR,
+    val notificationMinute: Int = NotificationDefaults.DEFAULT_MINUTE,
     val isLoading: Boolean = true,
     val showNotificationSheet: Boolean = false,
     val showLanguageDialog: Boolean = false,

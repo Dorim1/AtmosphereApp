@@ -35,16 +35,6 @@ import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.SecondaryGrayLight
 
 @Composable
-@Preview
-private fun InroScreenPreview() {
-    AtmosphereAppTheme {
-        IntroScreen(
-            onGetInClick = {}
-        )
-    }
-}
-
-@Composable
 fun IntroScreen(
     viewModel: IntroViewModel = hiltViewModel(),
     onGetInClick: () -> Unit
@@ -67,7 +57,9 @@ fun IntroScreen(
         HeaderSection()
         Spacer(Modifier.weight(1f, fill = false))
         FooterSection(
-            onGetInClick = { viewModel.setEvent(IntroEvent.CompleteOnboarding) }
+            onGetInClick = { isGranted ->
+                viewModel.setEvent(IntroEvent.CompleteOnboarding(isGranted))
+            }
         )
     }
 }
@@ -106,12 +98,12 @@ fun HeaderSection() {
 
 // TODO: Решить проблему в размером кнопки
 @Composable
-fun FooterSection(onGetInClick: () -> Unit) {
+fun FooterSection(onGetInClick: (Boolean) -> Unit) {
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
-    ) {
-        onGetInClick()
+    ) { isGranted ->
+        onGetInClick(isGranted)
     }
 
     Button(
@@ -122,7 +114,7 @@ fun FooterSection(onGetInClick: () -> Unit) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
-                onGetInClick()
+                onGetInClick(true)
             }
 
         },

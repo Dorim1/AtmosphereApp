@@ -7,7 +7,7 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 data object IntroState: UiState
 
 sealed interface IntroEvent : UiEvent {
-    object CompleteOnboarding: IntroEvent
+    data class CompleteOnboarding(val isNotificationGranted: Boolean): IntroEvent
 }
 
 sealed interface IntroEffect : UiEffect {

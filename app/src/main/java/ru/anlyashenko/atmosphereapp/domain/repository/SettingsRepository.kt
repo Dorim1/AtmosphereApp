@@ -3,6 +3,7 @@ package ru.anlyashenko.atmosphereapp.domain.repository
 import kotlinx.coroutines.flow.Flow
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.CornerRadiusMode
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 
 interface SettingsRepository {
     val notificationEnabledFlow: Flow<Boolean>

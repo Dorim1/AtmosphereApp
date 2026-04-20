@@ -7,6 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.anlyashenko.atmosphereapp.domain.model.AlarmItem
 import ru.anlyashenko.atmosphereapp.domain.notification.AlarmScheduler
 import ru.anlyashenko.atmosphereapp.receiver.notification.AppNotifier
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,9 +22,9 @@ class NotificationReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         appNotifier.showMoodNotification()
 
-        val hour = intent.getIntExtra("EXTRA_HOUR", 20)
-        val minute = intent.getIntExtra("EXTRA_MINUTE", 0)
-        val id = intent.getIntExtra("EXTRA_ID", 1001)
+        val hour = intent.getIntExtra("EXTRA_HOUR", NotificationDefaults.DEFAULT_HOUR)
+        val minute = intent.getIntExtra("EXTRA_MINUTE", NotificationDefaults.DEFAULT_MINUTE)
+        val id = intent.getIntExtra("EXTRA_ID", NotificationDefaults.ALARM_ID)
 
         alarmScheduler.schedule(AlarmItem(id, hour, minute))
     }

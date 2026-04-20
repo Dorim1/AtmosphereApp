@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.CornerRadiusMode
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,12 +37,12 @@ class SettingRepositoryImpl @Inject constructor(
 
     override val notificationHourFlow: Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[NOTIFICATION_HOUR] ?: 20
+            preferences[NOTIFICATION_HOUR] ?: NotificationDefaults.DEFAULT_HOUR
         }
 
     override val notificationMinuteFlow: Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[NOTIFICATION_MINUTE] ?: 30
+            preferences[NOTIFICATION_MINUTE] ?: NotificationDefaults.DEFAULT_MINUTE
         }
     override val selectedPaletteFlow: Flow<Int> = dataStore.data
         .map { preferences ->
