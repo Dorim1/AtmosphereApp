@@ -2,6 +2,7 @@ package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
 import android.os.Build
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -9,12 +10,16 @@ import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.model.AlarmItem
 import ru.anlyashenko.atmosphereapp.domain.notification.AlarmScheduler
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationPermissionManager
 import javax.inject.Inject
 
+// todo: Решить проблему с отправкой уведомлений после получения разрешения
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val alarmScheduler: AlarmScheduler
+    private val alarmScheduler: AlarmScheduler,
+    private val permissionManager: NotificationPermissionManager
 ) : BaseViewModel<SettingsEvent, SettingsState, SettingsEffect>() {
 
     override fun createInitialState(): SettingsState = SettingsState()
@@ -43,6 +48,7 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvent.OnBackClick -> setEffect { SettingsEffect.NavigateBack }
             is SettingsEvent.OnAppearanceClick -> setEffect { SettingsEffect.NavigateToAppearance }
             is SettingsEvent.OnEditMoodsClick -> setEffect { SettingsEffect.NavigateToEditMoods }
+            is SettingsEvent.OnShouldOpenSettings -> setEffect { SettingsEffect.OpenAppSettings }
 
             is SettingsEvent.OpenNotificationSheet -> setState { copy(showNotificationSheet = true) }
             is SettingsEvent.OpenLanguageDialog -> setState { copy(showLanguageDialog = true) }
@@ -71,19 +77,16 @@ class SettingsViewModel @Inject constructor(
         }
 
         if (event.isEnabled) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                setEffect { SettingsEffect.RequestNotificationPermission }
-            } else {
-                alarmScheduler.schedule(
-                    AlarmItem(
-                        hour = event.hour,
-                        minute = event.minute
-                    )
-                )
+            when  {
+                permissionManager.checkPermission() -> {
+                    alarmScheduler.schedule(AlarmItem(hour = event.hour, minute = event.minute))
+                }
+                else -> {
+                    setEffect { SettingsEffect.RequestNotificationPermission }
+                }
             }
-        } else {
-            alarmScheduler.cancel(1001)
         }
+
     }
 
     private fun handlePermissionResult(isGranted: Boolean) {
@@ -95,6 +98,13 @@ class SettingsViewModel @Inject constructor(
                 )
             )
         } else {
+            viewModelScope.launch {
+                settingsRepository.saveNotificationSettings(
+                    isEnabled = false,
+                    hour = currentState.notificationHour,
+                    minute = currentState.notificationMinute
+                )
+            }
             setState { copy(isNotificationsEnabled = false) }
         }
     }

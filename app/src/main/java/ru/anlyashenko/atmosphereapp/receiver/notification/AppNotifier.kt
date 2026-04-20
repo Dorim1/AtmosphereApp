@@ -45,6 +45,6 @@ class AppNotifier @Inject constructor(
             .setContentIntent(pendingIntent)
             .build()
 
-        notificationManager.notify(1001, notification)
+        notificationManager.notify(NotificationDefaults.ALARM_ID, notification)
     }
 }

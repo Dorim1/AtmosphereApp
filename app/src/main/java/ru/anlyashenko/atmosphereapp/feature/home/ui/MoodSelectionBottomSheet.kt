@@ -2,6 +2,7 @@ package ru.anlyashenko.atmosphereapp.feature.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -116,7 +117,8 @@ fun MoodItemRow(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.background
+    val backgroundColor =
+        if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.background
     val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSurface
 
     val displayName = mood.customLabel ?: stringResource(id = mood.defaultLabelRes)
@@ -126,7 +128,11 @@ fun MoodItemRow(
             .fillMaxWidth()
             .clip(RoundedCornerShape(30.dp))
             .background(backgroundColor)
-            .clickable(onClick = onClick)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
             .padding(horizontal = 21.dp, vertical = 27.dp)
             .semantics {
                 selected = isSelected

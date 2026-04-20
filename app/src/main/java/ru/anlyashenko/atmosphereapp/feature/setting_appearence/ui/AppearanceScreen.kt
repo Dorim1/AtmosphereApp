@@ -28,6 +28,7 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 
@@ -55,23 +59,20 @@ enum class CornerRadiusMode(val radius: Dp) {
     BIG(30.dp)
 }
 
-@Preview
-@Composable
-private fun AppearanceScreenPreview() {
-    AtmosphereAppTheme() {
-        AppearanceScreen(
-            onBackClick = {},
-        )
-    }
-}
 @Composable
 fun AppearanceScreen(
     onBackClick: () -> Unit,
-    initialTheme: ThemeMode = ThemeMode.SYSTEM,
-    initialCornerRadius: CornerRadiusMode = CornerRadiusMode.MODERATE
+    viewModel: AppearanceViewModel = hiltViewModel()
 ) {
-    var selectedTheme by remember { mutableStateOf<ThemeMode?>(null) }
-    var selectedCornerRadius by remember { mutableStateOf(initialCornerRadius) }
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.effect) {
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
+                AppearanceEffect.NavigateToBack -> onBackClick()
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -92,7 +93,7 @@ fun AppearanceScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .clickable(onClick = onBackClick),
+                    .clickable { viewModel.setEvent(AppearanceEvent.OnBackClick) },
             )
 
             Spacer(Modifier.width(12.dp))
@@ -127,24 +128,24 @@ fun AppearanceScreen(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_system),
                 painter = painterResource(R.drawable.ic_setting_theme),
-                isSelected = selectedTheme == ThemeMode.SYSTEM,
-                onClick = { selectedTheme = ThemeMode.SYSTEM }
+                isSelected = state.theme == ThemeMode.SYSTEM,
+                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.SYSTEM)) }
             )
 
             ThemeOptionCard(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_light),
                 painter = painterResource(R.drawable.ic_light_mode),
-                isSelected = selectedTheme == ThemeMode.LIGHT,
-                onClick = { selectedTheme = ThemeMode.LIGHT }
+                isSelected = state.theme == ThemeMode.LIGHT,
+                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.LIGHT)) }
             )
 
             ThemeOptionCard(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_dark),
                 painter = painterResource(R.drawable.ic_dark_mode),
-                isSelected = selectedTheme == ThemeMode.DARK,
-                onClick = { selectedTheme = ThemeMode.DARK }
+                isSelected = state.theme == ThemeMode.DARK,
+                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.DARK)) }
             )
         }
 
@@ -174,16 +175,28 @@ fun AppearanceScreen(
                     title = "Жесткое",
                     subtitle = "12.dp",
                     cornerRadius = 12.dp,
-                    isSelected = selectedCornerRadius == CornerRadiusMode.SMALL,
-                    onClick = { selectedCornerRadius = CornerRadiusMode.SMALL }
+                    isSelected = state.cornerRadius == CornerRadiusMode.SMALL,
+                    onClick = {
+                        viewModel.setEvent(
+                            AppearanceEvent.OnCornerRadiusSelected(
+                                CornerRadiusMode.SMALL
+                            )
+                        )
+                    }
                 )
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
                     title = "Умеренное",
                     subtitle = "20.dp",
                     cornerRadius = 20.dp,
-                    isSelected = selectedCornerRadius == CornerRadiusMode.MODERATE,
-                    onClick = { selectedCornerRadius = CornerRadiusMode.MODERATE }
+                    isSelected = state.cornerRadius == CornerRadiusMode.MODERATE,
+                    onClick = {
+                        viewModel.setEvent(
+                            AppearanceEvent.OnCornerRadiusSelected(
+                                CornerRadiusMode.MODERATE
+                            )
+                        )
+                    }
                 )
             }
             Row(
@@ -195,8 +208,14 @@ fun AppearanceScreen(
                     title = "Мягкое",
                     subtitle = "30.dp",
                     cornerRadius = 30.dp,
-                    isSelected = selectedCornerRadius == CornerRadiusMode.BIG,
-                    onClick = { selectedCornerRadius = CornerRadiusMode.BIG }
+                    isSelected = state.cornerRadius == CornerRadiusMode.BIG,
+                    onClick = {
+                        viewModel.setEvent(
+                            AppearanceEvent.OnCornerRadiusSelected(
+                                CornerRadiusMode.BIG
+                            )
+                        )
+                    }
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -214,8 +233,14 @@ fun ThemeOptionCard(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val contentColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+    val contentColor =
+        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(
+            alpha = 0.4f
+        )
+    val borderColor =
+        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(
+            alpha = 0.2f
+        )
     val borderWidth = if (isSelected) 2.dp else 1.dp
 
     Surface(
@@ -316,13 +341,23 @@ fun CornerRadiusCard(
                     modifier = Modifier.weight(1f),
                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Box(Modifier.weight(1f).fillMaxHeight().background(cardColor, RoundedCornerShape(cornerRadius)))
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .background(cardColor, RoundedCornerShape(cornerRadius))
+                    )
                 }
                 Row(
                     modifier = Modifier.weight(1f),
                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    Box(Modifier.weight(1f).fillMaxHeight().background(cardColor, RoundedCornerShape(cornerRadius)))
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .background(cardColor, RoundedCornerShape(cornerRadius))
+                    )
                 }
             }
         }
