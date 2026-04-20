@@ -181,8 +181,6 @@ class ProfileViewModel @Inject constructor(
         return Pair(chartData, insightText)
     }
 
-
-
     override fun handleEvent(event: ProfileEvent) {
         when (event) {
             ProfileEvent.OnSettingsClick -> setEffect { ProfileEffect.NavigateToSettings }

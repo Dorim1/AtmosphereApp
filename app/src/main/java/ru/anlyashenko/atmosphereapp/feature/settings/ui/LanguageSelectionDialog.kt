@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -144,15 +145,13 @@ fun LanguageOptionItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .clickable(
-                indication = null,
+            .selectable(
+                selected = isSelected,
+                onClick = onClick,
+                role = Role.RadioButton,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = onClick
-            )
-            .semantics {
-                selected = isSelected
-                role = Role.RadioButton
-            },
+                indication = null
+            ),
         shape = RoundedCornerShape(50.dp),
         color = backgroundColor,
         border = if (isSelected) null else BorderStroke(1.dp, borderColor),

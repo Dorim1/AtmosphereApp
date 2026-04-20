@@ -9,6 +9,7 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText.StringResource
+import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeEffect
 
 data class ProfileState(
     val totalEntries: Int = 0,
@@ -22,12 +23,12 @@ data class ProfileState(
     val yearlyProgress: Int = 0,
 ) : UiState
 
-sealed class ProfileEvent : UiEvent {
-    object OnYearlyStatsClick : ProfileEvent()
-    object OnSettingsClick : ProfileEvent()
+sealed interface ProfileEvent : UiEvent {
+    object OnYearlyStatsClick : ProfileEvent
+    object OnSettingsClick : ProfileEvent
 }
 
-sealed class ProfileEffect : UiEffect {
-    object NavigateToYearlyStats : ProfileEffect()
-    object NavigateToSettings : ProfileEffect()
+sealed interface ProfileEffect : UiEffect {
+    object NavigateToYearlyStats : ProfileEffect
+    object NavigateToSettings : ProfileEffect
 }

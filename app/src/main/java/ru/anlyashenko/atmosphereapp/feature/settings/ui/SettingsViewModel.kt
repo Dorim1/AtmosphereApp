@@ -61,6 +61,7 @@ class SettingsViewModel @Inject constructor(
     }
 
 
+
     private fun saveNotificationSettings(event: SettingsEvent.SaveNotificationSettings) {
         viewModelScope.launch {
             settingsRepository.saveNotificationSettings(event.isEnabled, event.hour, event.minute)
