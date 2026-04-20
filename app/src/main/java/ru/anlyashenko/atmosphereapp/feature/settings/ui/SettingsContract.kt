@@ -32,6 +32,8 @@ sealed interface SettingsEvent: UiEvent {
     object OpenLanguageDialog : SettingsEvent
     object DismissDialogs : SettingsEvent
 
+    object OnShouldOpenSettings: SettingsEvent
+
     data class SaveNotificationSettings(
         val isEnabled: Boolean,
         val hour: Int,
@@ -45,7 +47,7 @@ sealed interface SettingsEffect : UiEffect {
     object NavigateBack : SettingsEffect
     object NavigateToAppearance : SettingsEffect
     object NavigateToEditMoods : SettingsEffect
-
     object RequestNotificationPermission : SettingsEffect
+    object OpenAppSettings : SettingsEffect
 
 }

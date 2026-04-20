@@ -1,6 +1,12 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -26,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,19 +40,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.utils.LanguageManager
 import ru.anlyashenko.atmosphereapp.feature.profile.utils.asString
+import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationPermissionManager
 
 
 @Composable
@@ -56,8 +69,12 @@ fun SettingsScreen(
     onNavigateToEditMoods: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
     val currentLanguage = remember { LanguageManager.getCurrentLanguage() }
+
+    val permissionManager = remember {
+        NotificationPermissionManager(context)
+    }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -65,14 +82,37 @@ fun SettingsScreen(
         viewModel.setEvent(SettingsEvent.OnPermissionResult(isGranted))
     }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.setEvent(
+                    SettingsEvent.OnPermissionResult(permissionManager.checkPermission())
+                )
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is SettingsEffect.NavigateBack -> onBackClick()
-                is SettingsEffect.NavigateToAppearance -> onNavigateToAppearance()
-                is SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
-                is SettingsEffect.RequestNotificationPermission -> {
-                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                SettingsEffect.NavigateBack -> onBackClick()
+                SettingsEffect.NavigateToAppearance -> onNavigateToAppearance()
+                SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
+                SettingsEffect.RequestNotificationPermission -> {
+                    val activity = context as? Activity ?: return@collectLatest
+                    if (permissionManager.shouldShowRationale(activity)) {
+                        permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    } else {
+                        viewModel.setEvent(SettingsEvent.OnShouldOpenSettings)
+                    }
+                }
+                SettingsEffect.OpenAppSettings -> {
+                    val activity = context as? Activity ?: return@collectLatest
+                    permissionManager.openAppSettings(activity)
                 }
             }
         }
@@ -159,7 +199,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_about_subtitle),
                 painter = painterResource(R.drawable.ic_setting_info),
                 modifier = Modifier.weight(1f),
-                onClick = {  }
+                onClick = { }
             )
             Spacer(Modifier.weight(1f))
         }
