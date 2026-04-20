@@ -30,9 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,7 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,14 +46,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-
-enum class ThemeMode { SYSTEM, LIGHT, DARK }
-enum class CornerRadiusMode(val radius: Dp) {
-    SMALL(12.dp),
-    MODERATE(20.dp),
-    BIG(30.dp)
-}
 
 @Composable
 fun AppearanceScreen(
@@ -77,7 +65,7 @@ fun AppearanceScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface) // todo: Придумать что делать с бэком (мб расширение написать для сеттинг_бэк)
+            .background(MaterialTheme.colorScheme.surface)
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 23.dp)
     ) {
@@ -106,7 +94,7 @@ fun AppearanceScreen(
         }
 
         Text(
-            text = "Тема",
+            text = stringResource(R.string.appearance_theme_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
@@ -151,7 +139,7 @@ fun AppearanceScreen(
 
         Spacer(Modifier.height(40.dp))
         Text(
-            text = "Карточки приложения",
+            text = stringResource(R.string.appearance_cards_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
@@ -159,7 +147,7 @@ fun AppearanceScreen(
 
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Настройте степень закругления углов карточек, чтобы изменить внешний вид интерфейса.",
+            text = stringResource(R.string.appearance_cards_description),
             fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
         )
@@ -172,7 +160,7 @@ fun AppearanceScreen(
             ) {
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
-                    title = "Жесткое",
+                    title = stringResource(R.string.appearance_corner_small),
                     subtitle = "12.dp",
                     cornerRadius = 12.dp,
                     isSelected = state.cornerRadius == CornerRadiusMode.SMALL,
@@ -186,7 +174,7 @@ fun AppearanceScreen(
                 )
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
-                    title = "Умеренное",
+                    title = stringResource(R.string.appearance_corner_medium),
                     subtitle = "20.dp",
                     cornerRadius = 20.dp,
                     isSelected = state.cornerRadius == CornerRadiusMode.MODERATE,
@@ -205,7 +193,7 @@ fun AppearanceScreen(
             ) {
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
-                    title = "Мягкое",
+                    title = stringResource(R.string.appearance_corner_large),
                     subtitle = "30.dp",
                     cornerRadius = 30.dp,
                     isSelected = state.cornerRadius == CornerRadiusMode.BIG,
@@ -286,7 +274,7 @@ fun CornerRadiusCard(
 ) {
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary
     else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-    val cardColor = MaterialTheme.colorScheme.background
+    val cardColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
     val borderWidth = if (isSelected) 2.dp else 1.dp
 
     Surface(
@@ -309,15 +297,15 @@ fun CornerRadiusCard(
                 Column() {
                     Text(
                         text = title,
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onSurface,
-                        lineHeight = 12.sp
+                        lineHeight = 14.sp
                     )
                     Text(
                         text = subtitle,
-                        fontSize = 10.sp,
+                        fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                        lineHeight = 10.sp
+                        lineHeight = 12.sp
                     )
                 }
 

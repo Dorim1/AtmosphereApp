@@ -295,7 +295,7 @@ fun CurrentDayActionRow(
         Surface(
             onClick = onNoteClick,
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.surface,
             modifier = Modifier
                 .weight(1f)
                 .aspectRatio(1f)
@@ -308,7 +308,7 @@ fun CurrentDayActionRow(
                 Icon(
                     painter = painterResource(R.drawable.ic_edit),
                     contentDescription = stringResource(R.string.cd_edit_note),
-                    tint = MaterialTheme.colorScheme.onSecondary,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(102.dp)
                 )
                 Spacer(Modifier.height(6.dp))
@@ -316,7 +316,7 @@ fun CurrentDayActionRow(
                     text = if (!hasNote) stringResource(R.string.action_add_note) else stringResource(
                         R.string.action_change_note
                     ),
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
                     lineHeight = 24.sp

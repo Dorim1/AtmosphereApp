@@ -60,6 +60,7 @@ import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
 // todo: на карточках "серия года" и "записей в году" выровнять значок под цифры
+// todo: Отключить тянучку на скролл экранах
 @Composable
 fun YearlyStatsScreen(
     modifier: Modifier = Modifier,
@@ -431,7 +432,7 @@ fun YearlyStatsCards(
                 Text(
                     text = marksCount.toTwoDigits(),
                     fontSize = 86.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
@@ -483,7 +484,7 @@ fun SmallStatCard(
                 Text(
                     text = value,
                     fontSize = 36.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.width(2.dp))

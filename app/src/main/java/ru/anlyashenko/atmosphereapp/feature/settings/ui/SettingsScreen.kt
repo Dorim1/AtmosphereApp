@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -84,6 +85,8 @@ fun SettingsScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    val uriHandler = LocalUriHandler.current
+
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
@@ -104,12 +107,17 @@ fun SettingsScreen(
                 SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
                 SettingsEffect.RequestNotificationPermission -> {
                     val activity = context as? Activity ?: return@collectLatest
-                    if (permissionManager.shouldShowRationale(activity)) {
-                        permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (permissionManager.shouldShowRationale(activity)) {
+                            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        } else {
+                            viewModel.setEvent(SettingsEvent.OnShouldOpenSettings)
+                        }
                     } else {
-                        viewModel.setEvent(SettingsEvent.OnShouldOpenSettings)
+                        viewModel.setEvent(SettingsEvent.OnPermissionResult(true))
                     }
                 }
+
                 SettingsEffect.OpenAppSettings -> {
                     val activity = context as? Activity ?: return@collectLatest
                     permissionManager.openAppSettings(activity)
@@ -199,7 +207,9 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_about_subtitle),
                 painter = painterResource(R.drawable.ic_setting_info),
                 modifier = Modifier.weight(1f),
-                onClick = { }
+                onClick = {
+                    uriHandler.openUri("https://dorim1.github.io/app-privacy/")
+                }
             )
             Spacer(Modifier.weight(1f))
         }

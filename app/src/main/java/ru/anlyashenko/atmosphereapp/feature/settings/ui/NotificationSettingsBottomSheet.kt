@@ -41,6 +41,7 @@ import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.BaseVerticalWheelPicker
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.components.rememberWheelPickerState
 
+// todo: Либо передать под обычный экран, либо сделать, чтобы нельзя было закрыть свайпом
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationSettingsBottomSheet(

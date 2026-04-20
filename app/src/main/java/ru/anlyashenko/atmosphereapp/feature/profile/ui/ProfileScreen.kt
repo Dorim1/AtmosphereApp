@@ -62,7 +62,6 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 // todo: Выровнять текст на карточке "самая самая длинная серия"
-// todo: у "счётчика настроения" сделать одинаковые пропорции
 
 @Composable
 @Preview
@@ -128,7 +127,7 @@ fun ProfileScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 7.dp)
     ) {
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(9.dp)
@@ -147,39 +146,39 @@ fun ProfileScreen(
             )
         }
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         LongestStreakCard(
             currentStreak = currentStreak,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         AverageMoodCard(
             chartData = chartData,
             insightText = chartInsight,
             yAxisColors = yAxisColors
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         MoodCounterCard(
             items = moodCounts,
             totalCount = totalEntries,
             hasEnoughData = hasEnoughMoodData
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         YearlyStatsCard(
             percentage = yearlyPercentage,
             onClick = onYearlyStatsClick,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         SettingsCard(
             onClick = onSettingsClick,
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
 
     }
 }
@@ -379,7 +378,8 @@ fun MoodBarChart(
             ) {
                 data.forEach { stat ->
                     val targetHeight = stat.level / 5f
-                    val dayName = stat.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                    val dayName =
+                        stat.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                     val animatedHeight by animateFloatAsState(
                         targetValue = if (startAnimation) targetHeight else 0f,
                         animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
@@ -401,7 +401,11 @@ fun MoodBarChart(
                                     .fillMaxHeight(1f)
                                     .width(42.dp) // 37.dp
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                                    .background(
+                                        MaterialTheme.colorScheme.onSurface.copy(
+                                            alpha = 0.05f
+                                        )
+                                    )
                                     .align(Alignment.BottomCenter)
                             )
                             Box(

@@ -110,13 +110,13 @@ fun CalendarScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 7.dp)
     ) {
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         CalendarHeaderCard(
             displayMonth = displayMonth,
             displayYear = displayYear
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         CalendarPagerCard(
             pagerState = pagerState,
             startPage = startPage,
@@ -129,7 +129,7 @@ fun CalendarScreen(
             }
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         if (!note.isNullOrEmpty()) {
             NoteCard(
                 note = note,
@@ -138,7 +138,7 @@ fun CalendarScreen(
                 onDelete = onDeleteNote
             )
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
 
     }
 
@@ -196,7 +196,7 @@ fun DayNoteSection(
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
 
         Row(
             modifier = Modifier
@@ -206,7 +206,7 @@ fun DayNoteSection(
         ) {
             Box(
                 modifier = Modifier
-                    .width(8.dp)
+                    .width(6.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(50.dp))
                     .background(moodColor ?: MaterialTheme.colorScheme.primary)
@@ -228,7 +228,7 @@ fun DayNoteSection(
                 .align(Alignment.End)
                 .padding(end = 9.dp, bottom = 9.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.07f),
+                containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
                 contentColor = MaterialTheme.colorScheme.error
             )
         ) {
@@ -347,7 +347,7 @@ fun CalendarGrid(
                 )
             }
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val cellsSize = maxWidth / 7
             val calendarHeight = cellsSize * 6
@@ -413,12 +413,12 @@ fun CalendarMonthPage(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .size(50.dp)
                                     .clip(CircleShape)
                                     .then(
                                         if (isSelected) Modifier.border(
                                             width = 2.dp,
-                                            color = moodColor ?: MaterialTheme.colorScheme.primary,
+                                            color = moodColor ?: MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
                                             shape = CircleShape
                                         ) else Modifier
                                     )
@@ -430,19 +430,20 @@ fun CalendarMonthPage(
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .size(34.dp)
+                                        .size(46.dp)
                                         .clip(CircleShape)
                                         .background(
                                             when {
-                                                isFuture || hasNoMood -> Color.Transparent
+                                                isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
+                                                    alpha = 0.05f
+                                                )
                                                 else -> moodColor
                                             }
                                         )
                                         .then(
-                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.border(
-                                                width = 1.dp,
+                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.background(
                                                 color = MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.2f
+                                                    alpha = 0.05f
                                                 ),
                                                 shape = CircleShape
                                             ) else Modifier
