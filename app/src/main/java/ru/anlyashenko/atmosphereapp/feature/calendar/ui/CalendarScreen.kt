@@ -157,7 +157,7 @@ fun NoteCard(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.padding(top = 32.dp)) {
@@ -197,7 +197,7 @@ fun DayNoteSection(
                 selectedDate.dayOfMonth,
                 monthName
             ),
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium, // todo: Текст
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
         Spacer(Modifier.height(6.dp))
@@ -259,7 +259,7 @@ fun CalendarPagerCard(
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
@@ -471,7 +471,7 @@ fun CalendarMonthPage(
 fun CalendarHeaderCard(displayMonth: Month, displayYear: Int) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.secondary
     ) {
         Column(

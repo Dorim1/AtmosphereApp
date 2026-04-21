@@ -127,7 +127,7 @@ fun WeatherCard(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 260.dp),
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.primary
     ) {
         if (isLoading) {
@@ -263,7 +263,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onMoodClick,
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .weight(1f)
@@ -295,7 +295,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onNoteClick,
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier
                 .weight(1f)
@@ -342,7 +342,7 @@ fun DayEntryCard(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(

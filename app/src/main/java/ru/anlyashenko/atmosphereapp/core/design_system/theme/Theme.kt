@@ -67,7 +67,7 @@ fun AtmosphereAppTheme(
 //    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     themeMode: ThemeMode = ThemeMode.SYSTEM,
-    cornerRadiusMode: CornerRadiusMode = CornerRadiusMode.MODERATE,
+    cornerRadiusMode: CornerRadiusMode = CornerRadiusMode.BIG,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

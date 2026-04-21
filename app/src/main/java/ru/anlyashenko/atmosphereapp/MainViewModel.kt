@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(
     val cornerRadius: StateFlow<CornerRadiusMode> = settingsRepository.cornerRadiusFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = CornerRadiusMode.MODERATE
+        initialValue = CornerRadiusMode.BIG
     )
 
     init {

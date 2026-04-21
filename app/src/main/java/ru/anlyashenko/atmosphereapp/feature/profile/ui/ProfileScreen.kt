@@ -61,7 +61,6 @@ import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
 import java.time.format.TextStyle
 import java.util.Locale
 
-// todo: Выровнять текст на карточке "самая самая длинная серия"
 
 @Composable
 fun ProfileRoute(
@@ -119,7 +118,7 @@ fun ProfileScreen(
         Spacer(Modifier.height(6.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(9.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             TotalEntriesCard(
                 totalEntries,
@@ -167,6 +166,7 @@ fun ProfileScreen(
             onClick = onSettingsClick,
             modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(Modifier.height(6.dp))
 
     }
@@ -180,7 +180,7 @@ fun TotalEntriesCard(
 ) {
     Surface(
         modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp),
         color = MaterialTheme.colorScheme.primary
@@ -220,7 +220,7 @@ fun CurrentStreakCard(
 ) {
     Surface(
         modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.secondary)
             .padding(16.dp),
         color = MaterialTheme.colorScheme.secondary
@@ -254,6 +254,7 @@ fun CurrentStreakCard(
 }
 
 
+
 @Composable
 fun LongestStreakCard(
     currentStreak: Int,
@@ -261,7 +262,7 @@ fun LongestStreakCard(
 ) {
     Surface(
         modifier = modifier
-            .clip(RoundedCornerShape(30.dp))
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 16.dp, vertical = 32.dp),
         color = MaterialTheme.colorScheme.surface
@@ -275,7 +276,7 @@ fun LongestStreakCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = currentStreak.toThreeDigits(),
+                    text = currentStreak.toTwoDigits(),
                     fontSize = 96.sp,
                     fontWeight = FontWeight.Medium,
                     lineHeight = 96.sp,
@@ -289,8 +290,9 @@ fun LongestStreakCard(
             ) {
                 Text(
                     text = stringResource(R.string.profile_longest_streak_title),
-                    fontSize = 24.sp,
+                    fontSize = 32.sp,
                     fontWeight = FontWeight.Medium,
+                    lineHeight = 32.sp,
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
@@ -307,7 +309,7 @@ fun AverageMoodCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(
@@ -441,7 +443,7 @@ fun MoodCounterCard(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 160.dp),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(
@@ -649,12 +651,8 @@ fun YearlyStatsCard(
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier
-//            .clip(RoundedCornerShape(30.dp))
-//            .background(MaterialTheme.colorScheme.secondary)
-//            .padding(horizontal = 16.dp, vertical = 28.dp),
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.secondary,
     ) {
         Row(
@@ -740,11 +738,7 @@ fun SettingsCard(
     Surface(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
-//            .clip(RoundedCornerShape(30.dp))
-//            .background(MaterialTheme.colorScheme.primary)
-//            .clickable { onClick() }
-//            .padding(horizontal = 16.dp, vertical = 28.dp),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.primary
     ) {
         Row(
