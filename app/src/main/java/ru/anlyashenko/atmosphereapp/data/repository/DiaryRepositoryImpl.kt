@@ -26,9 +26,6 @@ class DiaryRepositoryImpl @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : DiaryRepository {
 
-//    override val availableMoods: Flow<List<MoodUiModel>> = moodDao.getAllMoods()
-//        .map { moods -> moods.map { it.toUiModel() } }
-
     override val availableMoods: Flow<List<MoodUiModel>> = combine(
         moodDao.getAllMoods(),
         settingsRepository.selectedPaletteFlow

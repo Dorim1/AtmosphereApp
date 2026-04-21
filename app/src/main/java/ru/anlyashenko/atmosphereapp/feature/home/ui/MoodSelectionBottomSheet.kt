@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
@@ -128,16 +129,14 @@ fun MoodItemRow(
             .fillMaxWidth()
             .clip(RoundedCornerShape(30.dp))
             .background(backgroundColor)
-            .clickable(
-                indication = null,
+            .selectable(
+                selected = isSelected,
+                onClick = onClick,
+                role = Role.RadioButton,
                 interactionSource = remember { MutableInteractionSource() },
-                onClick = onClick
+                indication = null
             )
-            .padding(horizontal = 21.dp, vertical = 27.dp)
-            .semantics {
-                selected = isSelected
-                role = Role.RadioButton
-            },
+            .padding(horizontal = 21.dp, vertical = 27.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -160,7 +159,7 @@ fun MoodItemRow(
 
         RadioButton(
             selected = isSelected,
-            onClick = onClick,
+            onClick = null,
             modifier = Modifier.size(24.dp),
             colors = RadioButtonDefaults.colors(
                 selectedColor = mood.color,

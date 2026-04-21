@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -49,6 +50,7 @@ import java.util.Locale
 
 
 // todo: сделать, чтобы погода не подгружалась каждый раз при обновлении экрана
+// todo: цвет настроения на карточках
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -126,7 +128,9 @@ fun WeatherCard(
     isLoading: Boolean
 ) {
     Surface(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 260.dp),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.primary
     ) {

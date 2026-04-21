@@ -6,9 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -151,30 +154,32 @@ fun EditMoodBottomSheet(
             )
             Spacer(Modifier.height(16.dp))
 
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                availableIconIndex.forEachIndexed { index, iconRes ->
-                    val isSelected = index == selectedIconIndex
+            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                val itemSize = (maxWidth - 16.dp * 5) / 6
 
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(if (isSelected) mood.color.copy(alpha = 0.8f) else Color.Transparent)
-                            .clickable { selectedIconIndex = index },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(iconRes),
-                            contentDescription = null,
-                            tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(
-                                alpha = 0.3f
-                            ),
-                            modifier = Modifier.size(32.dp)
-                        )
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    availableIconIndex.forEachIndexed { index, iconRes ->
+                        val isSelected = index == selectedIconIndex
+
+                        Box(
+                            modifier = Modifier
+                                .size(itemSize)
+                                .clip(CircleShape)
+                                .background(if (isSelected) mood.color.copy(alpha = 0.8f) else Color.Transparent)
+                                .clickable { selectedIconIndex = index },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(iconRes),
+                                contentDescription = null,
+                                tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                                modifier = Modifier.fillMaxSize(0.65f)
+                            )
+                        }
                     }
                 }
             }

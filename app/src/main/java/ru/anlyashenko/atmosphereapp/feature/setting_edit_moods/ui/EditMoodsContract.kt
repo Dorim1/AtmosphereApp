@@ -7,22 +7,20 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
-class EditMoodsContract {
 
-    data class State(
-        val selectedPaletteId: Int = 0,
-        val palettes: List<PaletteModel> = MoodPalettes.allPalettes,
-        val moods: List<MoodUiModel> = emptyList()
-    ): UiState
+data class EditMoodsState(
+    val selectedPaletteId: Int = 0,
+    val palettes: List<PaletteModel> = MoodPalettes.allPalettes,
+    val moods: List<MoodUiModel> = emptyList()
+) : UiState
 
-    sealed interface Event: UiEvent {
-        object OnBackClick : Event
-        data class SelectPalette(val paletteId: Int) : Event
-        data class SaveMood(val id: Int, val newName: String, val newIconRes: Int) : Event
-        data class ReplaceMood(val oldMoodId: Int, val targetMoodId: Int) : Event
-    }
+sealed interface EditMoodsEvent : UiEvent {
+    object OnBackClick : EditMoodsEvent
+    data class SelectPalette(val paletteId: Int) : EditMoodsEvent
+    data class SaveMood(val id: Int, val newName: String, val newIconRes: Int) : EditMoodsEvent
+    data class ReplaceMood(val oldMoodId: Int, val targetMoodId: Int) : EditMoodsEvent
+}
 
-    sealed interface Effect : UiEffect {
-        object NavigateBack : Effect
-    }
+sealed interface EditMoodsEffect : UiEffect {
+    object NavigateBack : EditMoodsEffect
 }

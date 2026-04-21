@@ -64,7 +64,7 @@ fun EditMoodsScreen(
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is EditMoodsContract.Effect.NavigateBack -> onBackClick()
+                is EditMoodsEffect.NavigateBack -> onBackClick()
             }
         }
     }
@@ -92,11 +92,12 @@ fun EditMoodsScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .clickable { viewModel.setEvent(EditMoodsContract.Event.OnBackClick) },
+                    .clickable { viewModel.setEvent(EditMoodsEvent.OnBackClick) },
             )
 
             Spacer(Modifier.width(12.dp))
             Text(
+                // todo: сделать, чтобы не переносилось на новую строку
                 text = stringResource(R.string.edit_moods_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
@@ -149,7 +150,7 @@ fun EditMoodsScreen(
                     palette = palette,
                     isSelected = state.selectedPaletteId == palette.id,
                     onClick = {
-                        viewModel.setEvent(EditMoodsContract.Event.SelectPalette(palette.id))
+                        viewModel.setEvent(EditMoodsEvent.SelectPalette(palette.id))
                     }
                 )
             }
@@ -164,7 +165,7 @@ fun EditMoodsScreen(
             onDismissRequest = { moodToEdit = null },
             onSave = { newName, newIconId ->
                 viewModel.setEvent(
-                    EditMoodsContract.Event.SaveMood(
+                    EditMoodsEvent.SaveMood(
                         moodToEdit!!.id,
                         newName,
                         newIconId
@@ -183,7 +184,7 @@ fun EditMoodsScreen(
             onDismissRequest = { moodToReplace = null },
             onReplaceConfirm = { targetMood ->
                 viewModel.setEvent(
-                    EditMoodsContract.Event.ReplaceMood(
+                    EditMoodsEvent.ReplaceMood(
                         oldMoodId = moodToReplace!!.id,
                         targetMoodId = targetMood.id
                     )

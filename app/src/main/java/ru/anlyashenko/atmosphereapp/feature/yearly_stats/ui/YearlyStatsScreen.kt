@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -61,7 +62,6 @@ import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
 // todo: на карточках "серия года" и "записей в году" выровнять значок под цифры
-// todo: Отключить тянучку на скролл экранах
 @Composable
 fun YearlyStatsScreen(
     modifier: Modifier = Modifier,
@@ -371,7 +371,7 @@ fun EmotionProgressBar(
                 text = "$animatedPercentage%",
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
-                color = OnMoodColor,// todo: Проверить цвет
+                color = OnMoodColor,
             )
             Text(
                 text = stringResource(mood.defaultLabelRes),

@@ -75,7 +75,6 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch {
             val location = locationTracker.getCurrentLocation()
-            Log.d("Weather", "fetchWeather called: ${location?.lat}, ${location?.lon}")
             if (location != null) {
                 val city = location.city ?: "Неизвестный город"
                 when (val result = weatherRepository.getWeather(location.lat, location.lon, city)) {
