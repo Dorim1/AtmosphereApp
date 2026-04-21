@@ -47,14 +47,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
@@ -610,9 +608,11 @@ fun LegendItem(
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(50.dp))
-                .background(MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = 0.05f
-                ))
+                .background(
+                    MaterialTheme.colorScheme.onSurface.copy(
+                        alpha = 0.05f
+                    )
+                )
                 .padding(horizontal = 17.dp, vertical = 5.dp)
         ) {
             Text(

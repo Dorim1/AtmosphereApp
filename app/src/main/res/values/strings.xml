@@ -108,7 +108,7 @@
     <string name="palette_dark_flame">Тёмное пламя</string>
     <string name="palette_northern_chill">Северный холод</string>
     <string name="palette_smoldering_coal">Тлеющий уголь</string>
-    <string name="edit_moods_title">Редактировать настроения</string>
+    <string name="edit_moods_title">Изменить настроения</string>
     <string name="edit_moods_moods_title">Настроения</string>
     <string name="edit_moods_moods_description">Измените название настроения или выберите новый значок, чтобы внешний вид соответствовал вашим предпочтениям.</string>
     <string name="edit_moods_palette_title">Палитра</string>

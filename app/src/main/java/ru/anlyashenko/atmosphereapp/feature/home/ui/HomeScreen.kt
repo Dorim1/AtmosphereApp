@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
@@ -35,13 +34,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.LocalDate
@@ -121,6 +118,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     }
 
 }
+
 @Composable
 fun WeatherCard(
     modifier: Modifier = Modifier,
@@ -157,6 +155,7 @@ fun WeatherCard(
         }
     }
 }
+
 @Composable
 fun WeatherSection(weather: WeatherUiModel) {
     Box(
@@ -254,8 +253,8 @@ fun WeatherHourlyItem(
 fun CurrentDayActionRow(
     hasMood: Boolean,
     hasNote: Boolean,
-    onMoodClick:() -> Unit,
-    onNoteClick:() -> Unit,
+    onMoodClick: () -> Unit,
+    onNoteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(

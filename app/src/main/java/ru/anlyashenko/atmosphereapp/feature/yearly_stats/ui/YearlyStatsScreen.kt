@@ -61,7 +61,6 @@ import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
-// todo: на карточках "серия года" и "записей в году" выровнять значок под цифры
 @Composable
 fun YearlyStatsScreen(
     modifier: Modifier = Modifier,
@@ -489,11 +488,6 @@ fun SmallStatCard(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.width(2.dp))
-                Icon(
-                    imageVector = Icons.Rounded.Equalizer,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
             }
             Spacer(Modifier.height(8.dp))
             Text(

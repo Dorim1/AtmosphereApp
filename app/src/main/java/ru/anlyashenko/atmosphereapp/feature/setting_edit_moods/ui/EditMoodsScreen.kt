@@ -97,7 +97,6 @@ fun EditMoodsScreen(
 
             Spacer(Modifier.width(12.dp))
             Text(
-                // todo: сделать, чтобы не переносилось на новую строку
                 text = stringResource(R.string.edit_moods_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,

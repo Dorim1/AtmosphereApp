@@ -2,11 +2,9 @@ package ru.anlyashenko.atmosphereapp.feature.calendar.ui
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -75,7 +73,7 @@ import java.util.Locale
 
 @Composable
 fun CalendarRoute(
-    viewModel: CalendarViewModel = hiltViewModel()
+    viewModel: CalendarViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -442,6 +440,7 @@ fun CalendarMonthPage(
                                             isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
                                                 alpha = 0.05f
                                             )
+
                                             else -> moodColor
                                         }
                                     )
