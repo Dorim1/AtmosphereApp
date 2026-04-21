@@ -232,7 +232,7 @@ fun DayNoteSection(
                 .align(Alignment.End)
                 .padding(end = 9.dp, bottom = 9.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
+                containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
                 contentColor = MaterialTheme.colorScheme.error
             )
         ) {
@@ -432,7 +432,7 @@ fun CalendarMonthPage(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(50.dp)
+                                    .size(42.dp)
                                     .scale(scale)
                                     .clip(CircleShape)
                                     .background(
@@ -450,28 +450,6 @@ fun CalendarMonthPage(
                                         onClick = { onDateClick(date) }
                                     )
                             ) {
-                                /*Box(
-                                    modifier = Modifier
-                                        .size(46.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            when {
-                                                isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.05f
-                                                )
-                                                else -> moodColor
-                                            }
-                                        )
-                                        .then(
-                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.background(
-                                                color = MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.05f
-                                                ),
-                                                shape = CircleShape
-                                            ) else Modifier
-                                        ),
-                                    contentAlignment = Alignment.Center*/
-
                                 if (hasNote) {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_edit),
@@ -480,16 +458,6 @@ fun CalendarMonthPage(
                                         tint = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
-//                                ) {
-//                                    if (hasNote) {
-//                                        Icon(
-//                                            painter = painterResource(R.drawable.ic_edit),
-//                                            contentDescription = null,
-//                                            modifier = Modifier.size(24.dp),
-//                                            tint = MaterialTheme.colorScheme.onSurface
-//                                        )
-//                                    }
-//                                }
                             }
                         }
                     }

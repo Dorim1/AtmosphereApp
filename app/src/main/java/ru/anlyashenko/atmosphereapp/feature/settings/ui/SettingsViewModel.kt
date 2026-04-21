@@ -28,12 +28,14 @@ class SettingsViewModel @Inject constructor(
             combine(
                 settingsRepository.notificationEnabledFlow,
                 settingsRepository.notificationHourFlow,
-                settingsRepository.notificationMinuteFlow
-            ) { isEnabled, hour, minute ->
+                settingsRepository.notificationMinuteFlow,
+                settingsRepository.themeModeFlow
+            ) { isEnabled, hour, minute, theme ->
                 currentState.copy(
                     isNotificationsEnabled = isEnabled,
                     notificationHour = hour,
                     notificationMinute = minute,
+                    theme = theme,
                     isLoading = false
                 )
             }.collect { newState ->

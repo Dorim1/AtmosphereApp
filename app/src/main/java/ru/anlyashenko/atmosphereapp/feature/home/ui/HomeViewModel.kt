@@ -21,6 +21,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         observeDiaryData()
+        fetchWeatherWithLocation()
     }
 
     override fun createInitialState(): HomeState = HomeState()

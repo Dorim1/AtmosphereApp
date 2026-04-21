@@ -47,12 +47,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
+import ru.anlyashenko.atmosphereapp.core.design_system.ui.toThreeDigits
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.profile.models.DailyMoodStat
 import ru.anlyashenko.atmosphereapp.feature.profile.models.MoodCountItem
@@ -251,6 +253,7 @@ fun CurrentStreakCard(
     }
 }
 
+
 @Composable
 fun LongestStreakCard(
     currentStreak: Int,
@@ -264,23 +267,33 @@ fun LongestStreakCard(
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = currentStreak.toTwoDigits(),
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 96.sp,
-                fontWeight = FontWeight.Medium,
-                lineHeight = 96.sp
-            )
-            Spacer(Modifier.width(58.dp))
-            Text(
-                text = stringResource(R.string.profile_longest_streak_title),
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-                lineHeight = 24.sp
-            )
+
+            Box(
+                modifier = Modifier.weight(1f),
+            ) {
+                Text(
+                    text = currentStreak.toThreeDigits(),
+                    fontSize = 96.sp,
+                    fontWeight = FontWeight.Medium,
+                    lineHeight = 96.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
+            Box(
+                modifier = Modifier.weight(1f),
+                Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.profile_longest_streak_title),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
     }
 }

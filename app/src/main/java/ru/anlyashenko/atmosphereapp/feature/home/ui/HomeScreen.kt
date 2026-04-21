@@ -39,15 +39,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.OnMoodColor
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-
-// todo: сделать, чтобы погода не подгружалась каждый раз при обновлении экрана
-// todo: цвет настроения на карточках
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -55,9 +53,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
 
-    LaunchedEffect(Unit) {
+/*    LaunchedEffect(Unit) {
         viewModel.setEvent(HomeEvent.LoadWeather)
-    }
+    }*/
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -387,7 +385,7 @@ fun DayEntryCard(
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         if (record.hasNote) {
                             Icon(
-                                imageVector = Icons.Rounded.Edit,
+                                painter = painterResource(R.drawable.ic_edit),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(32.dp)
