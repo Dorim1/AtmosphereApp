@@ -35,7 +35,6 @@ object DatabaseModule {
             "app_database.db"
         )
         .addCallback(DatabaseCallback(moodDaoProvider, CoroutineScope(Dispatchers.IO)))
-        .fallbackToDestructiveMigration() // TODO: Сделать миграцию
         .build()
     }
 

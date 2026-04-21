@@ -30,8 +30,8 @@ import ru.anlyashenko.atmosphereapp.R
 
 @Composable
 fun DeleteConfirmationDialog(
-    onDismiss:() -> Unit,
-    onConfirm:() -> Unit
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -83,8 +83,10 @@ fun DeleteConfirmationDialog(
                             .weight(1f)
                             .height(56.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = MaterialTheme.colorScheme.onBackground
+                            containerColor = MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.05f
+                            ),
+                            contentColor = MaterialTheme.colorScheme.onSurface
                         ),
                         shape = RoundedCornerShape(30.dp)
                     ) {
@@ -106,7 +108,7 @@ fun DeleteConfirmationDialog(
                             .height(56.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.error,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
+                            contentColor = MaterialTheme.colorScheme.onError
                         ),
                         shape = RoundedCornerShape(30.dp)
                     ) {

@@ -2,38 +2,20 @@ package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import ru.anlyashenko.atmosphereapp.core.utils.MoodPalettes
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
-import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import javax.inject.Inject
 
-// todo: почистить логику, часть логики есть в DiaryRepository
 @HiltViewModel
 class EditMoodsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val diaryRepository: DiaryRepository,
-) : BaseViewModel<EditMoodsContract.Event, EditMoodsContract.State, EditMoodsContract.Effect>(){
+) : BaseViewModel<EditMoodsEvent, EditMoodsState, EditMoodsEffect>(){
 
-//    val moodsFlow: Flow<List<MoodUiModel>> = combine(
-//        diaryRepository.availableMoods,
-//        settingsRepository.selectedPaletteFlow
-//    ) { moods, selectedPaletteId ->
-//        val activePalette = MoodPalettes.getPaletteById(selectedPaletteId)
-//
-//        moods.map { mood ->
-//            val colorIndex = mood.level - 1
-//            val dynamicColor = activePalette.colors.getOrElse(colorIndex) { mood.color }
-//            mood.copy(color = dynamicColor)
-//        }
-//    }
-
-    override fun createInitialState() = EditMoodsContract.State()
+    override fun createInitialState() = EditMoodsState()
 
     init {
 
@@ -50,11 +32,11 @@ class EditMoodsViewModel @Inject constructor(
         }
     }
 
-    override fun handleEvent(event: EditMoodsContract.Event) {
+    override fun handleEvent(event: EditMoodsEvent) {
         when (event) {
-            is EditMoodsContract.Event.OnBackClick -> setEffect { EditMoodsContract.Effect.NavigateBack }
-            is EditMoodsContract.Event.SelectPalette -> savePalette(event.paletteId)
-            is EditMoodsContract.Event.SaveMood -> {
+            is EditMoodsEvent.OnBackClick -> setEffect { EditMoodsEffect.NavigateBack }
+            is EditMoodsEvent.SelectPalette -> savePalette(event.paletteId)
+            is EditMoodsEvent.SaveMood -> {
                 viewModelScope.launch {
                     diaryRepository.updateMoodDetails(
                         moodId = event.id,
@@ -64,7 +46,7 @@ class EditMoodsViewModel @Inject constructor(
                 }
 
             }
-            is EditMoodsContract.Event.ReplaceMood -> {
+            is EditMoodsEvent.ReplaceMood -> {
                 viewModelScope.launch {
                     diaryRepository.replaceMood(event.oldMoodId, event.targetMoodId)
                 }

@@ -5,6 +5,7 @@ import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
+import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeEffect
 import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 
 data class SettingsState(
@@ -49,5 +50,4 @@ sealed interface SettingsEffect : UiEffect {
     object NavigateToEditMoods : SettingsEffect
     object RequestNotificationPermission : SettingsEffect
     object OpenAppSettings : SettingsEffect
-
 }

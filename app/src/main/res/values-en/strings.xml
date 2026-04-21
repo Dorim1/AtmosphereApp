@@ -77,9 +77,9 @@
 
     <!--  YearlyScreen  -->
     <string name="yearly_not_enough_data">Not enough data for this year</string>
-    <string name="yearly_mood_entries_title">Mood entries\nthis year</string>
+    <string name="yearly_mood_entries_title">Mood\nentries\nthis year</string>
     <string name="yearly_streak_title">Year streak</string>
-    <string name="yearly_notes_title">Notes this year</string>
+    <string name="yearly_notes_title">Notes\nthis year</string>
 
     <!--  SettingsScreen  -->
     <string name="settings_title">Settings</string>
@@ -122,7 +122,18 @@
 
     <!--  AppearanceScreen  -->
     <string name="appearance_screen_title">Appearance</string>
-    <string name="settings_appearance_desc">Turn on dark mode, or let Luma visually match your device settings.</string>
+    <string name="settings_appearance_desc">
+        Turn on dark mode, or let Luma visually match your device settings.
+    </string>
+    <string name="appearance_theme_title">Theme</string>
+    <string name="appearance_cards_title">App cards</string>
+    <string name="appearance_cards_description">
+        Adjust the corner radius of cards to change the overall look of the interface.
+    </string>
+    <string name="appearance_corner_small">Sharp</string>
+    <string name="appearance_corner_medium">Moderate</string>
+    <string name="appearance_corner_large">Soft</string>
+
 
     <!--  EditMoodsScreen  -->
     <string name="palette_classic">Classic</string>
@@ -161,6 +172,8 @@
     <string name="cd_mood_edit">Edit</string>
 
     <string name="duration_picker_confirm_button">Confirm</string>
+
+
 
     <string-array name="calendar_day_labels">
         <item>M</item>

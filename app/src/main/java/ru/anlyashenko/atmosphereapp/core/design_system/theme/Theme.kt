@@ -1,34 +1,24 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.CornerRadiusMode
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
 private val LightColorScheme = lightColorScheme(
-    primary = PrimaryPurple,
-    onPrimary = OnPrimaryWhite,
+    primary = PrimaryLight,
+    onPrimary = OnPrimaryLight,
 
     background = BackgroundWhiteLight,
     onBackground = OnBackgroundBlackLight,
 
-    secondaryContainer = ContainerWhiteLight,
-    onSecondaryContainer = OnContainerGrayLight,
+//    secondaryContainer = ContainerWhiteLight,
+//    onSecondaryContainer = OnContainerGrayLight,
 
     secondary = SecondaryLight,
     onSecondary = OnSecondaryBlackLight,
@@ -36,7 +26,8 @@ private val LightColorScheme = lightColorScheme(
     surface = SurfaceWhiteLight,
     onSurface = OnSurfaceBlackLight,
 
-    error = WarningRed
+    error = WarningRed,
+    onError = TextOnError
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -47,6 +38,27 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+)
+
+private val DarkColorScheme = darkColorScheme(
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
+
+    background = BackgroundBlackDark,
+    onBackground = OnBackgroundWhiteDark,
+
+//    secondaryContainer = ContainerWhiteLight,
+//    onSecondaryContainer = OnContainerGrayLight,
+
+    secondary = SecondaryDark,
+    onSecondary = OnSecondaryWhiteDark,
+
+    surface = SurfaceBlackDark,
+    onSurface = OnSurfaceWhiteDark,
+
+    error = WarningRed,
+    onError = TextOnError
+
 )
 
 

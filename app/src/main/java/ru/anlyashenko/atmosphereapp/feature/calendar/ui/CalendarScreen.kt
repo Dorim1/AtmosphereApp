@@ -1,5 +1,9 @@
 package ru.anlyashenko.atmosphereapp.feature.calendar.ui
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,7 +29,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -50,10 +53,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,7 +73,6 @@ import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
 
-// todo: показывать пользователю где есть запись а где нет
 @Composable
 fun CalendarRoute(
     viewModel: CalendarViewModel = hiltViewModel()
@@ -79,6 +82,7 @@ fun CalendarRoute(
     CalendarScreen(
         selectedDate = state.selectedDate,
         moodMap = state.moodMap,
+        daysWithNotes = state.daysWithNotes,
         note = state.selectedRecord?.note?.takeIf { it.isNotBlank() },
         onDateClick = { date ->
             viewModel.setEvent(CalendarEvent.OnDateSelected(date))
@@ -94,9 +98,10 @@ fun CalendarRoute(
 fun CalendarScreen(
     selectedDate: LocalDate,
     moodMap: Map<LocalDate, Color>,
+    daysWithNotes: Set<LocalDate>,
     note: String?,
     onDateClick: (LocalDate) -> Unit,
-    onDeleteNote: () -> Unit
+    onDeleteNote: () -> Unit,
 ) {
     var displayYear by remember { mutableIntStateOf(selectedDate.year) }
     var displayMonth by remember { mutableStateOf(selectedDate.month) }
@@ -110,18 +115,19 @@ fun CalendarScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 7.dp)
     ) {
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         CalendarHeaderCard(
             displayMonth = displayMonth,
             displayYear = displayYear
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         CalendarPagerCard(
             pagerState = pagerState,
             startPage = startPage,
             selectedDate = selectedDate,
             moodMap = moodMap,
+            daysWithNotes = daysWithNotes,
             onDateClick = onDateClick,
             onMonthChanged = { year, month ->
                 displayYear = year
@@ -129,7 +135,7 @@ fun CalendarScreen(
             }
         )
 
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         if (!note.isNullOrEmpty()) {
             NoteCard(
                 note = note,
@@ -138,7 +144,7 @@ fun CalendarScreen(
                 onDelete = onDeleteNote
             )
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
 
     }
 
@@ -196,7 +202,7 @@ fun DayNoteSection(
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
 
         Row(
             modifier = Modifier
@@ -206,7 +212,7 @@ fun DayNoteSection(
         ) {
             Box(
                 modifier = Modifier
-                    .width(8.dp)
+                    .width(6.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(50.dp))
                     .background(moodColor ?: MaterialTheme.colorScheme.primary)
@@ -228,7 +234,7 @@ fun DayNoteSection(
                 .align(Alignment.End)
                 .padding(end = 9.dp, bottom = 9.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.07f),
+                containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
                 contentColor = MaterialTheme.colorScheme.error
             )
         ) {
@@ -247,8 +253,9 @@ fun CalendarPagerCard(
     startPage: Int,
     selectedDate: LocalDate,
     moodMap: Map<LocalDate, Color>,
+    daysWithNotes: Set<LocalDate>,
     onDateClick: (LocalDate) -> Unit,
-    onMonthChanged: (Int, Month) -> Unit
+    onMonthChanged: (Int, Month) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -296,6 +303,7 @@ fun CalendarPagerCard(
                 startPage = startPage,
                 currentDate = selectedDate,
                 moodMap = moodMap,
+                daysWithNotes = daysWithNotes,
                 selectedDate = selectedDate,
                 onDateClick = onDateClick,
                 onMonthChanged = onMonthChanged
@@ -313,9 +321,10 @@ fun CalendarGrid(
     startPage: Int,
     currentDate: LocalDate,
     moodMap: Map<LocalDate, Color>,
+    daysWithNotes: Set<LocalDate>,
     selectedDate: LocalDate,
     onDateClick: (LocalDate) -> Unit,
-    onMonthChanged: (year: Int, month: Month) -> Unit
+    onMonthChanged: (year: Int, month: Month) -> Unit,
 ) {
     val today = remember { LocalDate.now() }
     val dayLabels = stringArrayResource(R.array.calendar_day_labels).toList()
@@ -347,7 +356,7 @@ fun CalendarGrid(
                 )
             }
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(6.dp))
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val cellsSize = maxWidth / 7
             val calendarHeight = cellsSize * 6
@@ -366,6 +375,7 @@ fun CalendarGrid(
                     year = pageDate.year,
                     month = pageDate.month,
                     moodMap = moodMap,
+                    daysWithNotes = daysWithNotes,
                     selectedDate = selectedDate,
                     onDateClick = onDateClick
                 )
@@ -380,8 +390,9 @@ fun CalendarMonthPage(
     year: Int,
     month: Month,
     moodMap: Map<LocalDate, Color>,
+    daysWithNotes: Set<LocalDate>,
     selectedDate: LocalDate,
-    onDateClick: (LocalDate) -> Unit
+    onDateClick: (LocalDate) -> Unit,
 ) {
     val firstDay = LocalDate.of(year, month, 1)
     val offset = firstDay.dayOfWeek.value - 1
@@ -409,18 +420,30 @@ fun CalendarMonthPage(
                             val today = LocalDate.now()
                             val isFuture = date.isAfter(today)
                             val hasNoMood = moodColor == null
+                            val hasNote = daysWithNotes.contains(date)
+
+                            val scale by animateFloatAsState(
+                                targetValue = if (isSelected) 1.1f else 1f,
+                                animationSpec = spring(
+                                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                                    stiffness = Spring.StiffnessMedium
+                                ),
+                                label = "scale"
+                            )
 
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .size(50.dp)
+                                    .scale(scale)
                                     .clip(CircleShape)
-                                    .then(
-                                        if (isSelected) Modifier.border(
-                                            width = 2.dp,
-                                            color = moodColor ?: MaterialTheme.colorScheme.primary,
-                                            shape = CircleShape
-                                        ) else Modifier
+                                    .background(
+                                        when {
+                                            isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
+                                                alpha = 0.05f
+                                            )
+                                            else -> moodColor
+                                        }
                                     )
                                     .clickable(
                                         interactionSource = remember { MutableInteractionSource() },
@@ -428,26 +451,46 @@ fun CalendarMonthPage(
                                         onClick = { onDateClick(date) }
                                     )
                             ) {
-                                Box(
+                                /*Box(
                                     modifier = Modifier
-                                        .size(34.dp)
+                                        .size(46.dp)
                                         .clip(CircleShape)
                                         .background(
                                             when {
-                                                isFuture || hasNoMood -> Color.Transparent
+                                                isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
+                                                    alpha = 0.05f
+                                                )
                                                 else -> moodColor
                                             }
                                         )
                                         .then(
-                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.border(
-                                                width = 1.dp,
+                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.background(
                                                 color = MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.2f
+                                                    alpha = 0.05f
                                                 ),
                                                 shape = CircleShape
                                             ) else Modifier
-                                        )
-                                )
+                                        ),
+                                    contentAlignment = Alignment.Center*/
+
+                                if (hasNote) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.ic_edit),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
+//                                ) {
+//                                    if (hasNote) {
+//                                        Icon(
+//                                            painter = painterResource(R.drawable.ic_edit),
+//                                            contentDescription = null,
+//                                            modifier = Modifier.size(24.dp),
+//                                            tint = MaterialTheme.colorScheme.onSurface
+//                                        )
+//                                    }
+//                                }
                             }
                         }
                     }

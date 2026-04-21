@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.mvi
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -23,40 +24,30 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(initialState)
     val uiState: StateFlow<State> = _uiState.asStateFlow()
 
-    // TODO: Возможно, более надёжный вариант SharedFlow с replay = 1
-    /**
-     * Channel может потерять события - если UI не подписан в момент отправки эффекта
-     */
-    private val _effect: Channel<Effect> = Channel()
+    private val _effect: Channel<Effect> = Channel(Channel.BUFFERED)
     val effect: Flow<Effect> = _effect.receiveAsFlow()
 
     init {
         subscribeEvents()
     }
 
-    // TODO: Нет обработки ошибок
-    /**
-     * Если handleEvent бросит исключение, корутина упадёт и события перестанут обрабатываться
-     */
     private fun subscribeEvents() {
         viewModelScope.launch {
-            _event.collect {
-                handleEvent(it)
+            _event.collect { event ->
+                try {
+                    handleEvent(event)
+                } catch (e: Exception) {
+                    handleError(e)
+                }
             }
         }
     }
 
     abstract fun handleEvent(event: Event)
 
-    // TODO: Возможно, MutableSharedFlow избыточен, можно попробовать >>>
-    /*
+
     fun setEvent(event: Event) {
-        viewModelScope.launch { handleEvent(event) }
-    }
-     */
-    fun setEvent(event: Event) {
-        val newEvent = event
-        viewModelScope.launch { _event.emit(newEvent) }
+        viewModelScope.launch { _event.emit(event) }
     }
 
     protected fun setState(reduce: State.() -> State) {
@@ -64,13 +55,13 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
         _uiState.value = newState
     }
 
-    // TODO: Лучше использовать один общий scope
-    /**
-     * setEffect запускает корутину на каждый эффект, могут создаваться много корутин
-     */
     protected fun setEffect(builder: () -> Effect) {
         val effectValue = builder()
-        viewModelScope.launch { _effect.send(effectValue) }
+        _effect.trySend(effectValue)
+    }
+
+    protected open fun handleError(error: Throwable) {
+        Log.e("ViewModelError", "Error handling event", error)
     }
 
 }

@@ -12,7 +12,6 @@ import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// todo: Удалить логи
 @Singleton
 class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi,
@@ -22,11 +21,9 @@ class WeatherRepositoryImpl @Inject constructor(
         return withContext(ioDispatcher) {
             try {
                 val response = api.getCurrentWeather(lat, lon)
-                Log.d("Weather", "Response: $response")
                 Result.Success(response.toUiModel(cityName))
             } catch (e: Exception) {
-                Log.e("Weather", "Error: ${e.message}", e)
-                Result.Error(Exception("Не удалось получить погоду"))
+                Result.Error(Exception("Не удалось получить погоду", e))
             }
         }
     }

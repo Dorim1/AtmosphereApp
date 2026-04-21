@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.OnMoodColor
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.DragHandle
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.toTwoDigits
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
@@ -369,13 +371,13 @@ fun EmotionProgressBar(
                 text = "$animatedPercentage%",
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = OnMoodColor,
             )
             Text(
                 text = stringResource(mood.defaultLabelRes),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = OnMoodColor
             )
         }
     }
@@ -431,7 +433,7 @@ fun YearlyStatsCards(
                 Text(
                     text = marksCount.toTwoDigits(),
                     fontSize = 86.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
@@ -483,7 +485,7 @@ fun SmallStatCard(
                 Text(
                     text = value,
                     fontSize = 36.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.width(2.dp))

@@ -1,6 +1,8 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,13 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,11 +40,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import ru.anlyashenko.atmosphereapp.R
-
-// todo: Вынести класс
-enum class AppLanguage {
-    RUSSIAN, ENGLISH
-}
 
 @Composable
 fun LanguageSelectionDialog(
@@ -101,8 +97,8 @@ fun LanguageSelectionDialog(
                             .height(48.dp),
                         shape = RoundedCornerShape(24.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = MaterialTheme.colorScheme.onBackground
+                            containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
+                            contentColor = MaterialTheme.colorScheme.onSecondary
                         )
                     ) {
                         Text(
@@ -146,14 +142,16 @@ fun LanguageOptionItem(
     val contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
 
     Surface(
-        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .semantics {
-                selected = isSelected
-                role = Role.RadioButton
-            },
+            .selectable(
+                selected = isSelected,
+                onClick = onClick,
+                role = Role.RadioButton,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ),
         shape = RoundedCornerShape(50.dp),
         color = backgroundColor,
         border = if (isSelected) null else BorderStroke(1.dp, borderColor),

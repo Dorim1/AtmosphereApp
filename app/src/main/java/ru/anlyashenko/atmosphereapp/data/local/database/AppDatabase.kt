@@ -10,7 +10,7 @@ import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
 
 @Database(
     entities = [DiaryEntryDBO::class, MoodDBO::class],
-    version = 2,
+    version = 1,
     exportSchema = true
 )
 @TypeConverters(DateConverter::class)

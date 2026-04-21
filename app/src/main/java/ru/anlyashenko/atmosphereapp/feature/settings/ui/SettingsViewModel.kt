@@ -14,7 +14,6 @@ import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationPermissionManager
 import javax.inject.Inject
 
-// todo: Решить проблему с отправкой уведомлений после получения разрешения
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
@@ -60,6 +59,7 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvent.OnPermissionResult -> handlePermissionResult(event.isGranted)
         }
     }
+
 
 
     private fun saveNotificationSettings(event: SettingsEvent.SaveNotificationSettings) {

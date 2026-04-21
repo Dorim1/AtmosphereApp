@@ -106,12 +106,6 @@ fun AddNoteDialog(
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurface
                     ),
-//                    placeholder = {
-//                        Text(
-//                            text = stringResource(R.string.note_dialog_placeholder),
-//                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-//                        )
-//                    },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = if (isLimitReached)
                             MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
@@ -143,48 +137,6 @@ fun AddNoteDialog(
                     },
                 )
 
-                /*Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 56.dp)
-                        .border(
-                            width = 1.dp,
-                            color = animatedBorderColor,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .background(
-                            MaterialTheme.colorScheme.surface,
-                            RoundedCornerShape(16.dp)
-                        )
-                        .padding(16.dp)
-                ) {
-                    BasicTextField(
-                        value = noteText,
-                        onValueChange = {
-                            if (it.length <= maxChar) noteText = it
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(focusRequester),
-                        textStyle = TextStyle(
-                            fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-                        decorationBox = { innerTextField ->
-                            Box(modifier = Modifier.fillMaxWidth()) {
-                                if (noteText.isEmpty()) {
-                                    Text(
-                                        text = stringResource(R.string.note_dialog_placeholder),
-                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
-                                        fontSize = 16.sp
-                                    )
-                                }
-                                innerTextField()
-                            }
-                        }
-                    )
-                }*/
 
                 Spacer(Modifier.height(28.dp))
 
@@ -198,8 +150,10 @@ fun AddNoteDialog(
                             .weight(1f)
                             .height(52.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f),
-                            contentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.05f
+                            ),
+                            contentColor = MaterialTheme.colorScheme.onSurface
                         ),
                         shape = RoundedCornerShape(30.dp),
                         elevation = null

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import ru.anlyashenko.atmosphereapp.core.mvi.BaseViewModel
 import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
+import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileEffect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,5 +57,7 @@ class AppearanceViewModel @Inject constructor(
             }
         }
     }
+
+
 
 }
