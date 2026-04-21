@@ -72,6 +72,7 @@ val OnSurfaceWhiteDark = Color(0xFFF5F5F5)
 val SecondaryDarkLight = Color(0xFF2B2B2B)
 val SecondaryGrayLight = Color(0xFFEBEBEB)
 
+val OnMoodColor = Color(0xFFF5F5F5)
 val WarningRed = Color(0xFFE60023)
 val TextOnError = Color(0xFFF5F5F5)
 

@@ -118,8 +118,8 @@ fun MoodItemRow(
     onClick: () -> Unit
 ) {
     val backgroundColor =
-        if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.background
-    val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSurface
+        if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
+    val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSecondary
 
     val displayName = mood.customLabel ?: stringResource(id = mood.defaultLabelRes)
 
@@ -164,7 +164,7 @@ fun MoodItemRow(
             modifier = Modifier.size(24.dp),
             colors = RadioButtonDefaults.colors(
                 selectedColor = mood.color,
-                unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                unselectedColor = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.3f)
             )
         )
     }

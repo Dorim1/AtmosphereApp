@@ -7,7 +7,6 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.models.PaletteModel
 
-// todo: МОжет убрать из класса
 class EditMoodsContract {
 
     data class State(

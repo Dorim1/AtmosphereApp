@@ -16,6 +16,12 @@ data class CalendarState(
             .filter { it.mood != null }
             .associate { it.date to it.mood!!.color }
 
+    val daysWithNotes: Set<LocalDate>
+        get() = records
+            .filter { !it.note.isNullOrBlank() }
+            .map { it.date }
+            .toSet()
+
     val selectedRecord: DiaryRecordUiModel?
         get() = records.find { it.date == selectedDate }
 }

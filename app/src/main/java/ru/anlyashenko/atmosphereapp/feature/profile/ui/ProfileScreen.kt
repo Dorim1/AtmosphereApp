@@ -64,17 +64,6 @@ import java.util.Locale
 // todo: Выровнять текст на карточке "самая самая длинная серия"
 
 @Composable
-@Preview
-private fun ProfileScreePreview() {
-    AtmosphereAppTheme() {
-        ProfileRoute(
-            onNavigateToSettings = { },
-            onNavigateToYearlyStats = { }
-        )
-    }
-}
-
-@Composable
 fun ProfileRoute(
     viewModel: ProfileViewModel = hiltViewModel(),
     onNavigateToSettings: () -> Unit,
@@ -621,7 +610,9 @@ fun LegendItem(
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(50.dp))
-                .background(MaterialTheme.colorScheme.secondary)
+                .background(MaterialTheme.colorScheme.onSurface.copy(
+                    alpha = 0.05f
+                ))
                 .padding(horizontal = 17.dp, vertical = 5.dp)
         ) {
             Text(

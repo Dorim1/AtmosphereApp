@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "moods")
 data class MoodDBO(
     @PrimaryKey val id: Int,
-    @ColumnInfo("systemKey") val systemKey: String,
     @ColumnInfo("level") val level: Int,
     @ColumnInfo("colorHex") val colorHex: String,
     @ColumnInfo("iconKey") val iconKey: String,
