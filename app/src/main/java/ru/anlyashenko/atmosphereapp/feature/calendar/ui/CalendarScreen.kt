@@ -47,6 +47,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -179,7 +180,7 @@ fun DayNoteSection(
     selectedDate: LocalDate,
     onDelete: () -> Unit
 ) {
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
     val monthName = selectedDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
@@ -197,7 +198,7 @@ fun DayNoteSection(
                 selectedDate.dayOfMonth,
                 monthName
             ),
-            style = MaterialTheme.typography.titleMedium, // todo: Текст
+            fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
         Spacer(Modifier.height(6.dp))
