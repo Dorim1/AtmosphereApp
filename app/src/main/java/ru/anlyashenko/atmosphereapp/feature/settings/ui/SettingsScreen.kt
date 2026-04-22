@@ -67,37 +67,13 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNavigateToAppearance: () -> Unit,
-    onNavigateToEditMoods: () -> Unit
+    onNavigateToEditMoods: () -> Unit,
+    onNavigateToNotificationSettings: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
     val currentLanguage = remember { LanguageManager.getCurrentLanguage() }
 
-    val permissionManager = remember {
-        NotificationPermissionManager(context)
-    }
-
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        viewModel.setEvent(SettingsEvent.OnPermissionResult(isGranted))
-    }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
     val uriHandler = LocalUriHandler.current
-
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                viewModel.setEvent(
-                    SettingsEvent.OnPermissionResult(permissionManager.checkPermission())
-                )
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
@@ -105,23 +81,7 @@ fun SettingsScreen(
                 SettingsEffect.NavigateBack -> onBackClick()
                 SettingsEffect.NavigateToAppearance -> onNavigateToAppearance()
                 SettingsEffect.NavigateToEditMoods -> onNavigateToEditMoods()
-                SettingsEffect.RequestNotificationPermission -> {
-                    val activity = context as? Activity ?: return@collectLatest
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (permissionManager.shouldShowRationale(activity)) {
-                            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        } else {
-                            viewModel.setEvent(SettingsEvent.OnShouldOpenSettings)
-                        }
-                    } else {
-                        viewModel.setEvent(SettingsEvent.OnPermissionResult(true))
-                    }
-                }
-
-                SettingsEffect.OpenAppSettings -> {
-                    val activity = context as? Activity ?: return@collectLatest
-                    permissionManager.openAppSettings(activity)
-                }
+                SettingsEffect.NavigateToNotificationSettings -> onNavigateToNotificationSettings()
             }
         }
     }
@@ -165,7 +125,7 @@ fun SettingsScreen(
                 subtitle = state.notificationSubtitle.asString(),
                 painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
-                onClick = { viewModel.setEvent(SettingsEvent.OpenNotificationSheet) }
+                onClick = { viewModel.setEvent(SettingsEvent.OnNotificationClick) }
             )
             SettingsItemCard(
                 title = stringResource(R.string.settings_appearance_title),
@@ -224,20 +184,6 @@ fun SettingsScreen(
             onSaveClick = { selectedLanguage ->
                 viewModel.setEvent(SettingsEvent.DismissDialogs)
                 LanguageManager.setLanguage(selectedLanguage)
-            }
-        )
-    }
-
-    if (state.showNotificationSheet && !state.isLoading) {
-        NotificationSettingsBottomSheet(
-            initialEnabled = state.isNotificationsEnabled,
-            initialHour = state.notificationHour,
-            initialMinute = state.notificationMinute,
-            onDismissRequest = { viewModel.setEvent(SettingsEvent.DismissDialogs) },
-            onSaveRequest = { selectedHour, selectedMinute, isEnabled ->
-                viewModel.setEvent(
-                    SettingsEvent.SaveNotificationSettings(isEnabled, selectedHour, selectedMinute)
-                )
             }
         )
     }

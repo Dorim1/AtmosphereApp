@@ -18,6 +18,8 @@ import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
 import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
 import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.AppearanceScreen
 import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui.EditMoodsScreen
+import ru.anlyashenko.atmosphereapp.feature.setting_notification.NotificationSettingsRoute
+import ru.anlyashenko.atmosphereapp.feature.setting_notification.NotificationSettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
 import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
 
@@ -107,6 +109,7 @@ fun AppNavHost(
             SettingsScreen(
                 onNavigateToAppearance = { navHostController.navigate(Destination.SettingsAppearanceRoute) },
                 onNavigateToEditMoods = { navHostController.navigate(Destination.SettingsEditMoodsRoute) },
+                onNavigateToNotificationSettings = { navHostController.navigate(Destination.SettingsNotificationRoute) },
                 onBackClick = {
                     navHostController.popBackStack()
                 }
@@ -123,6 +126,14 @@ fun AppNavHost(
 
         composable<Destination.SettingsEditMoodsRoute> {
             EditMoodsScreen(
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
+
+        composable<Destination.SettingsNotificationRoute> {
+            NotificationSettingsRoute(
                 onBackClick = {
                     navHostController.popBackStack()
                 }

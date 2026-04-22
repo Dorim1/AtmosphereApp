@@ -26,4 +26,6 @@ sealed interface Destination {
 
     @Serializable
     data object SettingsEditMoodsRoute : Destination
+    @Serializable
+    data object SettingsNotificationRoute : Destination
 }
