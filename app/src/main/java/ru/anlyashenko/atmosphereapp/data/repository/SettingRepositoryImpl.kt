@@ -60,7 +60,7 @@ class SettingRepositoryImpl @Inject constructor(
 
     override val cornerRadiusFlow: Flow<CornerRadiusMode> = dataStore.data
         .map { preferences ->
-            val radiusName = preferences[CORNER_RADIUS] ?: CornerRadiusMode.MODERATE.name
+            val radiusName = preferences[CORNER_RADIUS] ?: CornerRadiusMode.BIG.name
             CornerRadiusMode.valueOf(radiusName)
         }
 

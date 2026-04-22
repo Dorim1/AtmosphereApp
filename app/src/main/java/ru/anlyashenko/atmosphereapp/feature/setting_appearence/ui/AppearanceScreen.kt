@@ -274,7 +274,7 @@ fun CornerRadiusCard(
 ) {
     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary
     else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-    val cardColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
+    val cardColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)
     val borderWidth = if (isSelected) 2.dp else 1.dp
 
     Surface(

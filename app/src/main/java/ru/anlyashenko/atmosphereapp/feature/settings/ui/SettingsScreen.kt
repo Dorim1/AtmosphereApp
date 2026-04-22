@@ -169,7 +169,7 @@ fun SettingsScreen(
             )
             SettingsItemCard(
                 title = stringResource(R.string.settings_appearance_title),
-                subtitle = stringResource(R.string.settings_appearance_system),
+                subtitle = state.themeSubtitle.asString(),
                 painter = painterResource(R.drawable.ic_setting_theme),
                 modifier = Modifier.weight(1f),
                 onClick = { viewModel.setEvent(SettingsEvent.OnAppearanceClick) }

@@ -61,7 +61,6 @@ import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
-// todo: на карточках "серия года" и "записей в году" выровнять значок под цифры
 @Composable
 fun YearlyStatsScreen(
     modifier: Modifier = Modifier,
@@ -152,7 +151,7 @@ fun YearlyStatsPagerCard(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.padding(horizontal = 30.dp, vertical = 24.dp)) {
@@ -224,7 +223,7 @@ fun YearMatrixCard(
 fun YearHeaderCard(displayYear: Int, percentage: Int) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.secondary
     ) {
         Column(
@@ -277,7 +276,7 @@ fun TopMoodsCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 160.dp),
-                shape = RoundedCornerShape(30.dp),
+                shape = MaterialTheme.shapes.large,
                 color = MaterialTheme.colorScheme.surface
             ) {
                 Box(
@@ -349,7 +348,7 @@ fun EmotionProgressBar(
         modifier = modifier
             .fillMaxWidth()
             .height(165.dp)
-            .clip(RoundedCornerShape(30.dp))
+            .clip(MaterialTheme.shapes.large)
             .background(lightBackgroundColor)
     ) {
         if (animatedFraction > 0f) {
@@ -423,7 +422,7 @@ fun YearlyStatsCards(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight(),
-            shape = RoundedCornerShape(30.dp),
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.primary
         ) {
             Column(
@@ -473,7 +472,7 @@ fun SmallStatCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = backgroundColor
     ) {
         Column(
@@ -489,11 +488,6 @@ fun SmallStatCard(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.width(2.dp))
-                Icon(
-                    imageVector = Icons.Rounded.Equalizer,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
             }
             Spacer(Modifier.height(8.dp))
             Text(

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -55,16 +56,18 @@ fun IntroScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(SecondaryGrayLight),
+            .background(SecondaryGrayLight)
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderSection()
-        Spacer(Modifier.weight(1f, fill = false))
+        Spacer(Modifier.weight(1f))
         FooterSection(
             onGetInClick = { isGranted ->
                 viewModel.setEvent(IntroEvent.CompleteOnboarding(isGranted))
             }
         )
+        Spacer(Modifier.weight(1f))
     }
 }
 
@@ -100,7 +103,6 @@ fun HeaderSection() {
     }
 }
 
-// TODO: Решить проблему в размером кнопки
 @Composable
 fun FooterSection(onGetInClick: (Boolean) -> Unit) {
 
@@ -111,9 +113,6 @@ fun FooterSection(onGetInClick: (Boolean) -> Unit) {
     }
 
     Button(
-        modifier = Modifier
-            .padding(vertical = 150.dp)
-            .size(200.dp, 50.dp),
         onClick = {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -122,6 +121,9 @@ fun FooterSection(onGetInClick: (Boolean) -> Unit) {
             }
 
         },
+        modifier = Modifier
+            .width(200.dp)
+            .height(56.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = PrimaryLight,
             contentColor = OnPrimaryLight

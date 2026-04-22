@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
@@ -35,22 +34,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
+import ru.anlyashenko.atmosphereapp.core.design_system.theme.OnMoodColor
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-
-// todo: сделать, чтобы погода не подгружалась каждый раз при обновлении экрана
-// todo: цвет настроения на карточках
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -58,9 +53,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
 
-    LaunchedEffect(Unit) {
+/*    LaunchedEffect(Unit) {
         viewModel.setEvent(HomeEvent.LoadWeather)
-    }
+    }*/
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -121,6 +116,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     }
 
 }
+
 @Composable
 fun WeatherCard(
     modifier: Modifier = Modifier,
@@ -131,7 +127,7 @@ fun WeatherCard(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 260.dp),
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.primary
     ) {
         if (isLoading) {
@@ -157,6 +153,7 @@ fun WeatherCard(
         }
     }
 }
+
 @Composable
 fun WeatherSection(weather: WeatherUiModel) {
     Box(
@@ -254,8 +251,8 @@ fun WeatherHourlyItem(
 fun CurrentDayActionRow(
     hasMood: Boolean,
     hasNote: Boolean,
-    onMoodClick:() -> Unit,
-    onNoteClick:() -> Unit,
+    onMoodClick: () -> Unit,
+    onNoteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -266,7 +263,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onMoodClick,
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .weight(1f)
@@ -298,7 +295,7 @@ fun CurrentDayActionRow(
 
         Surface(
             onClick = onNoteClick,
-            shape = MaterialTheme.shapes.medium,
+            shape = MaterialTheme.shapes.large,
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier
                 .weight(1f)
@@ -345,7 +342,7 @@ fun DayEntryCard(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(
@@ -388,7 +385,7 @@ fun DayEntryCard(
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         if (record.hasNote) {
                             Icon(
-                                imageVector = Icons.Rounded.Edit,
+                                painter = painterResource(R.drawable.ic_edit),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(32.dp)

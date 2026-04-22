@@ -2,11 +2,9 @@ package ru.anlyashenko.atmosphereapp.feature.calendar.ui
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -49,6 +47,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,7 +74,7 @@ import java.util.Locale
 
 @Composable
 fun CalendarRoute(
-    viewModel: CalendarViewModel = hiltViewModel()
+    viewModel: CalendarViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -159,7 +158,7 @@ fun NoteCard(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.padding(top = 32.dp)) {
@@ -181,7 +180,7 @@ fun DayNoteSection(
     selectedDate: LocalDate,
     onDelete: () -> Unit
 ) {
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
     val monthName = selectedDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
@@ -199,7 +198,7 @@ fun DayNoteSection(
                 selectedDate.dayOfMonth,
                 monthName
             ),
-            style = MaterialTheme.typography.titleMedium,
+            fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
         Spacer(Modifier.height(6.dp))
@@ -234,7 +233,7 @@ fun DayNoteSection(
                 .align(Alignment.End)
                 .padding(end = 9.dp, bottom = 9.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
+                containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
                 contentColor = MaterialTheme.colorScheme.error
             )
         ) {
@@ -261,7 +260,7 @@ fun CalendarPagerCard(
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
@@ -434,7 +433,7 @@ fun CalendarMonthPage(
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .size(50.dp)
+                                    .size(42.dp)
                                     .scale(scale)
                                     .clip(CircleShape)
                                     .background(
@@ -442,6 +441,7 @@ fun CalendarMonthPage(
                                             isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
                                                 alpha = 0.05f
                                             )
+
                                             else -> moodColor
                                         }
                                     )
@@ -451,28 +451,6 @@ fun CalendarMonthPage(
                                         onClick = { onDateClick(date) }
                                     )
                             ) {
-                                /*Box(
-                                    modifier = Modifier
-                                        .size(46.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            when {
-                                                isFuture || hasNoMood -> MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.05f
-                                                )
-                                                else -> moodColor
-                                            }
-                                        )
-                                        .then(
-                                            if (!isSelected && (isFuture || hasNoMood)) Modifier.background(
-                                                color = MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.05f
-                                                ),
-                                                shape = CircleShape
-                                            ) else Modifier
-                                        ),
-                                    contentAlignment = Alignment.Center*/
-
                                 if (hasNote) {
                                     Icon(
                                         painter = painterResource(R.drawable.ic_edit),
@@ -481,16 +459,6 @@ fun CalendarMonthPage(
                                         tint = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
-//                                ) {
-//                                    if (hasNote) {
-//                                        Icon(
-//                                            painter = painterResource(R.drawable.ic_edit),
-//                                            contentDescription = null,
-//                                            modifier = Modifier.size(24.dp),
-//                                            tint = MaterialTheme.colorScheme.onSurface
-//                                        )
-//                                    }
-//                                }
                             }
                         }
                     }
@@ -504,7 +472,7 @@ fun CalendarMonthPage(
 fun CalendarHeaderCard(displayMonth: Month, displayYear: Int) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(30.dp),
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.secondary
     ) {
         Column(

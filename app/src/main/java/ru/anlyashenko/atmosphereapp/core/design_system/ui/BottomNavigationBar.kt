@@ -82,7 +82,7 @@ fun NavigationBar(modifier: Modifier = Modifier, startDestination: Destination) 
                             },
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = MaterialTheme.colorScheme.primary,
-                                unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+                                unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                                 indicatorColor = Color.Transparent
                             )
                         )

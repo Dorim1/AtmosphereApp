@@ -6,12 +6,14 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeEffect
+import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
 import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 
 data class SettingsState(
     val isNotificationsEnabled: Boolean = NotificationDefaults.DEFAULT_IS_ENABLED,
     val notificationHour: Int = NotificationDefaults.DEFAULT_HOUR,
     val notificationMinute: Int = NotificationDefaults.DEFAULT_MINUTE,
+    val theme: ThemeMode = ThemeMode.SYSTEM,
     val isLoading: Boolean = true,
     val showNotificationSheet: Boolean = false,
     val showLanguageDialog: Boolean = false,
@@ -21,6 +23,13 @@ data class SettingsState(
             UiText.StringResource(R.string.settings_notifications_enabled)
         } else {
             UiText.StringResource(R.string.settings_notifications_disabled)
+        }
+
+    val themeSubtitle: UiText
+        get() = when (theme) {
+            ThemeMode.SYSTEM -> UiText.StringResource(R.string.settings_appearance_system)
+            ThemeMode.LIGHT -> UiText.StringResource(R.string.settings_appearance_light)
+            ThemeMode.DARK -> UiText.StringResource(R.string.settings_appearance_dark)
         }
 }
 

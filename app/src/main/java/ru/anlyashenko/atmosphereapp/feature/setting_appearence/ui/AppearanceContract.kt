@@ -6,7 +6,7 @@ import ru.anlyashenko.atmosphereapp.core.mvi.UiState
 
 data class AppearanceState(
     val theme: ThemeMode = ThemeMode.SYSTEM,
-    val cornerRadius: CornerRadiusMode = CornerRadiusMode.MODERATE
+    val cornerRadius: CornerRadiusMode = CornerRadiusMode.BIG
 ) : UiState
 
 sealed interface AppearanceEvent : UiEvent {
