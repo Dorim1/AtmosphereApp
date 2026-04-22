@@ -23,7 +23,6 @@ sealed interface NotificationSettingsEvent : UiEvent {
     ) : NotificationSettingsEvent
     object OnShouldOpenSettings: NotificationSettingsEvent
     data class OnPermissionResult(val isGranted: Boolean) : NotificationSettingsEvent
-    data class ToggleNotifications(val isEnabled: Boolean) : NotificationSettingsEvent
 }
 
 sealed interface NotificationSettingsEffect : UiEffect {

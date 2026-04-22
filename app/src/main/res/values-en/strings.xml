@@ -12,7 +12,6 @@
     <string name="text_save_button">Save</string>
     <string name="text_confirm_button">Done</string>
 
-
     <!--  CalendarScreen  -->
     <string name="cd_previous_button">Previous month</string>
     <string name="cd_next_button">Next month</string>
@@ -47,8 +46,6 @@
     <string name="action_change_note">Edit\nnote</string>
     <string name="home_day_question">How was your day?</string>
 
-    <string name="note_dialog_placeholder">Write about your day…</string>
-
     <string name="mood_sheet_title">Select mood</string>
     <string name="mood_excellent">Excellent</string>
     <string name="mood_good">Good</string>
@@ -57,6 +54,7 @@
     <string name="mood_terrible">Terrible</string>
 
     <string name="add_note_to_day_title">Add a note for the day</string>
+    <string name="note_dialog_placeholder">Write about your day…</string>
 
     <!--  ProfileScreen  -->
     <string name="profile_total_entries_title">Total\nEntries</string>
@@ -72,7 +70,7 @@
     <string name="profile_fallback_mood">mood</string>
     <string name="not_enough_data">Not enough data</string>
     <string name="not_enough_data_description">
-    Add at least 7 days of mood entries to see statistics
+    Add at least 3 days of mood entries to see statistics
 </string>
 
     <!--  YearlyScreen  -->
@@ -139,16 +137,17 @@
     <string name="palette_classic">Classic</string>
     <string name="palette_sunset_heat">Sunset Heat</string>
     <string name="palette_desert_wind">Desert Wind</string>
-    <string name="palette_quiet_forest">Quiet Forest</string>
-    <string name="palette_graphite">Graphite</string>
-    <string name="palette_sea_breeze">Sea Breeze</string>
-    <string name="palette_autumn_comfort">Autumn Comfort</string>
     <string name="palette_dusty_roads">Dusty Roads</string>
-    <string name="palette_hot_sand">Hot Sand</string>
-    <string name="palette_velvet_night">Velvet Night</string>
     <string name="palette_dark_flame">Dark Flame</string>
     <string name="palette_northern_chill">Northern Chill</string>
-    <string name="palette_smoldering_coal">Smoldering Coal</string>
+    <string name="palette_soft_meadow">Soft Meadow</string>
+    <string name="palette_fire_ember">Fire Ember</string>
+    <string name="palette_berry_night">Berry Night</string>
+    <string name="palette_tropical_wave">Tropical Wave</string>
+    <string name="palette_summer_sky">Summer Sky</string>
+    <string name="palette_candy_pop">Candy Pop</string>
+    <string name="palette_cold_spark">Cold Spark</string>
+    <string name="palette_blue_heat">Blue Heat</string>
 
     <string name="edit_moods_title">Edit moods</string>
     <string name="edit_moods_moods_title">Moods</string>
@@ -171,8 +170,12 @@
     <string name="cd_mood_replace">Replace</string>
     <string name="cd_mood_edit">Edit</string>
 
-    <string name="duration_picker_confirm_button">Confirm</string>
+    <!--  Notification  -->
+    <string name="notification_mood_title">How was your day?</string>
+    <string name="notification_mood_text">Take a minute to mark your mood.</string>
+    <string name="notification_channel_name">Notifications</string>
 
+    <string name="duration_picker_confirm_button">Confirm</string>
 
 
     <string-array name="calendar_day_labels">

@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -89,13 +90,14 @@ fun SettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .statusBarsPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 23.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 34.dp),
+                .padding(top = 24.dp, bottom = 34.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -107,7 +109,7 @@ fun SettingsScreen(
                     .clickable(onClick = onBackClick),
             )
 
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(18.dp))
             Text(
                 text = stringResource(R.string.settings_title),
                 fontSize = 24.sp,

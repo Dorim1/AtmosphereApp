@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -68,8 +69,6 @@ import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsEffect
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsEvent
 import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationPermissionManager
 
-//todo: Сломанная анимация перехода на этот экран
-//todo: Если выключить уведомления через свитч, выбрать время и нажать Готово, то уведомление всё равно придёт
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationSettingsRoute(
@@ -118,6 +117,7 @@ fun NotificationSettingsRoute(
                         viewModel.setEvent(NotificationSettingsEvent.OnPermissionResult(true))
                     }
                 }
+
                 NotificationSettingsEffect.OpenAppSettings -> {
                     val activity = context as? Activity ?: return@collectLatest
                     permissionManager.openAppSettings(activity)
@@ -126,25 +126,28 @@ fun NotificationSettingsRoute(
         }
     }
 
-    if (!state.isLoading) {
-        NotificationSettingsScreen(
-            initialEnabled = state.isNotificationsEnabled,
-            initialHour = state.notificationHour,
-            initialMinute = state.notificationMinute,
-            onBackClick = { viewModel.setEvent(NotificationSettingsEvent.OnBackClick) },
-            onToggleNotifications = { isEnabled ->
-                viewModel.setEvent(NotificationSettingsEvent.ToggleNotifications(isEnabled))
-            },
-            onSaveRequest = { hour, minute, isEnabled ->
-                viewModel.setEvent(
-                    NotificationSettingsEvent.SaveNotificationSettings(
-                        hour,
-                        minute,
-                        isEnabled
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
+        if (!state.isLoading) {
+            NotificationSettingsScreen(
+                initialEnabled = state.isNotificationsEnabled,
+                initialHour = state.notificationHour,
+                initialMinute = state.notificationMinute,
+                onBackClick = { viewModel.setEvent(NotificationSettingsEvent.OnBackClick) },
+                onSaveRequest = { hour, minute, isEnabled ->
+                    viewModel.setEvent(
+                        NotificationSettingsEvent.SaveNotificationSettings(
+                            hour,
+                            minute,
+                            isEnabled
+                        )
                     )
-                )
-            }
-        )
+                }
+            )
+        }
     }
 }
 
@@ -155,7 +158,6 @@ fun NotificationSettingsScreen(
     initialHour: Int,
     initialMinute: Int,
     onBackClick: () -> Unit,
-    onToggleNotifications: (Boolean) -> Unit,
     onSaveRequest: (hour: Int, minute: Int, isEnabled: Boolean) -> Unit,
 ) {
 
@@ -170,13 +172,14 @@ fun NotificationSettingsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.background)
+            .statusBarsPadding()
             .padding(horizontal = 23.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 34.dp),
+                .padding(top = 24.dp, bottom = 34.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -186,21 +189,21 @@ fun NotificationSettingsScreen(
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
                     .clickable { onBackClick() },
-                tint = MaterialTheme.colorScheme.onSurface
+                tint = MaterialTheme.colorScheme.onBackground
             )
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(18.dp))
             Text(
                 text = stringResource(R.string.notification_settings_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
         Text(
             text = stringResource(R.string.notification_settings_description),
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
         )
 
         Spacer(Modifier.height(24.dp))
@@ -215,14 +218,13 @@ fun NotificationSettingsScreen(
                 text = stringResource(R.string.notification_settings_enable),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Switch(
                 checked = isEnabled,
-                onCheckedChange = { newValue ->
-                    isEnabled = newValue
-                    onToggleNotifications(newValue)
+                onCheckedChange = {
+                    isEnabled = it
                 },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
@@ -272,7 +274,7 @@ fun NotificationSettingsScreen(
                             fontSize = 96.sp,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 )
@@ -282,7 +284,7 @@ fun NotificationSettingsScreen(
                     fontSize = 96.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 BaseVerticalWheelPicker(
@@ -298,7 +300,7 @@ fun NotificationSettingsScreen(
                             fontSize = 96.sp,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 )

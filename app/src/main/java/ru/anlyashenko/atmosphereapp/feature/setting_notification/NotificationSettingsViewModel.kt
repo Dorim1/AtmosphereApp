@@ -48,28 +48,6 @@ class NotificationSettingsViewModel @Inject constructor(
             is NotificationSettingsEvent.OnShouldOpenSettings -> setEffect { NotificationSettingsEffect.OpenAppSettings }
             is NotificationSettingsEvent.SaveNotificationSettings -> saveNotificationSettings(event)
             is NotificationSettingsEvent.OnPermissionResult -> handlePermissionResult(event.isGranted)
-            is NotificationSettingsEvent.ToggleNotifications -> {
-                viewModelScope.launch {
-                    settingsRepository.saveNotificationSettings(
-                        isEnabled = event.isEnabled,
-                        hour = currentState.notificationHour,
-                        minute = currentState.notificationMinute
-                    )
-                    if (event.isEnabled) {
-                        when {
-                            permissionManager.checkPermission() -> {
-                                alarmScheduler.schedule(AlarmItem(
-                                    hour = currentState.notificationHour,
-                                    minute = currentState.notificationMinute
-                                ))
-                            }
-                            else -> setEffect { NotificationSettingsEffect.RequestNotificationPermission }
-                        }
-                    } else {
-                        alarmScheduler.cancel(NotificationDefaults.ALARM_ID)
-                    }
-                }
-            }
         }
     }
 
@@ -85,7 +63,16 @@ class NotificationSettingsViewModel @Inject constructor(
             }
 
             if (event.isEnabled) {
-                alarmScheduler.schedule(AlarmItem(hour = event.hour, minute = event.minute))
+                when  {
+                    permissionManager.checkPermission() -> {
+                        alarmScheduler.schedule(AlarmItem(hour = event.hour, minute = event.minute))
+                    }
+                    else -> {
+                        setEffect { NotificationSettingsEffect.RequestNotificationPermission }
+                    }
+                }
+            } else {
+                alarmScheduler.cancel(NotificationDefaults.ALARM_ID)
             }
 
             setEffect { NotificationSettingsEffect.NavigateBack }
@@ -94,12 +81,14 @@ class NotificationSettingsViewModel @Inject constructor(
 
     private fun handlePermissionResult(isGranted: Boolean) {
         if (isGranted) {
-            alarmScheduler.schedule(
-                AlarmItem(
-                    hour = currentState.notificationHour,
-                    minute = currentState.notificationMinute
+            if (currentState.isNotificationsEnabled) {
+                alarmScheduler.schedule(
+                    AlarmItem(
+                        hour = currentState.notificationHour,
+                        minute = currentState.notificationMinute
+                    )
                 )
-            )
+            }
         } else {
             viewModelScope.launch {
                 settingsRepository.saveNotificationSettings(

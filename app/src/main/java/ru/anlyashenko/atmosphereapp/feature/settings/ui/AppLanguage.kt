@@ -1,5 +1,5 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
 
 enum class AppLanguage {
-    RUSSIAN, ENGLISH
+    RUSSIAN, ENGLISH, JAPANESE
 }

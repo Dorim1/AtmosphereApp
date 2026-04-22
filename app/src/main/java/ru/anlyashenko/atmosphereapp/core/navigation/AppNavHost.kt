@@ -41,13 +41,13 @@ fun AppNavHost(
         },
         exitTransition = {
             slideOutHorizontally(
-                targetOffsetX = { it },
+                targetOffsetX = { -it / 3 },
                 animationSpec = tween(300)
             )
         },
         popEnterTransition = {
             slideInHorizontally(
-                initialOffsetX = { it },
+                initialOffsetX = { -it / 3 },
                 animationSpec = tween(300)
             )
         },
