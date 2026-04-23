@@ -59,7 +59,7 @@ fun IntroScreen(
             .fillMaxSize()
             .background(SecondaryGrayLight)
             .statusBarsPadding()
-            .padding(vertical = 16.dp),
+            .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HeaderSection()

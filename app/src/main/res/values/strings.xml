@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AtmosphereApp</string>
+    <string name="app_name">Atmosphere</string>
 
     <!--  IntroScreen  -->
     <string name="intro_title" translatable="false">Atmosphere</string>
