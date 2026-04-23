@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -53,11 +54,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
 
-/*    LaunchedEffect(Unit) {
-        viewModel.setEvent(HomeEvent.LoadWeather)
-    }*/
-
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

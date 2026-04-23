@@ -27,16 +27,11 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             combine(
                 settingsRepository.notificationEnabledFlow,
-                settingsRepository.notificationHourFlow,
-                settingsRepository.notificationMinuteFlow,
                 settingsRepository.themeModeFlow
-            ) { isEnabled, hour, minute, theme ->
+            ) { isEnabled, theme ->
                 currentState.copy(
                     isNotificationsEnabled = isEnabled,
-                    notificationHour = hour,
-                    notificationMinute = minute,
                     theme = theme,
-                    isLoading = false
                 )
             }.collect { newState ->
                 setState { newState }
@@ -49,64 +44,17 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvent.OnBackClick -> setEffect { SettingsEffect.NavigateBack }
             is SettingsEvent.OnAppearanceClick -> setEffect { SettingsEffect.NavigateToAppearance }
             is SettingsEvent.OnEditMoodsClick -> setEffect { SettingsEffect.NavigateToEditMoods }
-            is SettingsEvent.OnShouldOpenSettings -> setEffect { SettingsEffect.OpenAppSettings }
+            is SettingsEvent.OnNotificationClick -> setEffect { SettingsEffect.NavigateToNotificationSettings }
 
-            is SettingsEvent.OpenNotificationSheet -> setState { copy(showNotificationSheet = true) }
             is SettingsEvent.OpenLanguageDialog -> setState { copy(showLanguageDialog = true) }
-            is SettingsEvent.DismissDialogs -> setState {
-                copy(showNotificationSheet = false, showLanguageDialog = false)
-            }
+            is SettingsEvent.DismissDialogs -> setState { copy(showLanguageDialog = false) }
 
-            is SettingsEvent.SaveNotificationSettings -> saveNotificationSettings(event)
             is SettingsEvent.OnPermissionResult -> handlePermissionResult(event.isGranted)
         }
     }
 
-
-
-    private fun saveNotificationSettings(event: SettingsEvent.SaveNotificationSettings) {
-        viewModelScope.launch {
-            settingsRepository.saveNotificationSettings(event.isEnabled, event.hour, event.minute)
-        }
-
-        setState {
-            copy(
-                isNotificationsEnabled = event.isEnabled,
-                notificationHour = event.hour,
-                notificationMinute = event.minute,
-                showNotificationSheet = false
-            )
-        }
-
-        if (event.isEnabled) {
-            when  {
-                permissionManager.checkPermission() -> {
-                    alarmScheduler.schedule(AlarmItem(hour = event.hour, minute = event.minute))
-                }
-                else -> {
-                    setEffect { SettingsEffect.RequestNotificationPermission }
-                }
-            }
-        }
-
-    }
-
     private fun handlePermissionResult(isGranted: Boolean) {
-        if (isGranted) {
-            alarmScheduler.schedule(
-                AlarmItem(
-                    hour = currentState.notificationHour,
-                    minute = currentState.notificationMinute
-                )
-            )
-        } else {
-            viewModelScope.launch {
-                settingsRepository.saveNotificationSettings(
-                    isEnabled = false,
-                    hour = currentState.notificationHour,
-                    minute = currentState.notificationMinute
-                )
-            }
+        if (!isGranted) {
             setState { copy(isNotificationsEnabled = false) }
         }
     }

@@ -6,7 +6,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.compose.ui.graphics.Color
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.anlyashenko.atmosphereapp.MainActivity
 import ru.anlyashenko.atmosphereapp.R
@@ -21,7 +23,7 @@ class AppNotifier @Inject constructor(
 
         val channel = NotificationChannel(
             channelId,
-            "Уведомления",
+            context.getString(R.string.notification_channel_name),
             NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)
@@ -37,9 +39,9 @@ class AppNotifier @Inject constructor(
         )
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_setting_notifications) // todo: Поменять
-            .setContentTitle("Как прошёл ваш день?")
-            .setContentText("Уделите минуту, чтобы отметить своё настроение.")
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.notification_mood_title))
+            .setContentText(context.getString(R.string.notification_mood_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)

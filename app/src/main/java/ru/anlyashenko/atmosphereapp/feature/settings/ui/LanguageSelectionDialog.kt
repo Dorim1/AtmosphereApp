@@ -83,6 +83,12 @@ fun LanguageSelectionDialog(
                     isSelected = selectedLanguage == AppLanguage.ENGLISH,
                     onClick = { selectedLanguage = AppLanguage.ENGLISH }
                 )
+                Spacer(Modifier.height(12.dp))
+                LanguageOptionItem(
+                    text = "日本語",
+                    isSelected = selectedLanguage == AppLanguage.JAPANESE,
+                    onClick = { selectedLanguage = AppLanguage.JAPANESE }
+                )
 
                 Spacer(Modifier.height(24.dp))
 

@@ -46,7 +46,7 @@ class ProfileViewModel @Inject constructor(
                 val (currentStreak, longestStreak) = calculateStreaks(sortedDates)
 
                 val moodCounts = calculateMoodCounts(records, availableMoods)
-                val hasEnoughMoodData = moodCounts.sumOf { it.count } >= 1 // todo: 3
+                val hasEnoughMoodData = moodCounts.sumOf { it.count } >= 3
 
                 val currentYear = LocalDate.now().year
                 val entriesThisYear = records.count { it.date.year == currentYear }

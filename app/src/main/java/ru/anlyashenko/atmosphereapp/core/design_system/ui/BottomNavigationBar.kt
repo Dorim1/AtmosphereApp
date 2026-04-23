@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui
 
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -49,7 +51,7 @@ fun NavigationBar(modifier: Modifier = Modifier, startDestination: Destination) 
     } == true
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar(
@@ -95,7 +97,9 @@ fun NavigationBar(modifier: Modifier = Modifier, startDestination: Destination) 
         AppNavHost(
             navHostController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(bottom = contentPadding.calculateBottomPadding())
+            modifier = Modifier
+                .consumeWindowInsets(contentPadding)
+                .padding(contentPadding)
         )
     }
 }

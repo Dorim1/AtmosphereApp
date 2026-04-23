@@ -42,112 +42,102 @@ object MoodPalettes {
         ),
         PaletteModel(
             id = 3,
-            nameRes = R.string.palette_quiet_forest,
+            nameRes = R.string.palette_soft_meadow,
             colors = listOf(
-                Color(0xFF5B643D),
-                Color(0xFF314350),
-                Color(0xFFC89839),
-                Color(0xFFAB5E16),
-                Color(0xFF792318)
+                Color(0xFFD4D850),
+                Color(0xFFB8DA8D),
+                Color(0xFF9DADC8),
+                Color(0xFF5D648C),
+                Color(0xFF5F557D)
             )
         ),
         PaletteModel(
             id = 4,
-            nameRes = R.string.palette_graphite,
+            nameRes = R.string.palette_fire_ember,
             colors = listOf(
-                Color(0xFF3A3128),
-                Color(0xFF615441),
-                Color(0xFF89785C),
-                Color(0xFF333333),
-                Color(0xFF1D1D1D)
+                Color(0xFFFB6D10),
+                Color(0xFFEB3E1B),
+                Color(0xFF595978),
+                Color(0xFF4D3347),
+                Color(0xFF86112E)
             )
         ),
         PaletteModel(
             id = 5,
-            nameRes = R.string.palette_sea_breeze,
+            nameRes = R.string.palette_berry_night,
             colors = listOf(
-                Color(0xFF53658F),
-                Color(0xFF2D4159),
-                Color(0xFFE9B75A),
-                Color(0xFFC79769),
-                Color(0xFF5A4436)
+                Color(0xFFA40033),
+                Color(0xFFD31D3D),
+                Color(0xFF959EC9),
+                Color(0xFF4E5174),
+                Color(0xFF28264B)
             )
         ),
         PaletteModel(
             id = 6,
-            nameRes = R.string.palette_autumn_comfort,
+            nameRes = R.string.palette_tropical_wave,
             colors = listOf(
-                Color(0xFF7E3A27),
-                Color(0xFFCEBF94),
-                Color(0xFFAA9874),
-                Color(0xFF5B3C1F),
-                Color(0xFF221711)
+                Color(0xFF0193A5),
+                Color(0xFF027184),
+                Color(0xFFF6A276),
+                Color(0xFFF16744),
+                Color(0xFFC73618)
             )
         ),
         PaletteModel(
             id = 7,
             nameRes = R.string.palette_dusty_roads,
             colors = listOf(
-                Color(0xFF604848),
-                Color(0xFF907878),
-                Color(0xFFC0A890),
+                Color(0xFF484830),
                 Color(0xFF787860),
-                Color(0xFF484830)
+                Color(0xFFC0A890),
+                Color(0xFF907878),
+                Color(0xFF604848),
             )
         ),
         PaletteModel(
             id = 8,
-            nameRes = R.string.palette_hot_sand,
+            nameRes = R.string.palette_summer_sky,
             colors = listOf(
-                Color(0xFFC04732),
-                Color(0xFFE59732),
-                Color(0xFF772330),
-                Color(0xFF3B2A3A),
-                Color(0xFF744154)
+                Color(0xFF3DA5D9),
+                Color(0xFF2364AA),
+                Color(0xFF73BFB8),
+                Color(0xFFFEC601),
+                Color(0xFFEA7317)
             )
         ),
+        // переименовать
         PaletteModel(
             id = 9,
-            nameRes = R.string.palette_velvet_night,
+            nameRes = R.string.palette_candy_pop,
             colors = listOf(
-                Color(0xFF66546C),
-                Color(0xFFD2AA71),
-                Color(0xFF3A1D1F),
-                Color(0xFF892F31),
-                Color(0xFFAF7A3D)
+                Color(0xFF5B5F97),
+                Color(0xFFB8B8D1),
+                Color(0xFFFFC145),
+                Color(0xFFFF6B6C),
+                Color(0xFFD83737)
             )
         ),
         PaletteModel(
             id = 10,
-            nameRes = R.string.palette_dark_flame,
+            nameRes = R.string.palette_cold_spark,
             colors = listOf(
-                Color(0xFF2C1106),
-                Color(0xFF590505),
-                Color(0xFF8C0106),
-                Color(0xFFE2BA7C),
-                Color(0xFFD1A068)
+                Color(0xFF4855A4),
+                Color(0xFF166EE5),
+                Color(0xFF67ABF1),
+                Color(0xFFF38B1E),
+                Color(0xFFF0050F)
             )
         ),
         PaletteModel(
             id = 11,
-            nameRes = R.string.palette_northern_chill,
+            nameRes = R.string.palette_blue_heat,
             colors = listOf(
-                Color(0xFF0E1618),
-                Color(0xFF395563),
-                Color(0xFF7DA1B1),
-                Color(0xFFC47D7D),
-                Color(0xFF711218)
-            )
-        ),
-        PaletteModel(
-            id = 12,
-            nameRes = R.string.palette_smoldering_coal,
-            colors = listOf(
-                Color(0xFFB09F8B),
-                Color(0xFF503D36),
-                Color(0xFF15100D),
-                Color(0xFF510A04),
-                Color(0xFF860001)
+                Color(0xFFF27F0C),
+                Color(0xFFF7AD19),
+                Color(0xFF429EBD),
+                Color(0xFF4C84DC),
+                Color(0xFF545CA1)
             )
         ),
     )

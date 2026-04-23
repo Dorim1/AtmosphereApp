@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -7,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar
 import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
 import ru.anlyashenko.atmosphereapp.core.utils.LanguageManager
+import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -22,15 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
+//        enableEdgeToEdge(SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
 
         splashScreen.setKeepOnScreenCondition { viewModel.isLoading }
-
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
-                android.graphics.Color.TRANSPARENT
-            )
-        )
 
         val currentLocales = AppCompatDelegate.getApplicationLocales()
         if (currentLocales.isEmpty) {
@@ -39,9 +38,36 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContent {
-
             val themeMode by viewModel.themeMode.collectAsStateWithLifecycle()
             val cornerRadius by viewModel.cornerRadius.collectAsStateWithLifecycle()
+
+            val isDarkTheme = when (themeMode) {
+                ThemeMode.DARK -> true
+                ThemeMode.LIGHT -> false
+                else -> isSystemInDarkTheme()
+            }
+
+            DisposableEffect(isDarkTheme) {
+                enableEdgeToEdge(
+                    statusBarStyle = if (isDarkTheme) {
+                        SystemBarStyle.dark(Color.TRANSPARENT)
+                    } else {
+                        SystemBarStyle.light(
+                            Color.TRANSPARENT,
+                            Color.TRANSPARENT
+                        )
+                    },
+                    navigationBarStyle = if (isDarkTheme) {
+                        SystemBarStyle.dark(Color.TRANSPARENT)
+                    } else {
+                        SystemBarStyle.light(
+                            Color.TRANSPARENT,
+                            Color.TRANSPARENT
+                        )
+                    }
+                )
+                onDispose {}
+            }
 
             AtmosphereAppTheme(
                 themeMode = themeMode,

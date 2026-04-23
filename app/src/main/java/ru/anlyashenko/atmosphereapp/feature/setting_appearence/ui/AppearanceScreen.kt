@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -65,14 +66,15 @@ fun AppearanceScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.background)
+            .statusBarsPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 23.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 34.dp),
+                .padding(top = 24.dp, bottom = 34.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -84,12 +86,12 @@ fun AppearanceScreen(
                     .clickable { viewModel.setEvent(AppearanceEvent.OnBackClick) },
             )
 
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(18.dp))
             Text(
                 text = stringResource(R.string.appearance_screen_title),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
@@ -97,14 +99,14 @@ fun AppearanceScreen(
             text = stringResource(R.string.appearance_theme_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.settings_appearance_desc),
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
         )
 
         Spacer(Modifier.height(28.dp))
@@ -142,14 +144,14 @@ fun AppearanceScreen(
             text = stringResource(R.string.appearance_cards_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.appearance_cards_description),
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
         )
 
         Spacer(Modifier.height(28.dp))
@@ -281,7 +283,7 @@ fun CornerRadiusCard(
         modifier = modifier.aspectRatio(0.75f),
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(borderWidth, borderColor),
-        color = MaterialTheme.colorScheme.surface,
+        color = Color.Transparent,
         onClick = onClick
     ) {
         Column(
@@ -298,13 +300,13 @@ fun CornerRadiusCard(
                     Text(
                         text = title,
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = MaterialTheme.colorScheme.onBackground,
                         lineHeight = 14.sp
                     )
                     Text(
                         text = subtitle,
                         fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                         lineHeight = 12.sp
                     )
                 }
@@ -315,7 +317,7 @@ fun CornerRadiusCard(
                     modifier = Modifier.size(24.dp),
                     colors = RadioButtonDefaults.colors(
                         selectedColor = MaterialTheme.colorScheme.primary,
-                        unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                        unselectedColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
                     )
                 )
             }

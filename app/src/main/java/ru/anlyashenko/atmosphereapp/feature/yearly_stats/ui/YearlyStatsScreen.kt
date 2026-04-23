@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.pager.HorizontalPager
@@ -109,6 +110,7 @@ fun YearlyStatsScreen(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .statusBarsPadding()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 7.dp)
     ) {
