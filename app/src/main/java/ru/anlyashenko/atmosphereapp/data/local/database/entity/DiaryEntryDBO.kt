@@ -13,3 +13,4 @@ data class DiaryEntryDBO(
     @ColumnInfo("moodId") val moodId: Int? = null,
     @ColumnInfo("note") val note: String? = null,
 )
+

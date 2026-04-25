@@ -15,7 +15,7 @@ import ru.anlyashenko.database.entity.MoodDBO
     exportSchema = true
 )
 @TypeConverters(DateConverter::class)
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
     abstract fun diaryDao(): DiaryDao
     abstract fun moodDao(): MoodDao
 }

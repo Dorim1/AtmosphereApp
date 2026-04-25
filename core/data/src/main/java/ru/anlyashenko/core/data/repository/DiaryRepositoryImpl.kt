@@ -1,48 +1,27 @@
-package ru.anlyashenko.atmosphereapp.data.repository
+package ru.anlyashenko.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.core.utils.MoodIconManager
-import ru.anlyashenko.atmosphereapp.core.utils.MoodPalettes
-import ru.anlyashenko.atmosphereapp.data.local.database.dao.DiaryDao
-import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
-import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
-import ru.anlyashenko.atmosphereapp.domain.repository.DiaryRepository
-import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
-import ru.anlyashenko.atmosphereapp.feature.home.mapper.toUiModel
-import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
-import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
+import ru.anlyashenko.core.model.DiaryRecord
+import ru.anlyashenko.core.model.Mood
+import ru.anlyashenko.database.dao.DiaryDao
+import ru.anlyashenko.database.dao.MoodDao
+import ru.anlyashenko.database.entity.DiaryEntryDBO
+import ru.anlyashenko.database.entity.asExternalModel
 import java.time.DayOfWeek
 import java.time.LocalDate
-import javax.inject.Inject
-import javax.inject.Singleton
+import kotlin.collections.find
 
-// todo: ----
-@Singleton
-class DiaryRepositoryImpl @Inject constructor(
+class DiaryRepositoryImpl (
     private val diaryDao: DiaryDao,
     private val moodDao: MoodDao,
-    private val settingsRepository: SettingsRepository
 ) : DiaryRepository {
 
-    override val availableMoods: Flow<List<MoodUiModel>> = combine(
-        moodDao.getAllMoods(),
-        settingsRepository.selectedPaletteFlow
-    ) { moods, paletteId ->
-        val activePalette = MoodPalettes.getPaletteById(paletteId)
+    override val availableMoods: Flow<List<Mood>> = moodDao.getAllMoods()
+        .map { moods -> moods.map { it.asExternalModel() } }
 
-        moods.map { dbModel ->
-            val uiModel = dbModel.toUiModel()
-            val colorIndex = activePalette.colors.size - uiModel.level
-            val dynamicColor = activePalette.colors.getOrElse(colorIndex) { uiModel.color }
-
-            uiModel.copy(color = dynamicColor)
-        }
-    }
-
-    override fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
+    override fun getWeekRecordsFlow(): Flow<List<DiaryRecord>> {
         val today = LocalDate.now()
         val monday = today.with(DayOfWeek.MONDAY)
 
@@ -61,7 +40,7 @@ class DiaryRepositoryImpl @Inject constructor(
                 val entryForDate = entries.find { it.date == date }
                 val moodForEntry = moods.find { it.id == entryForDate?.moodId }
 
-                DiaryRecordUiModel(
+                DiaryRecord(
                     date = date,
                     mood = moodForEntry,
                     note = entryForDate?.note
@@ -70,14 +49,14 @@ class DiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAllRecordsFlow(): Flow<List<DiaryRecordUiModel>> {
+    override fun getAllRecordsFlow(): Flow<List<DiaryRecord>> {
         return combine(
             diaryDao.getAllEntries(),
             availableMoods
         ) { entries, mood ->
             entries.map { entry ->
                 val moodForEntry = mood.find { it.id == entry.moodId }
-                DiaryRecordUiModel(
+                DiaryRecord(
                     date = entry.date,
                     mood = moodForEntry,
                     note = entry.note
@@ -88,7 +67,10 @@ class DiaryRepositoryImpl @Inject constructor(
 
     override suspend fun saveMood(date: LocalDate, moodId: Int) {
         val existingEntry = diaryDao.getEntryByDate(date)
-        val entryToSave = existingEntry?.copy(moodId = moodId) ?: DiaryEntryDBO(date = date, moodId = moodId)
+        val entryToSave = existingEntry?.copy(moodId = moodId) ?: DiaryEntryDBO(
+            date = date,
+            moodId = moodId
+        )
         diaryDao.insertOrUpdate(entryToSave)
     }
 
@@ -112,9 +94,8 @@ class DiaryRepositoryImpl @Inject constructor(
     override suspend fun updateMoodDetails(
         moodId: Int,
         customName: String,
-        iconRes: Int
+        iconKey: String
     ) {
-        val iconKey = MoodIconManager.getKeyByRes(iconRes)
         moodDao.updateMoodDetails(moodId, customName, iconKey)
     }
 

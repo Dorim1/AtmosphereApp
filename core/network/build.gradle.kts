@@ -19,4 +19,5 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.androidx.annotation) // todo: ?
     implementation(libs.kotlinx.serialization.converter)
+    implementation(project(":core:model"))
 }

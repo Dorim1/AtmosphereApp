@@ -35,7 +35,9 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(project(":core:database"))
     implementation(project(":core:network"))
+    implementation(project(":core:model"))
 }

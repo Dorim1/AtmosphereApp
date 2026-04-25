@@ -1,25 +1,24 @@
-package ru.anlyashenko.atmosphereapp.data.repository
+package ru.anlyashenko.core.data.repository
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.anlyashenko.atmosphereapp.domain.repository.SettingsRepository
-import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.CornerRadiusMode
-import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
-import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
-import javax.inject.Inject
-import javax.inject.Singleton
+import ru.anlyashenko.core.model.CornerRadiusMode
+import ru.anlyashenko.core.model.ThemeMode
 
-// todo: ----
-@Singleton
-class SettingRepositoryImpl @Inject constructor(
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+/*
+class SettingRepositoryImpl constructor(
     private val dataStore: DataStore<Preferences>
-) : SettingsRepository {
+) :SettingsRepository {
 
     companion object {
         val NOTIFICATION_ENABLED = booleanPreferencesKey("notifications_enabled")
@@ -96,4 +95,4 @@ class SettingRepositoryImpl @Inject constructor(
             preferences[CORNER_RADIUS] = mode.name
         }
     }
-}
+}*/
