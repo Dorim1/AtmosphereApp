@@ -2,6 +2,7 @@ package ru.anlyashenko.atmosphereapp.feature.home.models
 
 import androidx.annotation.StringRes
 
+// todo: ----
 data class WeatherUiModel(
     val cityName: String,
     val temperature: String,
