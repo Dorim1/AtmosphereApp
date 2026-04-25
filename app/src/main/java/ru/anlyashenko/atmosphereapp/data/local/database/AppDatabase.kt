@@ -8,6 +8,7 @@ import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
 
+// todo: ----
 @Database(
     entities = [DiaryEntryDBO::class, MoodDBO::class],
     version = 1,

@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.data.local.database.dao
+package ru.anlyashenko.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -6,9 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
+import ru.anlyashenko.database.entity.MoodDBO
 
-// todo: ----
 @Dao
 interface MoodDao {
     @Query("SELECT * FROM moods ORDER BY id ASC")

@@ -26,3 +26,4 @@ rootProject.name = "AtmosphereApp"
 include(":app")
 include(":core:network")
 include(":core:database")
+include(":core:data")

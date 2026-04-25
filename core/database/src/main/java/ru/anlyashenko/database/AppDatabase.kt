@@ -1,4 +1,21 @@
 package ru.anlyashenko.database
 
-class AppDatabase {
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import ru.anlyashenko.database.dao.DiaryDao
+import ru.anlyashenko.database.dao.MoodDao
+import ru.anlyashenko.database.utils.DateConverter
+import ru.anlyashenko.database.entity.DiaryEntryDBO
+import ru.anlyashenko.database.entity.MoodDBO
+
+@Database(
+    entities = [DiaryEntryDBO::class, MoodDBO::class],
+    version = 1,
+    exportSchema = true
+)
+@TypeConverters(DateConverter::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun diaryDao(): DiaryDao
+    abstract fun moodDao(): MoodDao
 }

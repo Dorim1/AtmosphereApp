@@ -1,9 +1,9 @@
-package ru.anlyashenko.atmosphereapp.data.local.database
+package ru.anlyashenko.database.utils
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
-// todo: -----
-class DateConverter {
+
+internal class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: Long?): LocalDate? {
         return value?.let { LocalDate.ofEpochDay(it) }

@@ -1,4 +1,4 @@
-package ru.anlyashenko.database
+package ru.anlyashenko.core.data
 
 import org.junit.Test
 

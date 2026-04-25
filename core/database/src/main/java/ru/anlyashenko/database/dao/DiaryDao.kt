@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.data.local.database.dao
+package ru.anlyashenko.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,10 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
+import ru.anlyashenko.database.entity.DiaryEntryDBO
 import java.time.LocalDate
 
-// todo: ----
 @Dao
 interface DiaryDao {
     // Сохранение/обновление записи, если дата совпадает
