@@ -1,10 +1,9 @@
-package ru.anlyashenko.atmosphereapp.data.local.database.entity
+package ru.anlyashenko.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// todo: ----
 @Entity(tableName = "moods")
 data class MoodDBO(
     @PrimaryKey val id: Int,

@@ -1,11 +1,10 @@
-package ru.anlyashenko.atmosphereapp.data.local.database.entity
+package ru.anlyashenko.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-// todo: ----
 @Entity(tableName = "diary_entries")
 data class DiaryEntryDBO(
     @PrimaryKey
