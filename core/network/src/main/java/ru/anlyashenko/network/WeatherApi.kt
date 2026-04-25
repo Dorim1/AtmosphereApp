@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.data.network
+package ru.anlyashenko.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -8,9 +8,12 @@ import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.anlyashenko.atmosphereapp.data.network.models.WeatherResponseDTO
+import ru.anlyashenko.network.models.WeatherResponseDTO
 
-// todo: ----
+/**
+ * Было бы круто разделить api на разные модули
+ */
+
 interface WeatherApi {
     @GET("v1/forecast")
     suspend fun getCurrentWeather(
@@ -19,7 +22,7 @@ interface WeatherApi {
         @Query("current_weather") currentWeather: Boolean = true,
         @Query("hourly") hourly: String = "temperature_2m,weathercode",
         @Query("timezone") timezone: String = "auto"
-    ): WeatherResponseDTO
+    ): WeatherResponseDTO // // todo: Возвращать Result<> [55:00, 1ч]
 }
 
 fun WeatherApi (

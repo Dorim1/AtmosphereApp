@@ -1,9 +1,8 @@
-package ru.anlyashenko.atmosphereapp.data.network.models
+package ru.anlyashenko.network.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// todo: ----
 @Serializable
 data class IpGeoResponseDTO(
     @SerialName("latitude") val latitude: Double,
