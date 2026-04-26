@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
-    // todo: Вынести ссылка в gradle
     private const val WEATHER_BASE_URL = "https://api.open-meteo.com/"
     private const val IP_BASE_URL = "https://ipwhois.app/"
 

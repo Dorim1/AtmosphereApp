@@ -1,6 +1,6 @@
 package ru.anlyashenko.core.data.repository
 
-import ru.anlyashenko.core.data.utils.Result
+import ru.anlyashenko.core.common.util.Result
 import ru.anlyashenko.core.model.Weather
 
 interface WeatherRepository {

@@ -1,6 +1,5 @@
-package ru.anlyashenko.core.data.utils
+package ru.anlyashenko.core.common.util
 
-// todo: возможно перенести
 // todo: internal val data: T -- ?
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
