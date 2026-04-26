@@ -16,7 +16,6 @@ import ru.anlyashenko.core.model.ThemeMode
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 // todo: NotificationDefaults
-/*
 class SettingRepositoryImpl constructor(
     private val dataStore: DataStore<Preferences>
 ) :SettingsRepository {
@@ -96,4 +95,4 @@ class SettingRepositoryImpl constructor(
             preferences[CORNER_RADIUS] = mode.name
         }
     }
-}*/
+}

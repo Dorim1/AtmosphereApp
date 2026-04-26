@@ -2,9 +2,15 @@ package ru.anlyashenko.features.home
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import ru.anlyashenko.core.common.util.Result
+import ru.anlyashenko.core.data.location.LocationTracker
 import ru.anlyashenko.core.data.repository.DiaryRepository
 import ru.anlyashenko.core.data.repository.WeatherRepository
+import ru.anlyashenko.core.designsystem.theme.MoodPalettes
+import ru.anlyashenko.core.presentation.mvi.BaseViewModel
+import ru.anlyashenko.features.home.mapper.toUiModel
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -23,7 +29,7 @@ class HomeViewModel @Inject constructor(
     override fun createInitialState(): HomeState = HomeState()
 
     private fun observeDiaryData() {
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             diaryRepository.getWeekRecordsFlow().collect { records ->
                 setState { copy(weekRecords = records) }
             }
@@ -31,6 +37,30 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             diaryRepository.availableMoods.collect { moods ->
                 setState { copy(availableMoods = moods) }
+            }
+        }*/
+
+        viewModelScope.launch {
+            combine(
+                diaryRepository.getWeekRecordsFlow(),
+                diaryRepository.availableMoods
+            ) { domainRecords, domainMoods ->
+                // todo: SettingRepo брать палитру
+                val activePalette = MoodPalettes.getPaletteById(0)
+                val uiMoods = domainMoods.map { it.toUiModel(activePalette) }
+
+                val uiRecords = domainRecords.map { record ->
+                    record.toUiModel(uiMoods)
+                }
+
+                Pair(uiRecords, uiMoods)
+            }.collect { (mappedRecord, mappedMoods) ->
+                setState {
+                    copy(
+                        weekRecords = mappedRecord,
+                        availableMoods = mappedMoods
+                    )
+                }
             }
         }
     }
@@ -68,15 +98,15 @@ class HomeViewModel @Inject constructor(
 
 
     private fun fetchWeatherWithLocation() {
-        setState { copy(isLoadingWeather = true) }
+        /*setState { copy(isLoadingWeather = true) }
 
         viewModelScope.launch {
             val location = locationTracker.getCurrentLocation()
             if (location != null) {
                 val city = location.city ?: "Неизвестный город"
-                when (val result = weatherRepository.getWeather(location.lat, location.lon, city)) {
-                    is ru.anlyashenko.atmosphereapp.core.utils.Result.Success -> setState { copy(weather = result.data, isLoadingWeather = false) }
-                    is ru.anlyashenko.atmosphereapp.core.utils.Result.Error -> {
+                when (val result = weatherRepository.getWeather(location.latitude, location.longitude, city)) {
+                    is Result.Success -> setState { copy(weather = result.data, isLoadingWeather = false) }
+                    is Result.Error -> {
                         setState { copy(isLoadingWeather = false) }
                         setEffect { HomeEffect.ShowSnackbar("Не удалось загрузить погоду") }
                     }
@@ -86,7 +116,31 @@ class HomeViewModel @Inject constructor(
                 setEffect { HomeEffect.ShowSnackbar("Не удалось определить город") }
             }
 
+        }*/
+
+        setState { copy(isLoadingWeather = true) }
+
+        viewModelScope.launch {
+            val location = locationTracker.getCurrentLocation()
+            if (location != null) {
+                val city = location.city ?: "Unknown city"
+                when (val result = weatherRepository.getWeather(location.latitude, location.longitude, city)) {
+                    is Result.Success -> {
+                        val weatherUiModel = result.data.toUiModel()
+
+                        setState { copy(weather = weatherUiModel, isLoadingWeather = false) }
+                    }
+                    is Result.Error -> {
+                        setState { copy(isLoadingWeather = false) }
+                        setEffect { HomeEffect.ShowSnackbar("Couldn't load weather") }
+                    }
+                }
+            } else {
+                setState { copy(isLoadingWeather = false) }
+                setEffect { HomeEffect.ShowSnackbar("Couldn't identify the city") }
+            }
         }
+
     }
 
 }

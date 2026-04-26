@@ -1,11 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
+
 android {
-    namespace = "ru.anlyashenko.network"
+    namespace = "ru.anlyashenko.core.presentation"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -17,9 +15,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("String", "WEATHER_BASE_URL", "\"\"")
-        buildConfigField("String", "IP_BASE_URL", "\"\"")
     }
 
     buildTypes {
@@ -31,11 +26,6 @@ android {
             )
         }
     }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -43,12 +33,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.retrofit)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization)
-    implementation(libs.androidx.annotation)
-    implementation(libs.kotlinx.serialization.converter)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation(project(":core:model"))
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }
