@@ -1,0 +1,194 @@
+<resources>
+    <string name="app_name">Atmosphere</string>
+
+    <!--  IntroScreen  -->
+    <string name="intro_title" translatable="false">Atmosphere</string>
+    <string name="intro_subtitle">для тех, кто следит за своей «внутренней погодой»</string>
+    <string name="intro_button">Вперёд</string>
+
+    <!--  Universal  -->
+    <string name="text_delete_button">Удалить</string>
+    <string name="text_cancel_button">Отмена</string>
+    <string name="text_save_button">Сохранить</string>
+    <string name="text_confirm_button">Готово</string>
+
+    <!--  CalendarScreen  -->
+    <string name="cd_previous_button">Предыдущий месяц</string>
+    <string name="cd_next_button">Следующий месяц</string>
+
+    <string name="calendar_record_date">Ваша запись в этот день: %1$d %2$s</string>
+
+    <string name="dialog_delete_title">Удаление записи</string>
+    <string name="cd_dialog_delete">Внимание</string>
+    <string name="dialog_delete_subtitle">Отменить это действие будет невозможно</string>
+    <string name="dialog_delete_cancel">Нет, оставить</string>
+    <string name="dialog_delete_confirm">Да, удалить</string>
+
+    <!--  HomeScreen  -->
+    <string name="weather_clear">Ясно</string>
+    <string name="weather_partly_cloudy">Облачно</string>
+    <string name="weather_cloudy">Пасмурно</string>
+    <string name="weather_foggy">Туман</string>
+    <string name="weather_drizzle">Морось</string>
+    <string name="weather_rain">Дождь</string>
+    <string name="weather_snow">Снег</string>
+    <string name="weather_thunderstorm">Гроза</string>
+    <string name="weather_hail">Град</string>
+    <string name="weather_unknown">Неизвестно</string>
+    <string name="weather_no_data">Нет данных о погоде</string>
+
+    <string name="cd_select_mood">Выбрать настроение</string>
+    <string name="cd_edit_note">Редактировать запись</string>
+
+    <string name="action_change_mood">Изменить\nнастроение</string>
+    <string name="action_select_mood">Выбрать\nнастроение</string>
+    <string name="action_add_note">Добавить\nзапись</string>
+    <string name="action_change_note">Изменить\nзапись</string>
+    <string name="home_day_question">Как прошёл ваш день?</string>
+
+
+    <string name="mood_sheet_title">Выбрать настроение</string>
+    <string name="mood_excellent">Отлично</string>
+    <string name="mood_good">Хорошо</string>
+    <string name="mood_normal">Нормально</string>
+    <string name="mood_bad">Плохо</string>
+    <string name="mood_terrible">Ужасно</string>
+
+    <string name="add_note_to_day_title">Добавить заметку ко дню</string>
+    <string name="note_dialog_placeholder">Напишите как прошёл ваш день…</string>
+
+    <!--  ProfileScreen  -->
+    <string name="profile_total_entries_title">Всего\nОтметок</string>
+    <string name="profile_current_streak_title">Дней\nподряд</string>
+    <string name="profile_longest_streak_title">Лучшая\nсерия</string>
+    <string name="profile_average_mood_title">Среднее настроение</string>
+    <string name="profile_mood_counter_title">Счётчик настроения</string>
+    <string name="profile_yearly_stats_button">Статистика\nза год</string>
+    <string name="profile_settings_button">Настройки</string>
+    <string name="profile_insight_pattern">В %1$s у вас чаще всего «%2$s»</string>
+    <string name="profile_not_enough_data">Недостаточно данных</string>
+    <string name="profile_not_enough_data_stats">Недостаточно данных для статистики</string>
+    <string name="profile_fallback_mood">настроение</string>
+    <string name="not_enough_data">Недостаточно данных</string>
+    <string name="not_enough_data_description">
+    Сделайте отметки о настроении как минимум за 3 дня, чтобы увидеть статистику
+    </string>
+
+    <!--  YearlyScreen  -->
+    <string name="yearly_not_enough_data">Пока мало данных для этого года</string>
+    <string name="yearly_mood_entries_title">Отметок\nв этом\nгоду</string>
+    <string name="yearly_streak_title">Серия год</string>
+    <string name="yearly_notes_title">Записей в году</string>
+
+    <!--  SettingsScreen  -->
+    <string name="settings_title">Настройки</string>
+
+    <string name="cd_settings_back">Назад</string>
+
+    <string name="settings_notifications_title">Уведомления</string>
+    <string name="settings_notifications_enabled">Включены</string>
+    <string name="settings_notifications_disabled">Выключены</string>
+
+    <string name="settings_appearance_title">Оформление</string>
+    <string name="settings_appearance_system">Системная\nтема</string>
+    <string name="settings_appearance_light">Светлая\nтема</string>
+    <string name="settings_appearance_dark">Темная\nтема</string>
+
+    <string name="settings_palette_title">Палитра</string>
+    <string name="settings_palette_subtitle">Мягкая</string>
+
+    <string name="settings_corners_title">Закругление</string>
+    <string name="settings_corners_subtitle">Умеренное</string>
+
+    <string name="settings_moods_title">Настроения</string>
+    <string name="settings_moods_subtitle">Изменить</string>
+
+    <string name="settings_language_title">Язык</string>
+    <string name="settings_language_subtitle">Русский</string>
+
+    <string name="settings_about_title">О приложении</string>
+    <string name="settings_about_subtitle">Читать</string>
+
+    <string name="notification_settings_title">Уведомления</string>
+    <string name="hour_indicator">ч</string>
+    <string name="minute_indicator">м</string>
+    <string name="notification_settings_description">
+        Приложение будет отправлять напоминания только в указанное время, чтобы не отвлекать вас в неподходящие моменты.
+    </string>
+    <string name="notification_settings_enable">Включить уведомления</string>
+
+    <string name="select_app_language">Выберите язык\nприложения</string>
+
+    <!--  AppearanceScreen  -->
+    <string name="appearance_screen_title">Оформление</string>
+    <string name="settings_appearance_desc">
+        Включите темную тему или выберите автоматически подстраивается под тему, выбранную в настройках устройства.
+    </string>
+    <string name="appearance_theme_title">Тема</string>
+    <string name="appearance_cards_title">Карточки приложения</string>
+    <string name="appearance_cards_description">
+        Настройте степень закругления углов карточек, чтобы изменить внешний вид интерфейса.
+    </string>
+    <string name="appearance_corner_small">Резкое</string>
+    <string name="appearance_corner_medium">Умеренное</string>
+    <string name="appearance_corner_large">Мягкое</string>
+
+    <!--  EditMoodsScreen  -->
+    <string name="palette_classic">Классика</string>
+    <string name="palette_sunset_heat">Закатный жар</string>
+    <string name="palette_desert_wind">Пустынный ветер</string>
+    <string name="palette_dusty_roads">Пыльные дороги</string>
+    <string name="palette_dark_flame">Тёмное пламя</string>
+    <string name="palette_northern_chill">Северный холод</string>
+    <string name="palette_soft_meadow">Мягкий луг</string>
+    <string name="palette_fire_ember">Огненные угли</string>
+    <string name="palette_berry_night">Ягодная ночь</string>
+    <string name="palette_tropical_wave">Тропическая волна</string>
+    <string name="palette_summer_sky">Летнее небо</string>
+    <string name="palette_candy_pop">Яркие конфеты</string>
+    <string name="palette_cold_spark">Холодная искра</string>
+    <string name="palette_blue_heat">Синее тепло</string>
+
+    <string name="edit_moods_title">Изменить настроения</string>
+    <string name="edit_moods_moods_title">Настроения</string>
+    <string name="edit_moods_moods_description">
+        Измените название настроения или выберите новый значок, чтобы внешний вид соответствовал вашим предпочтениям.
+    </string>
+    <string name="edit_moods_palette_title">Палитра</string>
+    <string name="edit_moods_palette_description">
+        Настройте цветовую схему настроений под свой вкус.
+    </string>
+
+    <string name="edit_mood_change_name">Изменить название</string>
+    <string name="edit_mood_change_icon">Изменить значок</string>
+
+    <string name="replace_mood_title">Заменить настроение</string>
+    <string name="replace_mood_button">Заменить</string>
+    <string name="replace_mood_description">
+        Настроение “%1$s” будет заменено на выбранное настроение во всех записях
+    </string>
+    <string name="replace_mood_warning_prefix">"Внимание: "</string>
+    <string name="replace_mood_warning_text">это действие нельзя будет отменить</string>
+
+    <string name="cd_mood_replace">Заменить</string>
+    <string name="cd_mood_edit">Редактировать</string>
+
+    <!--  Notification  -->
+    <string name="notification_mood_title">Как прошёл ваш день?</string>
+    <string name="notification_mood_text">Уделите минуту, чтобы отметить своё настроение.</string>
+    <string name="notification_channel_name">Уведомления</string>
+
+    <string name="duration_picker_confirm_button">Продолжить</string>
+
+    <string-array name="calendar_day_labels">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
+
+
+</resources>

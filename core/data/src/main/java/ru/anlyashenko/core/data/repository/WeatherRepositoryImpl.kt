@@ -1,15 +1,20 @@
 package ru.anlyashenko.core.data.repository
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import ru.anlyashenko.core.data.utils.Result
 import ru.anlyashenko.core.model.Weather
 import ru.anlyashenko.network.WeatherApi
 import ru.anlyashenko.network.models.asExternalModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
 // todo: Result
 
-class WeatherRepositoryImpl(
+@Singleton
+class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi,
+    @param:IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : WeatherRepository {
 
     private var cachedWeather: Weather? = null

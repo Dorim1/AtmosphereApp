@@ -19,6 +19,7 @@ import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import javax.inject.Provider
 import javax.inject.Singleton
 
+// todo: -----
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {

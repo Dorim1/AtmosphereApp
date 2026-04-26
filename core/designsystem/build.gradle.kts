@@ -1,11 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
+
 android {
-    namespace = "ru.anlyashenko.features.home"
+    namespace = "ru.anlyashenko.core.designsystem"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -35,12 +33,16 @@ android {
 }
 
 dependencies {
-    implementation(libs.retrofit)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization)
-    implementation(libs.androidx.annotation) // todo: ?
-    implementation(libs.kotlinx.serialization.converter)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation(project(":core:model"))
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+
 }

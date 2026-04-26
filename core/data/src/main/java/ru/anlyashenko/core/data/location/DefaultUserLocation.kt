@@ -1,0 +1,24 @@
+package ru.anlyashenko.core.data.location
+
+import ru.anlyashenko.core.model.UserLocation
+import ru.anlyashenko.network.IpGeoApi
+import javax.inject.Inject
+
+class DefaultLocationTracker @Inject constructor(
+    private val ipGeoApi: IpGeoApi
+) : LocationTracker {
+
+    override suspend fun getCurrentLocation(): UserLocation? {
+        return try {
+            val response = ipGeoApi.getLocationByIp()
+            UserLocation(
+                latitude = response.latitude,
+                longitude = response.longitude,
+                city = response.city
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+}

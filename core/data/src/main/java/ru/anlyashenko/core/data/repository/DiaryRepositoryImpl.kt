@@ -11,9 +11,12 @@ import ru.anlyashenko.database.entity.DiaryEntryDBO
 import ru.anlyashenko.database.entity.asExternalModel
 import java.time.DayOfWeek
 import java.time.LocalDate
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.collections.find
 
-class DiaryRepositoryImpl (
+@Singleton
+class DiaryRepositoryImpl @Inject constructor (
     private val diaryDao: DiaryDao,
     private val moodDao: MoodDao,
 ) : DiaryRepository {

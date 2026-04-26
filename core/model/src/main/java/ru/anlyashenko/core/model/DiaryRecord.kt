@@ -7,6 +7,6 @@ data class DiaryRecord(
     val mood: Mood?,
     val note: String?
 ) {
-    val hasMood: Boolean get() = mood != null
-    val hasNote: Boolean get() = note != null
+    /*val hasMood: Boolean get() = mood != null
+    val hasNote: Boolean get() = note != null*/
 }
