@@ -34,7 +34,10 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation(project(":core:model")) // todo: Возможно перенести AppLanguage в этот модуль, чтобы не тащить :core:model
 }

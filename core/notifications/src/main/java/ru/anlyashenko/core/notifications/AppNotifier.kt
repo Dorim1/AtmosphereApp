@@ -20,7 +20,7 @@ class AppNotifier @Inject constructor(
 
         val channel = NotificationChannel(
             channelId,
-            context.getString(ru.anlyashenko.atmosphereapp.R.string.notification_channel_name),
+            context.getString(R.string.notification_channel_name),
             NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)

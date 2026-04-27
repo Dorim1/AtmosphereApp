@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.anlyashenko.features.home"
+    namespace = "ru.anlyashenko.feature.settings"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -35,8 +35,6 @@ android {
     }
 }
 
-
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -47,6 +45,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.material.icons) // todo: снести
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
