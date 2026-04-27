@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.receiver.notification
+package ru.anlyashenko.core.notifications
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,9 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
-import ru.anlyashenko.atmosphereapp.domain.model.AlarmItem
-import ru.anlyashenko.atmosphereapp.domain.notification.AlarmScheduler
-import ru.anlyashenko.atmosphereapp.receiver.NotificationReceiver
 import java.util.Calendar
 import javax.inject.Inject
 

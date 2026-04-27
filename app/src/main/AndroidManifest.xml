@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".receiver.NotificationReceiver" android:exported="false"/>
+<!--        <receiver android:name=".receiver.NotificationReceiver" android:exported="false"/>-->
     </application>
 
 </manifest>
