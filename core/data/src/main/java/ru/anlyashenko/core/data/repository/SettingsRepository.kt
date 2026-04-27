@@ -5,6 +5,14 @@ import ru.anlyashenko.core.model.CornerRadiusMode
 import ru.anlyashenko.core.model.ThemeMode
 
 interface SettingsRepository {
+
+    companion object {
+        const val DEFAULT_NOTIFICATION_HOUR = 20
+        const val DEFAULT_NOTIFICATION_MINUTE = 30
+        const val DEFAULT_NOTIFICATION_ENABLED = true
+        const val NOTIFICATION_ALARM_ID = 1001
+    }
+
     val notificationEnabledFlow: Flow<Boolean>
     val notificationHourFlow: Flow<Int>
     val notificationMinuteFlow: Flow<Int>

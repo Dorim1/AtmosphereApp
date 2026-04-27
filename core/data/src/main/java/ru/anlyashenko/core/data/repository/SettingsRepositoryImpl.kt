@@ -12,11 +12,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.anlyashenko.core.model.CornerRadiusMode
 import ru.anlyashenko.core.model.ThemeMode
+import javax.inject.Inject
+import javax.inject.Singleton
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-// todo: NotificationDefaults
-class SettingRepositoryImpl constructor(
+@Singleton
+class SettingRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) :SettingsRepository {
 
@@ -37,12 +39,12 @@ class SettingRepositoryImpl constructor(
 
     override val notificationHourFlow: Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[NOTIFICATION_HOUR] ?: NotificationDefaults.DEFAULT_HOUR
+            preferences[NOTIFICATION_HOUR] ?: SettingsRepository.DEFAULT_NOTIFICATION_HOUR
         }
 
     override val notificationMinuteFlow: Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[NOTIFICATION_MINUTE] ?: NotificationDefaults.DEFAULT_MINUTE
+            preferences[NOTIFICATION_MINUTE] ?: SettingsRepository.DEFAULT_NOTIFICATION_MINUTE
         }
     override val selectedPaletteFlow: Flow<Int> = dataStore.data
         .map { preferences ->

@@ -1,4 +1,4 @@
-package ru.anlyashenko.core.data.models
+package ru.anlyashenko.core.data.model
 
 import ru.anlyashenko.core.model.Mood
 import ru.anlyashenko.database.entity.MoodDBO

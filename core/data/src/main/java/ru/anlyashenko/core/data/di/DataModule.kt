@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.anlyashenko.core.data.repository.DiaryRepository
 import ru.anlyashenko.core.data.repository.DiaryRepositoryImpl
+import ru.anlyashenko.core.data.repository.SettingRepositoryImpl
 import ru.anlyashenko.core.data.repository.SettingsRepository
 import ru.anlyashenko.core.data.repository.WeatherRepository
 import ru.anlyashenko.core.data.repository.WeatherRepositoryImpl
@@ -27,10 +28,10 @@ interface DataModule {
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
 
-    /*@Binds
+    @Binds
     @Singleton
     fun bindSettingsRepository(
         settingsRepositoryImpl: SettingRepositoryImpl
-    ): SettingsRepository*/
+    ): SettingsRepository
 
 }

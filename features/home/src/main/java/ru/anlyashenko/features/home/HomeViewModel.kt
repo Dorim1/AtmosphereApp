@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import ru.anlyashenko.core.common.util.Result
 import ru.anlyashenko.core.data.location.LocationTracker
 import ru.anlyashenko.core.data.repository.DiaryRepository
+import ru.anlyashenko.core.data.repository.SettingsRepository
 import ru.anlyashenko.core.data.repository.WeatherRepository
 import ru.anlyashenko.core.designsystem.theme.MoodPalettes
 import ru.anlyashenko.core.presentation.mvi.BaseViewModel
@@ -19,6 +20,7 @@ class HomeViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val locationTracker: LocationTracker,
     private val diaryRepository: DiaryRepository,
+    private val settingsRepository: SettingsRepository,
 ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
 
     init {
@@ -43,17 +45,17 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             combine(
                 diaryRepository.getWeekRecordsFlow(),
-                diaryRepository.availableMoods
-            ) { domainRecords, domainMoods ->
-                // todo: SettingRepo брать палитру
-                val activePalette = MoodPalettes.getPaletteById(0)
-                val uiMoods = domainMoods.map { it.toUiModel(activePalette) }
+                diaryRepository.availableMoods,
+                settingsRepository.selectedPaletteFlow
+            ) { domainRecords, domainMoods, paletteId ->
 
+                val activePalette = MoodPalettes.getPaletteById(paletteId)
+                val uiMoods = domainMoods.map { it.toUiModel(activePalette) }
                 val uiRecords = domainRecords.map { record ->
                     record.toUiModel(uiMoods)
                 }
-
                 Pair(uiRecords, uiMoods)
+
             }.collect { (mappedRecord, mappedMoods) ->
                 setState {
                     copy(
@@ -64,11 +66,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-//    private fun updateTodayRecord() {
-//        val today = LocalDate.now()
-//        setState { copy(todayRecord = weekRecords.find { it.date == today }) }
-//    }
 
     override fun handleEvent(event: HomeEvent) {
         when (event) {

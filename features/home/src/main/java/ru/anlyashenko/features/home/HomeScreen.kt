@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp.feature.home.ui
+package ru.anlyashenko.features.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -36,17 +37,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.anlyashenko.atmosphereapp.R
-import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
-import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
+import ru.anlyashenko.core.designsystem.R
+import ru.anlyashenko.features.home.model.DiaryRecordUiModel
+import ru.anlyashenko.features.home.model.WeatherUiModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
-import androidx.compose.ui.platform.LocalLocale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
@@ -414,6 +413,3 @@ fun DayEntryCard(
         }
     }
 }
-
-
-

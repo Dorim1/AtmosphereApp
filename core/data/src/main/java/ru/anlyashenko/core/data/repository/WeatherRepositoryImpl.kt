@@ -10,7 +10,6 @@ import ru.anlyashenko.core.common.util.Result
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// todo: Result
 
 @Singleton
 class WeatherRepositoryImpl @Inject constructor(
@@ -39,7 +38,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
                 Result.Success(domainModel)
             } catch (e: Exception) {
-                Result.Error(Exception("Не удалось получить погоду", e))
+                Result.Error(Exception("Couldn't get the weather", e))
             }
         }
     }
