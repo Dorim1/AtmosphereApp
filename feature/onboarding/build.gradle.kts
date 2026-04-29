@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.anlyashenko.feature.profile"
+    namespace = "ru.anlyashenko.feature.onboarding"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -59,6 +59,7 @@ dependencies {
 
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+    implementation(project(":core:notifications"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:presentation"))
     implementation(project(":core:common"))
