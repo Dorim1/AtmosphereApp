@@ -47,7 +47,7 @@ object MoodIconManager {
 
     fun getKeyByRes(resId: Int): String {
         return icons.entries.find { it.value == resId }?.key
-            ?: "ic_mood_neutral"
+            ?: ICON_NEUTRAL
     }
 
     fun getAllIcons(): List<String> = icons.keys.toList()
