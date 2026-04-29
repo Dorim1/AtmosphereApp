@@ -4,16 +4,17 @@ import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.core.presentation.mvi.UiEffect
 import ru.anlyashenko.core.presentation.mvi.UiEvent
 import ru.anlyashenko.core.presentation.mvi.UiState
+import ru.anlyashenko.feature.calendar.model.CalendarRecordUiModel
 import java.time.LocalDate
 
 data class CalendarState(
     val selectedDate: LocalDate = LocalDate.now(),
-    val records: List<DiaryRecordUiModel> = emptyList()
+    val records: List<CalendarRecordUiModel> = emptyList()
 ) : UiState {
     val moodMap: Map<LocalDate, Color>
         get() = records
-            .filter { it.mood != null }
-            .associate { it.date to it.mood!!.color }
+            .filter { it.moodColor != null }
+            .associate { it.date to it.moodColor!! }
 
     val daysWithNotes: Set<LocalDate>
         get() = records
@@ -21,7 +22,7 @@ data class CalendarState(
             .map { it.date }
             .toSet()
 
-    val selectedRecord: DiaryRecordUiModel?
+    val selectedRecord: CalendarRecordUiModel?
         get() = records.find { it.date == selectedDate }
 }
 

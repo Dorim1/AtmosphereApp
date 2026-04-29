@@ -12,3 +12,6 @@ val CornerRadiusMode.dpValue: Dp
         CornerRadiusMode.MODERATE -> 20.dp
         CornerRadiusMode.BIG -> 30.dp
     }
+
+fun Int.toTwoDigits(): String = "%02d".format(this)
+fun Int.toThreeDigits(): String = "%03d".format(this)
