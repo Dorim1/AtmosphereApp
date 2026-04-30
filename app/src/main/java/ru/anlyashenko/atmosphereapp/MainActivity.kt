@@ -2,11 +2,11 @@ package ru.anlyashenko.atmosphereapp
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
@@ -19,7 +19,7 @@ import ru.anlyashenko.core.model.ThemeMode
 import ru.anlyashenko.core.presentation.language.LanguageManager
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity() {
                 themeMode = themeMode,
                 cornerRadiusMode = cornerRadius
             ) {
-                /*if (!viewModel.isLoading) {
-                    NavigationBar(startDestination = viewModel.startDestination)
-                }*/
-                AtmosphereApp()
+                val startKey = viewModel.startDestination
+                if (!viewModel.isLoading && startKey != null) {
+                    AtmosphereApp(startKey = startKey)
+                }
             }
         }
 

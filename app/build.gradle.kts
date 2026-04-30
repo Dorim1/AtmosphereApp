@@ -71,8 +71,10 @@ dependencies {
 
     // Feature модули
     implementation(project(":feature:settings"))
-    implementation(project(":feature:profile"))
     implementation(project(":feature:yearlystats"))
+
+    implementation(project(":feature:profile:api"))
+    implementation(project(":feature:profile:impl"))
 
     implementation(project(":feature:onboarding:api"))
     implementation(project(":feature:onboarding:impl"))
@@ -96,7 +98,6 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.foundation)
     ksp(libs.hilt.compiler)
-//    implementation(libs.androidx.navigation)
 
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)

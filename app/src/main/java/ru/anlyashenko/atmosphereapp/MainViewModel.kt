@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,8 @@ import ru.anlyashenko.atmosphereapp.core.navigation.Destination
 import ru.anlyashenko.core.data.repository.SettingsRepository
 import ru.anlyashenko.core.model.CornerRadiusMode
 import ru.anlyashenko.core.model.ThemeMode
+import ru.anlyashenko.feature.home.api.HomeNavKey
+import ru.anlyashenko.feature.onboarding.api.IntroNavKey
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +26,7 @@ class MainViewModel @Inject constructor(
     var isLoading by mutableStateOf(true)
         private set
 
-    var startDestination by mutableStateOf<Destination>(Destination.IntroRoute)
+    var startDestination by mutableStateOf<NavKey?>(null)
         private set
 
     val themeMode: StateFlow<ThemeMode> = settingsRepository.themeModeFlow.stateIn(
@@ -42,9 +45,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             settingsRepository.isOnboardingCompletedFlow.collect { isCompleted ->
                 startDestination = if (isCompleted) {
-                    Destination.HomeRoute
+                    HomeNavKey
                 } else {
-                    Destination.IntroRoute
+                    IntroNavKey
                 }
                 isLoading = false
             }

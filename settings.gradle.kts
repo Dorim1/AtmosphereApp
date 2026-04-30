@@ -36,9 +36,15 @@ include(":feature:settings")
 include(":feature:profile")
 include(":feature:yearlystats")
 include(":core:navigation")
+
 include(":feature:onboarding:api")
 include(":feature:onboarding:impl")
+
 include(":feature:home:api")
 include(":feature:home:impl")
+
 include(":feature:calendar:api")
 include(":feature:calendar:impl")
+
+include(":feature:profile:api")
+include(":feature:profile:impl")
