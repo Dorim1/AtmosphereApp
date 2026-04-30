@@ -91,6 +91,11 @@ dependencies {
     implementation(libs.androidx.foundation)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.navigation)
+
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewModel.navigation3)
+
     implementation(libs.androidx.compose.lifecycle)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)

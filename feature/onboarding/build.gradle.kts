@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
@@ -70,5 +71,6 @@ dependencies {
     implementation(project(":core:notifications"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:presentation"))
+    implementation(project(":core:navigation"))
     implementation(project(":core:common"))
 }

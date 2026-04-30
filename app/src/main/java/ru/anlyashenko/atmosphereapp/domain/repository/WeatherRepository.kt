@@ -1,7 +1,6 @@
 package ru.anlyashenko.atmosphereapp.domain.repository
 
 // todo: ----
-import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 
 /*
 interface WeatherRepository {

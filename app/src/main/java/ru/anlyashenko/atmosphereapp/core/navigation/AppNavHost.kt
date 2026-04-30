@@ -12,16 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.anlyashenko.atmosphereapp.feature.calendar.ui.CalendarRoute
-import ru.anlyashenko.atmosphereapp.feature.home.ui.HomeScreen
-import ru.anlyashenko.atmosphereapp.feature.onboarding.ui.IntroScreen
-import ru.anlyashenko.atmosphereapp.feature.profile.ui.ProfileRoute
-import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.AppearanceScreen
-import ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui.EditMoodsScreen
-import ru.anlyashenko.atmosphereapp.feature.setting_notification.NotificationSettingsRoute
-import ru.anlyashenko.atmosphereapp.feature.setting_notification.NotificationSettingsScreen
-import ru.anlyashenko.atmosphereapp.feature.settings.ui.SettingsScreen
-import ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui.YearlyStatsScreen
+import ru.anlyashenko.feature.calendar.CalendarRoute
+import ru.anlyashenko.feature.onboarding.IntroScreen
+import ru.anlyashenko.feature.profile.ProfileRoute
+import ru.anlyashenko.feature.settings.appearance.AppearanceScreen
+import ru.anlyashenko.feature.settings.main.SettingsScreen
+import ru.anlyashenko.feature.settings.moods.EditMoodsScreen
+import ru.anlyashenko.feature.settings.notifications.NotificationSettingsRoute
+import ru.anlyashenko.feature.yearlystats.YearlyStatsScreen
+import ru.anlyashenko.features.home.HomeScreen
 
 
 @Composable

@@ -45,7 +45,7 @@ import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
