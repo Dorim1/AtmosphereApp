@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
+// todo: ----
+/*
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -61,4 +63,4 @@ class EditMoodsViewModel @Inject constructor(
             settingsRepository.saveSelectedPalette(paletteId)
         }
     }
-}
+}*/

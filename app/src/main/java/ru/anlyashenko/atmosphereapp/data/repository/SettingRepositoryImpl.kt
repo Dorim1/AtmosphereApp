@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.repository
+// todo: ----
 
+/*
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -15,7 +17,6 @@ import ru.anlyashenko.atmosphereapp.receiver.notification.NotificationDefaults
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// todo: ----
 @Singleton
 class SettingRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
@@ -96,4 +97,4 @@ class SettingRepositoryImpl @Inject constructor(
             preferences[CORNER_RADIUS] = mode.name
         }
     }
-}
+}*/

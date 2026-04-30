@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.onboarding.ui
 
+// todo: ----
+/*
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
 import ru.anlyashenko.atmosphereapp.core.mvi.UiState
@@ -12,4 +14,4 @@ sealed interface IntroEvent : UiEvent {
 
 sealed interface IntroEffect : UiEffect {
     object NavigateToHome : IntroEffect
-}
+}*/

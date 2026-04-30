@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
+// todo: ----
+/*
 
 import android.Manifest
 import android.app.Activity
@@ -250,3 +252,4 @@ fun SettingsItemCard(
     }
 }
 
+*/

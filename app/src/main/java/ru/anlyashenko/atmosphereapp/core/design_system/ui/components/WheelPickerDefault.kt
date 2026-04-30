@@ -1,5 +1,8 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
 
+// todo: ----
+/*
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -44,9 +47,11 @@ fun WheelPickerFocusVertical(
     }
 }
 
+*/
 /**
  * The default implementation of focus view in horizontal.
- */
+ *//*
+
 @Composable
 fun WheelPickerFocusHorizontal(
     modifier: Modifier = Modifier,
@@ -73,9 +78,11 @@ fun WheelPickerFocusHorizontal(
     }
 }
 
+*/
 /**
  * Default divider color.
- */
+ *//*
+
 private val DefaultDividerColor: Color
     @Composable
     get() {
@@ -83,9 +90,11 @@ private val DefaultDividerColor: Color
         return color.copy(alpha = 0.2f)
     }
 
+*/
 /**
  * Default display.
- */
+ *//*
+
 @Composable
 fun WheelPickerDisplayScope.DefaultWheelPickerDisplay(
     index: Int,
@@ -102,4 +111,4 @@ fun WheelPickerDisplayScope.DefaultWheelPickerDisplay(
     ) {
         Content(index)
     }
-}
+}*/

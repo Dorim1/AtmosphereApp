@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.calendar.ui
+// todo: ----
+/*
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,4 +43,4 @@ class CalendarViewModel @Inject constructor(
             }
         }
     }
-}
+}*/

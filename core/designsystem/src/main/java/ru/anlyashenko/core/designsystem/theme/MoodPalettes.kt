@@ -25,6 +25,7 @@ object MoodPalettes {
                 Color(0xFFD50000)
             )
         ),
+        // TODO: добавить палитру см. Figma
         PaletteModel(
             id = 1,
             nameRes = R.string.palette_sunset_heat,

@@ -37,7 +37,6 @@ class ProfileViewModel @Inject constructor(
 
     private fun observeStatistics() {
         viewModelScope.launch {
-            // Комбинируем сразу 3 потока!
             combine(
                 diaryRepository.getAllRecordsFlow(),
                 diaryRepository.availableMoods,

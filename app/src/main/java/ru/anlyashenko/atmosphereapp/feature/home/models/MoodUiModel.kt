@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.home.models
 
-import androidx.annotation.DrawableRes
+// todo: ----
+/*import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
@@ -19,4 +20,4 @@ data class MoodUiModel(
         } else {
             UiText.DynamicString(customLabel)
         }
-}
+}*/

@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui
+// todo: ----
+/*
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,4 +46,4 @@ class YearlyStatsViewModel @Inject constructor(
         }
     }
 
-}
+}*/

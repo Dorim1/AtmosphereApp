@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
 
+// todo: ----
+/*
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -52,12 +54,14 @@ fun AddNoteDialog(
         focusRequester.requestFocus()
     }
 
-   /* val animatedBorderColor by animateColorAsState(
+   */
+/* val animatedBorderColor by animateColorAsState(
         targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
         animationSpec = tween(durationMillis = 300),
         label = "BorderColorAnimation"
-    )*/
+    )*//*
+
 
     val animatedCounterColor by animateColorAsState(
         targetValue = if (isLimitReached) MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
@@ -189,4 +193,4 @@ fun AddNoteDialog(
             }
         }
     }
-}
+}*/

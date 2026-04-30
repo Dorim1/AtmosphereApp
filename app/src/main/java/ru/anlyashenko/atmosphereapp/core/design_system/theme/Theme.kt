@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.theme
+// todo: ----
+/*
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,7 +31,8 @@ private val LightColorScheme = lightColorScheme(
     error = WarningRed,
     onError = TextOnError
 
-    /* Other default colors to override
+    */
+/* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -37,7 +40,8 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
+    *//*
+
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -79,10 +83,12 @@ fun AtmosphereAppTheme(
     }
 
     val colorScheme = when {
-        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        */
+/*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }*/
+        }*//*
+
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
@@ -101,4 +107,4 @@ fun AtmosphereAppTheme(
         typography = Typography,
         content = content
     )
-}
+}*/

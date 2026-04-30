@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.home.models
 
+// todo: ----
+/*
 import androidx.annotation.StringRes
 
 // todo: ----
@@ -15,4 +17,4 @@ data class HourlyWeatherUiModel(
     val time: String,
     val temperature: String,
     val iconResId: Int
-)
+)*/

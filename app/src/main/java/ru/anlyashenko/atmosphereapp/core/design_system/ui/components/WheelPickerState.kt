@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
+// todo: ----
+/*
 
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.lazy.LazyListItemInfo
@@ -46,30 +48,38 @@ class WheelPickerState(
         }
     private var _pendingIndexContinuation: Continuation<Unit>? = null
 
-    /**
+    */
+/**
      * Index of picker when it is idle, -1 means that there is no data.
      *
      * Note that this property is observable and if you use it in the composable function
      * it will be recomposed on every change.
-     */
+     *//*
+
     val currentIndex: Int get() = _currentIndex
 
-    /**
+    */
+/**
      * Index of picker when it is idle or drag but not fling, -1 means that there is no data.
      *
      * Note that this property is observable and if you use it in the composable function
      * it will be recomposed on every change.
-     */
+     *//*
+
     val currentIndexSnapshot: Int get() = _currentIndexSnapshot
 
-    /**
+    */
+/**
      * [LazyListState.interactionSource]
-     */
+     *//*
+
     val interactionSource: InteractionSource get() = lazyListState.interactionSource
 
-    /**
+    */
+/**
      * [LazyListState.isScrollInProgress]
-     */
+     *//*
+
     val isScrollInProgress: Boolean get() = lazyListState.isScrollInProgress
 
     suspend fun animateScrollToIndex(index: Int) {
@@ -153,9 +163,11 @@ class WheelPickerState(
         }
     }
 
-    /**
+    */
+/**
      * The item closest to the viewport start.
-     */
+     *//*
+
     private fun mostStartItemInfo(): LazyListItemInfo? {
         if (_count <= 0) return null
 
@@ -188,4 +200,4 @@ class WheelPickerState(
             }
         )
     }
-}
+}*/

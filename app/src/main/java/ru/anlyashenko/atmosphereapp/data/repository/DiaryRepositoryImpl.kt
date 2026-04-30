@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.repository
 
+// todo: ----
+/*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -19,7 +21,6 @@ import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// todo: ----
 @Singleton
 class DiaryRepositoryImpl @Inject constructor(
     private val diaryDao: DiaryDao,
@@ -122,4 +123,4 @@ class DiaryRepositoryImpl @Inject constructor(
     override suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int) {
         diaryDao.replaceMoodInAllEntries(oldMoodId, targetMoodId)
     }
-}
+}*/

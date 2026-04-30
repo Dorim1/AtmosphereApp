@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.calendar.ui
+// todo: ----
+/*
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -123,4 +125,4 @@ fun DeleteConfirmationDialog(
             }
         }
     }
-}
+}*/

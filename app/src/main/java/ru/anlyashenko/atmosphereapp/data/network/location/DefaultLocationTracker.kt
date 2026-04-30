@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.network.location
+// todo: ----
 
-import ru.anlyashenko.atmosphereapp.data.network.IpGeoApi
+/*import ru.anlyashenko.atmosphereapp.data.network.IpGeoApi
 import ru.anlyashenko.atmosphereapp.domain.location.LocationTracker
 import ru.anlyashenko.atmosphereapp.domain.model.UserLocation
 import javax.inject.Inject
@@ -22,5 +23,5 @@ class DefaultLocationTracker @Inject constructor(
             null
         }
     }
-}
+}*/
 

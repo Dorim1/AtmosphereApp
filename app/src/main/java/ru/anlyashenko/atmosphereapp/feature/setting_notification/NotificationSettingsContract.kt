@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_notification
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
@@ -29,4 +31,4 @@ sealed interface NotificationSettingsEffect : UiEffect {
     object NavigateBack : NotificationSettingsEffect
     object RequestNotificationPermission : NotificationSettingsEffect
     object OpenAppSettings : NotificationSettingsEffect
-}
+}*/

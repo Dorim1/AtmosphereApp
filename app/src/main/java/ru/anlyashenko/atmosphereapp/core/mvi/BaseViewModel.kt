@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.mvi
 
-import android.util.Log
+// todo: ----
+/*import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -64,4 +65,4 @@ abstract class BaseViewModel<Event: UiEvent, State: UiState, Effect: UiEffect> :
         Log.e("ViewModelError", "Error handling event", error)
     }
 
-}
+}*/

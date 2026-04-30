@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.onboarding.ui
-
+// todo: ----
+/*
 import android.Manifest
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -140,4 +141,5 @@ fun FooterSection(onGetInClick: (Boolean) -> Unit) {
     }
 }
 
+*/
 

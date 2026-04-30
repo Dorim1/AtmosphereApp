@@ -78,7 +78,7 @@ fun HeaderSection() {
         modifier = Modifier.fillMaxWidth()
     ) {
         Image(
-            painter = painterResource(R.drawable.background_photo),
+            painter = painterResource(ru.anlyashenko.feature.onboarding.R.drawable.background_photo),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

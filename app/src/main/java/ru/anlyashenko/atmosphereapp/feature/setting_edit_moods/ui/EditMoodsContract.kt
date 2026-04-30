@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_edit_moods.ui
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.core.utils.MoodPalettes
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
@@ -24,3 +26,4 @@ sealed interface EditMoodsEvent : UiEvent {
 sealed interface EditMoodsEffect : UiEffect {
     object NavigateBack : EditMoodsEffect
 }
+*/

@@ -1,6 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.home.mapper
-
-import androidx.compose.ui.graphics.Color
+// todo: ----
+/*import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.MoodDBO
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import androidx.core.graphics.toColorInt
@@ -25,6 +25,6 @@ fun MoodDBO.toUiModel(): MoodUiModel {
         iconRes = MoodIconManager.getIconRes(this.iconKey),
         color = Color(colorHex.toColorInt())
     )
-}
+}*/
 
 

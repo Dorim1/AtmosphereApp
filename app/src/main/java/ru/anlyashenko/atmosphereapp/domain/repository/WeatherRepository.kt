@@ -1,9 +1,9 @@
 package ru.anlyashenko.atmosphereapp.domain.repository
 
-import ru.anlyashenko.atmosphereapp.core.utils.Result
+// todo: ----
 import ru.anlyashenko.atmosphereapp.feature.home.models.WeatherUiModel
 
-// todo: ----
+/*
 interface WeatherRepository {
     suspend fun getWeather(lat: Double, lon: Double, cityName: String): Result<WeatherUiModel>
-}
+}*/

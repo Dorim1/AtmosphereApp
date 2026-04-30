@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.utils
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.R
 
@@ -52,4 +54,4 @@ object MoodIconManager {
 
     fun getAllIcons(): List<String> = icons.keys.toList()
     fun getAllIconRes(): List<Int> = icons.values.toList()
-}
+}*/

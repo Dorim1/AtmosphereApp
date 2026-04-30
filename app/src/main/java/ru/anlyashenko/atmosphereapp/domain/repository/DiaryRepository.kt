@@ -1,10 +1,11 @@
 package ru.anlyashenko.atmosphereapp.domain.repository
 
+// todo: -----
+/*
 import kotlinx.coroutines.flow.Flow
 import ru.anlyashenko.atmosphereapp.feature.home.models.DiaryRecordUiModel
 import ru.anlyashenko.atmosphereapp.feature.home.models.MoodUiModel
 import java.time.LocalDate
-// todo: -----
 interface DiaryRepository {
     val availableMoods: Flow<List<MoodUiModel>>
     fun getWeekRecordsFlow(): Flow<List<DiaryRecordUiModel>>
@@ -14,4 +15,4 @@ interface DiaryRepository {
     suspend fun updateMoodDetails(moodId: Int, customName: String, iconRes: Int)
     suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int)
 
-}
+}*/

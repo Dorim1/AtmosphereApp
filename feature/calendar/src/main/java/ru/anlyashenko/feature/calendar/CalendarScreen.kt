@@ -63,11 +63,11 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.anlyashenko.core.designsystem.R
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
+import ru.anlyashenko.core.designsystem.R
 import androidx.compose.ui.platform.LocalLocale
 import ru.anlyashenko.core.designsystem.component.DragHandle
 
@@ -273,7 +273,7 @@ fun CalendarPagerCard(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.ChevronLeft,
+                        painter = painterResource(R.drawable.ic_chevron_backward),
                         contentDescription = stringResource(R.string.cd_previous_button),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -289,7 +289,7 @@ fun CalendarPagerCard(
                     enabled = pagerState.currentPage < startPage
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.ChevronRight,
+                        painter = painterResource(R.drawable.ic_chevron_forward),
                         contentDescription = stringResource(R.string.cd_next_button),
                         tint = if (pagerState.currentPage < startPage) MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)

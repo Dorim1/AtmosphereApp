@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.di
 
-import dagger.Module
+// todo: ----
+/*import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -33,4 +34,4 @@ object NetworkModule {
             json = Json { ignoreUnknownKeys = true }
         )
     }
-}
+}*/

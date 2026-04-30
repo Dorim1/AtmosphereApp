@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.profile.ui
+// todo: ----
+/*
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
@@ -187,4 +189,4 @@ class ProfileViewModel @Inject constructor(
             ProfileEvent.OnYearlyStatsClick -> setEffect { NavigateToYearlyStats }
         }
     }
-}
+}*/

@@ -1,4 +1,5 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
+/*
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -327,4 +328,4 @@ private fun PreviewHourNumberPicker(
         onConfirmClick = { time = it },
         confirmButtonTitle = null
     )
-}
+}*/

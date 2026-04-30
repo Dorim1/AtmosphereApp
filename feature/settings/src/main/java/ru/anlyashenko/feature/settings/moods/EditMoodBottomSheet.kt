@@ -46,11 +46,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.core.designsystem.icons.MoodIconManager
+import ru.anlyashenko.feature.settings.model.SettingsMoodUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditMoodBottomSheet(
-    mood: MoodUiModel,
+    mood: SettingsMoodUiModel,
     onDismissRequest: () -> Unit,
     onSave: (newName: String, newIconRes: Int) -> Unit
 ) {

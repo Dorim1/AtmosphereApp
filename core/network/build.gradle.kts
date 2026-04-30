@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization)
-    implementation(libs.androidx.annotation)
     implementation(libs.kotlinx.serialization.converter)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

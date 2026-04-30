@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
@@ -38,3 +40,4 @@ sealed interface HomeEvent : UiEvent {
 sealed interface HomeEffect : UiEffect {
     data class ShowSnackbar(val message: String) : HomeEffect
 }
+*/

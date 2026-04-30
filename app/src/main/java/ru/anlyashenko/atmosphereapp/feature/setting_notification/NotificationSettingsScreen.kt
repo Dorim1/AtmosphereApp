@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_notification
+// todo: ----
+/*
 
 import android.Manifest
 import android.app.Activity
@@ -330,3 +332,4 @@ fun NotificationSettingsScreen(
         Spacer(Modifier.height(34.dp))
     }
 }
+*/

@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui.components
-
+// todo: ----
+/*
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDecay
@@ -352,3 +353,4 @@ fun verySlowScrollFlingBehavior(): FlingBehavior {
 
 
 
+*/

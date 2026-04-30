@@ -1,13 +1,14 @@
 package ru.anlyashenko.atmosphereapp.data.network.models
+// todo: ----
+/*
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// todo: ----
 @Serializable
 data class WeatherResponseDTO(
     @SerialName("current_weather")
     val currentWeather: CurrentWeatherDTO,
     @SerialName("hourly")
     val hourly: HourlyDTO
-)
+)*/

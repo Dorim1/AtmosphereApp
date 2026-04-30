@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui
+// todo: ----
+/*
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -501,3 +503,4 @@ fun SmallStatCard(
         }
     }
 }
+*/

@@ -1,9 +1,10 @@
 package ru.anlyashenko.atmosphereapp.data.network.models
 
+// todo: ----
+/*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// todo: ----
 @Serializable
 data class HourlyDTO (
     @SerialName("time")
@@ -12,4 +13,4 @@ data class HourlyDTO (
     val temperature: List<Double>,
     @SerialName("weathercode")
     val weatherCode: List<Int>
-)
+)*/

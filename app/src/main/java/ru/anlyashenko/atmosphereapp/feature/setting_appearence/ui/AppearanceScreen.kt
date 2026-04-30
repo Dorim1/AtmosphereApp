@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui
+// todo: ----
+/*
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -352,4 +354,4 @@ fun CornerRadiusCard(
             }
         }
     }
-}
+}*/

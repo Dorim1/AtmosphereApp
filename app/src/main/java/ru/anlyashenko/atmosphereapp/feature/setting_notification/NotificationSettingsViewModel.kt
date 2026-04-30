@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_notification
+// todo: ----
+/*
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -101,4 +103,4 @@ class NotificationSettingsViewModel @Inject constructor(
         }
     }
 
-}
+}*/

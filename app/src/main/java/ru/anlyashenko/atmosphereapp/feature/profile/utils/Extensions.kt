@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.profile.utils
-
+// todo: ----
+/*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
@@ -17,4 +18,4 @@ fun UiText.asString(): String {
             stringResource(resId, *resolvedArgs)
         }
     }
-}
+}*/

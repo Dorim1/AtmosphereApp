@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEffect
 import ru.anlyashenko.atmosphereapp.core.mvi.UiEvent
@@ -17,4 +19,4 @@ sealed interface AppearanceEvent : UiEvent {
 
 sealed interface AppearanceEffect : UiEffect {
     data object NavigateToBack : AppearanceEffect
-}
+}*/

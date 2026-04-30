@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.utils
-
+// todo: ----
+/*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import ru.anlyashenko.atmosphereapp.feature.settings.ui.AppLanguage
@@ -39,4 +40,4 @@ object LanguageManager {
             else -> AppLanguage.ENGLISH
         }
     }
-}
+}*/

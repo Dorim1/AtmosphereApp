@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.utils
 
+// todo: ----
+/*
 object TimeUtil {
     fun convertTimeToDuration(time: String): Int {
         val t = time.substringBeforeLast(':').split(':').map { it.toInt() }
@@ -10,4 +12,4 @@ object TimeUtil {
         return seconds / 3600 to (seconds / 60) % 60
     }
 
-}
+}*/

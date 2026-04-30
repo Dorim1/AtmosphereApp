@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.profile.ui
 
+// todo: ----
+/*
 import androidx.compose.ui.graphics.Color
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
@@ -31,4 +33,4 @@ sealed interface ProfileEvent : UiEvent {
 sealed interface ProfileEffect : UiEffect {
     object NavigateToYearlyStats : ProfileEffect
     object NavigateToSettings : ProfileEffect
-}
+}*/

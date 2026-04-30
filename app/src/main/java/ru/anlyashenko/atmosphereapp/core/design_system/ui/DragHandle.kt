@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui
 
+// todo: ----
+/*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,4 +29,4 @@ fun DragHandle() {
                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
         )
     }
-}
+}*/

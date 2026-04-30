@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui
-
+// todo: ----
+/*
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
@@ -12,13 +13,15 @@ sealed class UiText {
         vararg val args: Any
     ) : UiText()
 
-    /*@Composable
+    */
+/*@Composable
     fun asString(): String {
         return when (this) {
             is DynamicString -> value
             is StringResource -> stringResource(resId, *args)
         }
-    }*/
+    }*//*
+
 
     @Composable
     fun asString(): String {
@@ -34,12 +37,14 @@ sealed class UiText {
         }
     }
 
-    /*fun asString(context: Context): String {
+    */
+/*fun asString(context: Context): String {
         return when (this) {
             is DynamicString -> value
             is StringResource -> context.getString(resId, *args)
         }
-    }*/
+    }*//*
+
 
     fun asString(context: Context): String {
         return when (this) {
@@ -53,4 +58,4 @@ sealed class UiText {
             }
         }
     }
-}
+}*/

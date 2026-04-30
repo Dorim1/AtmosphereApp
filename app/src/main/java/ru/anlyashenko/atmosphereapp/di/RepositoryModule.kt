@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.di
 
+// todo: ----
+/*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,4 +43,4 @@ interface RepositoryModule {
     fun bindAlarmScheduler(
         alarmSchedulerImpl: NotificationAlarmScheduler
     ): AlarmScheduler
-}
+}*/

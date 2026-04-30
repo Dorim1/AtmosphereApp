@@ -1,6 +1,6 @@
 [versions]
 agp = "9.0.1"
-annotation = "1.10.0"
+#annotation = "1.10.0"
 coreKtx = "1.18.0"
 jakartaInjectApi = "2.0.1"
 junit = "4.13.2"
@@ -26,7 +26,7 @@ material = "1.13.0"
 androidLifecycle = "2.10.0"
 
 [libraries]
-androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+#androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version.ref = "jakartaInjectApi" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -59,14 +59,13 @@ androidx-compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-r
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+#material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
-
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "serializationConverter" }

@@ -58,6 +58,25 @@ ksp {
 }
 
 dependencies {
+    // Core модули
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:database"))
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:model"))
+    implementation(project(":core:navigation"))
+    implementation(project(":core:network"))
+    implementation(project(":core:notifications"))
+    implementation(project(":core:presentation"))
+
+    // Feature модули
+    implementation(project(":feature:calendar"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:yearlystats"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -77,7 +96,6 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.kotlinx.serialization)
-    implementation(libs.material.icons)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.converter)

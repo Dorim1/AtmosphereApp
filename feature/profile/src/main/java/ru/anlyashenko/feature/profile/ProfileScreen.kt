@@ -187,7 +187,7 @@ fun TotalEntriesCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     modifier = Modifier.size(48.dp),
-                    imageVector = Icons.Rounded.Check,
+                    painter = painterResource(R.drawable.ic_check),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
                 )
@@ -746,7 +746,7 @@ fun SettingsCard(
             Icon(
                 modifier = Modifier.size(96.dp),
                 tint = MaterialTheme.colorScheme.onPrimary,
-                imageVector = Icons.Rounded.Settings,
+                painter = painterResource(R.drawable.ic_settings),
                 contentDescription = null,
             )
             Spacer(Modifier.width(44.dp))

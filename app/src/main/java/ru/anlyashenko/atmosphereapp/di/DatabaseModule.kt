@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp.di
 
-import android.content.Context
+// todo: -----
+/*import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
@@ -19,7 +20,6 @@ import ru.anlyashenko.atmosphereapp.data.local.database.dao.MoodDao
 import javax.inject.Provider
 import javax.inject.Singleton
 
-// todo: -----
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -57,4 +57,4 @@ object DatabaseModule {
     fun provideDiaryDao(database: AppDatabase): DiaryDao {
         return database.diaryDao()
     }
-}
+}*/

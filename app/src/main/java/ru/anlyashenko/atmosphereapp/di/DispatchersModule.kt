@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.di
-
+// todo: ----
+/*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +44,4 @@ object DispatchersModule {
     @Provides
     @UnconfinedDispatcher
     fun provideUnconfinedDispatcher(): CoroutineDispatcher = Dispatchers.Unconfined
-}
+}*/

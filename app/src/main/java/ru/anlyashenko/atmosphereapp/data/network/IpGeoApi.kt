@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.network
 
+// todo: ----
+/*
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -9,7 +11,6 @@ import retrofit2.create
 import retrofit2.http.GET
 import ru.anlyashenko.atmosphereapp.data.network.models.IpGeoResponseDTO
 
-// todo: ----
 interface IpGeoApi {
     @GET("json/")
     suspend fun getLocationByIp(): IpGeoResponseDTO
@@ -35,4 +36,4 @@ private fun retrofit(
         .run { if (okHttpClient != null) client(okHttpClient) else this }
         .build()
 
-}
+}*/

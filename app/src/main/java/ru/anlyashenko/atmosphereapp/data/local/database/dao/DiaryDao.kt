@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.local.database.dao
+// todo: ----
 
+/*
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import ru.anlyashenko.atmosphereapp.data.local.database.entity.DiaryEntryDBO
 import java.time.LocalDate
 
-// todo: ----
 @Dao
 interface DiaryDao {
     // Сохранение/обновление записи, если дата совпадает
@@ -34,4 +35,4 @@ interface DiaryDao {
 
     @Delete
     suspend fun delete(entry: DiaryEntryDBO)
-}
+}*/

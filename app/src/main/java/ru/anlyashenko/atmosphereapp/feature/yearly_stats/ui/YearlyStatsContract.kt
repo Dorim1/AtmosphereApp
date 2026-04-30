@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.feature.yearly_stats.ui
 
+// todo: ----
+/*
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -21,4 +23,4 @@ sealed class YearlyStatsEvent : UiEvent {
 
 sealed class YearlyStatsEffect : UiEffect {
     object NavigateBack : YearlyStatsEffect()
-}
+}*/

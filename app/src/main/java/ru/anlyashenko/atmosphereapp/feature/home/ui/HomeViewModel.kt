@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.home.ui
+// todo: ----
+/*
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -93,4 +95,4 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-}
+}*/

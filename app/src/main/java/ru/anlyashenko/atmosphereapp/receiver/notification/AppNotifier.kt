@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.receiver.notification
-
+// todo: ----
+/*
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -49,4 +50,4 @@ class AppNotifier @Inject constructor(
 
         notificationManager.notify(NotificationDefaults.ALARM_ID, notification)
     }
-}
+}*/

@@ -1,8 +1,9 @@
 package ru.anlyashenko.atmosphereapp.feature.home.models
 
+// todo: ----
 import java.time.LocalDate
 
-// todo: ----
+/*
 data class DiaryRecordUiModel(
     val date: LocalDate,
     val mood: MoodUiModel? = null,
@@ -11,3 +12,4 @@ data class DiaryRecordUiModel(
     val hasMood: Boolean get() = mood != null
     val hasNote: Boolean get() = note != null
 }
+*/

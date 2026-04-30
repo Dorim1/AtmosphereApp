@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.data.local.database
 
+// todo: ----
+/*
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -64,4 +66,4 @@ class DatabaseCallback(
         )
         moodDaoProvider.get().insertMoods(defaultMoods)
     }
-}
+}*/

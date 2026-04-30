@@ -1,5 +1,8 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.theme
 
+// todo: ----
+/*
+
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -78,3 +81,4 @@ val TextOnError = Color(0xFFF5F5F5)
 
 
 
+*/

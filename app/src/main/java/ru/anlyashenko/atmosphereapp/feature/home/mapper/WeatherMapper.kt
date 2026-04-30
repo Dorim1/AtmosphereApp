@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.home.mapper
-
+// todo ----
+/*
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.data.network.models.WeatherResponseDTO
 import ru.anlyashenko.atmosphereapp.feature.home.models.HourlyWeatherUiModel
@@ -61,4 +62,4 @@ fun WeatherResponseDTO.toUiModel(cityName: String): WeatherUiModel {
         iconResId = icon,
         hourlyForecast = hourlyList
     )
-}
+}*/

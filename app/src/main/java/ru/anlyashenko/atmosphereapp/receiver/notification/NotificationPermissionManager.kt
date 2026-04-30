@@ -1,5 +1,7 @@
 package ru.anlyashenko.atmosphereapp.receiver.notification
 
+// todo: ----
+/*
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -42,4 +44,4 @@ class NotificationPermissionManager @Inject constructor(
         }
         activity.startActivity(intent)
     }
-}
+}*/

@@ -1,4 +1,6 @@
 package ru.anlyashenko.atmosphereapp.feature.settings.ui
+// todo: ----
+/*
 
 import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.atmosphereapp.core.design_system.ui.UiText
@@ -46,4 +48,4 @@ sealed interface SettingsEffect : UiEffect {
     object NavigateToAppearance : SettingsEffect
     object NavigateToEditMoods : SettingsEffect
     object NavigateToNotificationSettings : SettingsEffect
-}
+}*/
