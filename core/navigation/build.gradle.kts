@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -30,6 +31,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
@@ -37,10 +42,10 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(libs.androidx.navigation)
+//    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.compose.lifecycle)
 
-    implementation(libs.androidx.navigation3.ui)
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.lifecycle.viewModel.navigation3)
-    implementation(libs.androidx.compose.material3.adaptive.navigation3)
+    api(libs.androidx.navigation3.ui)
+    api(libs.androidx.navigation3.runtime)
+    api(libs.androidx.lifecycle.viewModel.navigation3)
 }

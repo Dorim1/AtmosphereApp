@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar
 import ru.anlyashenko.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.core.model.ThemeMode
 import ru.anlyashenko.core.presentation.language.LanguageManager
@@ -73,9 +72,10 @@ class MainActivity : AppCompatActivity() {
                 themeMode = themeMode,
                 cornerRadiusMode = cornerRadius
             ) {
-                if (!viewModel.isLoading) {
+                /*if (!viewModel.isLoading) {
                     NavigationBar(startDestination = viewModel.startDestination)
-                }
+                }*/
+                AtmosphereApp()
             }
         }
 

@@ -57,7 +57,6 @@ import ru.anlyashenko.feature.profile.model.MoodCountItem
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.collections.forEach
-import androidx.compose.ui.platform.LocalLocale
 
 @Composable
 fun ProfileRoute(
@@ -379,7 +378,7 @@ fun MoodBarChart(
                 data.forEach { stat ->
                     val targetHeight = stat.level / 5f
                     val dayName =
-                        stat.dayOfWeek.getDisplayName(TextStyle.SHORT, LocalLocale.current.platformLocale)
+                        stat.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                     val animatedHeight by animateFloatAsState(
                         targetValue = if (startAnimation) targetHeight else 0f,
                         animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),

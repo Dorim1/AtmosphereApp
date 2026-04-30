@@ -1,4 +1,5 @@
 package ru.anlyashenko.atmosphereapp.core.design_system.ui
+/*
 
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -103,4 +104,5 @@ fun NavigationBar(modifier: Modifier = Modifier, startDestination: Destination) 
         )
     }
 }
+*/
 

@@ -70,12 +70,18 @@ dependencies {
     implementation(project(":core:presentation"))
 
     // Feature модули
-    implementation(project(":feature:calendar"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:profile"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:profile"))
     implementation(project(":feature:yearlystats"))
+
+    implementation(project(":feature:onboarding:api"))
+    implementation(project(":feature:onboarding:impl"))
+
+    implementation(project(":feature:home:api"))
+    implementation(project(":feature:home:impl"))
+
+    implementation(project(":feature:calendar:api"))
+    implementation(project(":feature:calendar:impl"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -90,7 +96,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.foundation)
     ksp(libs.hilt.compiler)
-    implementation(libs.androidx.navigation)
+//    implementation(libs.androidx.navigation)
 
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)

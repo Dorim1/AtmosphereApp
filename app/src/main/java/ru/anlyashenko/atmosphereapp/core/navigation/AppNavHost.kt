@@ -1,19 +1,17 @@
 package ru.anlyashenko.atmosphereapp.core.navigation
 
+/*
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.anlyashenko.feature.calendar.CalendarRoute
-import ru.anlyashenko.feature.onboarding.IntroScreen
 import ru.anlyashenko.feature.profile.ProfileRoute
 import ru.anlyashenko.feature.settings.appearance.AppearanceScreen
 import ru.anlyashenko.feature.settings.main.SettingsScreen
@@ -139,4 +137,4 @@ fun AppNavHost(
             )
         }
     }
-}
+}*/
