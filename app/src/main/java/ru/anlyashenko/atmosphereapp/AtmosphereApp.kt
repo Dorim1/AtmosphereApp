@@ -1,5 +1,10 @@
 package ru.anlyashenko.atmosphereapp
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -22,9 +27,12 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import ru.anlyashenko.core.navigation.Navigator
 import ru.anlyashenko.core.navigation.toEntries
+import ru.anlyashenko.feature.calendar.api.CalendarNavKey
 import ru.anlyashenko.feature.calendar.impl.navigation.calendarEntry
+import ru.anlyashenko.feature.home.api.HomeNavKey
 import ru.anlyashenko.feature.home.impl.navigation.homeEntry
 import ru.anlyashenko.feature.onboarding.impl.navigation.introEntry
+import ru.anlyashenko.feature.profile.api.ProfileNavKey
 import ru.anlyashenko.feature.profile.impl.navigation.profileEntry
 import ru.anlyashenko.feature.settings.impl.navigation.appearanceEntry
 import ru.anlyashenko.feature.settings.impl.navigation.editMoodsEntry
@@ -39,6 +47,7 @@ fun AtmosphereApp(
 ) {
     val appState = rememberAtmosphereAppState(startKey)
     val navigator = remember { Navigator(appState.navigationState) }
+    val topLevelKeys = remember { setOf(HomeNavKey, CalendarNavKey, ProfileNavKey) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -86,12 +95,22 @@ fun AtmosphereApp(
                 notificationSettingsEntry(navigator)
             }
 
+            // todo: Доделать анимации
             NavDisplay(
                 entries = appState.navigationState.toEntries(entryProvider),
                 onBack = { navigator.goBack() },
                 modifier = Modifier
                     .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding)
+                    .padding(innerPadding),
+                transitionSpec = {
+                    slideInHorizontally(initialOffsetX = { it }) togetherWith
+                            slideOutHorizontally(targetOffsetX = { -it })
+                },
+                popTransitionSpec = {
+                    slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                            slideOutHorizontally(targetOffsetX = { it })
+                },
+
             )
     }
 }

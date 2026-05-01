@@ -6,7 +6,7 @@ import ru.anlyashenko.feature.profile.api.ProfileNavKey
 
 data class TopLevelNavItem(
     val selectedIcon: Int,
-    val titleTextId: String // todo: переделать под ресурсы
+    val titleTextId: String
 )
 
 val HOME = TopLevelNavItem(

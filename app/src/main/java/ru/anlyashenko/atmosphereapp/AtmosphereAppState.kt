@@ -30,5 +30,5 @@ class AtmosphereAppState(
         get() = navigationState.currentTopLevelKey
 
     val shouldShowBottomBar: Boolean
-        get() = TOP_LEVEL_NAV_ITEMS.containsKey(currentTopLevelKey)
+        get() = TOP_LEVEL_NAV_ITEMS.containsKey(navigationState.currentKey)
 }

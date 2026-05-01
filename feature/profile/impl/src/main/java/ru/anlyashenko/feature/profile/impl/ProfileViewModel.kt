@@ -136,6 +136,7 @@ class ProfileViewModel @Inject constructor(
         return Pair(currentStreak, longestStreak)
     }
 
+    // todo: Зарандомить insightText
     private fun calculateChartData(
         records: List<ProfileRecordUiModel>,
         availableMoods: List<ProfileMoodUiModel>,
