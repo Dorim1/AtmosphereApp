@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.anlyashenko.feature.profile.impl"
+    namespace = "ru.anlyashenko.feature.yealystats.impl"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -65,8 +65,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(project(":feature:profile:api"))
-    implementation(project(":feature:settings:api"))
     implementation(project(":feature:yearlystats:api"))
 
     implementation(project(":core:data"))

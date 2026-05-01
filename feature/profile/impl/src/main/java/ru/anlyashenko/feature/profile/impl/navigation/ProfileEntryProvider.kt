@@ -6,6 +6,7 @@ import ru.anlyashenko.core.navigation.Navigator
 import ru.anlyashenko.feature.profile.api.ProfileNavKey
 import ru.anlyashenko.feature.profile.impl.ProfileRoute
 import ru.anlyashenko.feature.settings.api.SettingsNavKey
+import ru.anlyashenko.feature.yearlystats.api.YearlyStatsNavKey
 
 fun EntryProviderScope<NavKey>.profileEntry(navigator: Navigator) {
     entry<ProfileNavKey> {
@@ -14,7 +15,7 @@ fun EntryProviderScope<NavKey>.profileEntry(navigator: Navigator) {
                 navigator.navigate(SettingsNavKey)
             },
             onNavigateToYearlyStats = {
-                // TODO: Not implemented 
+                navigator.navigate(YearlyStatsNavKey)
             }
         )
     }

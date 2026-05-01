@@ -39,6 +39,7 @@ import ru.anlyashenko.feature.settings.impl.navigation.appearanceEntry
 import ru.anlyashenko.feature.settings.impl.navigation.editMoodsEntry
 import ru.anlyashenko.feature.settings.impl.navigation.notificationSettingsEntry
 import ru.anlyashenko.feature.settings.impl.navigation.settingsEntry
+import ru.anlyashenko.feature.yealystats.impl.navigation.yearlyStatsEntry
 
 @Composable
 fun AtmosphereApp(
@@ -86,6 +87,8 @@ fun AtmosphereApp(
                 homeEntry(navigator)
                 calendarEntry(navigator)
                 profileEntry(navigator)
+
+                yearlyStatsEntry(navigator)
 
                 settingsEntry(navigator)
                 appearanceEntry(navigator)

@@ -33,7 +33,6 @@ include(":core:designsystem")
 include(":core:presentation")
 include(":core:notifications")
 include(":feature:profile")
-include(":feature:yearlystats")
 include(":core:navigation")
 
 include(":feature:onboarding:api")
@@ -50,3 +49,6 @@ include(":feature:profile:impl")
 
 include(":feature:settings:api")
 include(":feature:settings:impl")
+
+include(":feature:yearlystats:api")
+include(":feature:yearlystats:impl")
