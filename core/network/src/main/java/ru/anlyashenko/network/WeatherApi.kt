@@ -22,7 +22,7 @@ interface WeatherApi {
         @Query("current_weather") currentWeather: Boolean = true,
         @Query("hourly") hourly: String = "temperature_2m,weathercode",
         @Query("timezone") timezone: String = "auto"
-    ): WeatherResponseDTO // // todo: Возвращать Result<> [55:00, 1ч]
+    ): WeatherResponseDTO
 }
 
 fun WeatherApi (

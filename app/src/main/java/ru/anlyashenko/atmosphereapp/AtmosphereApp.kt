@@ -1,6 +1,5 @@
 package ru.anlyashenko.atmosphereapp
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -12,8 +11,6 @@ import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,17 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import ru.anlyashenko.atmosphereapp.core.navigation.TOP_LEVEL_NAV_ITEMS
 import ru.anlyashenko.core.navigation.Navigator
-import ru.anlyashenko.core.navigation.rememberNavigationState
 import ru.anlyashenko.core.navigation.toEntries
-import ru.anlyashenko.feature.calendar.api.CalendarNavKey
 import ru.anlyashenko.feature.calendar.impl.navigation.calendarEntry
-import ru.anlyashenko.feature.home.api.HomeNavKey
 import ru.anlyashenko.feature.home.impl.navigation.homeEntry
-import ru.anlyashenko.feature.onboarding.api.IntroNavKey
 import ru.anlyashenko.feature.onboarding.impl.navigation.introEntry
-import ru.anlyashenko.feature.profile.api.ProfileNavKey
 import ru.anlyashenko.feature.profile.impl.navigation.profileEntry
 import ru.anlyashenko.feature.settings.impl.navigation.appearanceEntry
 import ru.anlyashenko.feature.settings.impl.navigation.editMoodsEntry
@@ -81,7 +72,6 @@ fun AtmosphereApp(
             }
         }
     ) { innerPadding ->
-
             val entryProvider = entryProvider<NavKey> {
                 introEntry(navigator)
                 homeEntry(navigator)

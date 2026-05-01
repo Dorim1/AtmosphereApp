@@ -1,7 +1,5 @@
-package ru.anlyashenko.atmosphereapp.core.navigation
+package ru.anlyashenko.atmosphereapp
 
-import androidx.annotation.StringRes
-import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.feature.calendar.api.CalendarNavKey
 import ru.anlyashenko.feature.home.api.HomeNavKey
 import ru.anlyashenko.feature.profile.api.ProfileNavKey

@@ -263,7 +263,10 @@ fun TopMoodsCard(
             .groupingBy { it }
             .eachCount()
             .entries
-            .sortedByDescending { it.value }
+            .sortedWith(
+                compareByDescending<Map.Entry<YearlyMoodUiModel, Int>> { it.value }
+                    .thenByDescending { it.key.level }
+            )
             .take(3)
             .map { (color, count) ->
                 val percentage = (count * 100) / totalMoods
@@ -373,8 +376,6 @@ fun EmotionProgressBar(
                 color = OnMoodColor,
             )
             Text(
-                // todo: тута было такое
-//                text = stringResource(mood.defaultLabelRes),
                 text = mood.displayName.asString(),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,

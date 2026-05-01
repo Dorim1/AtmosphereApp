@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavKey
-import ru.anlyashenko.atmosphereapp.core.navigation.TOP_LEVEL_NAV_ITEMS
 import ru.anlyashenko.core.navigation.NavigationState
 import ru.anlyashenko.core.navigation.rememberNavigationState
 

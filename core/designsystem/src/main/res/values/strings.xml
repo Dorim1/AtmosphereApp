@@ -174,11 +174,6 @@
     <string name="cd_mood_replace">Заменить</string>
     <string name="cd_mood_edit">Редактировать</string>
 
-    <!--  Notification  -->
-    <string name="notification_mood_title">Как прошёл ваш день?</string>
-    <string name="notification_mood_text">Уделите минуту, чтобы отметить своё настроение.</string>
-    <string name="notification_channel_name">Уведомления</string>
-
     <string name="duration_picker_confirm_button">Продолжить</string>
 
     <string-array name="calendar_day_labels">

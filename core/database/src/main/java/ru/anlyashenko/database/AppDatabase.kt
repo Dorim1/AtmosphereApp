@@ -9,7 +9,6 @@ import ru.anlyashenko.database.utils.DateConverter
 import ru.anlyashenko.database.entity.DiaryEntryDBO
 import ru.anlyashenko.database.entity.MoodDBO
 
-// todo: перенести в этот модуль schemas
 @Database(
     entities = [DiaryEntryDBO::class, MoodDBO::class],
     version = 1,

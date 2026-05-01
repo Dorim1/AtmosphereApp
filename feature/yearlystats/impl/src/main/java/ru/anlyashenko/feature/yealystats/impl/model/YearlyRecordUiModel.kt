@@ -16,6 +16,6 @@ fun DiaryRecord.toUiModel(activePalette: PaletteModel): YearlyRecordUiModel {
     return YearlyRecordUiModel(
         date = this.date,
         mood = this.mood?.toUiModel(activePalette),
-        hasNote = !this.note.isNullOrBlank() // Todo: Обратить внимание на записи в годовой статистке
+        hasNote = !this.note.isNullOrBlank()
     )
 }

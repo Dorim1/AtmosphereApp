@@ -11,7 +11,7 @@ import ru.anlyashenko.network.models.IpGeoResponseDTO
 
 interface IpGeoApi {
     @GET("json/")
-    suspend fun getLocationByIp(): IpGeoResponseDTO // todo: Возвращать Result<> [55:00, 1ч]
+    suspend fun getLocationByIp(): IpGeoResponseDTO
 }
 
 fun IpGeoApi (

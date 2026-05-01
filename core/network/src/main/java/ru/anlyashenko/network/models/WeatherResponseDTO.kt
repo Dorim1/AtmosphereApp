@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.anlyashenko.core.model.HourlyWeather
 import ru.anlyashenko.core.model.Weather
+// todo: wtf??
 
 @Serializable
 data class WeatherResponseDTO(
@@ -13,7 +14,6 @@ data class WeatherResponseDTO(
     val hourly: HourlyDTO
 )
 
-// todo: тута Ошибка
 fun WeatherResponseDTO.asExternalModel(cityName: String): Weather {
     val currentIndex = this.hourly.time.indexOfFirst { it >= this.currentWeather.time }
     val startIndex = if (currentIndex != -1) currentIndex else 0

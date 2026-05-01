@@ -10,7 +10,6 @@ import ru.anlyashenko.core.designsystem.theme.PaletteModel
 import ru.anlyashenko.core.designsystem.util.UiText
 import ru.anlyashenko.core.model.Mood
 
-// todo: Вынести MoodUiModel в :core:designsystem и работать с ней в двух фичах?
 
 data class SettingsMoodUiModel(
     val id: Int,

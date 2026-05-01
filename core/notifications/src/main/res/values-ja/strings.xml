@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Notification  -->
+    <string name="notification_mood_title">今日はどんな一日でしたか？</string>
+    <string name="notification_mood_text">少し時間を取って気分を記録してください。</string>
+    <string name="notification_channel_name">通知</string>
+
+</resources>

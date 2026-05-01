@@ -1,0 +1,7 @@
+<resources>
+    <!--  Notification  -->
+    <string name="notification_mood_title">Как прошёл ваш день?</string>
+    <string name="notification_mood_text">Уделите минуту, чтобы отметить своё настроение.</string>
+    <string name="notification_channel_name">Уведомления</string>
+
+</resources>

@@ -15,7 +15,6 @@ data class YearlyMoodUiModel(
     val customLabel: String?,
     val color: Color
 ) {
-    // todo: Название не меняется на кастомнейм в карточка процентажа
     val displayName: UiText
         get() = if (customLabel.isNullOrBlank()) {
             UiText.StringResource(defaultLabelRes)

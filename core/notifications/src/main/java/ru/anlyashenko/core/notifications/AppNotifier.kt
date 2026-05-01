@@ -8,7 +8,6 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.anlyashenko.core.data.repository.SettingsRepository
-import ru.anlyashenko.core.designsystem.R
 import javax.inject.Inject
 
 class AppNotifier @Inject constructor(

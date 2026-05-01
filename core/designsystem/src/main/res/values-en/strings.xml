@@ -171,10 +171,6 @@
     <string name="cd_mood_replace">Replace</string>
     <string name="cd_mood_edit">Edit</string>
 
-    <!--  Notification  -->
-    <string name="notification_mood_title">How was your day?</string>
-    <string name="notification_mood_text">Take a minute to mark your mood.</string>
-    <string name="notification_channel_name">Notifications</string>
 
     <string name="duration_picker_confirm_button">Confirm</string>
 

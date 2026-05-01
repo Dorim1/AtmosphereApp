@@ -43,5 +43,4 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(project(":core:data"))
-    implementation(project(":core:designsystem")) // todo: возможно вместо имплементации перетащить в этом модуль иконки
 }

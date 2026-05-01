@@ -1,0 +1,7 @@
+<resources>
+    <!--  Notification  -->
+    <string name="notification_mood_title">How was your day?</string>
+    <string name="notification_mood_text">Take a minute to mark your mood.</string>
+    <string name="notification_channel_name">Notifications</string>
+
+</resources>
