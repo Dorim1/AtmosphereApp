@@ -45,8 +45,11 @@ class NotificationSettingsViewModel @Inject constructor(
             is NotificationSettingsEvent.OnShouldOpenSettings -> setEffect { NotificationSettingsEffect.OpenAppSettings }
             is NotificationSettingsEvent.SaveNotificationSettings -> saveNotificationSettings(event)
             is NotificationSettingsEvent.OnPermissionResult -> handlePermissionResult(event.isGranted)
+            is NotificationSettingsEvent.OnResumePermissionCheck -> handleResumeCheck(event.isGranted)
         }
     }
+
+
 
     private fun saveNotificationSettings(event: NotificationSettingsEvent.SaveNotificationSettings) {
         viewModelScope.launch {
@@ -102,5 +105,24 @@ class NotificationSettingsViewModel @Inject constructor(
             setState { copy(isNotificationsEnabled = false) }
         }
     }
+
+    private fun handleResumeCheck(isGranted: Boolean) {
+        if (isGranted) {
+            return
+        }
+
+        if (currentState.isNotificationsEnabled) {
+            viewModelScope.launch {
+                settingsRepository.saveNotificationSettings(
+                    isEnabled = false,
+                    hour = currentState.notificationHour,
+                    minute = currentState.notificationMinute
+                )
+            }
+            setState { copy(isNotificationsEnabled = false) }
+            alarmScheduler.cancel(SettingsRepository.NOTIFICATION_ALARM_ID)
+        }
+    }
+
 
 }

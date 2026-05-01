@@ -43,7 +43,7 @@ class YearlyStatsViewModel @Inject constructor(
                     copy(
                         records = records,
                         availableMoods = moods,
-                        hasEnoughMoodData = records.count { it.hasMood } >= 3
+                        hasEnoughMoodData = records.count { it.hasMood } >= 1
                     )
                 }
             }

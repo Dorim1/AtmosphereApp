@@ -84,7 +84,7 @@ fun NotificationSettingsRoute(
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 viewModel.setEvent(
-                    NotificationSettingsEvent.OnPermissionResult(permissionManager.checkPermission())
+                    NotificationSettingsEvent.OnResumePermissionCheck(permissionManager.checkPermission())
                 )
             }
         }

@@ -8,5 +8,5 @@ data class DiaryRecordUiModel(
     val note: String?
 ) {
     val hasMood: Boolean get() = mood != null
-    val hasNote: Boolean get() = note.isNullOrBlank()
+    val hasNote: Boolean get() = note != null
 }

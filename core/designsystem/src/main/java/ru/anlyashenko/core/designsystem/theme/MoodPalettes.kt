@@ -18,6 +18,17 @@ object MoodPalettes {
             id = 0,
             nameRes = R.string.palette_classic,
             colors = listOf(
+                Color(0xFF64D12D),
+                Color(0xFFB7D22D),
+                Color(0xFFFBC117),
+                Color(0xFFFB5E01),
+                Color(0xFFE40000)
+            )
+        ),
+        PaletteModel(
+            id = 1,
+            nameRes = R.string.palette_deep_classic,
+            colors = listOf(
                 Color(0xFF8CB342),
                 Color(0xFF00695C),
                 Color(0xFFFBC02D),
@@ -25,9 +36,8 @@ object MoodPalettes {
                 Color(0xFFD50000)
             )
         ),
-        // TODO: добавить палитру см. Figma
         PaletteModel(
-            id = 1,
+            id = 2,
             nameRes = R.string.palette_sunset_heat,
             colors = listOf(
                 Color(0xFFF2C230),
@@ -38,7 +48,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 2,
+            id = 3,
             nameRes = R.string.palette_desert_wind,
             colors = listOf(
                 Color(0xFF355459),
@@ -49,7 +59,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 3,
+            id = 4,
             nameRes = R.string.palette_soft_meadow,
             colors = listOf(
                 Color(0xFFD4D850),
@@ -60,7 +70,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 4,
+            id = 5,
             nameRes = R.string.palette_fire_ember,
             colors = listOf(
                 Color(0xFFFB6D10),
@@ -71,7 +81,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 5,
+            id = 6,
             nameRes = R.string.palette_berry_night,
             colors = listOf(
                 Color(0xFFA40033),
@@ -82,7 +92,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 6,
+            id = 7,
             nameRes = R.string.palette_tropical_wave,
             colors = listOf(
                 Color(0xFF0193A5),
@@ -93,7 +103,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 7,
+            id = 8,
             nameRes = R.string.palette_dusty_roads,
             colors = listOf(
                 Color(0xFF484830),
@@ -104,7 +114,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 8,
+            id = 9,
             nameRes = R.string.palette_summer_sky,
             colors = listOf(
                 Color(0xFF3DA5D9),
@@ -114,9 +124,8 @@ object MoodPalettes {
                 Color(0xFFEA7317)
             )
         ),
-        // переименовать
         PaletteModel(
-            id = 9,
+            id = 10,
             nameRes = R.string.palette_candy_pop,
             colors = listOf(
                 Color(0xFF5B5F97),
@@ -127,7 +136,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 10,
+            id = 11,
             nameRes = R.string.palette_cold_spark,
             colors = listOf(
                 Color(0xFF4855A4),
@@ -138,7 +147,7 @@ object MoodPalettes {
             )
         ),
         PaletteModel(
-            id = 11,
+            id = 12,
             nameRes = R.string.palette_blue_heat,
             colors = listOf(
                 Color(0xFFF27F0C),

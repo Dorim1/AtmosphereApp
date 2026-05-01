@@ -135,6 +135,7 @@
 
     <!--  EditMoodsScreen  -->
     <string name="palette_classic">Classic</string>
+    <string name="palette_deep_classic">Classic Deep</string>
     <string name="palette_sunset_heat">Sunset Heat</string>
     <string name="palette_desert_wind">Desert Wind</string>
     <string name="palette_dusty_roads">Dusty Roads</string>

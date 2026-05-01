@@ -135,6 +135,7 @@
 
     <!--  EditMoodsScreen  -->
     <string name="palette_classic">Классика</string>
+    <string name="palette_deep_classic">Глубокая классика</string>
     <string name="palette_sunset_heat">Закатный жар</string>
     <string name="palette_desert_wind">Пустынный ветер</string>
     <string name="palette_dusty_roads">Пыльные дороги</string>

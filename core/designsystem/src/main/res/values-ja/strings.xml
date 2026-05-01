@@ -136,6 +136,7 @@
 
     <!-- EditMoodsScreen -->
     <string name="palette_classic">クラシック</string>
+    <string name="palette_deep_classic">深み</string>
     <string name="palette_sunset_heat">サンセットヒート</string>
     <string name="palette_desert_wind">デザートウィンド</string>
     <string name="palette_dusty_roads">ダスティロード</string>
