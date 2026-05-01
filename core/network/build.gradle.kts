@@ -15,8 +15,6 @@ android {
     defaultConfig {
         minSdk = 27
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "WEATHER_BASE_URL", "\"\"")
         buildConfigField("String", "IP_BASE_URL", "\"\"")

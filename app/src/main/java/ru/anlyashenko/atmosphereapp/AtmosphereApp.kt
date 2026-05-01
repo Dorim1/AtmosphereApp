@@ -1,6 +1,7 @@
 package ru.anlyashenko.atmosphereapp
 
 import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -47,7 +48,6 @@ fun AtmosphereApp(
 ) {
     val appState = rememberAtmosphereAppState(startKey)
     val navigator = remember { Navigator(appState.navigationState) }
-    val topLevelKeys = remember { setOf(HomeNavKey, CalendarNavKey, ProfileNavKey) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -81,36 +81,37 @@ fun AtmosphereApp(
             }
         }
     ) { innerPadding ->
-            val entryProvider = entryProvider<NavKey> {
-                introEntry(navigator)
-                homeEntry(navigator)
-                calendarEntry(navigator)
-                profileEntry(navigator)
+        val entryProvider = entryProvider {
+            introEntry(navigator)
+            homeEntry(navigator)
+            calendarEntry(navigator)
+            profileEntry(navigator)
 
-                yearlyStatsEntry(navigator)
+            yearlyStatsEntry(navigator)
 
-                settingsEntry(navigator)
-                appearanceEntry(navigator)
-                editMoodsEntry(navigator)
-                notificationSettingsEntry(navigator)
+            settingsEntry(navigator)
+            appearanceEntry(navigator)
+            editMoodsEntry(navigator)
+            notificationSettingsEntry(navigator)
+        }
+
+        // todo: Доделать анимации
+        NavDisplay(
+            entries = appState.navigationState.toEntries(entryProvider),
+            onBack = { navigator.goBack() },
+            modifier = Modifier
+                .consumeWindowInsets(innerPadding)
+                .padding(innerPadding),
+            transitionSpec = {
+                // Slide in from right when navigating forward
+                slideInHorizontally(initialOffsetX = { it }) togetherWith
+                        slideOutHorizontally(targetOffsetX = { -it })
+            },
+            popTransitionSpec = {
+                // Slide in from left when navigating back
+                slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                        slideOutHorizontally(targetOffsetX = { it })
             }
-
-            // todo: Доделать анимации
-            NavDisplay(
-                entries = appState.navigationState.toEntries(entryProvider),
-                onBack = { navigator.goBack() },
-                modifier = Modifier
-                    .consumeWindowInsets(innerPadding)
-                    .padding(innerPadding),
-                transitionSpec = {
-                    slideInHorizontally(initialOffsetX = { it }) togetherWith
-                            slideOutHorizontally(targetOffsetX = { -it })
-                },
-                popTransitionSpec = {
-                    slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                            slideOutHorizontally(targetOffsetX = { it })
-                },
-
-            )
+        )
     }
 }
