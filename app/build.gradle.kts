@@ -70,8 +70,10 @@ dependencies {
     implementation(project(":core:presentation"))
 
     // Feature модули
-    implementation(project(":feature:settings"))
     implementation(project(":feature:yearlystats"))
+
+    implementation(project(":feature:settings:api"))
+    implementation(project(":feature:settings:impl"))
 
     implementation(project(":feature:profile:api"))
     implementation(project(":feature:profile:impl"))

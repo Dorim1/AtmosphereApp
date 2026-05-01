@@ -35,6 +35,10 @@ import ru.anlyashenko.feature.onboarding.api.IntroNavKey
 import ru.anlyashenko.feature.onboarding.impl.navigation.introEntry
 import ru.anlyashenko.feature.profile.api.ProfileNavKey
 import ru.anlyashenko.feature.profile.impl.navigation.profileEntry
+import ru.anlyashenko.feature.settings.impl.navigation.appearanceEntry
+import ru.anlyashenko.feature.settings.impl.navigation.editMoodsEntry
+import ru.anlyashenko.feature.settings.impl.navigation.notificationSettingsEntry
+import ru.anlyashenko.feature.settings.impl.navigation.settingsEntry
 
 @Composable
 fun AtmosphereApp(
@@ -76,16 +80,17 @@ fun AtmosphereApp(
             }
         }
     ) { innerPadding ->
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(innerPadding)
-//        ) {
+
             val entryProvider = entryProvider<NavKey> {
                 introEntry(navigator)
                 homeEntry(navigator)
                 calendarEntry(navigator)
                 profileEntry(navigator)
+
+                settingsEntry(navigator)
+                appearanceEntry(navigator)
+                editMoodsEntry(navigator)
+                notificationSettingsEntry(navigator)
             }
 
             NavDisplay(
@@ -95,6 +100,5 @@ fun AtmosphereApp(
                     .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
             )
-//        }
     }
 }

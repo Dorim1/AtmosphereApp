@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.anlyashenko.feature.profile.impl"
+    namespace = "ru.anlyashenko.feature.settings.impl"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -50,6 +50,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.kotlinx.coroutines.android)
 
@@ -65,7 +66,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(project(":feature:profile:api"))
     implementation(project(":feature:settings:api"))
 
     implementation(project(":core:data"))
@@ -74,4 +74,7 @@ dependencies {
     implementation(project(":core:presentation"))
     implementation(project(":core:navigation"))
     implementation(project(":core:common"))
+    implementation(project(":core:notifications"))
+
+
 }
