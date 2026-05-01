@@ -1,19 +1,25 @@
 package ru.anlyashenko.atmosphereapp
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -41,9 +47,12 @@ fun AtmosphereApp(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
-            // Показываем BottomBar только на экранах Home, Calendar, Profile
             if (appState.shouldShowBottomBar) {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    windowInsets = NavigationBarDefaults.windowInsets,
+                    modifier = modifier.height(67.dp)
+                ) {
                     TOP_LEVEL_NAV_ITEMS.forEach { (navKey, navItem) ->
                         val selected = navKey == appState.currentTopLevelKey
 
@@ -56,18 +65,22 @@ fun AtmosphereApp(
                                     contentDescription = navItem.titleTextId
                                 )
                             },
-                            label = { Text(text = navItem.titleTextId) }
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = MaterialTheme.colorScheme.primary,
+                                unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                                indicatorColor = Color.Transparent
+                            )
                         )
                     }
                 }
             }
         }
     ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
+//        Box(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(innerPadding)
+//        ) {
             val entryProvider = entryProvider<NavKey> {
                 introEntry(navigator)
                 homeEntry(navigator)
@@ -77,8 +90,11 @@ fun AtmosphereApp(
 
             NavDisplay(
                 entries = appState.navigationState.toEntries(entryProvider),
-                onBack = { navigator.goBack() }
+                onBack = { navigator.goBack() },
+                modifier = Modifier
+                    .consumeWindowInsets(innerPadding)
+                    .padding(innerPadding)
             )
-        }
+//        }
     }
 }

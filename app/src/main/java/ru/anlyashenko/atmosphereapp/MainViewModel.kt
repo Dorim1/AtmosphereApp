@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.anlyashenko.atmosphereapp.core.navigation.Destination
 import ru.anlyashenko.core.data.repository.SettingsRepository
 import ru.anlyashenko.core.model.CornerRadiusMode
 import ru.anlyashenko.core.model.ThemeMode

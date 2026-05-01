@@ -1,5 +1,6 @@
 package ru.anlyashenko.atmosphereapp.core.navigation
 
+/*
 import kotlinx.serialization.Serializable
 
 
@@ -28,4 +29,4 @@ sealed interface Destination {
     data object SettingsEditMoodsRoute : Destination
     @Serializable
     data object SettingsNotificationRoute : Destination
-}
+}*/
