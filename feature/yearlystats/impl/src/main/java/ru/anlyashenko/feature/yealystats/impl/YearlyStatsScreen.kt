@@ -52,6 +52,7 @@ import ru.anlyashenko.core.designsystem.component.DragHandle
 import ru.anlyashenko.core.designsystem.ext.toTwoDigits
 import ru.anlyashenko.core.designsystem.theme.OnMoodColor
 import ru.anlyashenko.feature.yealystats.impl.model.YearlyMoodUiModel
+import ru.anlyashenko.feature.yealystats.impl.model.YearlyRecordUiModel
 import java.time.LocalDate
 import java.time.Year.isLeap
 import java.time.YearMonth
@@ -62,7 +63,6 @@ import kotlin.collections.component2
 
 @Composable
 fun YearlyStatsScreen(
-    modifier: Modifier = Modifier,
     viewModel: YearlyStatsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
 ) {
@@ -76,13 +76,22 @@ fun YearlyStatsScreen(
         }
     }
 
+    YearlyStatsScreen(
+        records = state.records,
+        hasEnoughMoodData = state.hasEnoughMoodData
+    )
+}
+@Composable
+internal fun YearlyStatsScreen(
+    modifier: Modifier = Modifier,
+    records: List<YearlyRecordUiModel>,
+    hasEnoughMoodData: Boolean,
+) {
     val currentYear = LocalDate.now().year
 
-    val moodMap = remember(state.records) {
-        state.records.filter { it.hasMood }.associate { it.date to it.mood!! }
+    val moodMap = remember(records) {
+        records.filter { it.hasMood }.associate { it.date to it.mood!! }
     }
-
-    val hasEnoughData = state.hasEnoughMoodData
 
     val availableYears = remember(moodMap) {
         val years = moodMap.keys.map { it.year }.toMutableSet()
@@ -113,33 +122,27 @@ fun YearlyStatsScreen(
             .padding(horizontal = 7.dp)
     ) {
         Spacer(Modifier.height(6.dp))
-        YearHeaderCard(
-            displayYear = displayYear,
-            percentage = percentage
-        )
-
+        YearHeaderCard(displayYear = displayYear, percentage = percentage)
         Spacer(Modifier.height(6.dp))
         YearlyStatsPagerCard(
             pagerState = pagerState,
             availableYears = availableYears,
             moodMap = moodMap
         )
-
         Spacer(Modifier.height(6.dp))
         TopMoodsCard(
             year = displayYear,
             moodMap = moodMap,
-            hasEnoughData = hasEnoughData
+            hasEnoughData = hasEnoughMoodData
         )
         Spacer(Modifier.height(6.dp))
         YearlyStatsCards(
             year = displayYear,
             moodMap = moodMap,
-            notesCount = state.records.count { it.date.year == displayYear && it.hasNote }
+            notesCount = records.count { it.date.year == displayYear && it.hasNote }
         )
         Spacer(Modifier.height(6.dp))
     }
-
 }
 
 

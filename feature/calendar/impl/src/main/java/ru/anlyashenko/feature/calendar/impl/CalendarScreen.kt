@@ -71,7 +71,7 @@ import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.core.designsystem.component.DragHandle
 
 @Composable
-fun CalendarRoute(
+fun CalendarScreen(
     viewModel: CalendarViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -92,7 +92,7 @@ fun CalendarRoute(
 }
 
 @Composable
-fun CalendarScreen(
+internal fun CalendarScreen(
     selectedDate: LocalDate,
     moodMap: Map<LocalDate, Color>,
     daysWithNotes: Set<LocalDate>,

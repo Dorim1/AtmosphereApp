@@ -38,6 +38,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import ru.anlyashenko.core.designsystem.R
+import ru.anlyashenko.core.designsystem.util.UiText
+import ru.anlyashenko.core.model.AppLanguage
 import ru.anlyashenko.core.presentation.language.LanguageManager
 
 @Composable
@@ -51,8 +53,6 @@ fun SettingsScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val currentLanguage = remember { LanguageManager.getCurrentLanguage() }
 
-    val uriHandler = LocalUriHandler.current
-
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
@@ -63,6 +63,39 @@ fun SettingsScreen(
             }
         }
     }
+
+    SettingsScreen(
+        notificationSubtitle = state.notificationSubtitle,
+        themeSubtitle = state.themeSubtitle,
+        showLanguageDialog = state.showLanguageDialog,
+        currentLanguage = currentLanguage,
+        onBackClick = { viewModel.setEvent(SettingsEvent.OnBackClick) },
+        onNotificationClick = { viewModel.setEvent(SettingsEvent.OnNotificationClick) },
+        onAppearanceClick = { viewModel.setEvent(SettingsEvent.OnAppearanceClick) },
+        onEditMoodsClick = { viewModel.setEvent(SettingsEvent.OnEditMoodsClick) },
+        onLanguageDialogOpen = { viewModel.setEvent(SettingsEvent.OpenLanguageDialog) },
+        onLanguageSelected = { viewModel.setEvent(SettingsEvent.DismissDialogs); LanguageManager.setLanguage(it) },
+        onDismissDialogs = { viewModel.setEvent(SettingsEvent.DismissDialogs) }
+    )
+}
+
+@Composable
+internal fun SettingsScreen(
+    notificationSubtitle: UiText,
+    themeSubtitle: UiText,
+    showLanguageDialog: Boolean,
+    currentLanguage: AppLanguage,
+    onBackClick: () -> Unit,
+    onNotificationClick: () -> Unit,
+    onAppearanceClick: () -> Unit,
+    onEditMoodsClick: () -> Unit,
+    onLanguageDialogOpen: () -> Unit,
+    onLanguageSelected: (AppLanguage) -> Unit,
+    onDismissDialogs: () -> Unit,
+) {
+
+    val uriHandler = LocalUriHandler.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -101,17 +134,17 @@ fun SettingsScreen(
         ) {
             SettingsItemCard(
                 title = stringResource(R.string.settings_notifications_title),
-                subtitle = state.notificationSubtitle.asString(),
+                subtitle = notificationSubtitle.asString(),
                 painter = painterResource(R.drawable.ic_setting_notifications),
                 modifier = Modifier.weight(1f),
-                onClick = { viewModel.setEvent(SettingsEvent.OnNotificationClick) }
+                onClick = onNotificationClick
             )
             SettingsItemCard(
                 title = stringResource(R.string.settings_appearance_title),
-                subtitle = state.themeSubtitle.asString(),
+                subtitle = themeSubtitle.asString(),
                 painter = painterResource(R.drawable.ic_setting_theme),
                 modifier = Modifier.weight(1f),
-                onClick = { viewModel.setEvent(SettingsEvent.OnAppearanceClick) }
+                onClick = onAppearanceClick
             )
         }
         Spacer(Modifier.height(12.dp))
@@ -124,7 +157,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_moods_subtitle),
                 painter = painterResource(R.drawable.ic_setting_palette),
                 modifier = Modifier.weight(1f),
-                onClick = { viewModel.setEvent(SettingsEvent.OnEditMoodsClick) }
+                onClick = onEditMoodsClick
             )
 
             SettingsItemCard(
@@ -132,7 +165,7 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.settings_language_subtitle),
                 painter = painterResource(R.drawable.ic_setting_language),
                 modifier = Modifier.weight(1f),
-                onClick = { viewModel.setEvent(SettingsEvent.OpenLanguageDialog) }
+                onClick = onLanguageDialogOpen
             )
 
         }
@@ -156,14 +189,11 @@ fun SettingsScreen(
 
     }
 
-    if (state.showLanguageDialog) {
+    if (showLanguageDialog) {
         LanguageSelectionDialog(
             initialLanguage = currentLanguage,
-            onDismissRequest = { viewModel.setEvent(SettingsEvent.DismissDialogs) },
-            onSaveClick = { selectedLanguage ->
-                viewModel.setEvent(SettingsEvent.DismissDialogs)
-                LanguageManager.setLanguage(selectedLanguage)
-            }
+            onDismissRequest = onDismissDialogs,
+            onSaveClick = { onLanguageSelected(it) }
         )
     }
 }

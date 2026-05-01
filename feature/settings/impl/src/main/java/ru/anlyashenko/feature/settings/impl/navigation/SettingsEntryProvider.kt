@@ -10,7 +10,7 @@ import ru.anlyashenko.feature.settings.api.SettingsNavKey
 import ru.anlyashenko.feature.settings.impl.appearance.AppearanceScreen
 import ru.anlyashenko.feature.settings.impl.main.SettingsScreen
 import ru.anlyashenko.feature.settings.impl.moods.EditMoodsScreen
-import ru.anlyashenko.feature.settings.impl.notifications.NotificationSettingsRoute
+import ru.anlyashenko.feature.settings.impl.notifications.NotificationSettingsScreen
 
 fun EntryProviderScope<NavKey>.settingsEntry(navigator: Navigator) {
     entry<SettingsNavKey> {
@@ -41,7 +41,7 @@ fun EntryProviderScope<NavKey>.editMoodsEntry(navigator: Navigator) {
 
 fun EntryProviderScope<NavKey>.notificationSettingsEntry(navigator: Navigator) {
     entry<NotificationSettingsNavKey> {
-        NotificationSettingsRoute(
+        NotificationSettingsScreen(
             onBackClick = { navigator.goBack() }
         )
     }

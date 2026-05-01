@@ -59,7 +59,7 @@ import java.util.Locale
 import kotlin.collections.forEach
 
 @Composable
-fun ProfileRoute(
+fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onNavigateToSettings: () -> Unit,
     onNavigateToYearlyStats: () -> Unit,
@@ -91,7 +91,7 @@ fun ProfileRoute(
 }
 
 @Composable
-fun ProfileScreen(
+internal fun ProfileScreen(
     totalEntries: Int,
     currentStreak: Int,
     longestStreak: Int,

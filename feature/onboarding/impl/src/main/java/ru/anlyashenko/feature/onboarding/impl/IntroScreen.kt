@@ -42,7 +42,6 @@ fun IntroScreen(
     viewModel: IntroViewModel = hiltViewModel(),
     onGetInClick: () -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
@@ -51,6 +50,17 @@ fun IntroScreen(
         }
     }
 
+    IntroScreen(
+        onGetInClick = { isGranted ->
+            viewModel.setEvent(IntroEvent.CompleteOnboarding(isGranted))
+        }
+    )
+}
+
+@Composable
+internal fun IntroScreen(
+    onGetInClick: (Boolean) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,11 +71,7 @@ fun IntroScreen(
     ) {
         HeaderSection()
         Spacer(Modifier.weight(1f))
-        FooterSection(
-            onGetInClick = { isGranted ->
-                viewModel.setEvent(IntroEvent.CompleteOnboarding(isGranted))
-            }
-        )
+        FooterSection(onGetInClick = onGetInClick)
         Spacer(Modifier.weight(1f))
     }
 }

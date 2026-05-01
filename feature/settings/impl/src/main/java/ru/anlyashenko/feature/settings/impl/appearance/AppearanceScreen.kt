@@ -64,6 +64,23 @@ fun AppearanceScreen(
         }
     }
 
+    AppearanceScreen(
+        theme = state.theme,
+        cornerRadius = state.cornerRadius,
+        onBackClick = { viewModel.setEvent(AppearanceEvent.OnBackClick) },
+        onThemeSelected = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(it)) },
+        onCornerRadiusSelected = { viewModel.setEvent(AppearanceEvent.OnCornerRadiusSelected(it)) }
+    )
+}
+
+@Composable
+internal fun AppearanceScreen(
+    theme: ThemeMode,
+    cornerRadius: CornerRadiusMode,
+    onBackClick: () -> Unit,
+    onThemeSelected: (ThemeMode) -> Unit,
+    onCornerRadiusSelected: (CornerRadiusMode) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -84,7 +101,7 @@ fun AppearanceScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .clickable { viewModel.setEvent(AppearanceEvent.OnBackClick) },
+                    .clickable { onBackClick() },
             )
 
             Spacer(Modifier.width(18.dp))
@@ -119,24 +136,24 @@ fun AppearanceScreen(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_system),
                 painter = painterResource(R.drawable.ic_setting_theme),
-                isSelected = state.theme == ThemeMode.SYSTEM,
-                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.SYSTEM)) }
+                isSelected = theme == ThemeMode.SYSTEM,
+                onClick = { onThemeSelected(ThemeMode.SYSTEM) }
             )
 
             ThemeOptionCard(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_light),
                 painter = painterResource(R.drawable.ic_light_mode),
-                isSelected = state.theme == ThemeMode.LIGHT,
-                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.LIGHT)) }
+                isSelected = theme == ThemeMode.LIGHT,
+                onClick = { onThemeSelected(ThemeMode.LIGHT) }
             )
 
             ThemeOptionCard(
                 modifier = Modifier.weight(1f),
                 title = stringResource(R.string.settings_appearance_dark),
                 painter = painterResource(R.drawable.ic_dark_mode),
-                isSelected = state.theme == ThemeMode.DARK,
-                onClick = { viewModel.setEvent(AppearanceEvent.OnThemeSelected(ThemeMode.DARK)) }
+                isSelected = theme == ThemeMode.DARK,
+                onClick = { onThemeSelected(ThemeMode.DARK) }
             )
         }
 
@@ -164,30 +181,16 @@ fun AppearanceScreen(
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.appearance_corner_small),
-                    subtitle = "${CornerRadiusMode.SMALL.dpValue.value.toInt()}.dp",
                     cornerRadius = CornerRadiusMode.SMALL.dpValue,
-                    isSelected = state.cornerRadius == CornerRadiusMode.SMALL,
-                    onClick = {
-                        viewModel.setEvent(
-                            AppearanceEvent.OnCornerRadiusSelected(
-                                CornerRadiusMode.SMALL
-                            )
-                        )
-                    }
+                    isSelected = cornerRadius == CornerRadiusMode.SMALL,
+                    onClick = { onCornerRadiusSelected(CornerRadiusMode.SMALL) }
                 )
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.appearance_corner_medium),
-                    subtitle = "${CornerRadiusMode.MODERATE.dpValue.value.toInt()}.dp",
                     cornerRadius = CornerRadiusMode.MODERATE.dpValue,
-                    isSelected = state.cornerRadius == CornerRadiusMode.MODERATE,
-                    onClick = {
-                        viewModel.setEvent(
-                            AppearanceEvent.OnCornerRadiusSelected(
-                                CornerRadiusMode.MODERATE
-                            )
-                        )
-                    }
+                    isSelected = cornerRadius == CornerRadiusMode.MODERATE,
+                    onClick = { onCornerRadiusSelected(CornerRadiusMode.MODERATE) }
                 )
             }
             Row(
@@ -197,16 +200,9 @@ fun AppearanceScreen(
                 CornerRadiusCard(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.appearance_corner_large),
-                    subtitle = "${CornerRadiusMode.BIG.dpValue.value.toInt()}.dp",
                     cornerRadius = CornerRadiusMode.BIG.dpValue,
-                    isSelected = state.cornerRadius == CornerRadiusMode.BIG,
-                    onClick = {
-                        viewModel.setEvent(
-                            AppearanceEvent.OnCornerRadiusSelected(
-                                CornerRadiusMode.BIG
-                            )
-                        )
-                    }
+                    isSelected = cornerRadius == CornerRadiusMode.BIG,
+                    onClick = { onCornerRadiusSelected(CornerRadiusMode.BIG) }
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -270,7 +266,6 @@ fun ThemeOptionCard(
 fun CornerRadiusCard(
     modifier: Modifier = Modifier,
     title: String,
-    subtitle: String,
     cornerRadius: Dp,
     isSelected: Boolean,
     onClick: () -> Unit
@@ -295,23 +290,14 @@ fun CornerRadiusCard(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column() {
-                    Text(
-                        text = title,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        lineHeight = 14.sp
-                    )
-                    Text(
-                        text = subtitle,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
-                        lineHeight = 12.sp
-                    )
-                }
-
+                Text(
+                    text = title,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    lineHeight = 16.sp
+                )
                 RadioButton(
                     selected = isSelected,
                     onClick = onClick,

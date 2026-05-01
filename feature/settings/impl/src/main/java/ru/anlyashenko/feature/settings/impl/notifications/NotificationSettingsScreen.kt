@@ -60,9 +60,8 @@ import ru.anlyashenko.core.designsystem.component.BaseVerticalWheelPicker
 import ru.anlyashenko.core.designsystem.component.rememberWheelPickerState
 import ru.anlyashenko.core.notifications.NotificationPermissionManager
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationSettingsRoute(
+fun NotificationSettingsScreen(
     viewModel: NotificationSettingsViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
@@ -70,9 +69,7 @@ fun NotificationSettingsRoute(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    val permissionManager = remember {
-        NotificationPermissionManager(context)
-    }
+    val permissionManager = remember { NotificationPermissionManager(context) }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -83,9 +80,7 @@ fun NotificationSettingsRoute(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
-                viewModel.setEvent(
-                    NotificationSettingsEvent.OnResumePermissionCheck(permissionManager.checkPermission())
-                )
+                viewModel.setEvent(NotificationSettingsEvent.OnResumePermissionCheck(permissionManager.checkPermission()))
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -108,7 +103,6 @@ fun NotificationSettingsRoute(
                         viewModel.setEvent(NotificationSettingsEvent.OnPermissionResult(true))
                     }
                 }
-
                 NotificationSettingsEffect.OpenAppSettings -> {
                     val activity = context as? Activity ?: return@collectLatest
                     permissionManager.openAppSettings(activity)
@@ -117,25 +111,41 @@ fun NotificationSettingsRoute(
         }
     }
 
+    NotificationSettingsScreen(
+        isLoading = state.isLoading,
+        initialEnabled = state.isNotificationsEnabled,
+        initialHour = state.notificationHour,
+        initialMinute = state.notificationMinute,
+        onBackClick = { viewModel.setEvent(NotificationSettingsEvent.OnBackClick) },
+        onSaveRequest = { hour, minute, isEnabled ->
+            viewModel.setEvent(NotificationSettingsEvent.SaveNotificationSettings(hour, minute, isEnabled))
+        }
+    )
+}
+
+@Composable
+internal fun NotificationSettingsScreen(
+    isLoading: Boolean,
+    initialEnabled: Boolean,
+    initialHour: Int,
+    initialMinute: Int,
+    onBackClick: () -> Unit,
+    onSaveRequest: (hour: Int, minute: Int, isEnabled: Boolean) -> Unit,
+) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
     ) {
-        if (!state.isLoading) {
+        if (!isLoading) {
             NotificationSettingsScreen(
-                initialEnabled = state.isNotificationsEnabled,
-                initialHour = state.notificationHour,
-                initialMinute = state.notificationMinute,
-                onBackClick = { viewModel.setEvent(NotificationSettingsEvent.OnBackClick) },
+                initialEnabled = initialEnabled,
+                initialHour = initialHour,
+                initialMinute = initialMinute,
+                onBackClick = { onBackClick() },
                 onSaveRequest = { hour, minute, isEnabled ->
-                    viewModel.setEvent(
-                        NotificationSettingsEvent.SaveNotificationSettings(
-                            hour,
-                            minute,
-                            isEnabled
-                        )
-                    )
+                    onSaveRequest(hour, minute, isEnabled)
                 }
             )
         }
@@ -144,7 +154,7 @@ fun NotificationSettingsRoute(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationSettingsScreen(
+internal fun NotificationSettingsScreen(
     initialEnabled: Boolean,
     initialHour: Int,
     initialMinute: Int,

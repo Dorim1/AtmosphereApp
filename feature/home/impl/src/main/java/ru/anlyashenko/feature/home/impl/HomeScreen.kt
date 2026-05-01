@@ -18,7 +18,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -36,20 +35,52 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.feature.home.impl.model.DiaryRecordUiModel
+import ru.anlyashenko.feature.home.impl.model.MoodUiModel
 import ru.anlyashenko.feature.home.impl.model.WeatherUiModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-
     val todayRecord = state.weekRecords.find { it.date == LocalDate.now() }
 
+    HomeScreen(
+        weekRecords = state.weekRecords,
+        weather = state.weather,
+        isLoadingWeather = state.isLoadingWeather,
+        availableMoods = state.availableMoods,
+        showMoodSheet = state.showMoodSheet,
+        showNoteDialog = state.showNoteDialog,
+        todayNote = todayRecord?.note ?: "",
+        onMoodClick = { viewModel.setEvent(HomeEvent.OnMoodButtonClick) },
+        onNoteClick = { viewModel.setEvent(HomeEvent.OnNoteButtonClick) },
+        onDismissDialogs = { viewModel.setEvent(HomeEvent.DismissDialogs) },
+        onMoodSelected = { viewModel.setEvent(HomeEvent.OnMoodSelected(it)) },
+        onSaveNote = { viewModel.setEvent(HomeEvent.OnSaveNote(it)) }
+    )
+}
+
+
+@Composable
+internal fun HomeScreen(
+    weekRecords: List<DiaryRecordUiModel>,
+    weather: WeatherUiModel?,
+    isLoadingWeather: Boolean,
+    availableMoods: List<MoodUiModel>,
+    showMoodSheet: Boolean,
+    showNoteDialog: Boolean,
+    todayNote: String,
+    onMoodClick: () -> Unit,
+    onNoteClick: () -> Unit,
+    onDismissDialogs: () -> Unit,
+    onMoodSelected: (Int) -> Unit,
+    onSaveNote: (String) -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -64,13 +95,13 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         ) {
             Spacer(Modifier.height(6.dp))
             WeatherCard(
-                weather = state.weather,
-                isLoading = state.isLoadingWeather
+                weather = weather,
+                isLoading = isLoadingWeather
             )
             Spacer(Modifier.height(6.dp))
 
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                state.weekRecords.forEachIndexed { index, record ->
+                weekRecords.forEachIndexed { index, record ->
                     val isToday = index == 0
 
                     DayEntryCard(
@@ -82,8 +113,8 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         CurrentDayActionRow(
                             hasMood = record.hasMood,
                             hasNote = record.hasNote,
-                            onMoodClick = { viewModel.setEvent(HomeEvent.OnMoodButtonClick) },
-                            onNoteClick = { viewModel.setEvent(HomeEvent.OnNoteButtonClick) },
+                            onMoodClick = onMoodClick,
+                            onNoteClick = onNoteClick,
                         )
                     }
                 }
@@ -91,23 +122,19 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             Spacer(Modifier.height(6.dp))
         }
 
-        if (state.showMoodSheet) {
+        if (showMoodSheet) {
             MoodSelectionBottomSheet(
-                moods = state.availableMoods,
-                onDismissRequest = { viewModel.setEvent(HomeEvent.DismissDialogs) },
-                onMoodSelected = { selectedMood ->
-                    viewModel.setEvent(HomeEvent.OnMoodSelected(selectedMood.id))
-                }
+                moods = availableMoods,
+                onDismissRequest = onDismissDialogs,
+                onMoodSelected = { onMoodSelected(it.id) }
             )
         }
 
-        if (state.showNoteDialog) {
+        if (showNoteDialog) {
             AddNoteDialog(
-                initialText = todayRecord?.note ?: "",
-                onDismiss = { viewModel.setEvent(HomeEvent.DismissDialogs) },
-                onSave = { savedText ->
-                    viewModel.setEvent(HomeEvent.OnSaveNote(savedText))
-                }
+                initialText = todayNote,
+                onDismiss = onDismissDialogs,
+                onSave = onSaveNote
             )
         }
     }

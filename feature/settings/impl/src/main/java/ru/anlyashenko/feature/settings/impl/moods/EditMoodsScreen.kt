@@ -55,10 +55,7 @@ fun EditMoodsScreen(
     viewModel: EditMoodsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-
-    val moods = state.moods
 
     LaunchedEffect(viewModel.effect) {
         viewModel.effect.collectLatest { effect ->
@@ -68,6 +65,43 @@ fun EditMoodsScreen(
         }
     }
 
+    EditMoodsScreen(
+        moods = state.moods,
+        palettes = state.palettes,
+        selectedPaletteId = state.selectedPaletteId,
+        onBackClick = { viewModel.setEvent(EditMoodsEvent.OnBackClick) },
+        onSaveMood = { id, name, iconId ->
+            viewModel.setEvent(
+                EditMoodsEvent.SaveMood(
+                    id,
+                    name,
+                    iconId
+                )
+            )
+        },
+        onReplaceMood = { oldId, targetId ->
+            viewModel.setEvent(
+                EditMoodsEvent.ReplaceMood(
+                    oldId,
+                    targetId
+                )
+            )
+        },
+        onSelectPalette = { viewModel.setEvent(EditMoodsEvent.SelectPalette(it)) }
+    )
+}
+
+
+@Composable
+internal fun EditMoodsScreen(
+    moods: List<SettingsMoodUiModel>,
+    palettes: List<PaletteModel>,
+    selectedPaletteId: Int,
+    onBackClick: () -> Unit,
+    onSaveMood: (id: Int, name: String, iconId: Int) -> Unit,
+    onReplaceMood: (oldId: Int, targetId: Int) -> Unit,
+    onSelectPalette: (Int) -> Unit,
+) {
 
     var moodToEdit by remember { mutableStateOf<SettingsMoodUiModel?>(null) }
     var moodToReplace by remember { mutableStateOf<SettingsMoodUiModel?>(null) }
@@ -92,7 +126,7 @@ fun EditMoodsScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clip(RoundedCornerShape(50.dp))
-                    .clickable { viewModel.setEvent(EditMoodsEvent.OnBackClick) },
+                    .clickable { onBackClick() },
             )
 
             Spacer(Modifier.width(18.dp))
@@ -144,13 +178,11 @@ fun EditMoodsScreen(
         )
         Spacer(Modifier.height(28.dp))
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            state.palettes.forEach { palette ->
+            palettes.forEach { palette ->
                 PaletteSelectionItem(
                     palette = palette,
-                    isSelected = state.selectedPaletteId == palette.id,
-                    onClick = {
-                        viewModel.setEvent(EditMoodsEvent.SelectPalette(palette.id))
-                    }
+                    isSelected = selectedPaletteId == palette.id,
+                    onClick = { onSelectPalette(palette.id) }
                 )
             }
         }
@@ -158,36 +190,24 @@ fun EditMoodsScreen(
 
     }
 
-    if (moodToEdit != null) {
+    moodToEdit?.let { mood ->
         EditMoodBottomSheet(
-            mood = moodToEdit!!,
+            mood = mood,
             onDismissRequest = { moodToEdit = null },
             onSave = { newName, newIconId ->
-                viewModel.setEvent(
-                    EditMoodsEvent.SaveMood(
-                        moodToEdit!!.id,
-                        newName,
-                        newIconId
-                    )
-                )
+                onSaveMood(mood.id, newName, newIconId)
                 moodToEdit = null
             }
         )
     }
 
-    if (moodToReplace != null) {
-        val otherMoods = moods.filter { it.id != moodToReplace!!.id }
+    moodToReplace?.let { mood ->
         ReplaceMoodBottomSheet(
-            moodToReplace = moodToReplace!!,
-            availableMoods = otherMoods,
+            moodToReplace = mood,
+            availableMoods = moods.filter { it.id != mood.id },
             onDismissRequest = { moodToReplace = null },
             onReplaceConfirm = { targetMood ->
-                viewModel.setEvent(
-                    EditMoodsEvent.ReplaceMood(
-                        oldMoodId = moodToReplace!!.id,
-                        targetMoodId = targetMood.id
-                    )
-                )
+                onReplaceMood(mood.id, targetMood.id)
                 moodToReplace = null
             }
         )
