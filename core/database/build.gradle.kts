@@ -1,48 +1,13 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.atmosphere.android.library)
+    alias(libs.plugins.atmosphere.android.room)
+    alias(libs.plugins.atmosphere.hilt)
 }
 
 android {
     namespace = "ru.anlyashenko.core.database"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
-
-    defaultConfig {
-        minSdk = 27
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    implementation(project(":core:model"))
+    api(project(":core:model"))
 }

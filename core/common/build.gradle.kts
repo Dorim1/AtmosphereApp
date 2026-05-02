@@ -1,27 +1,10 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.jetbrains.kotlin.jvm)
-    alias(libs.plugins.ksp)
-}
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-    }
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
+    alias(libs.plugins.atmosphere.jvm.library)
+    alias(libs.plugins.atmosphere.hilt)
 }
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.jakarta.inject.api)
-    implementation(libs.hilt.core)
-    ksp(libs.hilt.compiler)
-
 }
 

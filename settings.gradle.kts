@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -23,6 +24,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AtmosphereApp"
+
 include(":app")
 include(":core:network")
 include(":core:database")
@@ -52,3 +54,11 @@ include(":feature:settings:impl")
 
 include(":feature:yearlystats:api")
 include(":feature:yearlystats:impl")
+
+check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
+    """
+    Now in Android requires JDK 17+ but it is currently using JDK ${JavaVersion.current()}.
+    Java Home: [${System.getProperty("java.home")}]
+    https://developer.android.com/build/jdks#jdk-config-in-studio
+    """.trimIndent()
+}

@@ -1,50 +1,17 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.atmosphere.android.library)
+    alias(libs.plugins.atmosphere.hilt)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "ru.anlyashenko.core.navigation"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
-
-    defaultConfig {
-        minSdk = 27
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-
-    implementation(libs.androidx.compose.lifecycle)
-
-    api(libs.androidx.navigation3.ui)
     api(libs.androidx.navigation3.runtime)
-    api(libs.androidx.lifecycle.viewModel.navigation3)
+    implementation(libs.androidx.lifecycle.viewModel.navigation3)
+
 }
