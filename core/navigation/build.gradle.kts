@@ -42,7 +42,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-//    implementation(libs.androidx.navigation)
     implementation(libs.androidx.compose.lifecycle)
 
     api(libs.androidx.navigation3.ui)

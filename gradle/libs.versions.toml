@@ -1,6 +1,7 @@
 [versions]
 agp = "9.0.1"
 coreKtx = "1.18.0"
+detektFormatting = "1.23.6"
 jakartaInjectApi = "2.0.1"
 junit = "4.13.2"
 junitVersion = "1.3.0"

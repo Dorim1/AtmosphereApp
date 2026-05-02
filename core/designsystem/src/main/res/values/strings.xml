@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Atmosphere</string>
-
     <!--  IntroScreen  -->
     <string name="intro_title" translatable="false">Atmosphere</string>
     <string name="intro_subtitle">для тех, кто следит за своей «внутренней погодой»</string>

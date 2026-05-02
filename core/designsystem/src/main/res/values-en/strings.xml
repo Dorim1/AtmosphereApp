@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">Atmosphere</string>
-
     <!--  IntroScreen  -->
-    <string name="intro_title">Atmosphere</string>
     <string name="intro_subtitle">for those who care about their inner weather</string>
     <string name="intro_button">Get started</string>
 

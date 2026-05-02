@@ -7,5 +7,16 @@ plugins {
     alias(libs.plugins.kotlinx.serialization) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.detekt)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = true
+    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
+    autoCorrect = true
+}
+
+dependencies {
+    detektPlugins(libs.detekt.formatting)
 }

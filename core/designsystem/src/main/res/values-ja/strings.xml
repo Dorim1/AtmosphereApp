@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Atmosphere</string>
 
     <!-- IntroScreen -->
-    <string name="intro_title" translatable="false">Atmosphere</string>
     <string name="intro_subtitle">自分の「心の天気」を大切にする人のために</string>
     <string name="intro_button">はじめる</string>
 
