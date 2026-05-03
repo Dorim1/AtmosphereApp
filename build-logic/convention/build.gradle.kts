@@ -32,7 +32,9 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
-    implementation(libs.room.gradlePlugin) // todo: Должен быть compileOnly но чёт не работает с ним
+    compileOnly(libs.google.services.gradlePlugin)
+    compileOnly(libs.firebase.crashlytics.gradlePlugin)
+    compileOnly(libs.room.gradlePlugin)
 }
 
 gradlePlugin {
@@ -76,6 +78,10 @@ gradlePlugin {
         register("detekt") {
             id = libs.plugins.atmosphere.detekt.get().pluginId
             implementationClass = "DetektConventionPlugin"
+        }
+        register("androidApplicationFirebase") {
+            id = libs.plugins.atmosphere.android.application.firebase.get().pluginId
+            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
     }
 }

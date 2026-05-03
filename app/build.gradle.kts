@@ -4,9 +4,9 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.atmosphere.android.application)
     alias(libs.plugins.atmosphere.android.application.compose)
+    alias(libs.plugins.atmosphere.android.application.firebase)
     alias(libs.plugins.atmosphere.hilt)
     alias(libs.plugins.kotlinx.serialization)
-
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
