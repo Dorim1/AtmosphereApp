@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import ru.anlyashenko.atmosphereapp.ui.AtmosphereApp
 import ru.anlyashenko.core.designsystem.theme.AtmosphereAppTheme
 import ru.anlyashenko.core.model.ThemeMode
 import ru.anlyashenko.core.presentation.language.LanguageManager
@@ -21,7 +22,7 @@ import ru.anlyashenko.core.presentation.language.LanguageManager
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()

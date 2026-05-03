@@ -1,5 +1,6 @@
-package ru.anlyashenko.atmosphereapp
+package ru.anlyashenko.atmosphereapp.navigation
 
+import ru.anlyashenko.atmosphereapp.R
 import ru.anlyashenko.feature.calendar.api.CalendarNavKey
 import ru.anlyashenko.feature.home.api.HomeNavKey
 import ru.anlyashenko.feature.profile.api.ProfileNavKey

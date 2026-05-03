@@ -1,4 +1,4 @@
-package ru.anlyashenko.atmosphereapp
+package ru.anlyashenko.atmosphereapp.ui
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import ru.anlyashenko.atmosphereapp.navigation.TOP_LEVEL_NAV_ITEMS
 import ru.anlyashenko.core.navigation.Navigator
 import ru.anlyashenko.core.navigation.toEntries
 import ru.anlyashenko.feature.calendar.impl.navigation.calendarEntry

@@ -19,7 +19,7 @@ import ru.anlyashenko.feature.onboarding.api.IntroNavKey
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
     var isLoading by mutableStateOf(true)
