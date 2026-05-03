@@ -13,11 +13,16 @@ android {
         applicationId = "ru.anlyashenko.atmosphereapp"
         versionCode = 1
         versionName = "1.0"
+
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            ndk {
+                //noinspection ChromeOsAbiSupport
+                abiFilters += setOf("armeabi-v7a", "arm64-v8a")
+            }
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -25,7 +30,16 @@ android {
         }
     }
 
-    packaging { resources { excludes.add("/META-INF/{AL2.0,LGPL2.1}") } }
+    packaging {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+            excludes.add("/okhttp3/internal/publicsuffix/NOTICE")
+            excludes.add("/kotlin/**")
+            excludes.add("/META-INF/androidx.*.version")
+            excludes.add("/META-INF/com.google.*.version")
+            excludes.add("/META-INF/kotlinx_*.version")
+        }
+    }
 
 }
 

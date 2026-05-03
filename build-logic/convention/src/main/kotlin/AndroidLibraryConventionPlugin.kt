@@ -19,9 +19,9 @@ abstract class AndroidLibraryConventionPlugin : Plugin<Project> {
                 lint.targetSdk = 36
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true
-                resourcePrefix =
+                /*resourcePrefix =
                     path.split("""\W""".toRegex()).drop(1).distinct().joinToString(separator = "_")
-                        .lowercase() + "_"
+                        .lowercase() + "_"*/
             }
             dependencies {
                 add("testImplementation", libs.findLibrary("junit").get())
