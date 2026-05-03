@@ -7,7 +7,6 @@ import dagger.hilt.components.SingletonComponent
 import ru.anlyashenko.database.AppDatabase
 import ru.anlyashenko.database.dao.DiaryDao
 import ru.anlyashenko.database.dao.MoodDao
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

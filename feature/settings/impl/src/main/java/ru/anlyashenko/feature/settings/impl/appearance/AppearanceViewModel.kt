@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import ru.anlyashenko.core.data.repository.SettingsRepository
-import ru.anlyashenko.core.designsystem.ext.dpValue
 import ru.anlyashenko.core.presentation.mvi.BaseViewModel
 import javax.inject.Inject
 
@@ -57,7 +56,6 @@ class AppearanceViewModel @Inject constructor(
             }
         }
     }
-
 
 
 }

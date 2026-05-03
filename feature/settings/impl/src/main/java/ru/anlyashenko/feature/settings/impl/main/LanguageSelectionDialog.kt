@@ -142,7 +142,10 @@ fun LanguageOptionItem(
 ) {
     val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent
     val borderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-    val contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+    val contentColor =
+        if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface.copy(
+            alpha = 0.3f
+        )
 
     Surface(
         modifier = Modifier

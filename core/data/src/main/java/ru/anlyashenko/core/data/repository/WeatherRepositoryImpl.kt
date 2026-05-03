@@ -3,10 +3,10 @@ package ru.anlyashenko.core.data.repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import ru.anlyashenko.core.common.di.IoDispatcher
+import ru.anlyashenko.core.common.util.Result
 import ru.anlyashenko.core.model.Weather
 import ru.anlyashenko.network.WeatherApi
 import ru.anlyashenko.network.models.asExternalModel
-import ru.anlyashenko.core.common.util.Result
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +44,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     private companion object {
-        const val  CACHE_VALID_DURATION_MS = 30 * 60 * 1000
+        const val CACHE_VALID_DURATION_MS = 30 * 60 * 1000
     }
 
 }

@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
@@ -63,7 +64,7 @@ class NotificationAlarmScheduler @Inject constructor(
                 )
             }
         } catch (e: SecurityException) {
-            e.printStackTrace()
+            Log.e("NotificationAlarmScheduler", "Failed to schedule alarm", e)
         }
 
     }
@@ -77,5 +78,6 @@ class NotificationAlarmScheduler @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         alarmManager.cancel(pendingIntent)
+
     }
 }

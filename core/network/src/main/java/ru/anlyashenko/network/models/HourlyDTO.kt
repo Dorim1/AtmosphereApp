@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HourlyDTO (
+data class HourlyDTO(
     @SerialName("time")
     val time: List<String>,
     @SerialName("temperature_2m")

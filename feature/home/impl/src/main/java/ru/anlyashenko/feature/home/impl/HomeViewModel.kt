@@ -84,6 +84,7 @@ class HomeViewModel @Inject constructor(
                     setState { copy(showMoodSheet = false) }
                 }
             }
+
             is HomeEvent.OnSaveNote -> {
                 viewModelScope.launch {
                     val today = LocalDate.now()
@@ -121,12 +122,14 @@ class HomeViewModel @Inject constructor(
             val location = locationTracker.getCurrentLocation()
             if (location != null) {
                 val city = location.city ?: "Unknown city"
-                when (val result = weatherRepository.getWeather(location.latitude, location.longitude, city)) {
+                when (val result =
+                    weatherRepository.getWeather(location.latitude, location.longitude, city)) {
                     is Result.Success -> {
                         val weatherUiModel = result.data.toUiModel()
 
                         setState { copy(weather = weatherUiModel, isLoadingWeather = false) }
                     }
+
                     is Result.Error -> {
                         setState { copy(isLoadingWeather = false) }
                         setEffect { HomeEffect.ShowSnackbar("Couldn't load weather") }

@@ -4,13 +4,13 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-object SettingsNavKey: NavKey
+object SettingsNavKey : NavKey
 
 @Serializable
-object AppearanceNavKey: NavKey
+object AppearanceNavKey : NavKey
 
 @Serializable
-object EditMoodsNavKey: NavKey
+object EditMoodsNavKey : NavKey
 
 @Serializable
-object NotificationSettingsNavKey: NavKey
+object NotificationSettingsNavKey : NavKey

@@ -2,7 +2,7 @@ package ru.anlyashenko.core.notifications
 
 import ru.anlyashenko.core.data.repository.SettingsRepository
 
-data class AlarmItem (
+data class AlarmItem(
     val id: Int = SettingsRepository.NOTIFICATION_ALARM_ID,
     val hour: Int = SettingsRepository.DEFAULT_NOTIFICATION_HOUR,
     val minute: Int = SettingsRepository.DEFAULT_NOTIFICATION_MINUTE,

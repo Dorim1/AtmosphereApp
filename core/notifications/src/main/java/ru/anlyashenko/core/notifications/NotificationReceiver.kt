@@ -8,7 +8,7 @@ import ru.anlyashenko.core.data.repository.SettingsRepository
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotificationReceiver: BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var appNotifier: AppNotifier
@@ -20,7 +20,8 @@ class NotificationReceiver: BroadcastReceiver() {
         appNotifier.showMoodNotification()
 
         val hour = intent.getIntExtra("EXTRA_HOUR", SettingsRepository.DEFAULT_NOTIFICATION_HOUR)
-        val minute = intent.getIntExtra("EXTRA_MINUTE", SettingsRepository.DEFAULT_NOTIFICATION_MINUTE)
+        val minute =
+            intent.getIntExtra("EXTRA_MINUTE", SettingsRepository.DEFAULT_NOTIFICATION_MINUTE)
         val id = intent.getIntExtra("EXTRA_ID", SettingsRepository.NOTIFICATION_ALARM_ID)
 
         alarmScheduler.schedule(AlarmItem(id, hour, minute))

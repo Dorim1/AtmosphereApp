@@ -58,8 +58,6 @@ import java.time.Year.isLeap
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import java.util.Collections
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 @Composable
 fun YearlyStatsScreen(
@@ -81,6 +79,7 @@ fun YearlyStatsScreen(
         hasEnoughMoodData = state.hasEnoughMoodData
     )
 }
+
 @Composable
 internal fun YearlyStatsScreen(
     modifier: Modifier = Modifier,

@@ -56,7 +56,6 @@ import ru.anlyashenko.feature.profile.impl.model.DailyMoodStat
 import ru.anlyashenko.feature.profile.impl.model.MoodCountItem
 import java.time.format.TextStyle
 import java.util.Locale
-import kotlin.collections.forEach
 
 @Composable
 fun ProfileScreen(
@@ -249,7 +248,6 @@ fun CurrentStreakCard(
         }
     }
 }
-
 
 
 @Composable

@@ -10,16 +10,17 @@ data class NotificationSettingsState(
     val notificationHour: Int = SettingsRepository.DEFAULT_NOTIFICATION_HOUR,
     val notificationMinute: Int = SettingsRepository.DEFAULT_NOTIFICATION_MINUTE,
     val isLoading: Boolean = true,
-): UiState
+) : UiState
 
 sealed interface NotificationSettingsEvent : UiEvent {
-    object OnBackClick: NotificationSettingsEvent
+    object OnBackClick : NotificationSettingsEvent
     data class SaveNotificationSettings(
         val hour: Int,
         val minute: Int,
         val isEnabled: Boolean,
     ) : NotificationSettingsEvent
-    object OnShouldOpenSettings: NotificationSettingsEvent
+
+    object OnShouldOpenSettings : NotificationSettingsEvent
     data class OnPermissionResult(val isGranted: Boolean) : NotificationSettingsEvent
     data class OnResumePermissionCheck(val isGranted: Boolean) : NotificationSettingsEvent
 }

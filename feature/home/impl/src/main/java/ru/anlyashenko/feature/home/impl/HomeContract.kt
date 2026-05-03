@@ -19,7 +19,7 @@ data class HomeState(
     val showMoodSheet: Boolean = false,
     val showNoteDialog: Boolean = false,
 
-    ): UiState
+    ) : UiState
 
 sealed interface HomeEvent : UiEvent {
     object LoadWeather : HomeEvent

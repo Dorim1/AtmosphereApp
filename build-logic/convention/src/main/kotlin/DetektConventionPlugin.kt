@@ -16,10 +16,6 @@ class DetektConventionPlugin : Plugin<Project> {
                 config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
                 autoCorrect = true
             }
-
-            dependencies {
-                "detektPlugins"(libs.findLibrary("detekt.formatting").get())
-            }
         }
     }
 }

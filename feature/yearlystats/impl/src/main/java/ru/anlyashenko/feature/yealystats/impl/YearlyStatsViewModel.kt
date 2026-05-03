@@ -15,7 +15,7 @@ import javax.inject.Inject
 class YearlyStatsViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
     private val settingsRepository: SettingsRepository,
-): BaseViewModel<YearlyStatsEvent, YearlyStatsState, YearlyStatsEffect>() {
+) : BaseViewModel<YearlyStatsEvent, YearlyStatsState, YearlyStatsEffect>() {
 
     override fun createInitialState(): YearlyStatsState = YearlyStatsState()
 

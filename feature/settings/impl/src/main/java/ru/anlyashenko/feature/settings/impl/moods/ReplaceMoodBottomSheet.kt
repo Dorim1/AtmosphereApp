@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.feature.settings.impl.model.SettingsMoodUiModel
-import kotlin.collections.forEach
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

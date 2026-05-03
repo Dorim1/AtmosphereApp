@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.feature.home.impl.model.DiaryRecordUiModel
 import ru.anlyashenko.feature.home.impl.model.MoodUiModel

@@ -175,7 +175,9 @@ fun EditMoodBottomSheet(
                             Icon(
                                 painter = painterResource(iconRes),
                                 contentDescription = null,
-                                tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                                tint = if (isSelected) Color.Black else MaterialTheme.colorScheme.onSurface.copy(
+                                    alpha = 0.3f
+                                ),
                                 modifier = Modifier.fillMaxSize(0.65f)
                             )
                         }

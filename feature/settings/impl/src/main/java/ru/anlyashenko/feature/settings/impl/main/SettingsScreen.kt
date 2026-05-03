@@ -74,7 +74,11 @@ fun SettingsScreen(
         onAppearanceClick = { viewModel.setEvent(SettingsEvent.OnAppearanceClick) },
         onEditMoodsClick = { viewModel.setEvent(SettingsEvent.OnEditMoodsClick) },
         onLanguageDialogOpen = { viewModel.setEvent(SettingsEvent.OpenLanguageDialog) },
-        onLanguageSelected = { viewModel.setEvent(SettingsEvent.DismissDialogs); LanguageManager.setLanguage(it) },
+        onLanguageSelected = {
+            viewModel.setEvent(SettingsEvent.DismissDialogs); LanguageManager.setLanguage(
+            it
+        )
+        },
         onDismissDialogs = { viewModel.setEvent(SettingsEvent.DismissDialogs) }
     )
 }

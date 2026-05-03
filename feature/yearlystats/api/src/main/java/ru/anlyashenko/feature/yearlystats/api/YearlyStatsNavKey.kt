@@ -4,5 +4,5 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-object YearlyStatsNavKey: NavKey {
+object YearlyStatsNavKey : NavKey {
 }

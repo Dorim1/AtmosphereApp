@@ -2,11 +2,11 @@ package ru.anlyashenko.feature.profile.impl.model
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
+import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.core.designsystem.theme.PaletteModel
 import ru.anlyashenko.core.designsystem.util.UiText
 import ru.anlyashenko.core.model.Mood
-import androidx.core.graphics.toColorInt
-import ru.anlyashenko.core.designsystem.R
 
 data class ProfileMoodUiModel(
     val id: Int,

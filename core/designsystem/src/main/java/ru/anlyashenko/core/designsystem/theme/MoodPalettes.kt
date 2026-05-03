@@ -160,7 +160,7 @@ object MoodPalettes {
     )
 
 
-    fun getPaletteById(id: Int) : PaletteModel {
+    fun getPaletteById(id: Int): PaletteModel {
         return allPalettes.find { it.id == id } ?: allPalettes[0]
     }
 }

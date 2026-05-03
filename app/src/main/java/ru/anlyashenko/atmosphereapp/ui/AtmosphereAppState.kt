@@ -11,7 +11,7 @@ import ru.anlyashenko.core.navigation.rememberNavigationState
 @Composable
 fun rememberAtmosphereAppState(
     startKey: NavKey
-) : AtmosphereAppState {
+): AtmosphereAppState {
     val topLevelKeys = remember(startKey) {
         TOP_LEVEL_NAV_ITEMS.keys + startKey
     }

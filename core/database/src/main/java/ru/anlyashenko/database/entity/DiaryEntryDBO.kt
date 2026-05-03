@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.anlyashenko.core.model.DiaryEntry
-import ru.anlyashenko.core.model.Mood
 import java.time.LocalDate
 
 @Entity(tableName = "diary_entries")

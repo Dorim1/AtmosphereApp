@@ -1,10 +1,10 @@
 package ru.anlyashenko.feature.calendar.impl.model
 
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import ru.anlyashenko.core.designsystem.theme.PaletteModel
 import ru.anlyashenko.core.model.DiaryRecord
 import java.time.LocalDate
-import androidx.core.graphics.toColorInt
 
 data class CalendarRecordUiModel(
     val date: LocalDate,
@@ -12,7 +12,7 @@ data class CalendarRecordUiModel(
     val note: String?
 )
 
-fun DiaryRecord.toUiModel(activePalette: PaletteModel) : CalendarRecordUiModel {
+fun DiaryRecord.toUiModel(activePalette: PaletteModel): CalendarRecordUiModel {
     val color = this.mood?.let { domainMood ->
         val baseColor = Color(domainMood.colorHex.toColorInt())
         val colorIndex = activePalette.colors.size - domainMood.level

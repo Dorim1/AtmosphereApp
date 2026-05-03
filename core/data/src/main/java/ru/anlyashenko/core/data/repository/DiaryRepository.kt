@@ -1,7 +1,6 @@
 package ru.anlyashenko.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.anlyashenko.core.model.DiaryEntry
 import ru.anlyashenko.core.model.DiaryRecord
 import ru.anlyashenko.core.model.Mood
 import java.time.LocalDate

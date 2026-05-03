@@ -48,7 +48,6 @@ class CalendarViewModel @Inject constructor(
     }
 
 
-
     override fun handleEvent(event: CalendarEvent) {
         when (event) {
             is CalendarEvent.OnDateSelected -> {

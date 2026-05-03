@@ -14,7 +14,8 @@ class AppNotifier @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
     fun showMoodNotification() {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "mood_reminder_channel"
 
         val channel = NotificationChannel(
@@ -24,9 +25,10 @@ class AppNotifier @Inject constructor(
         )
         notificationManager.createNotificationChannel(channel)
 
-        val activityIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        val activityIntent =
+            context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         val pendingIntent = PendingIntent.getActivity(
             context,
             0,

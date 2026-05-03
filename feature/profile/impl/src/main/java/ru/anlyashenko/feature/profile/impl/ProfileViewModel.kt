@@ -115,7 +115,8 @@ class ProfileViewModel @Inject constructor(
         val today = LocalDate.now()
         val yesterday = today.minusDays(1)
 
-        var isActiveStreak = datesDescending.first() == today || datesDescending.first() == yesterday
+        var isActiveStreak =
+            datesDescending.first() == today || datesDescending.first() == yesterday
         if (isActiveStreak) currentStreak = 1
 
         for (i in 0 until datesDescending.size - 1) {
@@ -140,7 +141,7 @@ class ProfileViewModel @Inject constructor(
     private fun calculateChartData(
         records: List<ProfileRecordUiModel>,
         availableMoods: List<ProfileMoodUiModel>,
-    ) : Pair<List<DailyMoodStat>, UiText> {
+    ): Pair<List<DailyMoodStat>, UiText> {
         val recordsWithMood = records.filter { it.hasMood }
 
         if (recordsWithMood.isEmpty() || availableMoods.isEmpty()) {
@@ -172,7 +173,8 @@ class ProfileViewModel @Inject constructor(
             val originalLevel = bestDay.level.roundToInt()
             val mood = availableMoods.find { it.level == originalLevel }
 
-            val localizedDayName = bestDay.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+            val localizedDayName =
+                bestDay.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
 
             if (mood != null) {
                 UiText.StringResource(

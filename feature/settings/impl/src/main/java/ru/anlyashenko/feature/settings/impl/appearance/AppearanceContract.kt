@@ -1,6 +1,5 @@
 package ru.anlyashenko.feature.settings.impl.appearance
 
-import ru.anlyashenko.core.designsystem.ext.dpValue
 import ru.anlyashenko.core.model.CornerRadiusMode
 import ru.anlyashenko.core.model.ThemeMode
 import ru.anlyashenko.core.presentation.mvi.UiEffect

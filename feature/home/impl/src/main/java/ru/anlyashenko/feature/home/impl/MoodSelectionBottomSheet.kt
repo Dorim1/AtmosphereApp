@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.anlyashenko.core.designsystem.R
 import ru.anlyashenko.feature.home.impl.model.MoodUiModel
-import kotlin.collections.forEach
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +115,9 @@ fun MoodItemRow(
     onClick: () -> Unit
 ) {
     val backgroundColor =
-        if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f)
+        if (isSelected) mood.color.copy(alpha = 0.1f) else MaterialTheme.colorScheme.secondary.copy(
+            alpha = 0.5f
+        )
     val contentColor = if (isSelected) mood.color else MaterialTheme.colorScheme.onSecondary
 
     val displayName = mood.customLabel ?: stringResource(id = mood.defaultLabelRes)

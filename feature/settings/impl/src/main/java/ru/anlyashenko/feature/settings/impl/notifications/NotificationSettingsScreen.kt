@@ -80,7 +80,11 @@ fun NotificationSettingsScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
-                viewModel.setEvent(NotificationSettingsEvent.OnResumePermissionCheck(permissionManager.checkPermission()))
+                viewModel.setEvent(
+                    NotificationSettingsEvent.OnResumePermissionCheck(
+                        permissionManager.checkPermission()
+                    )
+                )
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -103,6 +107,7 @@ fun NotificationSettingsScreen(
                         viewModel.setEvent(NotificationSettingsEvent.OnPermissionResult(true))
                     }
                 }
+
                 NotificationSettingsEffect.OpenAppSettings -> {
                     val activity = context as? Activity ?: return@collectLatest
                     permissionManager.openAppSettings(activity)
@@ -118,7 +123,13 @@ fun NotificationSettingsScreen(
         initialMinute = state.notificationMinute,
         onBackClick = { viewModel.setEvent(NotificationSettingsEvent.OnBackClick) },
         onSaveRequest = { hour, minute, isEnabled ->
-            viewModel.setEvent(NotificationSettingsEvent.SaveNotificationSettings(hour, minute, isEnabled))
+            viewModel.setEvent(
+                NotificationSettingsEvent.SaveNotificationSettings(
+                    hour,
+                    minute,
+                    isEnabled
+                )
+            )
         }
     )
 }

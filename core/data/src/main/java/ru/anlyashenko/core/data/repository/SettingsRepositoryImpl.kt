@@ -20,7 +20,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 @Singleton
 class SettingRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) :SettingsRepository {
+) : SettingsRepository {
 
     companion object {
         val NOTIFICATION_ENABLED = booleanPreferencesKey("notifications_enabled")
@@ -56,7 +56,7 @@ class SettingRepositoryImpl @Inject constructor(
         }
     override val themeModeFlow: Flow<ThemeMode> = dataStore.data
         .map { preferences ->
-            val themeName =preferences[THEME_MODE] ?: ThemeMode.SYSTEM.name
+            val themeName = preferences[THEME_MODE] ?: ThemeMode.SYSTEM.name
             ThemeMode.valueOf(themeName)
         }
 

@@ -78,7 +78,6 @@ kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
-detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }

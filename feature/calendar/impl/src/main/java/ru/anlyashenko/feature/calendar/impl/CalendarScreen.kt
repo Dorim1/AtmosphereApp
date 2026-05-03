@@ -63,12 +63,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.anlyashenko.core.designsystem.R
+import ru.anlyashenko.core.designsystem.component.DragHandle
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
-import ru.anlyashenko.core.designsystem.R
-import ru.anlyashenko.core.designsystem.component.DragHandle
 
 @Composable
 fun CalendarScreen(

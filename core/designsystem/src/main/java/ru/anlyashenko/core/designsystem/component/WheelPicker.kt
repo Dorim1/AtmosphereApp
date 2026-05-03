@@ -54,7 +54,11 @@ fun BaseVerticalWheelPicker(
     userScrollEnabled: Boolean = true,
     reverseLayout: Boolean = false,
     focus: @Composable () -> Unit = { WheelPickerFocusVertical() },
-    display: @Composable WheelPickerDisplayScope.(index: Int) -> Unit = { DefaultWheelPickerDisplay( it) },
+    display: @Composable WheelPickerDisplayScope.(index: Int) -> Unit = {
+        DefaultWheelPickerDisplay(
+            it
+        )
+    },
     content: @Composable WheelPickerContentScope.(index: Int) -> Unit,
 ) {
     WheelPicker(
@@ -86,7 +90,8 @@ fun BaseHorizontalWheelPicker(
     focus: @Composable () -> Unit = { WheelPickerFocusHorizontal() },
     display: @Composable WheelPickerDisplayScope.(index: Int) -> Unit = {
         DefaultWheelPickerDisplay(
-            it)
+            it
+        )
     },
     content: @Composable WheelPickerContentScope.(index: Int) -> Unit,
 ) {
@@ -312,6 +317,7 @@ class WheelPickerDisplayScopeImpl(
         content(index)
     }
 }
+
 class SlowScrollFlingBehavior(
     private val flingDecay: DecayAnimationSpec<Float>,
     private val maxInitialVelocity: Float = 3000f, // Adjust for desired starting speed

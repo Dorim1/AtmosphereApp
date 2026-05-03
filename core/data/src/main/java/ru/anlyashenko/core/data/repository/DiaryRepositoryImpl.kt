@@ -13,10 +13,9 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.find
 
 @Singleton
-class DiaryRepositoryImpl @Inject constructor (
+class DiaryRepositoryImpl @Inject constructor(
     private val diaryDao: DiaryDao,
     private val moodDao: MoodDao,
 ) : DiaryRepository {
@@ -89,7 +88,8 @@ class DiaryRepositoryImpl @Inject constructor (
                 }
             }
         } else {
-            val entryToSave = existingEntry?.copy(note = text) ?: DiaryEntryDBO(date = date, note = text)
+            val entryToSave =
+                existingEntry?.copy(note = text) ?: DiaryEntryDBO(date = date, note = text)
             diaryDao.insertOrUpdate(entryToSave)
         }
     }

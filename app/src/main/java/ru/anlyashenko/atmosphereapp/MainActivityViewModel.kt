@@ -30,13 +30,13 @@ class MainActivityViewModel @Inject constructor(
 
     val themeMode: StateFlow<ThemeMode> = settingsRepository.themeModeFlow.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
         initialValue = ThemeMode.SYSTEM
     )
 
     val cornerRadius: StateFlow<CornerRadiusMode> = settingsRepository.cornerRadiusFlow.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
         initialValue = CornerRadiusMode.BIG
     )
 

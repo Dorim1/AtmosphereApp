@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.anlyashenko.database.dao.DiaryDao
 import ru.anlyashenko.database.dao.MoodDao
-import ru.anlyashenko.database.utils.DateConverter
 import ru.anlyashenko.database.entity.DiaryEntryDBO
 import ru.anlyashenko.database.entity.MoodDBO
+import ru.anlyashenko.database.utils.DateConverter
 
 @Database(
     entities = [DiaryEntryDBO::class, MoodDBO::class],

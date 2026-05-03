@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.anlyashenko.core.model.HourlyWeather
 import ru.anlyashenko.core.model.Weather
+
 // todo: wtf??
 
 @Serializable

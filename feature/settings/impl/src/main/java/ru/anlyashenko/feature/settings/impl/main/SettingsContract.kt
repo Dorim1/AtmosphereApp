@@ -12,7 +12,7 @@ data class SettingsState(
     val isNotificationsEnabled: Boolean = SettingsRepository.DEFAULT_NOTIFICATION_ENABLED,
     val theme: ThemeMode = ThemeMode.SYSTEM,
     val showLanguageDialog: Boolean = false,
-): UiState {
+) : UiState {
     val notificationSubtitle: UiText
         get() = if (isNotificationsEnabled) {
             UiText.StringResource(R.string.settings_notifications_enabled)
@@ -28,7 +28,7 @@ data class SettingsState(
         }
 }
 
-sealed interface SettingsEvent: UiEvent {
+sealed interface SettingsEvent : UiEvent {
     object OnBackClick : SettingsEvent
     object OnAppearanceClick : SettingsEvent
     object OnEditMoodsClick : SettingsEvent

@@ -25,11 +25,11 @@ interface WeatherApi {
     ): WeatherResponseDTO
 }
 
-fun WeatherApi (
+fun WeatherApi(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
     json: Json = Json
-) : WeatherApi {
+): WeatherApi {
     return retrofit(baseUrl, okHttpClient, json).create()
 }
 
@@ -37,7 +37,7 @@ private fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient?,
     json: Json
-) : Retrofit {
+): Retrofit {
     val contentType = "application/json".toMediaType()
     return Retrofit.Builder()
         .baseUrl(baseUrl)
