@@ -31,6 +31,7 @@ abstract class BaseViewModel<Event : UiEvent, State : UiState, Effect : UiEffect
         subscribeEvents()
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun subscribeEvents() {
         viewModelScope.launch {
             _event.collect { event ->

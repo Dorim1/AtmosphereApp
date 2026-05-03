@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 import ru.anlyashenko.core.navigation.Navigator
 
 @Serializable
-object HomeNavKey : NavKey {
-}
+object HomeNavKey : NavKey
+
 
 fun Navigator.navigateToHome() {
     navigate(HomeNavKey)

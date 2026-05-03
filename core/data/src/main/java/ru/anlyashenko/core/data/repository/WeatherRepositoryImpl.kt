@@ -27,7 +27,7 @@ class WeatherRepositoryImpl @Inject constructor(
         if (isCacheValid && cachedWeather != null) {
             return Result.Success(cachedWeather!!)
         }
-
+        @Suppress("TooGenericExceptionCaught")
         return withContext(ioDispatcher) {
             try {
                 val responseDTO = api.getCurrentWeather(lat, lon)

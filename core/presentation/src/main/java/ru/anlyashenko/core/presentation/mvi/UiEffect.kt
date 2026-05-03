@@ -5,5 +5,5 @@ package ru.anlyashenko.core.presentation.mvi
  * переживать поворот экрана (навигация, показ Toast/Snackbar)
  */
 
-interface UiEffect {
-}
+interface UiEffect
+

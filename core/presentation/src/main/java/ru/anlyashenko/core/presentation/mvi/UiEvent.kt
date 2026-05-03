@@ -5,5 +5,4 @@ package ru.anlyashenko.core.presentation.mvi
  * или события жизненного цикла
  */
 
-interface UiEvent {
-}
+interface UiEvent
