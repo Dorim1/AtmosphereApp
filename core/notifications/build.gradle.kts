@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:data"))
+    implementation(projects.core.data)
 
     compileOnly(platform(libs.androidx.compose.bom))
 }

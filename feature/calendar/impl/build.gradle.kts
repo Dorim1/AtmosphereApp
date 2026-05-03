@@ -8,10 +8,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:calendar:api"))
+    implementation(projects.feature.calendar.api)
 
-    implementation(project(":core:data"))
-    implementation(project(":core:presentation"))
+    implementation(projects.core.data)
+    implementation(projects.core.presentation)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

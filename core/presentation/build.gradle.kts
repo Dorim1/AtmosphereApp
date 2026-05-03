@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    api(project(":core:model"))
+    api(projects.core.model)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

@@ -8,11 +8,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:settings:api"))
+    implementation(projects.feature.settings.api)
 
-    implementation(project(":core:data"))
-    implementation(project(":core:presentation"))
-    implementation(project(":core:notifications"))
+    implementation(projects.core.data)
+    implementation(projects.core.presentation)
+    implementation(projects.core.notifications)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

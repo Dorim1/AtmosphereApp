@@ -8,10 +8,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:yearlystats:api"))
+    implementation(projects.feature.yearlystats.api)
 
-    implementation(project(":core:data"))
-    implementation(project(":core:presentation"))
+    implementation(projects.core.data)
+    implementation(projects.core.presentation)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

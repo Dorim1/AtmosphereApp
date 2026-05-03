@@ -1,9 +1,18 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.atmosphere.android.application)
     alias(libs.plugins.atmosphere.android.application.compose)
     alias(libs.plugins.atmosphere.hilt)
     alias(libs.plugins.kotlinx.serialization)
 
+}
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -16,17 +25,32 @@ android {
 
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            ndk {
-                //noinspection ChromeOsAbiSupport
-                abiFilters += setOf("armeabi-v7a", "arm64-v8a")
-            }
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            signingConfig = signingConfigs.getByName("release")
+
+            ndk {
+                //noinspection ChromeOsAbiSupport
+                abiFilters += setOf("armeabi-v7a", "arm64-v8a")
+            }
         }
     }
 
@@ -44,31 +68,29 @@ android {
 }
 
 dependencies {
-    // Feature modules
-    implementation(project(":feature:yearlystats:api"))
-    implementation(project(":feature:yearlystats:impl"))
+    implementation(projects.feature.yearlystats.api)
+    implementation(projects.feature.yearlystats.impl)
 
-    implementation(project(":feature:settings:api"))
-    implementation(project(":feature:settings:impl"))
+    implementation(projects.feature.settings.api)
+    implementation(projects.feature.settings.impl)
 
-    implementation(project(":feature:profile:api"))
-    implementation(project(":feature:profile:impl"))
+    implementation(projects.feature.profile.api)
+    implementation(projects.feature.profile.impl)
 
-    implementation(project(":feature:onboarding:api"))
-    implementation(project(":feature:onboarding:impl"))
+    implementation(projects.feature.onboarding.api)
+    implementation(projects.feature.onboarding.impl)
 
-    implementation(project(":feature:home:api"))
-    implementation(project(":feature:home:impl"))
+    implementation(projects.feature.home.api)
+    implementation(projects.feature.home.impl)
 
-    implementation(project(":feature:calendar:api"))
-    implementation(project(":feature:calendar:impl"))
+    implementation(projects.feature.calendar.api)
+    implementation(projects.feature.calendar.impl)
 
-    // Core модули
-    implementation(project(":core:common"))
-    implementation(project(":core:presentation"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:data"))
-    implementation(project(":core:model"))
+    implementation(projects.core.common)
+    implementation(projects.core.presentation)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)

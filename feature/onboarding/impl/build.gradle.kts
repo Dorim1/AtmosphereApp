@@ -8,12 +8,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:onboarding:api"))
-    implementation(project(":feature:home:api"))
+    implementation(projects.feature.onboarding.api)
+    implementation(projects.feature.home.api)
 
-    implementation(project(":core:data"))
-    implementation(project(":core:notifications"))
-    implementation(project(":core:presentation"))
+    implementation(projects.core.data)
+    implementation(projects.core.notifications)
+    implementation(projects.core.presentation)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

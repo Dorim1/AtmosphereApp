@@ -8,10 +8,10 @@ android {
 }
 
 dependencies {
-    api(project(":core:common"))
-    api(project(":core:database"))
-    api(project(":core:network"))
-    api(project(":core:model"))
+    api(projects.core.common)
+    api(projects.core.database)
+    api(projects.core.network)
+    api(projects.core.model)
 
     implementation(libs.androidx.datastore.preferences)
 

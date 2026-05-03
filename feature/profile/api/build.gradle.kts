@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    api(project(":core:navigation"))
+    api(projects.core.navigation)
 }

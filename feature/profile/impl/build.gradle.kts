@@ -8,12 +8,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:profile:api"))
-    implementation(project(":feature:settings:api"))
-    implementation(project(":feature:yearlystats:api"))
+    implementation(projects.feature.profile.api)
+    implementation(projects.feature.settings.api)
+    implementation(projects.feature.yearlystats.api)
 
-    implementation(project(":core:data"))
-    implementation(project(":core:presentation"))
+    implementation(projects.core.data)
+    implementation(projects.core.presentation)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
