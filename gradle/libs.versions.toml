@@ -87,6 +87,7 @@ compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 #firebase-performance-gradlePlugin = { group = "com.google.firebase", name = "perf-plugin", version.ref = "firebasePerfPlugin" }
 #firebase-crashlytics-gradlePlugin = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPlugin" }
 
@@ -112,7 +113,7 @@ atmosphere-android-library-compose = { id = "atmosphere.android.library.compose"
 atmosphere-android-room = { id = "atmosphere.android.room" }
 atmosphere-hilt = { id = "atmosphere.hilt" }
 atmosphere-jvm-library = { id = "atmosphere.jvm.library" }
-atmosphere-root = { id = "atmosphere.root" }
+atmosphere-detekt = { id = "atmosphere.detekt" }
 #atmosphere-android-application-firebase = { id = "atmosphere.android.application.firebase" }
 
 

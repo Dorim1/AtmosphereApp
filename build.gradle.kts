@@ -9,14 +9,3 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.detekt)
 }
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = true
-    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
-    autoCorrect = true
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
-}

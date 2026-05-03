@@ -31,6 +31,7 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
     implementation(libs.room.gradlePlugin) // todo: Должен быть compileOnly но чёт не работает с ним
 }
 
@@ -71,6 +72,10 @@ gradlePlugin {
         register("jvmLibrary") {
             id = libs.plugins.atmosphere.jvm.library.get().pluginId
             implementationClass = "JvmLibraryConventionPlugin"
+        }
+        register("detekt") {
+            id = libs.plugins.atmosphere.detekt.get().pluginId
+            implementationClass = "DetektConventionPlugin"
         }
     }
 }

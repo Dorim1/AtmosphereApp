@@ -12,6 +12,7 @@ abstract class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "com.android.library")
+            apply(plugin = "io.gitlab.arturbosch.detekt")
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)

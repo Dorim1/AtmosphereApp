@@ -1,9 +1,6 @@
 package ru.anlyashenko.atmosphereapp.data.local.database.entity
 // todo: ----
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 /*@Entity(tableName = "diary_entries")
