@@ -7,6 +7,9 @@ import ru.anlyashenko.feature.settings.api.AppearanceNavKey
 import ru.anlyashenko.feature.settings.api.EditMoodsNavKey
 import ru.anlyashenko.feature.settings.api.NotificationSettingsNavKey
 import ru.anlyashenko.feature.settings.api.SettingsNavKey
+import ru.anlyashenko.feature.settings.api.navigateToAppearance
+import ru.anlyashenko.feature.settings.api.navigateToEditMoods
+import ru.anlyashenko.feature.settings.api.navigateToNotificationSettings
 import ru.anlyashenko.feature.settings.impl.appearance.AppearanceScreen
 import ru.anlyashenko.feature.settings.impl.main.SettingsScreen
 import ru.anlyashenko.feature.settings.impl.moods.EditMoodsScreen
@@ -16,9 +19,9 @@ fun EntryProviderScope<NavKey>.settingsEntry(navigator: Navigator) {
     entry<SettingsNavKey> {
         SettingsScreen(
             onBackClick = { navigator.goBack() },
-            onNavigateToAppearance = { navigator.navigate(AppearanceNavKey) },
-            onNavigateToEditMoods = { navigator.navigate(EditMoodsNavKey) },
-            onNavigateToNotificationSettings = { navigator.navigate(NotificationSettingsNavKey) }
+            onNavigateToAppearance = navigator::navigateToAppearance,
+            onNavigateToEditMoods = navigator::navigateToEditMoods,
+            onNavigateToNotificationSettings = navigator::navigateToNotificationSettings
         )
     }
 }
