@@ -1,0 +1,194 @@
+<resources>
+    <!--  IntroScreen  -->
+    <string name="intro_subtitle">for those who care about their inner weather</string>
+    <string name="intro_button">Get started</string>
+
+    <!--  Universal  -->
+    <string name="text_delete_button">Delete</string>
+    <string name="text_cancel_button">Cancel</string>
+    <string name="text_save_button">Save</string>
+    <string name="text_confirm_button">Done</string>
+
+    <!--  CalendarScreen  -->
+    <string name="cd_previous_button">Previous month</string>
+    <string name="cd_next_button">Next month</string>
+
+    <string name="calendar_record_date">Your entry for %2$s %1$d</string>
+
+    <string name="dialog_delete_title">Delete entry</string>
+    <string name="cd_dialog_delete">Warning</string>
+    <string name="dialog_delete_subtitle">This action cannot be undone</string>
+    <string name="dialog_delete_cancel">No, keep it</string>
+    <string name="dialog_delete_confirm">Yes, delete</string>
+
+    <!--  HomeScreen  -->
+    <string name="weather_clear">Clear</string>
+    <string name="weather_partly_cloudy">Partly cloudy</string>
+    <string name="weather_cloudy">Overcast</string>
+    <string name="weather_foggy">Foggy</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_rain">Rain</string>
+    <string name="weather_snow">Snow</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_hail">Hail</string>
+    <string name="weather_unknown">Unknown</string>
+    <string name="weather_no_data">No weather data</string>
+
+    <string name="cd_select_mood">Select mood</string>
+    <string name="cd_edit_note">Edit note</string>
+
+    <string name="action_change_mood">Change\nmood</string>
+    <string name="action_select_mood">Select\nmood</string>
+    <string name="action_add_note">Add\nnote</string>
+    <string name="action_change_note">Edit\nnote</string>
+    <string name="home_day_question">How was your day?</string>
+
+    <string name="mood_sheet_title">Select mood</string>
+    <string name="mood_excellent">Excellent</string>
+    <string name="mood_good">Good</string>
+    <string name="mood_normal">Okay</string>
+    <string name="mood_bad">Bad</string>
+    <string name="mood_terrible">Terrible</string>
+
+    <string name="add_note_to_day_title">Add a note for the day</string>
+    <string name="note_dialog_placeholder">Write about your day…</string>
+
+    <!--  ProfileScreen  -->
+    <string name="profile_total_entries_title">Total\nEntries</string>
+    <string name="profile_current_streak_title">Streak\ndays</string>
+    <string name="profile_longest_streak_title">Longest\nstreak</string>
+    <string name="profile_average_mood_title">Average mood</string>
+    <string name="profile_mood_counter_title">Mood tracker</string>
+    <string name="profile_yearly_stats_button">Yearly\nstatistics</string>
+    <string name="profile_settings_button">Settings</string>
+    <string name="profile_insight_pattern">On %1$s you usually feel \'%2$s\'</string>
+    <string name="profile_not_enough_data">Not enough data</string>
+    <string name="profile_not_enough_data_stats">Not enough data for statistics</string>
+    <string name="profile_fallback_mood">mood</string>
+    <string name="not_enough_data">Not enough data</string>
+    <string name="not_enough_data_description">
+    Add at least 3 days of mood entries to see statistics
+</string>
+
+    <string name="day_short_monday">Mon</string>
+    <string name="day_short_tuesday">Tue</string>
+    <string name="day_short_wednesday">Wed</string>
+    <string name="day_short_thursday">Thu</string>
+    <string name="day_short_friday">Fri</string>
+    <string name="day_short_saturday">Sat</string>
+    <string name="day_short_sunday">Sun</string>
+
+    <!--  YearlyScreen  -->
+    <string name="yearly_not_enough_data">Not enough data for this year</string>
+    <string name="yearly_mood_entries_title">Mood\nentries\nthis year</string>
+    <string name="yearly_streak_title">Year streak</string>
+    <string name="yearly_notes_title">Notes\nthis year</string>
+
+    <!--  SettingsScreen  -->
+    <string name="settings_title">Settings</string>
+
+    <string name="cd_settings_back">Back</string>
+
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_enabled">Enabled</string>
+    <string name="settings_notifications_disabled">Disabled</string>
+
+    <string name="settings_appearance_title">Appearance</string>
+    <string name="settings_appearance_system">System</string>
+    <string name="settings_appearance_light">Light</string>
+    <string name="settings_appearance_dark">Dark</string>
+
+    <string name="settings_palette_title">Palette</string>
+    <string name="settings_palette_subtitle">Soft</string>
+
+    <string name="settings_corners_title">Corners</string>
+    <string name="settings_corners_subtitle">Moderate</string>
+
+    <string name="settings_moods_title">Moods</string>
+    <string name="settings_moods_subtitle">Manage</string>
+
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_subtitle">English</string>
+
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_subtitle">Read</string>
+
+    <string name="notification_settings_title">Notifications</string>
+    <string name="hour_indicator">h</string>
+    <string name="minute_indicator">m</string>
+    <string name="notification_settings_description">
+        The app will send reminders only at the selected time to avoid disturbing you at inconvenient moments.
+    </string>
+    <string name="notification_settings_enable">Enable notifications</string>
+
+    <string name="select_app_language">Select app language</string>
+
+    <!--  AppearanceScreen  -->
+    <string name="appearance_screen_title">Appearance</string>
+    <string name="settings_appearance_desc">
+        Turn on dark mode, or let Luma visually match your device settings.
+    </string>
+    <string name="appearance_theme_title">Theme</string>
+    <string name="appearance_cards_title">App cards</string>
+    <string name="appearance_cards_description">
+        Adjust the corner radius of cards to change the overall look of the interface.
+    </string>
+    <string name="appearance_corner_small">Sharp</string>
+    <string name="appearance_corner_medium">Moderate</string>
+    <string name="appearance_corner_large">Soft</string>
+
+
+    <!--  EditMoodsScreen  -->
+    <string name="palette_classic">Classic</string>
+    <string name="palette_deep_classic">Classic Deep</string>
+    <string name="palette_sunset_heat">Sunset Heat</string>
+    <string name="palette_desert_wind">Desert Wind</string>
+    <string name="palette_dusty_roads">Dusty Roads</string>
+    <string name="palette_dark_flame">Dark Flame</string>
+    <string name="palette_northern_chill">Northern Chill</string>
+    <string name="palette_soft_meadow">Soft Meadow</string>
+    <string name="palette_fire_ember">Fire Ember</string>
+    <string name="palette_berry_night">Berry Night</string>
+    <string name="palette_tropical_wave">Tropical Wave</string>
+    <string name="palette_summer_sky">Summer Sky</string>
+    <string name="palette_candy_pop">Candy Pop</string>
+    <string name="palette_cold_spark">Cold Spark</string>
+    <string name="palette_blue_heat">Blue Heat</string>
+
+    <string name="edit_moods_title">Edit moods</string>
+    <string name="edit_moods_moods_title">Moods</string>
+    <string name="edit_moods_moods_description">
+        Change mood names or select a new icon so their appearance matches your preferences.
+    </string>
+    <string name="edit_moods_palette_title">Palette</string>
+    <string name="edit_moods_palette_description">
+        Customize the mood color scheme to fit your personal style.
+    </string>
+    <string name="edit_mood_change_name">Change name</string>
+    <string name="edit_mood_change_icon">Change icon</string>
+
+    <string name="replace_mood_title">Replace mood</string>
+    <string name="replace_mood_description">Mood «%1$s» will be replaced with the selected mood in all entries</string>
+    <string name="replace_mood_warning_prefix">"Warning: "</string>
+    <string name="replace_mood_warning_text">this action cannot be undone</string>
+    <string name="replace_mood_button">Replace</string>
+
+    <string name="cd_mood_replace">Replace</string>
+    <string name="cd_mood_edit">Edit</string>
+
+
+    <string name="duration_picker_confirm_button">Confirm</string>
+
+
+    <string-array name="calendar_day_labels">
+        <item>M</item>
+        <item>T</item>
+        <item>W</item>
+        <item>T</item>
+        <item>F</item>
+        <item>S</item>
+        <item>S</item>
+    </string-array>
+
+
+</resources>

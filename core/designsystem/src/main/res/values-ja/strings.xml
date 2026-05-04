@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- IntroScreen -->
+    <string name="intro_subtitle">自分の「心の天気」を大切にする人のために</string>
+    <string name="intro_button">はじめる</string>
+
+    <!-- Universal -->
+    <string name="text_delete_button">削除</string>
+    <string name="text_cancel_button">キャンセル</string>
+    <string name="text_save_button">保存</string>
+    <string name="text_confirm_button">完了</string>
+
+    <!-- CalendarScreen -->
+    <string name="cd_previous_button">前の月</string>
+    <string name="cd_next_button">次の月</string>
+    <string name="calendar_record_date">%2$s %1$d日の記録</string>
+
+    <string name="dialog_delete_title">記録を削除</string>
+    <string name="cd_dialog_delete">警告</string>
+    <string name="dialog_delete_subtitle">この操作は元に戻せません</string>
+    <string name="dialog_delete_cancel">いいえ、残す</string>
+    <string name="dialog_delete_confirm">はい、削除</string>
+
+    <!-- HomeScreen -->
+    <string name="weather_clear">晴れ</string>
+    <string name="weather_partly_cloudy">一部曇り</string>
+    <string name="weather_cloudy">曇り</string>
+    <string name="weather_foggy">霧</string>
+    <string name="weather_drizzle">霧雨</string>
+    <string name="weather_rain">雨</string>
+    <string name="weather_snow">雪</string>
+    <string name="weather_thunderstorm">雷雨</string>
+    <string name="weather_hail">ひょう</string>
+    <string name="weather_unknown">不明</string>
+    <string name="weather_no_data">天気データなし</string>
+
+    <string name="cd_select_mood">気分を選択</string>
+    <string name="cd_edit_note">メモを編集</string>
+
+    <string name="action_change_mood">気分を変更</string>
+    <string name="action_select_mood">気分を選択</string>
+    <string name="action_add_note">メモを追加</string>
+    <string name="action_change_note">メモを編集</string>
+    <string name="home_day_question">今日はどんな一日でしたか？</string>
+
+    <string name="note_dialog_placeholder">今日の出来事を書いてください…</string>
+
+    <string name="mood_sheet_title">気分を選択</string>
+    <string name="mood_excellent">とても良い</string>
+    <string name="mood_good">良い</string>
+    <string name="mood_normal">普通</string>
+    <string name="mood_bad">悪い</string>
+    <string name="mood_terrible">最悪</string>
+
+    <string name="add_note_to_day_title">その日のメモを追加</string>
+
+    <!-- ProfileScreen -->
+    <string name="profile_total_entries_title">合計記録数</string>
+    <string name="profile_current_streak_title">連続日数</string>
+    <string name="profile_longest_streak_title">最長連続記録</string>
+    <string name="profile_average_mood_title">平均気分</string>
+    <string name="profile_mood_counter_title">気分トラッカー</string>
+    <string name="profile_yearly_stats_button">年間統計</string>
+    <string name="profile_settings_button">設定</string>
+
+    <string name="profile_insight_pattern">%1$sには「%2$s」の気分が多いです</string>
+    <string name="profile_not_enough_data">データ不足</string>
+    <string name="profile_not_enough_data_stats">統計を表示するにはデータが不足しています</string>
+    <string name="profile_fallback_mood">気分</string>
+
+    <string name="not_enough_data">データ不足</string>
+    <string name="not_enough_data_description">
+        統計を表示するには少なくとも3日分の記録が必要です
+    </string>
+
+    <string name="day_short_monday">月</string>
+    <string name="day_short_tuesday">火</string>
+    <string name="day_short_wednesday">水</string>
+    <string name="day_short_thursday">木</string>
+    <string name="day_short_friday">金</string>
+    <string name="day_short_saturday">土</string>
+    <string name="day_short_sunday">日</string>
+
+    <!-- YearlyScreen -->
+    <string name="yearly_not_enough_data">この年のデータが不足しています</string>
+    <string name="yearly_mood_entries_title">今年の記録数</string>
+    <string name="yearly_streak_title">年間連続記録</string>
+    <string name="yearly_notes_title">今年のメモ数</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_title">設定</string>
+    <string name="cd_settings_back">戻る</string>
+
+    <string name="settings_notifications_title">通知</string>
+    <string name="settings_notifications_enabled">オン</string>
+    <string name="settings_notifications_disabled">オフ</string>
+
+    <string name="settings_appearance_title">外観</string>
+    <string name="settings_appearance_system">システム</string>
+    <string name="settings_appearance_light">ライト</string>
+    <string name="settings_appearance_dark">ダーク</string>
+
+    <string name="settings_palette_title">カラーパレット</string>
+    <string name="settings_palette_subtitle">ソフト</string>
+
+    <string name="settings_corners_title">角の丸み</string>
+    <string name="settings_corners_subtitle">中程度</string>
+
+    <string name="settings_moods_title">気分</string>
+    <string name="settings_moods_subtitle">管理</string>
+
+    <string name="settings_language_title">言語</string>
+    <string name="settings_language_subtitle">日本語</string>
+
+    <string name="settings_about_title">アプリについて</string>
+    <string name="settings_about_subtitle">詳細</string>
+
+    <string name="notification_settings_title">通知</string>
+    <string name="hour_indicator">時間</string>
+    <string name="minute_indicator">分</string>
+    <string name="notification_settings_description">
+        不便な時間を避けるため、指定した時間にのみ通知を送信します。
+    </string>
+    <string name="notification_settings_enable">通知を有効にする</string>
+
+    <string name="select_app_language">アプリの言語を選択</string>
+
+    <!-- AppearanceScreen -->
+    <string name="appearance_screen_title">外観</string>
+    <string name="settings_appearance_desc">
+        ダークモードを有効にするか、端末設定に合わせて自動で切り替えます。
+    </string>
+    <string name="appearance_theme_title">テーマ</string>
+    <string name="appearance_cards_title">カード</string>
+    <string name="appearance_cards_description">
+        カードの角の丸みを調整して、全体の見た目を変更できます。
+    </string>
+    <string name="appearance_corner_small">シャープ</string>
+    <string name="appearance_corner_medium">標準</string>
+    <string name="appearance_corner_large">ソフト</string>
+
+    <!-- EditMoodsScreen -->
+    <string name="palette_classic">クラシック</string>
+    <string name="palette_deep_classic">深み</string>
+    <string name="palette_sunset_heat">サンセットヒート</string>
+    <string name="palette_desert_wind">デザートウィンド</string>
+    <string name="palette_dusty_roads">ダスティロード</string>
+    <string name="palette_dark_flame">ダークフレイム</string>
+    <string name="palette_northern_chill">ノーザンチル</string>
+    <string name="palette_soft_meadow">やわらかな草原</string>
+    <string name="palette_fire_ember">燃える残り火</string>
+    <string name="palette_berry_night">ベリーナイト</string>
+    <string name="palette_tropical_wave">トロピカルウェーブ</string>
+    <string name="palette_summer_sky">夏の空</string>
+    <string name="palette_candy_pop">キャンディポップ</string>
+    <string name="palette_cold_spark">クールスパーク</string>
+    <string name="palette_blue_heat">ブルーヒート</string>
+
+    <string name="edit_moods_title">気分を編集</string>
+    <string name="edit_moods_moods_title">気分</string>
+    <string name="edit_moods_moods_description">
+        気分の名前を変更したり、アイコンを選んで見た目をカスタマイズできます。
+    </string>
+    <string name="edit_moods_palette_title">パレット</string>
+    <string name="edit_moods_palette_description">
+        気分のカラーテーマを自分好みに調整できます。
+    </string>
+    <string name="edit_mood_change_name">名前を変更</string>
+    <string name="edit_mood_change_icon">アイコンを変更</string>
+
+    <string name="replace_mood_title">気分を置き換え</string>
+    <string name="replace_mood_description">「%1$s」はすべての記録で選択した気分に置き換えられます</string>
+    <string name="replace_mood_warning_prefix">"警告: "</string>
+    <string name="replace_mood_warning_text">この操作は元に戻せません</string>
+    <string name="replace_mood_button">置き換え</string>
+
+    <string name="cd_mood_replace">置き換え</string>
+    <string name="cd_mood_edit">編集</string>
+
+    <string name="duration_picker_confirm_button">確認</string>
+
+    <string-array name="calendar_day_labels">
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+        <item>日</item>
+    </string-array>
+
+</resources>

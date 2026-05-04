@@ -14,15 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import ru.anlyashenko.atmosphereapp.core.design_system.ui.NavigationBar
-import ru.anlyashenko.atmosphereapp.core.design_system.theme.AtmosphereAppTheme
-import ru.anlyashenko.atmosphereapp.core.utils.LanguageManager
-import ru.anlyashenko.atmosphereapp.feature.setting_appearence.ui.ThemeMode
+import ru.anlyashenko.atmosphereapp.ui.AtmosphereApp
+import ru.anlyashenko.core.designsystem.theme.AtmosphereAppTheme
+import ru.anlyashenko.core.model.ThemeMode
+import ru.anlyashenko.core.presentation.language.LanguageManager
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -73,12 +73,11 @@ class MainActivity : AppCompatActivity() {
                 themeMode = themeMode,
                 cornerRadiusMode = cornerRadius
             ) {
-                if (!viewModel.isLoading) {
-                    NavigationBar(startDestination = viewModel.startDestination)
+                val startKey = viewModel.startDestination
+                if (!viewModel.isLoading && startKey != null) {
+                    AtmosphereApp(startKey = startKey)
                 }
             }
         }
-
     }
 }
-
