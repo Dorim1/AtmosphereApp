@@ -4,4 +4,29 @@
     <string name="notification_mood_text">Уделите минуту, чтобы отметить своё настроение.</string>
     <string name="notification_channel_name">Уведомления</string>
 
+    <string-array name="notification_reminders_titles">
+        <item>Как прошёл ваш день?</item>
+        <item>Время для себя</item>
+        <item>Запиши свои мысли</item>
+    </string-array>
+
+    <string-array name="notification_reminders_texts">
+        <item>Отметь свое настроение, чтобы не потерять статистику.</item>
+        <item>Пару кликов, чтобы дневник оставался актуальным.</item>
+        <item>Сделай паузу и оцени, как ты себя чувствуешь.</item>
+        <item>Уделите минуту, чтобы отметить своё настроение.</item>
+    </string-array>
+
+    <string-array name="notification_logged_titles">
+        <item>Отличная работа!</item>
+        <item>День зафиксирован</item>
+        <item>Хочешь добавить что-то еще?</item>
+    </string-array>
+
+    <string-array name="notification_logged_texts">
+        <item>Ты уже отметил настроение сегодня. Так держать!</item>
+        <item>Возможно, появились новые мысли? Можно дополнить запись.</item>
+        <item>Твоя статистика пополнена. Желаем хорошего дня!</item>
+    </string-array>
+
 </resources>

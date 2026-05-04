@@ -13,5 +13,5 @@ interface DiaryRepository {
     suspend fun saveNote(date: LocalDate, text: String)
     suspend fun updateMoodDetails(moodId: Int, customName: String, iconKey: String)
     suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int)
-
+    suspend fun hasMoodForDate(date: LocalDate) : Boolean
 }

@@ -106,4 +106,9 @@ class DiaryRepositoryImpl @Inject constructor(
     override suspend fun replaceMood(oldMoodId: Int, targetMoodId: Int) {
         diaryDao.replaceMoodInAllEntries(oldMoodId, targetMoodId)
     }
+
+    override suspend fun hasMoodForDate(date: LocalDate): Boolean {
+        val entry = diaryDao.getEntryByDate(date)
+        return entry?.moodId != null
+    }
 }

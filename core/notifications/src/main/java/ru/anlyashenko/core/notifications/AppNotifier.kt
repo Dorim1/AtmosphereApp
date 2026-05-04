@@ -13,7 +13,7 @@ import javax.inject.Inject
 class AppNotifier @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
-    fun showMoodNotification() {
+    fun showMoodNotification(isMoodLogged: Boolean) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "mood_reminder_channel"
@@ -24,6 +24,12 @@ class AppNotifier @Inject constructor(
             NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)
+
+        val titlesArrayId = if (isMoodLogged) R.array.notification_logged_titles else R.array.notification_reminders_titles
+        val textArrayId = if (isMoodLogged) R.array.notification_logged_texts else R.array.notification_reminders_texts
+
+        val title = context.resources.getStringArray(titlesArrayId).random()
+        val text = context.resources.getStringArray(textArrayId).random()
 
         val activityIntent =
             context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply {
@@ -38,9 +44,9 @@ class AppNotifier @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.notification_mood_title))
-            .setContentText(context.getString(R.string.notification_mood_text))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
