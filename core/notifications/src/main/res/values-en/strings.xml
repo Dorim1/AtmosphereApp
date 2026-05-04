@@ -1,7 +1,32 @@
 <resources>
-    <!--  Notification  -->
+    <!-- Notification -->
     <string name="notification_mood_title">How was your day?</string>
-    <string name="notification_mood_text">Take a minute to mark your mood.</string>
+    <string name="notification_mood_text">Take a minute to record your mood.</string>
     <string name="notification_channel_name">Notifications</string>
+
+    <string-array name="notification_reminders_titles">
+        <item>How was your day?</item>
+        <item>Time for yourself</item>
+        <item>Write down your thoughts</item>
+    </string-array>
+
+    <string-array name="notification_reminders_texts">
+        <item>Log your mood so you don’t lose your stats.</item>
+        <item>Just a couple of taps to keep your journal up to date.</item>
+        <item>Take a moment and reflect on how you feel.</item>
+        <item>Take a minute to record your mood.</item>
+    </string-array>
+
+    <string-array name="notification_logged_titles">
+        <item>Great job!</item>
+        <item>Day recorded</item>
+        <item>Want to add anything else?</item>
+    </string-array>
+
+    <string-array name="notification_logged_texts">
+        <item>You’ve already logged your mood today. Keep it up!</item>
+        <item>Maybe you have new thoughts? You can update your entry.</item>
+        <item>Your stats have been updated. Have a great day!</item>
+    </string-array>
 
 </resources>

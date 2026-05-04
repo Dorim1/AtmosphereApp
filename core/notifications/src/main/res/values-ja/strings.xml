@@ -5,4 +5,29 @@
     <string name="notification_mood_text">少し時間を取って気分を記録してください。</string>
     <string name="notification_channel_name">通知</string>
 
+    <string-array name="notification_reminders_titles">
+        <item>今日はどんな一日でしたか？</item>
+        <item>自分のための時間</item>
+        <item>考えを書き留めましょう</item>
+    </string-array>
+
+    <string-array name="notification_reminders_texts">
+        <item>気分を記録して、統計を失わないようにしましょう。</item>
+        <item>数回のタップで日記を最新の状態に保てます。</item>
+        <item>少し立ち止まって、自分の気持ちを見つめてみましょう。</item>
+        <item>少し時間をとって、気分を記録しましょう。</item>
+    </string-array>
+
+    <string-array name="notification_logged_titles">
+        <item>よくできました！</item>
+        <item>今日の記録が完了しました</item>
+        <item>他にも追加しますか？</item>
+    </string-array>
+
+    <string-array name="notification_logged_texts">
+        <item>今日はすでに気分を記録しています。その調子です！</item>
+        <item>新しい考えはありますか？記録を更新できます。</item>
+        <item>統計が更新されました。良い一日を！</item>
+    </string-array>
+
 </resources>
