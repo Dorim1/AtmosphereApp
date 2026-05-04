@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,7 +65,7 @@ internal fun IntroScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(OnboardingBackground)
+            .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
             .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -81,27 +82,30 @@ internal fun IntroScreen(
 fun HeaderSection() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 23.dp)
     ) {
-        Image(
-            painter = painterResource(ru.anlyashenko.feature.onboarding.impl.R.drawable.background_photo),
+        Icon(
+            painter = painterResource(ru.anlyashenko.feature.onboarding.impl.R.drawable.ic_app),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(4f / 4f)
+                .aspectRatio(0.75f)
         )
         Spacer(Modifier.height(4.dp))
         Text(
             text = stringResource(R.string.intro_title),
-            style = MaterialTheme.typography.displayLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 62.sp,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.intro_subtitle),
-            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 22.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 30.dp)
         )
@@ -130,8 +134,8 @@ fun FooterSection(onGetInClick: (Boolean) -> Unit) {
             .width(200.dp)
             .height(56.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = PrimaryLight,
-            contentColor = OnPrimaryLight
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         shape = RoundedCornerShape(50.dp),
     ) {
