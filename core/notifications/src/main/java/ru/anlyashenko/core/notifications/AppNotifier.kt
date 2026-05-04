@@ -37,7 +37,7 @@ class AppNotifier @Inject constructor(
         )
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(ru.anlyashenko.core.notifications.R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_mood_title))
             .setContentText(context.getString(R.string.notification_mood_text))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

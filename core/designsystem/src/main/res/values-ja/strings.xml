@@ -74,6 +74,14 @@
         統計を表示するには少なくとも3日分の記録が必要です
     </string>
 
+    <string name="day_short_monday">月</string>
+    <string name="day_short_tuesday">火</string>
+    <string name="day_short_wednesday">水</string>
+    <string name="day_short_thursday">木</string>
+    <string name="day_short_friday">金</string>
+    <string name="day_short_saturday">土</string>
+    <string name="day_short_sunday">日</string>
+
     <!-- YearlyScreen -->
     <string name="yearly_not_enough_data">この年のデータが不足しています</string>
     <string name="yearly_mood_entries_title">今年の記録数</string>

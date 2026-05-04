@@ -11,7 +11,6 @@ import dagger.hilt.components.SingletonComponent
 import ru.anlyashenko.core.data.repository.dataStore
 import javax.inject.Singleton
 
-// todo: См. NiA
 @Module
 @InstallIn(SingletonComponent::class)
 object DatastoreModule {

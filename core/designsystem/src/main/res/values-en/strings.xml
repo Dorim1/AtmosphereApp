@@ -70,6 +70,14 @@
     Add at least 3 days of mood entries to see statistics
 </string>
 
+    <string name="day_short_monday">Mon</string>
+    <string name="day_short_tuesday">Tue</string>
+    <string name="day_short_wednesday">Wed</string>
+    <string name="day_short_thursday">Thu</string>
+    <string name="day_short_friday">Fri</string>
+    <string name="day_short_saturday">Sat</string>
+    <string name="day_short_sunday">Sun</string>
+
     <!--  YearlyScreen  -->
     <string name="yearly_not_enough_data">Not enough data for this year</string>
     <string name="yearly_mood_entries_title">Mood\nentries\nthis year</string>

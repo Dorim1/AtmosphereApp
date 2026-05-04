@@ -72,6 +72,14 @@
     Сделайте отметки о настроении как минимум за 3 дня, чтобы увидеть статистику
     </string>
 
+    <string name="day_short_monday">Пн</string>
+    <string name="day_short_tuesday">Вт</string>
+    <string name="day_short_wednesday">Ср</string>
+    <string name="day_short_thursday">Чт</string>
+    <string name="day_short_friday">Пт</string>
+    <string name="day_short_saturday">Сб</string>
+    <string name="day_short_sunday">Вс</string>
+
     <!--  YearlyScreen  -->
     <string name="yearly_not_enough_data">Пока мало данных для этого года</string>
     <string name="yearly_mood_entries_title">Отметок\nв этом\nгоду</string>

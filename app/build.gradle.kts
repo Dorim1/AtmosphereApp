@@ -9,6 +9,10 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
 }
 
+/**
+ * If there is no key, comment out this call and signingConfigs (and in buildTypes)
+ */
+
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {

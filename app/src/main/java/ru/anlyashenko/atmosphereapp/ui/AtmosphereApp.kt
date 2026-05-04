@@ -90,7 +90,7 @@ fun AtmosphereApp(
             notificationSettingsEntry(navigator)
         }
 
-        // todo: Доделать анимации
+        // TODO: disable transition animations on TOP_LEVEL_NAV_ITEMS screens
         NavDisplay(
             entries = appState.navigationState.toEntries(entryProvider),
             onBack = { navigator.goBack() },

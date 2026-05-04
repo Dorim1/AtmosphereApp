@@ -117,13 +117,13 @@ internal fun ProfileScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             TotalEntriesCard(
-                totalEntries,
+                streak = totalEntries,
                 modifier = Modifier
                     .weight(1f)
                     .aspectRatio(1f)
             )
             CurrentStreakCard(
-                longestStreak,
+                streak = currentStreak,
                 modifier = Modifier
                     .weight(1f)
                     .aspectRatio(1f)
@@ -132,7 +132,7 @@ internal fun ProfileScreen(
 
         Spacer(Modifier.height(6.dp))
         LongestStreakCard(
-            currentStreak = currentStreak,
+            streak = longestStreak,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -171,7 +171,7 @@ internal fun ProfileScreen(
 
 @Composable
 fun TotalEntriesCard(
-    total: Int,
+    streak: Int,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -199,7 +199,7 @@ fun TotalEntriesCard(
                 )
             }
             Text(
-                text = total.toTwoDigits(),
+                text = streak.toTwoDigits(),
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
@@ -211,7 +211,7 @@ fun TotalEntriesCard(
 
 @Composable
 fun CurrentStreakCard(
-    total: Int,
+    streak: Int,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -239,7 +239,7 @@ fun CurrentStreakCard(
                 )
             }
             Text(
-                text = total.toTwoDigits(),
+                text = streak.toTwoDigits(),
                 color = MaterialTheme.colorScheme.onSecondary,
                 fontSize = 96.sp,
                 fontWeight = FontWeight.Medium,
@@ -252,7 +252,7 @@ fun CurrentStreakCard(
 
 @Composable
 fun LongestStreakCard(
-    currentStreak: Int,
+    streak: Int,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -271,7 +271,7 @@ fun LongestStreakCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = currentStreak.toTwoDigits(),
+                    text = streak.toTwoDigits(),
                     fontSize = 96.sp,
                     fontWeight = FontWeight.Medium,
                     lineHeight = 96.sp,

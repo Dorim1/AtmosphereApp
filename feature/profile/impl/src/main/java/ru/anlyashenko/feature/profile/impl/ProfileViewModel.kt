@@ -18,8 +18,6 @@ import ru.anlyashenko.feature.profile.impl.model.ProfileRecordUiModel
 import ru.anlyashenko.feature.profile.impl.model.toUiModel
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -137,7 +135,6 @@ class ProfileViewModel @Inject constructor(
         return Pair(currentStreak, longestStreak)
     }
 
-    // todo: Зарандомить insightText
     private fun calculateChartData(
         records: List<ProfileRecordUiModel>,
         availableMoods: List<ProfileMoodUiModel>,
@@ -168,27 +165,24 @@ class ProfileViewModel @Inject constructor(
             )
         }
 
-        val bestDay = chartData.maxByOrNull { it.level }
-        val insightText = if (bestDay != null && bestDay.level > 0f) {
-            val originalLevel = bestDay.level.roundToInt()
+        val validDays = chartData.filter { it.level > 0f }
+        val randomDay = validDays.randomOrNull()
+
+        val insightText = if (randomDay != null) {
+            val originalLevel = randomDay.level.roundToInt()
             val mood = availableMoods.find { it.level == originalLevel }
 
-            val localizedDayName =
-                bestDay.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+            val moodName =
+                mood?.displayName ?: UiText.StringResource(R.string.profile_fallback_mood)
+            val dayStringResId = getDayOfWeekStringRes(randomDay.dayOfWeek)
 
-            if (mood != null) {
-                UiText.StringResource(
-                    R.string.profile_insight_pattern,
-                    localizedDayName,
-                    mood.displayName
-                )
-            } else {
-                UiText.StringResource(
-                    R.string.profile_insight_pattern,
-                    localizedDayName,
-                    UiText.StringResource(R.string.profile_fallback_mood)
-                )
-            }
+
+            UiText.StringResource(
+                R.string.profile_insight_pattern,
+                UiText.StringResource(dayStringResId),
+                moodName
+            )
+
         } else {
             UiText.StringResource(R.string.profile_not_enough_data)
         }
@@ -201,5 +195,17 @@ class ProfileViewModel @Inject constructor(
             ProfileEvent.OnSettingsClick -> setEffect { ProfileEffect.NavigateToSettings }
             ProfileEvent.OnYearlyStatsClick -> setEffect { ProfileEffect.NavigateToYearlyStats }
         }
+    }
+}
+
+private fun getDayOfWeekStringRes(dayOfWeek: DayOfWeek): Int {
+    return when (dayOfWeek) {
+        DayOfWeek.MONDAY -> R.string.day_short_monday
+        DayOfWeek.TUESDAY -> R.string.day_short_tuesday
+        DayOfWeek.WEDNESDAY -> R.string.day_short_wednesday
+        DayOfWeek.THURSDAY -> R.string.day_short_thursday
+        DayOfWeek.FRIDAY -> R.string.day_short_friday
+        DayOfWeek.SATURDAY -> R.string.day_short_saturday
+        DayOfWeek.SUNDAY -> R.string.day_short_sunday
     }
 }
