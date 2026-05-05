@@ -1,6 +1,11 @@
 import java.io.FileInputStream
 import java.util.Properties
 
+/**
+ * move your google-services.json file in the :app directory
+ * or delete on the connection of the firebase plugin
+ */
+
 plugins {
     alias(libs.plugins.atmosphere.android.application)
     alias(libs.plugins.atmosphere.android.application.compose)
@@ -10,7 +15,8 @@ plugins {
 }
 
 /**
- * If there is no key, comment out this call and signingConfigs (and in buildTypes)
+ * If there is no key, comment out this code and signingConfigs (and in buildTypes)
+ * and run the debug version.
  */
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
