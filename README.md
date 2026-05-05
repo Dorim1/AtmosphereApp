@@ -14,8 +14,6 @@ The app is still a work in progress, so some things may change!
 The app is built entirely with Kotlin and Jetpack Compose,
 following the official Android architecture guidelines and best practices.
 
-![Atmosphere App Banner](https://via.placeholder.com/800x400.png?text=Atmosphere+App+Screenshots)
-
 ## ✨ Features
 
 Atmosphere was built to help users track and understand their mood over time.
