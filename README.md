@@ -1,4 +1,4 @@
-![Atmosphere](docs/images/splash.png)
+![Atmosphere](docs/images/splash.jpg)
 
 # Atmosphere App
 
